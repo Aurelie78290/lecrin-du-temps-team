@@ -456,12 +456,11 @@ CREATE TABLE IF NOT EXISTS `EcrinDuTemps`.`articles` (
   `content` LONGTEXT NULL,
   `reference_source` VARCHAR(45) NULL,
   `user_iduser` INT NOT NULL,
-  `user_reviews_idreviews` INT NOT NULL,
-  PRIMARY KEY (`idarticles`, `user_iduser`, `user_reviews_idreviews`),
-  INDEX `fk_articles_user1_idx` (`user_iduser` ASC, `user_reviews_idreviews` ASC) VISIBLE,
+  PRIMARY KEY (`idarticles`),
+  INDEX `fk_articles_user1_idx` (`user_iduser` ASC) VISIBLE,
   CONSTRAINT `fk_articles_user1`
-    FOREIGN KEY (`user_iduser` , `user_reviews_idreviews`)
-    REFERENCES `EcrinDuTemps`.`user` (`iduser` , `reviews_idreviews`)
+    FOREIGN KEY (`user_iduser`)
+    REFERENCES `EcrinDuTemps`.`user` (`iduser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
