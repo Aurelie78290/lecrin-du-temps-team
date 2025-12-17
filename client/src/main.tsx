@@ -7,6 +7,20 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 
 // Import the main app component
 import App from "./App";
+import About from "./pages/About/About";
+import Collection from "./pages/Collection/Collection";
+import CollectionWatchIndex from "./pages/CollectionWatchIndex/CollectionWatchIndex";
+import Contact from "./pages/Contact/Contact";
+import Faq from "./pages/Faq/Faq";
+import Home from "./pages/Home/Home";
+import Hub from "./pages/Hub/Hub";
+import News from "./pages/News/News";
+import NewsDetails from "./pages/NewsDetails/NewsDetails";
+import Shop from "./pages/Shop/Shop";
+import ShopBasket from "./pages/ShopBasket/ShopBasket";
+import ShopPayment from "./pages/ShopPayment/ShopPayment";
+import ShopWatchIndex from "./pages/ShopWatchIndex/ShopWatchIndex";
+import UserProfil from "./pages/UserProfil/UserProfil";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -20,9 +34,67 @@ import App from "./App";
 // You can add more routes as you build out your app!
 const router = createBrowserRouter([
   {
-    path: "/", // The root path
     element: <App />, // Renders the App component for the home page
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/Hub",
+        element: <Hub />,
+      },
+      {
+        path: "/Collection",
+        element: <Collection />,
+      },
+      {
+        path: "/CollectionWathIndex/:id",
+        element: <CollectionWatchIndex />,
+      },
+      {
+        path: "/Shop",
+        element: <Shop />,
+      },
+      {
+        path: "/ShopWatchIndex/:id",
+        element: <ShopWatchIndex />,
+      },
+      {
+        path: "/ShopBasket",
+        element: <ShopBasket />,
+      },
+      {
+        path: "/ShopPayment",
+        element: <ShopPayment />,
+      },
+      {
+        path: "/News",
+        element: <News />,
+      },
+      {
+        path: "/NewsDetails",
+        element: <NewsDetails />,
+      },
+      {
+        path: "/Contact",
+        element: <Contact />,
+      },
+      {
+        path: "/About",
+        element: <About />,
+      },
+      {
+        path: "/Faq",
+        element: <Faq />,
+      },
+      {
+        path: "/UserProfil",
+        element: <UserProfil />,
+      },
+    ],
   },
+
   // Try adding a new route! For example, "/about" with an About component
 ]);
 
