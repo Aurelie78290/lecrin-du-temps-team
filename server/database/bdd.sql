@@ -452,6 +452,7 @@ CREATE TABLE IF NOT EXISTS `EcrinDuTemps`.`articles` (
   `article_title` VARCHAR(100) NULL,
   `subtitle` VARCHAR(100) NULL,
   `release_date` DATETIME NULL,
+  `url_photoArticle` VARCHAR(2048) NULL,
   `content` LONGTEXT NULL,
   `reference_source` VARCHAR(45) NULL,
   `user_iduser` INT NOT NULL,
