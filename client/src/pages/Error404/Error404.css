@@ -1,0 +1,17 @@
+.error404All {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.5rem;
+  justify-content: center;
+
+  a {
+    position: inherit;
+    color: var(--secondary-color);
+    width: auto;
+    text-decoration: none;
+    margin-top: 30px;
+    padding: 10px;
+  }
+}
