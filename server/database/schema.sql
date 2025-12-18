@@ -482,6 +482,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`iduser`),
   UNIQUE KEY `e_mail_UNIQUE` (`e_mail`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+TRUNCATE TABLE `user`;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -490,7 +491,8 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (2,'Joachim','Masson',NULL,NULL,NULL,NULL,'1980-01-01','Homme','Developpeur Web',NULL,'joachim.mpasson.17@gmail.com',0,'admin',NULL,NULL,NULL),(3,'Jo','Masson',NULL,NULL,NULL,NULL,NULL,NULL,'client',NULL,'qsd@qsd.com',NULL,'customer',NULL,NULL,NULL);
+INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role) 
+VALUES ('Anaïs','B','1980-01-01','Developpeur Web','anaisberthome@gmail.com','admin');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
