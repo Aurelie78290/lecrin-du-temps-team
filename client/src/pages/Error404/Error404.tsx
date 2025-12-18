@@ -6,7 +6,8 @@ export default function Error404() {
   const error = useRouteError();
 
   let message = "Page Not Found";
-  let message1 = "Were're sorry, the page you requested could not be found, Please go back to the Homepage";
+  const message1 =
+    "Were're sorry, the page you requested could not be found, Please go back to the Homepage";
   if (isRouteErrorResponse(error)) {
     message = error.statusText;
   } else if (error instanceof Error) {
