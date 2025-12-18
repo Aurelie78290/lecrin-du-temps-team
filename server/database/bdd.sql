@@ -498,6 +498,109 @@ CREATE TABLE IF NOT EXISTS `EcrinDuTemps`.`watch_has_cart` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Seed : `EcrinDuTemps`. articles
+-- -----------------------------------------------------
+
+-- Hypothèse => admin a iduser = 1 (à adapter si besoin).
+
+-- INSERT INTO `EcrinDuTemps`.`articles`
+-- (idarticles, article_title, subtitle, release_date, url_photoArticle, content, reference_source, user_iduser)
+-- VALUES
+-- (
+--   1,
+--   'Rolex Submariner : une icône intemporelle',
+--   'La montre de plongée devenue légendaire',
+--   '2025-05-10',
+--   'https://i.pinimg.com/1200x/51/f4/52/51f4525c5f44c86aa4ddf8087ff7040e.jpg',
+--   'Depuis sa création en 1953, la Rolex Submariner est devenue une référence absolue dans le monde de l’horlogerie. Conçue pour résister aux conditions extrêmes de la plongée sous-marine, elle séduit aujourd’hui autant les sportifs que les collectionneurs.  
+
+-- Cette montre emblématique allie robustesse et élégance. Son design a peu évolué au fil des décennies, ce qui en fait un modèle immédiatement reconnaissable. Chaque détail, de la lunette tournante aux index luminescents, a été pensé pour l’efficacité et la lisibilité sous l’eau.  
+
+-- La Submariner n’est pas seulement un outil de plongée ; elle est aussi un symbole de statut et de goût raffiné, portant fièrement l’héritage Rolex.',
+--   'Rolex',
+--   1
+-- ),
+-- (
+--   2,
+--   'Patek Philippe : l’art de la transmission',
+--   'Des montres conçues pour traverser les générations',
+--   '2025-08-15',
+--   'https://i.pinimg.com/1200x/b0/49/27/b0492785efa2860ac95002605145d103.jpg',
+--   'Patek Philippe est synonyme d’excellence horlogère depuis 1839. Chaque montre est conçue pour durer et se transmettre de génération en génération.  
+
+-- Les complications horlogères, telles que les calendriers perpétuels ou les répétitions minutes, témoignent d’une maîtrise technique exceptionnelle. Les finitions manuelles, poli miroir ou gravures minutieuses, montrent un savoir-faire rare et précieux.  
+
+-- Posséder une Patek Philippe, c’est posséder un héritage, un témoignage d’artisanat suisse haut de gamme et de prestige durable.',
+--   'Patek Philippe',
+--   1
+-- ),
+-- (
+--   3,
+--   'Audemars Piguet Royal Oak',
+--   'La montre qui a révolutionné le luxe',
+--   '2025-10-20',
+--   'https://i.pinimg.com/1200x/ab/0b/47/ab0b470061b50522bbaff7e4d3126530.jpg',
+--   'Présentée en 1972, la Royal Oak d’Audemars Piguet a bouleversé les codes de l’horlogerie de luxe avec son boîtier octogonal et son bracelet intégré.  
+
+-- Ce design audacieux, imaginé par Gérald Genta, a créé une nouvelle catégorie de montres sport-chic, mêlant acier et raffinement. Les finitions de la Royal Oak, notamment le fameux cadran « Tapisserie », restent emblématiques et reconnaissables entre tous.  
+
+-- Aujourd’hui, la Royal Oak est un symbole de modernité et d’innovation, portée par les amateurs de design et de mécanique fine à travers le monde.',
+--   'Audemars Piguet',
+--   1
+-- ),
+-- (
+--   4,
+--   'Omega Speedmaster : la montre lunaire',
+--   'Un chronographe entré dans l’histoire',
+--   '2025-11-25',
+--   'https://i.pinimg.com/1200x/22/e8/f9/22e8f9163b1027f5273ca20f82546adc.jpg',
+--   'L’Omega Speedmaster est célèbre pour avoir accompagné les astronautes lors des missions Apollo. Testée et approuvée par la NASA, elle est devenue la première montre portée sur la Lune en 1969.  
+
+-- Sa précision, sa robustesse et sa lisibilité ont été mises à l’épreuve dans des conditions extrêmes. Les passionnés d’horlogerie admirent encore aujourd’hui la combinaison unique de technologie et d’histoire contenue dans chaque Speedmaster.  
+
+-- Au-delà de sa dimension historique, la Speedmaster reste un chronographe moderne, élégant et performant, idéal pour tous ceux qui recherchent un instrument fiable et emblématique.',
+--   'Omega',
+--   1
+-- ),
+-- (
+--   5,
+--   'Les 10 meilleures marques de montres de tous les temps',
+--   'Un classement des maisons horlogères les plus emblématiques',
+--   '2025-12-01',
+--   'https://i.pinimg.com/736x/1f/18/a1/1f18a10cc0617ae6066e8b28701813e2.jpg',
+--   'L’univers de l’horlogerie de luxe regorge de marques prestigieuses qui ont marqué l’histoire. Voici un classement des 10 maisons incontournables :  
+
+-- 1. Rolex – Symbole d’élégance et de fiabilité, la Submariner reste une icône intemporelle.  
+-- 2. Patek Philippe – L’art de la transmission, chaque montre est un héritage à transmettre.  
+-- 3. Audemars Piguet – La Royal Oak a révolutionné le luxe avec son design audacieux.  
+-- 4. Omega – La Speedmaster, première montre sur la Lune, un mélange de performance et d’histoire.  
+-- 5. Jaeger-LeCoultre – Réputée pour ses mouvements complexes et ses montres raffinées.  
+-- 6. Vacheron Constantin – Plus de 260 ans de savoir-faire horloger d’exception.  
+-- 7. Cartier – L’élégance à la française, des modèles emblématiques et intemporels.  
+-- 8. Richard Mille – Innovation technique et design futuriste, une horlogerie d’avant-garde.  
+-- 9. TAG Heuer – Montres sportives et chronographes emblématiques depuis plus d’un siècle.  
+-- 10. Breitling – Spécialiste des montres d’aviation, précision et robustesse au programme.  
+
+-- Ce classement reflète à la fois l’histoire, l’innovation et l’impact culturel de ces marques dans le monde entier. Chaque maison a su créer un univers unique, mêlant tradition et excellence.',
+--   'Diverses sources horlogères',
+--   1
+-- );
+-- (
+--   6,
+--   'Richard Mille : l’horlogerie du futur',
+--   'Quand innovation et performance ne font qu’un',
+--   '2026-01-05',
+--   'https://i.pinimg.com/736x/25/11/05/251105e10415063dfc556b9f7187c7ea.jpg',
+--   'Richard Mille a révolutionné l’horlogerie contemporaine en combinant innovation technique, matériaux high-tech et design futuriste.  
+
+-- Chaque montre est conçue comme un exploit d’ingénierie : du titane aux composites carbone, tout est pensé pour la légèreté, la résistance et la performance. Les mouvements sont visibles, souvent suspendus, révélant le cœur mécanique de l’instrument.  
+
+-- Posséder une Richard Mille, c’est investir dans une technologie de pointe et un design audacieux, qui repousse les limites de l’horlogerie traditionnelle.',
+--   'Richard Mille',
+--   1
+-- );
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

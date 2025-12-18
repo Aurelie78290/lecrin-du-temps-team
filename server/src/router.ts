@@ -15,4 +15,13 @@ router.post("/api/items", itemActions.add);
 
 /* ************************************************************************* */
 
+// Define articles-related routes
+import articlesActions from "./modules/item/itemActions";
+
+router.get("/api/articles", articlesActions.browse);
+router.get("/api/articles/:id", articlesActions.read);
+router.post("/api/articles", articlesActions.add);
+
+/* ************************************************************************* */
+
 export default router;
