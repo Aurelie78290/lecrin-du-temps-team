@@ -11,6 +11,7 @@ import About from "./pages/About/About";
 import Collection from "./pages/Collection/Collection";
 import CollectionWatchIndex from "./pages/CollectionWatchIndex/CollectionWatchIndex";
 import Contact from "./pages/Contact/Contact";
+import Error404 from "./pages/Error404/Error404";
 import Faq from "./pages/Faq/Faq";
 import Home from "./pages/Home/Home";
 import Hub from "./pages/Hub/Hub";
@@ -35,6 +36,7 @@ import UserProfil from "./pages/UserProfil/UserProfil";
 const router = createBrowserRouter([
   {
     element: <App />, // Renders the App component for the home page
+    errorElement: <Error404 />,
     children: [
       {
         path: "/",
@@ -91,6 +93,10 @@ const router = createBrowserRouter([
       {
         path: "/UserProfil",
         element: <UserProfil />,
+      },
+      {
+        path: "*",
+        element: <Error404 />,
       },
     ],
   },

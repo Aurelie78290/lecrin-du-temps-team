@@ -1,0 +1,14 @@
+.ReviewCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-color: var(--secondary-color);
+  border-style: solid;
+  border-radius: 15px;
+  width: 25rem;
+  padding: 1rem;
+}
+
+.ReviewCard-star {
+  width: 5rem;
+}

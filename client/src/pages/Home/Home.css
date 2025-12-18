@@ -1,0 +1,142 @@
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.home-header {
+  margin-bottom: 20px;
+  z-index: 10;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  width: 8rem;
+  height: auto;
+}
+
+.home-main-title {
+  font-size: 2.6rem;
+  font-weight: 300;
+  color: var(--secondary-color);
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.home-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.content-split {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 60px;
+}
+
+.image-block {
+  flex: 1;
+  position: relative;
+}
+
+.featured-watch {
+  width: 140%;
+  position: absolute;
+  bottom: -60rem;
+  left: -22rem;
+  transform: rotate(-25deg);
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+}
+
+.form-block {
+  flex: 1;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.home-main-subtitle {
+  text-align: left;
+  font-size: 2.6rem;
+  color: var(--text-color);
+  font-weight: 300;
+  margin: 0 0 8rem 0;
+  max-width: 500px;
+  line-height: 1.2;
+}
+
+.form-block h3 {
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--text-color);
+  margin-bottom: 30px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.input-group input,
+.input-row input {
+  width: 100%;
+  padding: 15px;
+  background-color: transparent;
+  border: 1px solid var(--secondary-color);
+  border-radius: 4px;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  color: white;
+  outline: none;
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
+}
+
+.submit-btn {
+  background-color: transparent;
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  padding: 0 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: var(--secondary-color);
+  color: black;
+}
+
+.signup-link {
+  display: inline-block;
+  margin-top: 25px;
+  text-decoration: none;
+  color: var(--secondary-color);
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s;
+}
