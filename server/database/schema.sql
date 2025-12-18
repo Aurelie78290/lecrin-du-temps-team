@@ -493,6 +493,8 @@ LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role) 
 VALUES ('Anaïs','B','1980-01-01','Developpeur Web','anaisberthome@gmail.com','admin');
+INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role) 
+VALUES ('Romain','Debas','1988-02-02','Developpeur Web','debasromain@gmail.com','admin')
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
