@@ -1,44 +1,51 @@
+/* ===== LIGHT THEME COLORS ===== */
+
 :root {
-  /* ==================================  ===== */
-  /* =================================== COLORS ===== */
-  /* ==================================  ===== */
-  /* ===== DARK THEME COLORS ===== */
-  --d-background-color: linear-gradient(to bottom, #010510 55%, #010C2A 100%);
-  --d-primary-color: #010c2a;
-  --d-text-color: #f5F0E9;
-  /* ===== LIGHT THEME COLORS ===== */
-  --l-background-color: linear-gradient(to bottom, #D9CBC2 65%, #F5F0E9 100%);
-  --l-primary-color: #F5F0E9;
-  --l-text-color: #010510;
+  --background-color: linear-gradient(to bottom, #d9cbc2 65%, #f5f0e9 100%);
+  --primary-color: #f5f0e9;
+  --text-color: #010510;
+
   /* ===== COLORS IN COMMON ===== */
   --secondary-color: #e0c58f;
-  --accent-color: #D9CBC2;
-  --bonus-color: #3E160C;
+  --accent-color: #d9cbc2;
+  --bonus-color: #3e160c;
 
-
-  /* ==================================  ===== */
-  /* =================================== TYPO ===== */
-  /* ==================================  ===== */
-  --font-primary: 'Playfair Display', serif;
-  --font-secondary: 'Inter', sans-serif;
+  /* ===== TYPO ===== */
+  --font-primary: "Playfair Display", serif;
+  --font-secondary: "Inter", sans-serif;
 }
 
-.background-dark{
+:root[data-theme="dark"] {
+  --background-color: linear-gradient(to bottom, #010510 55%, #010c2a 100%);
+  --primary-color: #010c2a;
+  --text-color: #f5f0e9;
+
+  /* ===== COLORS IN COMMON ===== */
+  --secondary-color: #e0c58f;
+  --accent-color: #d9cbc2;
+  --bonus-color: #3e160c;
+
+  /* ===== TYPO ===== */
+  --font-primary: "Playfair Display", serif;
+  --font-secondary: "Inter", sans-serif;
+}
+
+body {
   margin: 0;
   padding: 0;
-  background: var(--d-background-color);
+  background: var(--background-color);
+  color: var(--text-color);
 }
-.background-light{
-  margin: 0;
-  padding: 0;
-  background: var(--l-background-color);
-}
-
-h1,h2,h3,h4,h5,h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-primary);
 }
 
-p{
+p {
   font-family: var(--font-secondary);
 }
 
