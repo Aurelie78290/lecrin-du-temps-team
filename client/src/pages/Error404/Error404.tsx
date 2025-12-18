@@ -5,8 +5,8 @@ import "../../components/ThemeChange/ThemeChange.css";
 export default function Error404() {
   const error = useRouteError();
 
-  let message = "Une erreur inattendue est survenue.";
-
+  let message = "Page Not Found";
+  let message1 = "Were're sorry, the page you requested could not be found, Please go back to the Homepage";
   if (isRouteErrorResponse(error)) {
     message = error.statusText;
   } else if (error instanceof Error) {
@@ -16,10 +16,11 @@ export default function Error404() {
   return (
     <main className="error404All">
       <h1>404</h1>
-      <p>{message}</p>
+      <p className="notFound">{message}</p>
+      <p className="sorry">{message1}</p>
 
       <Link to="/" className="theme-change">
-        Retour à l’accueil
+        Homepage
       </Link>
     </main>
   );
