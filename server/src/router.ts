@@ -13,6 +13,15 @@ router.get("/api/items", itemActions.browse);
 router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
+// Define reviews routes
+import reviewsActions from "./modules/reviews/reviewsActions";
+
+router.get("/api/reviews", reviewsActions.browse);
+router.get("/api/reviews/:id", reviewsActions.read);
+router.put("/api/reviews/:id", reviewsActions.edit);
+router.post("/api/reviews", reviewsActions.add);
+router.delete("/api/reviews", reviewsActions.destroy);
+
 /* ************************************************************************* */
 
 export default router;
