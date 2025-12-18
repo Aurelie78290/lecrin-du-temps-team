@@ -6,7 +6,7 @@
   --text-color: #010510;
 
   /* ===== COLORS IN COMMON ===== */
-  --secondary-color: #e0c58f;
+  --secondary-color: #010510;
   --accent-color: #d9cbc2;
   --bonus-color: #3e160c;
 
@@ -14,6 +14,8 @@
   --font-primary: "Playfair Display", serif;
   --font-secondary: "Inter", sans-serif;
 }
+
+/* ===== DARK THEME COLORS ===== */
 
 :root[data-theme="dark"] {
   --background-color: linear-gradient(to bottom, #010510 55%, #010c2a 100%);
