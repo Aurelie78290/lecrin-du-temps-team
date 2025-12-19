@@ -25,11 +25,13 @@ router.delete("/api/reviews", reviewsActions.destroy);
 /* ************************************************************************* */
 
 // Define articles-related routes
-import articlesActions from "./modules/item/itemActions";
+import articlesActions from "./modules/articles/articlesActions";
 
 router.get("/api/articles", articlesActions.browse);
 router.get("/api/articles/:id", articlesActions.read);
+router.put("/articles/:id", articlesActions.edit);
 router.post("/api/articles", articlesActions.add);
+router.delete("/articles/:id", articlesActions.destroy);
 
 /* ************************************************************************* */
 
