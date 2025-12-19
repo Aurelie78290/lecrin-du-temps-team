@@ -374,6 +374,74 @@ CREATE TABLE `photo` (
 
 LOCK TABLES `photo` WRITE;
 /*!40000 ALTER TABLE `photo` DISABLE KEYS */;
+INSERT INTO photo (
+  url_photo1,
+  url_photo2,
+  url_photo3,
+  url_photo4,
+  url_photo5
+) VALUES
+
+-- 1 Rolex Submariner
+('watches/1/photo1.webp','watches/1/photo2.webp','watches/1/photo3.webp','watches/1/photo4.webp','watches/1/photo5.webp'),
+
+-- 2 Rolex GMT Batman
+('watches/2/photo1.webp','watches/2/photo2.webp','watches/2/photo3.webp','watches/2/photo4.webp','watches/2/photo5.webp'),
+
+-- 3 Omega Speedmaster
+('watches/3/photo1.webp','watches/3/photo2.webp','watches/3/photo3.webp','watches/3/photo4.webp','watches/3/photo5.webp'),
+
+-- 4 Omega Seamaster
+('watches/4/photo1.webp','watches/4/photo2.webp','watches/4/photo3.webp','watches/4/photo4.webp','watches/4/photo5.webp'),
+
+-- 5 Cartier Santos
+('watches/5/photo1.webp','watches/5/photo2.webp','watches/5/photo3.webp','watches/5/photo4.webp','watches/5/photo5.webp'),
+
+-- 6 Cartier Tank
+('watches/6/photo1.webp','watches/6/photo2.webp','watches/6/photo3.webp','watches/6/photo4.webp','watches/6/photo5.webp'),
+
+-- 7 Seiko Prospex
+('watches/7/photo1.webp','watches/7/photo2.webp','watches/7/photo3.webp','watches/7/photo4.webp','watches/7/photo5.webp'),
+
+-- 8 Seiko 5 GMT
+('watches/8/photo1.webp','watches/8/photo2.webp','watches/8/photo3.webp','watches/8/photo4.webp','watches/8/photo5.webp'),
+
+-- 9 Tudor Black Bay 58
+('watches/9/photo1.webp','watches/9/photo2.webp','watches/9/photo3.webp','watches/9/photo4.webp','watches/9/photo5.webp'),
+
+-- 10 Tudor Black Bay 41
+('watches/10/photo1.webp','watches/10/photo2.webp','watches/10/photo3.webp','watches/10/photo4.webp','watches/10/photo5.webp'),
+
+-- 11 TAG Heuer Carrera
+('watches/11/photo1.webp','watches/11/photo2.webp','watches/11/photo3.webp','watches/11/photo4.webp','watches/11/photo5.webp'),
+
+-- 12 TAG Heuer Formula 1
+('watches/12/photo1.webp','watches/12/photo2.webp','watches/12/photo3.webp','watches/12/photo4.webp','watches/12/photo5.webp'),
+
+-- 13 IWC Portugieser
+('watches/13/photo1.webp','watches/13/photo2.webp','watches/13/photo3.webp','watches/13/photo4.webp','watches/13/photo5.webp'),
+
+-- 14 IWC Mark XX
+('watches/14/photo1.webp','watches/14/photo2.webp','watches/14/photo3.webp','watches/14/photo4.webp','watches/14/photo5.webp'),
+
+-- 15 Breitling Navitimer
+('watches/15/photo1.webp','watches/15/photo2.webp','watches/15/photo3.webp','watches/15/photo4.webp','watches/15/photo5.webp'),
+
+-- 16 Breitling Superocean
+('watches/16/photo1.webp','watches/16/photo2.webp','watches/16/photo3.webp','watches/16/photo4.webp','watches/16/photo5.webp'),
+
+-- 17 Grand Seiko Snowflake
+('watches/17/photo1.webp','watches/17/photo2.webp','watches/17/photo3.webp','watches/17/photo4.webp','watches/17/photo5.webp'),
+
+-- 18 Grand Seiko Elegance GMT
+('watches/18/photo1.webp','watches/18/photo2.webp','watches/18/photo3.webp','watches/18/photo4.webp','watches/18/photo5.webp'),
+
+-- 19 Longines Moonphase
+('watches/19/photo1.webp','watches/19/photo2.webp','watches/19/photo3.webp','watches/19/photo4.webp','watches/19/photo5.webp'),
+
+-- 20 Longines HydroConquest
+('watches/20/photo1.webp','watches/20/photo2.webp','watches/20/photo3.webp','watches/20/photo4.webp','watches/20/photo5.webp');
+
 /*!40000 ALTER TABLE `photo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -569,6 +637,122 @@ CREATE TABLE `watch` (
 
 LOCK TABLES `watch` WRITE;
 /*!40000 ALTER TABLE `watch` DISABLE KEYS */;
+
+INSERT INTO watch (
+  user_id,
+  brand,
+  model,
+  ref_no,
+  production_year,
+  is_limited_edition,
+  edition_number,
+  photo_id,
+  watch_gender,
+  watch_sell_status,
+  watch_price,
+  case_material_id,
+  diameter_mm,
+  thickness_mm,
+  water_resistance_bar,
+  dial_color,
+  dial_finish_id,
+  hour_marker_type_id,
+  strap_material_id,
+  strap_color,
+  clasp_type_id,
+  lug_width_mm,
+  watch_condition,
+  certificate_id,
+  movement_type_id,
+  caliber,
+  functions_id,
+  power_reserve_hours,
+  frequency_hz,
+  jewel_count,
+  market_data_id,
+  order_archive_id,
+  order_archive_watch_id
+) VALUES
+
+-- 1 Rolex Submariner No-Date
+(1,'Rolex','Submariner No-Date',124060,'2022-01-01',0,NULL,1,'Homme','En vente',12450,
+1,41,12,30,'Noir',1,1,1,'Acier',1,21,'Très bon état',1,1,'3230',1,70,4,31,1,1,1),
+
+-- 2 Rolex GMT-Master II Batman
+(1,'Rolex','GMT-Master II Batman',126710,'2021-01-01',0,NULL,2,'Homme','En vente',15990,
+1,40,12,10,'Noir',1,1,1,'Acier',1,20,'Excellent état',1,1,'3285',3,70,4,31,1,1,1),
+
+-- 3 Omega Speedmaster Moonwatch
+(1,'Omega','Speedmaster Moonwatch',31042,'2020-01-01',0,NULL,3,'Homme','En vente',6750,
+1,42,13,5,'Noir',1,2,1,'Acier',1,20,'Très bon état',1,2,'3861',2,50,3,26,1,1,1),
+
+-- 4 Omega Seamaster Diver 300M
+(1,'Omega','Seamaster Diver 300M',21042,'2022-01-01',0,NULL,4,'Homme','En vente',4650,
+1,42,14,30,'Noir',2,1,1,'Acier',1,20,'Excellent état',1,1,'8800',1,55,3,35,1,1,1),
+
+-- 5 Cartier Santos Medium
+(1,'Cartier','Santos Medium',4848,'2023-01-01',0,NULL,5,'Unisexe','En vente',6250,
+1,35,9,10,'Argent',1,3,1,'Acier',1,18,'Excellent état',1,1,'1847 MC',1,42,4,23,1,1,1),
+
+-- 6 Cartier Tank Must Large
+(1,'Cartier','Tank Must Large',9992,'2022-01-01',0,NULL,6,'Unisexe','En vente',3350,
+1,34,7,3,'Argent',3,3,2,'Noir',2,19,'Très bon état',1,3,'Quartz Cartier',1,NULL,NULL,NULL,1,1,1),
+
+-- 7 Seiko Prospex Diver
+(1,'Seiko','Prospex Diver 200m',1431,'2021-01-01',0,NULL,7,'Homme','En vente',850,
+1,41,13,20,'Gris',1,1,1,'Acier',1,20,'Bon état',1,1,'6R35',1,70,3,24,1,1,1),
+
+-- 8 Seiko 5 Sports GMT
+(1,'Seiko','5 Sports GMT',3003,'2023-01-01',0,NULL,8,'Homme','En vente',420,
+1,43,14,10,'Noir',2,2,1,'Acier',1,22,'Très bon état',1,1,'4R34',3,41,3,24,1,1,1),
+
+-- 9 Tudor Black Bay 58
+(1,'Tudor','Black Bay 58',9030,'2020-01-01',0,NULL,9,'Homme','En vente',3150,
+1,39,12,20,'Noir',1,1,1,'Acier',1,20,'Très bon état',1,1,'MT5402',1,70,4,27,1,1,1),
+
+-- 10 Tudor Black Bay 41
+(1,'Tudor','Black Bay 41 Burgundy',7941,'2023-01-01',0,NULL,10,'Homme','En vente',3850,
+1,41,14,20,'Bordeaux',2,1,1,'Acier',1,21,'Excellent état',1,1,'MT5602',1,70,4,25,1,1,1),
+
+-- 11 TAG Heuer Carrera Chronograph
+(1,'TAG Heuer','Carrera Chronograph 42',2010,'2021-01-01',0,NULL,11,'Homme','En vente',4650,
+1,42,14,10,'Bleu',2,1,1,'Acier',1,22,'Très bon état',1,1,'Heuer 02',2,80,4,33,1,1,1),
+
+-- 12 TAG Heuer Formula 1 Quartz
+(1,'TAG Heuer','Formula 1 Quartz',1110,'2019-01-01',0,NULL,12,'Homme','En vente',1100,
+1,41,12,20,'Noir',1,2,1,'Acier',1,20,'Bon état',1,3,'Quartz',1,NULL,NULL,NULL,1,1,1),
+
+-- 13 IWC Portugieser Chronograph
+(1,'IWC','Portugieser Chronograph',3716,'2022-01-01',0,NULL,13,'Homme','En vente',6150,
+1,41,13,3,'Vert',2,1,2,'Vert',2,20,'Excellent état',1,1,'69355',2,46,4,33,1,1,1),
+
+-- 14 IWC Pilot Mark XX
+(1,'IWC','Pilot Mark XX',3283,'2023-01-01',0,NULL,14,'Homme','En vente',4950,
+1,40,11,10,'Noir',1,2,2,'Brun',2,20,'Excellent état',1,1,'32111',1,120,4,21,1,1,1),
+
+-- 15 Breitling Navitimer B01
+(1,'Breitling','Navitimer B01',1341,'2020-01-01',0,NULL,15,'Homme','En vente',6850,
+1,43,14,3,'Noir',4,4,1,'Acier',1,22,'Très bon état',1,1,'B01',2,70,4,47,1,1,1),
+
+-- 16 Breitling Superocean 44
+(1,'Breitling','Superocean 44',1910,'2021-01-01',0,NULL,16,'Homme','En vente',3250,
+1,44,13,100,'Bleu',2,2,1,'Acier',1,22,'Très bon état',1,1,'Breitling 17',1,38,4,26,1,1,1),
+
+-- 17 Grand Seiko Snowflake
+(1,'Grand Seiko','Snowflake',211,'2018-01-01',0,NULL,17,'Homme','En vente',5350,
+2,41,13,10,'Blanc',4,1,3,'Titane',1,20,'Très bon état',1,1,'9R65',1,72,0,30,1,1,1),
+
+-- 18 Grand Seiko Elegance GMT
+(1,'Grand Seiko','Elegance GMT',221,'2019-01-01',0,NULL,18,'Homme','En vente',3950,
+1,40,14,3,'Crème',3,4,2,'Brun',2,19,'Très bon état',1,1,'9S66',3,72,4,35,1,1,1),
+
+-- 19 Longines Master Moonphase
+(1,'Longines','Master Moonphase',2628,'2020-01-01',0,NULL,19,'Homme','En vente',1850,
+1,40,11,3,'Argent',3,3,1,'Acier',1,21,'Bon état',1,1,'L899',4,64,3,21,1,1,1),
+
+-- 20 Longines HydroConquest
+(1,'Longines','HydroConquest 41',3781,'2022-01-01',0,NULL,20,'Homme','En vente',1350,
+1,41,12,30,'Vert',2,1,1,'Acier',1,21,'Très bon état',1,1,'L888',1,72,3,21,1,1,1);
 /*!40000 ALTER TABLE `watch` ENABLE KEYS */;
 UNLOCK TABLES;
 
