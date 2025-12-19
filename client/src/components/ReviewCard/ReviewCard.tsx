@@ -2,12 +2,13 @@ import "./ReviewCard.css";
 import star from "../../assets/images/starReview.svg";
 
 interface ReviewI {
-  review: {
-    idreviews: number;
-    review_title: string;
-    note: number;
-    comment: string;
-  };
+  idreviews: number;
+  review_title: string;
+  note: number;
+  comment: string;
+}
+interface ReviewCardProps {
+  review: ReviewI;
 }
 
 // Pour tester l'affichage
@@ -19,7 +20,7 @@ interface ReviewI {
 //     "L'écrin du temps est LE site parfais pour trouver des montres d'exception tout en ayant sa collection à portée de vue.",
 // };
 
-function ReviewCard({ review }: ReviewI) {
+function ReviewCard({ review }: ReviewCardProps) {
   return (
     <div className="ReviewCard">
       <div className="ReviewCard-note">

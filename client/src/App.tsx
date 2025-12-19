@@ -1,12 +1,12 @@
 import "./App.css";
+import { Outlet } from "react-router";
 import ThemeChange from "./components/ThemeChange/ThemeChange";
-import Home from "./pages/Home/Home";
 
 function App() {
   return (
     <>
       <main>
-        <Home />
+        <Outlet />
         <ThemeChange />
       </main>
     </>
