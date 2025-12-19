@@ -42,6 +42,7 @@ CREATE TABLE `articles` (
 
 LOCK TABLES `articles` WRITE;
 /*!40000 ALTER TABLE `articles` DISABLE KEYS */;
+INSERT INTO `articles` VALUES (1,'Rolex Submariner : une icône intemporelle','La montre de plongée devenue légendaire','2025-05-10','Depuis sa création en 1953, la Rolex Submariner est devenue une référence absolue dans le monde de l’horlogerie. Conçue pour résister aux conditions extrêmes de la plongée sous-marine, elle séduit aujourd’hui autant les sportifs que les collectionneurs.  ','Rolex',2),(2,'Patek Philippe : l’art de la transmission','Des montres conçues pour traverser les générations','2025-08-15 00:00:00','Patek Philippe est synonyme d’excellence horlogère depuis 1839. Chaque montre est conçue pour durer et se transmettre de génération en génération.  ','Le Point',2),(3,'Audemars Piguet Royal Oak','La montre qui a révolutionné le luxe','2025-10-20 00:00:00','Présentée en 1972, la Royal Oak d’Audemars Piguet a bouleversé les codes de l’horlogerie de luxe avec son boîtier octogonal et son bracelet intégré.  ','Horloger',2),(4,'Omega Speedmaster : la montre lunaire','Un chronographe entré dans l’histoire','2025-11-25 00:00:00','L’Omega Speedmaster est célèbre pour avoir accompagné les astronautes lors des missions Apollo. Testée et approuvée par la NASA, elle est devenue la première montre portée sur la Lune en 1969.  ','Le Monde',2),(5,'Les 10 meilleures marques de montres de tous les temps','Un classement des maisons horlogères les plus emblématiques','2025-12-01 00:00:00','L’univers de l’horlogerie de luxe regorge de marques prestigieuses qui ont marqué l’histoire. Voici un classement des 10 maisons incontournables :  ','Le Point',2);
 /*!40000 ALTER TABLE `articles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -492,7 +493,7 @@ TRUNCATE TABLE `user`;
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role) 
-VALUES ('Anaïs','B','1980-01-01','Developpeur Web','anaisberthome@gmail.com','admin');
+VALUES ('Anaïs','B','1980-01-01','Developpeur Web','anaisberthome@gmail.com','admin'),('Aurélie','Dumotier','1986-02-14','Developpeur Web','aurelie.dumotier@gmail.com','admin');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
