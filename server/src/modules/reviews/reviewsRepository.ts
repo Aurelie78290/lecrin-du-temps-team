@@ -35,7 +35,7 @@ class ReviewsRepository {
 
   async readAll() {
     // Execute the SQL SELECT query to retrieve all reviews from the "review" table
-    const [rows] = await databaseClient.query<Rows>("select * from review");
+    const [rows] = await databaseClient.query<Rows>("select * from reviews");
 
     // Return the array of reviews
     return rows as ReviewI[];

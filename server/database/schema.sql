@@ -489,7 +489,7 @@ CREATE TABLE `reviews` (
   KEY `fk_reviews_user1_idx` (`user_iduser`),
   CONSTRAINT `fk_reviews_user1` FOREIGN KEY (`user_iduser`) REFERENCES `user` (`iduser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-TRUNCATE TABLE 'reviews';
+-- TRUNCATE TABLE 'reviews';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -502,7 +502,7 @@ INSERT INTO reviews (review_title, note, comment, user_iduser)
 VALUES ('Avis client',5,"La montre était exactement comme décrite par le vendeur. J'ai apprécié les nombreuses photos haute résolution qu'il a fournies et sa réponse rapide à mes questions sur l'historique de révision. La plateforme de l'Ecrin du temps a facilité la mise en relation sécurisée.",2),
 ('Avis client',4,"C'était la première fois que j'achetais une montre d'occasion aussi chère en ligne à un particulier. Le processus de paiement sécurisé m'a permis d'inspecter la montre avan que le vendeur ne reçoit les fonds. un gage de confiance indispensable pour ce type de transaction. Très professionnel.",2),
 ('Avis vendeur',3,"J'ai opté pour le service de conciergerie où l’Écrin du temps s'occupe de tout (photos professionnelles, description, négociation). Cela justifie amplement la commission. La montre a été vendue rapidement et je n'ai eu à m'occuper de rien, à part l'envoi sécurisé au centre d'authentification. Une solution parfaite pour vendre une pièce de très haute valeur sans stress.",2),
-('Avis vendeur',5,"J'ai vendu ma Cartier en moins de deux semaines via cette plateforme. La commission est juste, et le fait que l'acheteur ait un système de séquestre garantit une vente sérieuse. J'ai été payée immédiatement après la confirmation de l'authentification. Interface de vente très claire et excellent support client pour m'aider à remplir l'annonce.",2)
+('Avis vendeur',5,"J'ai vendu ma Cartier en moins de deux semaines via cette plateforme. La commission est juste, et le fait que l'acheteur ait un système de séquestre garantit une vente sérieuse. J'ai été payée immédiatement après la confirmation de l'authentification. Interface de vente très claire et excellent support client pour m'aider à remplir l'annonce.",2);
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 UNLOCK TABLES;
 
