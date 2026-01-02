@@ -13,6 +13,8 @@ router.get("/api/items", itemActions.browse);
 router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
+/* ************************************************************************* */
+
 // Define reviews routes
 import reviewsActions from "./modules/reviews/reviewsActions";
 
@@ -40,6 +42,17 @@ import watchActions from "./modules/watch/watchActions";
 router.get("/api/watches", watchActions.browse);
 router.get("/api/watches/:id", watchActions.read);
 router.post("/api/watches", watchActions.add);
+
+/* ************************************************************************* */
+
+// Define articles-related routes
+import faqActions from "./modules/faq/faqActions";
+
+router.get("/api/faq", faqActions.browse);
+router.get("/api/faq/:id", faqActions.read);
+router.put("/faq/:id", faqActions.edit);
+router.post("/api/faq", faqActions.add);
+router.delete("/faq/:id", faqActions.destroy);
 
 /* ************************************************************************* */
 
