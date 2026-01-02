@@ -7,6 +7,7 @@ import Navbar from "../../components/Navbar/Navbar";
 interface Article {
   idarticles: number;
   article_title: string;
+  photo: string;
   subtitle: string;
   release_date: string;
   content: string;
@@ -27,7 +28,7 @@ function News() {
     <div>
       <Navbar />
       <section>
-        <h1>Chroniques horlogères</h1>
+        <h1 className="news-title">Chroniques horlogères</h1>
         <div className="news-grid">
           {news.map((article) => (
             <BreakingNewsCard key={article.idarticles} article={article} />
