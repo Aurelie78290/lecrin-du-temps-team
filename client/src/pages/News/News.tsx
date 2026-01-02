@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import BreakingNewsCard from "../../components/BreakingNewsCard/BreakingNewsCard";
 
 import "./News.css";
+import Navbar from "../../components/Navbar/Navbar";
 
 interface Article {
   idarticles: number;
@@ -23,14 +24,17 @@ function News() {
   }, []);
 
   return (
-    <section>
-      <h1>Chroniques horlogères</h1>
-      <div className="news-grid">
-        {news.map((article) => (
-          <BreakingNewsCard key={article.idarticles} article={article} />
-        ))}
-      </div>
-    </section>
+    <div>
+      <Navbar />
+      <section>
+        <h1>Chroniques horlogères</h1>
+        <div className="news-grid">
+          {news.map((article) => (
+            <BreakingNewsCard key={article.idarticles} article={article} />
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
 
