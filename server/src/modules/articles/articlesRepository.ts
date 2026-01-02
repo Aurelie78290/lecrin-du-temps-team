@@ -9,6 +9,7 @@ export type Article = {
   release_date: string;
   content: string;
   reference_source: string | null;
+  photo: string;
   user_iduser: number;
   // url_photoArticle: string;
 };
@@ -20,7 +21,7 @@ class ArticleRepository {
     // Execute the SQL INSERT query to add a new item to the "article" table
     const [result] = await databaseClient.query<Result>(
       `INSERT INTO articles 
-      (article_title, subtitle, release_date, content, reference_source, user_iduser)
+      (article_title, subtitle, release_date, content, reference_source, photo, user_iduser)
       VALUES (?, ?, ?, ?, ?, ?)`,
       [
         article.article_title,
@@ -28,6 +29,7 @@ class ArticleRepository {
         article.release_date || new Date().toISOString(),
         article.content,
         article.reference_source,
+        article.photo,
         article.user_iduser,
       ],
     );
@@ -42,7 +44,7 @@ class ArticleRepository {
     // Execute the SQL SELECT query to retrieve a specific item by its ID
     const [rows] = await databaseClient.query<Rows>(
       `SELECT idarticles, article_title, subtitle, release_date, 
-              content, reference_source, user_iduser 
+              content, reference_source, photo, user_iduser 
        FROM articles 
        WHERE idarticles = ?`,
       [id],
@@ -56,7 +58,7 @@ class ArticleRepository {
     // Execute the SQL SELECT query to retrieve all items from the "article" table
     const [rows] = await databaseClient.query<Rows>(
       `SELECT idarticles, article_title, subtitle, release_date, 
-              content, reference_source, user_iduser 
+              content, reference_source, photo, user_iduser 
        FROM articles 
        ORDER BY release_date DESC`,
     );
@@ -89,6 +91,10 @@ class ArticleRepository {
     if (article.release_date !== undefined) {
       fields.push("release_date = ?");
       values.push(article.release_date);
+    }
+    if (article.photo !== undefined) {
+      fields.push("photo = ?");
+      values.push(article.photo);
     }
 
     if (fields.length === 0) {
