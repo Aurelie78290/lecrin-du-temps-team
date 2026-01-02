@@ -26,9 +26,10 @@ CREATE TABLE `articles` (
   `idarticles` int NOT NULL AUTO_INCREMENT,
   `article_title` varchar(100) DEFAULT NULL,
   `subtitle` varchar(100) DEFAULT NULL,
-  `release_date` datetime DEFAULT NULL,
+  `release_date` date DEFAULT NULL,
   `content` longtext,
   `reference_source` varchar(45) DEFAULT NULL,
+  `photo` varchar(255) DEFAULT NULL,
   `user_iduser` int NOT NULL,
   PRIMARY KEY (`idarticles`),
   KEY `fk_articles_user1_idx` (`user_iduser`),
@@ -42,9 +43,28 @@ CREATE TABLE `articles` (
 
 LOCK TABLES `articles` WRITE;
 /*!40000 ALTER TABLE `articles` DISABLE KEYS */;
-INSERT INTO `articles` VALUES (1,'Rolex Submariner : une icône intemporelle','La montre de plongée devenue légendaire','2025-05-10','Depuis sa création en 1953, la Rolex Submariner est devenue une référence absolue dans le monde de l’horlogerie. Conçue pour résister aux conditions extrêmes de la plongée sous-marine, elle séduit aujourd’hui autant les sportifs que les collectionneurs.  ','Rolex',3),(2,'Patek Philippe : l’art de la transmission','Des montres conçues pour traverser les générations','2025-08-15 00:00:00','Patek Philippe est synonyme d’excellence horlogère depuis 1839. Chaque montre est conçue pour durer et se transmettre de génération en génération.  ','Le Point',3),(3,'Audemars Piguet Royal Oak','La montre qui a révolutionné le luxe','2025-10-20 00:00:00','Présentée en 1972, la Royal Oak d’Audemars Piguet a bouleversé les codes de l’horlogerie de luxe avec son boîtier octogonal et son bracelet intégré.  ','Horloger',3),(4,'Omega Speedmaster : la montre lunaire','Un chronographe entré dans l’histoire','2025-11-25 00:00:00','L’Omega Speedmaster est célèbre pour avoir accompagné les astronautes lors des missions Apollo. Testée et approuvée par la NASA, elle est devenue la première montre portée sur la Lune en 1969.  ','Le Monde',3),(5,'Les 10 meilleures marques de montres de tous les temps','Un classement des maisons horlogères les plus emblématiques','2025-12-01 00:00:00','L’univers de l’horlogerie de luxe regorge de marques prestigieuses qui ont marqué l’histoire. Voici un classement des 10 maisons incontournables :  ','Le Point',3);
+INSERT INTO `articles` VALUES (1,'Rolex Submariner : une icône intemporelle','La Rolex Submariner, montre de plongée légendaire, allie robustesse, élégance et précision, séduisant amateurs, collectionneurs et sportifs depuis plus de 70 ans.','2025-05-10','Depuis sa création en 1953, la Rolex Submariner est devenue une référence absolue dans le monde de l’horlogerie. Conçue pour résister aux conditions extrêmes de la plongée sous-marine, elle séduit aujourd’hui autant les sportifs que les collectionneurs.','Rolex','https://i.pinimg.com/1200x/51/f4/52/51f4525c5f44c86aa4ddf8087ff7040e.jpg',3),(2,'Patek Philippe : l’art de la transmission','Patek Philippe incarne l’excellence suisse, combinant héritage, techniques horlogères avancées et montres conçues pour traverser les générations avec raffinement.','2025-08-15','Patek Philippe est synonyme d’excellence horlogère depuis 1839. Chaque montre est conçue pour durer et se transmettre de génération en génération.','Le Point','https://i.pinimg.com/1200x/b0/49/27/b0492785efa2860ac95002605145d103.jpg',3),(3,'Audemars Piguet Royal Oak','La Royal Oak, montre iconique, a révolutionné le luxe avec son design octogonal, son bracelet intégré et son style sport-chic devenu un classique intemporel.','2025-10-20','Présentée en 1972, la Royal Oak d’Audemars Piguet a bouleversé les codes de l’horlogerie de luxe avec son boîtier octogonal et son bracelet intégré.  ','Horloger','https://i.pinimg.com/1200x/ab/0b/47/ab0b470061b50522bbaff7e4d3126530.jpg',3),(4,'Omega Speedmaster : la montre lunaire','La Speedmaster, premier chronographe sur la Lune, allie précision, robustesse et design emblématique, célébrant l’exploration spatiale et l’excellence horlogère.','2025-11-25','L’Omega Speedmaster est célèbre pour avoir accompagné les astronautes lors des missions Apollo. Testée et approuvée par la NASA, elle est devenue la première montre portée sur la Lune en 1969.  ','Le Monde','https://i.pinimg.com/1200x/22/e8/f9/22e8f9163b1027f5273ca20f82546adc.jpg',3),(5,'Les 10 meilleures marques de montres de tous les temps','Un classement détaillé des maisons horlogères les plus prestigieuses, explorant leur histoire, leur influence et leurs créations emblématiques à travers le temps.','2025-12-01','L’univers de l’horlogerie de luxe regorge de marques prestigieuses qui ont marqué l’histoire. Voici un classement des 10 maisons incontournables :  ','Le Point','https://i.pinimg.com/736x/1f/18/a1/1f18a10cc0617ae6066e8b28701813e2.jpg',3);
 /*!40000 ALTER TABLE `articles` ENABLE KEYS */;
 UNLOCK TABLES;
+
+INSERT INTO articles (
+  article_title,
+  subtitle,
+  release_date,
+  content,
+  reference_source,
+  photo,
+  user_iduser
+)
+VALUES (
+  'Richard Mille : l’horlogerie du futur',
+  'Richard Mille combine design futuriste et technologies avancées, créant des montres légères, performantes et spectaculaires, véritables exploits d’ingénierie contemporaine.',
+  '2026-01-05',
+  'Richard Mille a révolutionné l’horlogerie contemporaine en combinant innovation technique, matériaux high-tech et design futuriste. Chaque montre est conçue comme un exploit d’ingénierie...',
+  'Richard Mille',
+  'https://i.pinimg.com/736x/25/11/05/251105e10415063dfc556b9f7187c7ea.jpg',
+  3
+);
 
 --
 -- Table structure for table `cart`

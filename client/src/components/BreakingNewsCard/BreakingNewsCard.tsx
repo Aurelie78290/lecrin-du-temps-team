@@ -5,6 +5,7 @@ import "./BreakingNewsCard.css";
 interface Article {
   idarticles: number;
   article_title: string;
+  photo: string;
   subtitle: string;
   release_date: string;
   content: string;
@@ -16,13 +17,29 @@ interface BreakingNewsCardProps {
 }
 
 function BreakingNewsCard({ article }: BreakingNewsCardProps) {
+  const formatDate = (dateString: string) => {
+    return dateString.split("T")[0];
+  };
+
   return (
     <article className="breakingNews-section">
       <h2>{article.article_title}</h2>
-      <p>{article.reference_source}</p>
-      <p>{article.release_date}</p>
-      {/* <img src={article.url_photoArticle} alt={article.article_title} /> */}
-      <p>{article.subtitle}</p>
+      <div className="breakingNews-references">
+        <p className="breakingNews-references-content">
+          {article.reference_source}
+        </p>
+        <p className="breakingNews-references-content">
+          {formatDate(article.release_date)}
+        </p>
+      </div>
+      <div className="breakingNews-container">
+        <img
+          src={article.photo}
+          alt={article.article_title}
+          className="breakingNews-photo"
+        />
+      </div>
+      <p className="breakingNews-subtitle">{article.subtitle}</p>
       <Link to={`/news/${article.idarticles}`}>Lire l’article</Link>
     </article>
   );
