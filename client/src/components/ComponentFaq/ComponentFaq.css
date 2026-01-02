@@ -9,27 +9,29 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
-.ComponentFaq-question-list {
-  width: 70%;
+.ComponentFaq-h2 {
+  padding-bottom: 3rem;
 }
-
 .ComponentFaq-question {
   width: 100%;
   text-align: left;
   background: none;
   border: none;
-  padding: 1.2em 1em;
+  padding: 0.8em 1em;
+  margin-top: 1rem;
   font-size: 1.1em;
-  color: var(--text-color);
+  color: var(--secondary-color);
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom-color: var(--secondary-color);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
 }
 
 .ComponentFaq-icon {
   font-size: 1.5em;
-  color: var(--linkv);
   transition: transform 0.6s ease;
 }
 
@@ -38,9 +40,32 @@
 }
 
 .ComponentFaq-answer {
-  margin: 0 0.9em;
-  padding: 1.2em 0.4em 1.2em 1.2em;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 1.2em;
   background-color: var(--primary-color);
-  color: var(--text-color);
-  animation: fadeIn 0.6s ease;
+  color: var(--secondary-color);
+}
+
+.ComponentFaq-answer p {
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.ComponentFaq-answer.active {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  padding-top: 1.2em;
+  padding-bottom: 1.2em;
+}
+
+@media screen and (max-width: 1070px) {
+  .ComponentFaq-h2,
+  .ComponentFaq-question-list {
+    max-width: 70%;
+  }
 }
