@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import Navbar from "../../components/Navbar/Navbar";
+
 import "./Faq.css";
 
 const questions = [
@@ -24,37 +26,40 @@ function Faq() {
   };
 
   return (
-    <section className="Faq-section">
-      <h1>Vous vous poser une question?</h1>
-      <h2>
-        Votre question concernant L’Écrin du temps a peut-être déjà été posée.
-        Si c’est le cas, vous la trouverez ici.
-      </h2>
-      <div className="faq-question-list">
-        {questions.map((item) => (
-          <div
-            key={item.idtable}
-            className={`faq-item ${activeId === item.idtable ? "active" : ""}`}
-          >
-            <button
-              type="button"
-              className="faq-question"
-              onClick={() => toggleQuestion(item.idtable)}
+    <>
+      <Navbar />
+      <section className="Faq-section">
+        <h1>Vous vous poser une question?</h1>
+        <h2>
+          Votre question concernant L’Écrin du temps a peut-être déjà été posée.
+          Si c’est le cas, vous la trouverez ici.
+        </h2>
+        <div className="faq-question-list">
+          {questions.map((item) => (
+            <div
+              key={item.idtable}
+              className={`faq-item ${activeId === item.idtable ? "active" : ""}`}
             >
-              {item.question}
-              <span className="faq-icon">
-                {activeId === item.idtable ? "-" : "+"}
-              </span>
-            </button>
-            {activeId === item.idtable && (
-              <div className="faq-answer">
-                <p>{item.answer}</p>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </section>
+              <button
+                type="button"
+                className="faq-question"
+                onClick={() => toggleQuestion(item.idtable)}
+              >
+                {item.question}
+                <span className="faq-icon">
+                  {activeId === item.idtable ? "-" : "+"}
+                </span>
+              </button>
+              {activeId === item.idtable && (
+                <div className="faq-answer">
+                  <p>{item.answer}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
 
