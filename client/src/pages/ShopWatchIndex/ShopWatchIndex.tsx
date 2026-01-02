@@ -1,5 +1,7 @@
+import Navbar from "../../components/Navbar/Navbar";
+
 function ShopWatchIndex() {
-  return <div />;
+  return <Navbar />;
 }
 
 export default ShopWatchIndex;

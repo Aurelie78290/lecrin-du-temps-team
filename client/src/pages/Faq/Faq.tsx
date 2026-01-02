@@ -1,5 +1,11 @@
+import Navbar from "../../components/Navbar/Navbar";
+
 function Faq() {
-  return <div />;
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 }
 
 export default Faq;
