@@ -191,6 +191,14 @@ CREATE TABLE `faq` (
 
 LOCK TABLES `faq` WRITE;
 /*!40000 ALTER TABLE `faq` DISABLE KEYS */;
+INSERT INTO `faq` (question, answer) 
+VALUES ('Comment acheter une montre sur le site l''Écrin du temps ?', 'Parcourez notre catalogue, ajoutez votre montre au panier et suivez les étapes de paiement sécurisé. Un e-mail de confirmation vous sera envoyé.'),
+('Que comprend le prix de vente d''une montre ?', 'Le prix inclut la montre, son certificat d''authenticité, l''écrin d''origine, une garantie de 24 mois et le contrôle technique de nos experts.'),
+('À quoi correspond le numéro de référence d''une montre de luxe ?', 'C''est l''identifiant unique du modèle qui précise la marque, la collection et les matériaux utilisés. C''est essentiel pour la traçabilité.'),
+('Dois-je être inscrit sur l''Écrin du Temps pour passer commande ?', 'Oui, l''inscription est obligatoire. La création d''un compte client nous permet de sécuriser vos transactions et de gérer vos garanties.'),
+('Comment faire part de mes doutes concernant l''authenticité d''une montre ?', 'L''authenticité est notre priorité. Utilisez la section "Contact" située juste en dessous de cette FAQ pour nous envoyer un message direct.'),
+('Quels sont les délais de livraison et les frais d''expédition d''une montre ?', 'Expédition sous 48h et livraison en 3 à 5 jours. Les frais sont calculés au panier selon la valeur et la destination.'),
+('Suis-je assuré(e) en cas de dommage ou de vol pendant le transport ?', 'Absolument. Toutes nos expéditions sont couvertes par une assurance "ad valorem" à hauteur de la valeur réelle de la montre.');
 /*!40000 ALTER TABLE `faq` ENABLE KEYS */;
 UNLOCK TABLES;
 
