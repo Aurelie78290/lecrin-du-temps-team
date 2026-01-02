@@ -2,19 +2,19 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router";
 import "./Navbar.css";
 
-// Importe tes images
-import logo from "../../assets/images/logo.svg";
 import home from "../../assets/images/home.svg";
+// Importe tes images
 import book from "../../assets/images/icon/book.svg";
 import envelope from "../../assets/images/icon/envelope.svg";
+import facebook from "../../assets/images/icon/facebook.svg";
 import handbag from "../../assets/images/icon/handbag.svg";
 import info from "../../assets/images/icon/info-square.svg";
-import person from "../../assets/images/icon/person.svg";
-import watch from "../../assets/images/icon/watch.svg";
-import facebook from "../../assets/images/icon/facebook.svg";
-import linkedin from "../../assets/images/icon/linkedin.svg";
-import tiktok from "../../assets/images/icon/tiktok.svg";
 import instagram from "../../assets/images/icon/instagram.png";
+import linkedin from "../../assets/images/icon/linkedin.svg";
+import person from "../../assets/images/icon/person.svg";
+import tiktok from "../../assets/images/icon/tiktok.svg";
+import watch from "../../assets/images/icon/watch.svg";
+import logo from "../../assets/images/logo.svg";
 
 function Navbar() {
   const [expanded, setExpanded] = useState(false);
