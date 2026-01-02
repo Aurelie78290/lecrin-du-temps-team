@@ -1,0 +1,25 @@
+.DisplayAllReviews-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  gap: 1rem;
+}
+
+.DisplayAllReviews-element-list {
+  list-style-type: none;
+  padding: 2rem 0;
+}
+
+@media screen and (max-width: 1200px) {
+  .DisplayAllReviews-list {
+    margin: 0 5rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .DisplayAllReviews-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import ReviewCard from "../ReviewCard/ReviewCard";
 
+import "./DisplayAllReviews.css";
+
 type ReviewI = {
   idreviews: number;
   review_title: string;
@@ -21,9 +23,9 @@ function DisplayAllReviews() {
 
   return (
     <>
-      <ul>
+      <ul className="DisplayAllReviews-list">
         {reviews.map((review) => (
-          <li key={review.idreviews}>
+          <li className="DisplayAllReviews-element-list" key={review.idreviews}>
             <ReviewCard review={review} />
           </li>
         ))}
