@@ -1,5 +1,7 @@
+import Navbar from "../../components/Navbar/Navbar";
+
 function ShopPayment() {
-  return <div />;
+  return <Navbar />;
 }
 
 export default ShopPayment;
