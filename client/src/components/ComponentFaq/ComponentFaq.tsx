@@ -4,20 +4,6 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 import "./ComponentFaq.css";
 
-// const questions = [
-//   {
-//     idtable: 1,
-//     question: "Comment acheter une montre sur le site l'Ecrin du temps?",
-//     answer: "Il suffit de cliquer sur acheter et de se laisser guider ",
-//   },
-//   {
-//     idtable: 2,
-//     question: "Que comprend le prix de vente d'une montre",
-//     answer:
-//       "Il comprend le prix de la montre, le montant de la TVA ainsi qu'une commission pour le site l'Ecrin du temps",
-//   },
-// ];
-
 interface QuestionsI {
   idtable1: number;
   question: string;
