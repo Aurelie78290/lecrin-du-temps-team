@@ -1,7 +1,5 @@
-import Navbar from "../../components/Navbar/Navbar";
-
 function Collection() {
-  return <Navbar />;
+  return;
 }
 
 export default Collection;

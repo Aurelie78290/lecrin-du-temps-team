@@ -16,8 +16,13 @@ import tiktok from "../../assets/images/icon/tiktok.svg";
 import watch from "../../assets/images/icon/watch.svg";
 import logo from "../../assets/images/logo.svg";
 
-function Navbar() {
-  const [expanded, setExpanded] = useState(false);
+function Navbar({
+  expanded,
+  setExpanded,
+}: {
+  expanded: boolean;
+  setExpanded: (value: boolean) => void;
+}) {
   const location = useLocation();
 
   const isActive = (path: string) => {

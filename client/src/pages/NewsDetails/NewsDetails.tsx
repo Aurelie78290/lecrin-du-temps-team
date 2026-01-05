@@ -1,7 +1,5 @@
-import Navbar from "../../components/Navbar/Navbar";
-
 function NewsDetails() {
-  return <Navbar />;
+  return;
 }
 
 export default NewsDetails;

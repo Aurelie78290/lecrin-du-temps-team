@@ -1,7 +1,5 @@
-import Navbar from "../../components/Navbar/Navbar";
-
 function ShopBasket() {
-  return <Navbar />;
+  return;
 }
 
 export default ShopBasket;
