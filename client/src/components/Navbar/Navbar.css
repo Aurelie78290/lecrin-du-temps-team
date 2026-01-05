@@ -156,6 +156,14 @@
   gap: 1.5rem;
 }
 
+.theme-change-display {
+  display: none;
+}
+
+.sidebar.expanded .theme-change-display {
+  display: flex;
+}
+
 .sidebar.expanded .social-links {
   display: flex;
 }

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router";
 import "./Navbar.css";
 
@@ -15,6 +14,7 @@ import person from "../../assets/images/icon/person.svg";
 import tiktok from "../../assets/images/icon/tiktok.svg";
 import watch from "../../assets/images/icon/watch.svg";
 import logo from "../../assets/images/logo.svg";
+import ThemeChange from "../ThemeChange/ThemeChange";
 
 function Navbar({
   expanded,
@@ -101,6 +101,10 @@ function Navbar({
 
       {/* Footer : dark mode + réseaux + mentions */}
       <div className="sidebar-footer">
+        <div className="theme-change-display">
+          <ThemeChange />
+        </div>
+
         <div className="social-links">
           <a href="/">
             <img src={linkedin} alt="LinkedIn" />
