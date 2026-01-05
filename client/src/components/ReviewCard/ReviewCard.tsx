@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useTheme } from "../../contexts/ThemeContext";
 
 import "./ReviewCard.css";
 import starDark from "../../assets/images/starReviewDark.svg";
@@ -14,30 +14,9 @@ interface ReviewCardProps {
   review: ReviewI;
 }
 
-// Pour tester l'affichage
-// const review = {
-//   idreviews: 1,
-//   review_title: "un site exceptionnel",
-//   note: 5,
-//   comment:
-//     "L'écrin du temps est LE site parfais pour trouver des montres d'exception tout en ayant sa collection à portée de vue.",
-// };
-
 function ReviewCard({ review }: ReviewCardProps) {
-  const [isLight, setIsLight] = useState(
-    localStorage.getItem("theme") === "light",
-  );
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const currentTheme = localStorage.getItem("theme");
-      setIsLight(currentTheme === "light");
-    };
-    window.addEventListener("storage", checkTheme);
-    return () => window.removeEventListener("storage", checkTheme);
-  }, []);
-
-  const starIcon = isLight ? starLight : starDark;
+  const { theme } = useTheme();
+  const starIcon = theme === "light" ? starLight : starDark;
 
   return (
     <div className="ReviewCard">
