@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import WatchCard, { type Watch } from "../WatchCard/WatchCard";
 import "./WatchCardCollection.css";
+import WatchCardAdd from "../WatchCardAdd/WatchCardAdd";
 
 function WatchCardCollection() {
   const [watches, setWatches] = useState<Watch[]>([]);
@@ -25,6 +26,7 @@ function WatchCardCollection() {
           />
         ))}
       </div>
+      <WatchCardAdd />
     </div>
   );
 }
