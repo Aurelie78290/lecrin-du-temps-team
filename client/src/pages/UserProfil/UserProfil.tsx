@@ -1,7 +1,5 @@
-import Navbar from "../../components/Navbar/Navbar";
-
 function UserProfil() {
-  return <Navbar />;
+  return <></>;
 }
 
 export default UserProfil;

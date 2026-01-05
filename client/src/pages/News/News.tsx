@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import BreakingNewsCard from "../../components/BreakingNewsCard/BreakingNewsCard";
 
 import "./News.css";
-import Navbar from "../../components/Navbar/Navbar";
 
 interface Article {
   idarticles: number;
@@ -26,7 +25,6 @@ function News() {
 
   return (
     <div>
-      <Navbar />
       <section>
         <h1 className="news-title">Chroniques horlogères</h1>
         <div className="news-grid">

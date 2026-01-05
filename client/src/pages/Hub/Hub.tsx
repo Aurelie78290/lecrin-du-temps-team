@@ -1,7 +1,5 @@
-import Navbar from "../../components/Navbar/Navbar";
-
 function Hub() {
-  return <Navbar />;
+  return <></>;
 }
 
 export default Hub;
