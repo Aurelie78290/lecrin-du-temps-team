@@ -3,6 +3,7 @@ section {
   padding: 3rem 2rem;
   max-width: 1400px;
   min-height: 100vh;
+  max-height: 150vh;
 }
 
 .news-title {
@@ -16,9 +17,22 @@ section {
 .news-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 1.2rem;
   grid-auto-rows: 1fr;
   align-items: stretch;
+}
+
+.card--tall {
+  min-height: 500px;
+}
+
+.card--short {
+  min-height: 450px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
 }
 
 .news-grid:hover > * {
