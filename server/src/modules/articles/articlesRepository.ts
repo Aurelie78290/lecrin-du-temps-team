@@ -11,7 +11,6 @@ export type Article = {
   reference_source: string | null;
   photo: string;
   user_iduser: number;
-  // url_photoArticle: string;
 };
 
 class ArticleRepository {

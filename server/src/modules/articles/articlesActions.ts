@@ -84,6 +84,7 @@ const add: RequestHandler = async (req, res, next) => {
       article_title: req.body.article_title,
       subtitle: req.body.subtitle || null,
       content: req.body.content,
+      photo: req.body.photo,
       reference_source: req.body.reference_source || null,
       user_iduser: req.body.user_iduser,
       release_date: req.body.release_date || new Date().toISOString(),
