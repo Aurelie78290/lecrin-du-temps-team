@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import WatchCard, { type Watch } from "../../components/WatchCard/WatchCard";
 import "./Shop.css";
-import Navbar from "../../components/Navbar/Navbar";
 
 const API_URL = "http://localhost:3310";
 
@@ -18,7 +17,6 @@ export default function Shop() {
 
   return (
     <div>
-      <Navbar />
       <div className="shop-page">
         <div className="shop-header">
           <h1 className="shop-title">Boutique</h1>
