@@ -28,8 +28,12 @@ function News() {
       <section>
         <h1 className="news-title">Chroniques horlogères</h1>
         <div className="news-grid">
-          {news.map((article) => (
-            <BreakingNewsCard key={article.idarticles} article={article} />
+          {news.map((article, index) => (
+            <BreakingNewsCard
+              key={article.idarticles}
+              article={article}
+              className={index % 2 !== 0 ? "card--tall" : "card--short"}
+            />
           ))}
         </div>
       </section>
