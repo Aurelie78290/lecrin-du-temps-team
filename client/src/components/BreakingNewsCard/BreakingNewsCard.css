@@ -92,3 +92,10 @@
   border-color: #e0c58f;
   box-shadow: 0 0 20px rgba(224, 197, 143, 0.2);
 }
+
+:root {
+  .breakingNews-subtitle,
+  .breakingNews-section h2 {
+    color: #f5f0e9;
+  }
+}
