@@ -23,6 +23,7 @@ function DisplayAllReviews() {
 
   return (
     <>
+      <h2 className="DisplayAllReviews-h2">les Avis de nos clients</h2>
       <ul className="DisplayAllReviews-list">
         {reviews.map((review) => (
           <li className="DisplayAllReviews-element-list" key={review.idreviews}>

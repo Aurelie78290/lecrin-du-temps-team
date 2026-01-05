@@ -5,7 +5,6 @@ function About() {
   return (
     <div>
       <Navbar />
-      <h1>Page About</h1>
       <DisplayAllReviews />
     </div>
   );

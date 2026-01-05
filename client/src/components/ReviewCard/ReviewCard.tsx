@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
+
 import "./ReviewCard.css";
-import star from "../../assets/images/starReview.svg";
+import starDark from "../../assets/images/starReviewDark.svg";
+import starLight from "../../assets/images/starReviewLight.svg";
 
 interface ReviewI {
   idreviews: number;
@@ -21,14 +24,29 @@ interface ReviewCardProps {
 // };
 
 function ReviewCard({ review }: ReviewCardProps) {
+  const [isLight, setIsLight] = useState(
+    localStorage.getItem("theme") === "light",
+  );
+
+  useEffect(() => {
+    const checkTheme = () => {
+      const currentTheme = localStorage.getItem("theme");
+      setIsLight(currentTheme === "light");
+    };
+    window.addEventListener("storage", checkTheme);
+    return () => window.removeEventListener("storage", checkTheme);
+  }, []);
+
+  const starIcon = isLight ? starLight : starDark;
+
   return (
     <div className="ReviewCard">
       <div className="ReviewCard-note">
-        {Array.from({ length: review.note }, () => (
+        {Array.from({ length: review.note }, (_, index) => (
           <img
-            key={review.idreviews}
-            src={star}
-            alt={`Note de ${review.note} sur 5`}
+            key={`${review.idreviews}-${index}`}
+            src={starIcon}
+            alt={`Étoile ${index + 1} sur 5`}
             className="ReviewCard-star"
           />
         ))}
