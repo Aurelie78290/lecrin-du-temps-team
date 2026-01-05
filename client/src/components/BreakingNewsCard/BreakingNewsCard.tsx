@@ -41,7 +41,7 @@ function BreakingNewsCard({ article, className }: BreakingNewsCardProps) {
         />
       </div>
       <p className="breakingNews-subtitle">{article.subtitle}</p>
-      <Link to={`/news/${article.idarticles}`}>Lire l’article</Link>
+      <Link to={`/NewsDetails/${article.idarticles}`}>Lire l’article</Link>
     </article>
   );
 }
