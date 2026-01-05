@@ -69,3 +69,7 @@ p {
 .app-layout.sidebar-expanded .main-content {
   margin-left: 220px; /* Largeur sidebar ouverte */
 }
+
+.app-layout.no-sidebar .main-content {
+  margin-left: 0;
+}

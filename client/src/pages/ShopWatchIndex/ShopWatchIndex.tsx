@@ -1,5 +1,5 @@
 function ShopWatchIndex() {
-  return;
+  return <></>;
 }
 
 export default ShopWatchIndex;

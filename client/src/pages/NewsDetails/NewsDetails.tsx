@@ -1,5 +1,5 @@
 function NewsDetails() {
-  return;
+  return <></>;
 }
 
 export default NewsDetails;
