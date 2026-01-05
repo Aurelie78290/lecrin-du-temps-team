@@ -20,7 +20,7 @@ function App() {
       )}
       <main className="main-content">
         <Outlet />
-        <ThemeChange />
+        {/* <ThemeChange /> */}
       </main>
     </div>
   );

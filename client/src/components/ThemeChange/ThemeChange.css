@@ -1,19 +1,19 @@
 .theme-change {
   cursor: pointer;
   background: var(--bonus-color);
-  border: 2px solid var(--secondary-color);
+  border: 1px solid var(--secondary-color);
   border-radius: 30px;
-  padding: 5px;
+
   width: 60px;
   height: 30px;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+
   z-index: 1000;
   display: flex;
   align-items: center;
   transition: all 0.3s ease;
   overflow: hidden;
+
+  margin-top: 10px;
 }
 
 .icon-container {
