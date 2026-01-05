@@ -14,15 +14,16 @@ interface Article {
 
 interface BreakingNewsCardProps {
   article: Article;
+  className?: string;
 }
 
-function BreakingNewsCard({ article }: BreakingNewsCardProps) {
+function BreakingNewsCard({ article, className }: BreakingNewsCardProps) {
   const formatDate = (dateString: string) => {
     return dateString.split("T")[0];
   };
 
   return (
-    <article className="breakingNews-section">
+    <article className={`breakingNews-section ${className ?? ""}`}>
       <h2>{article.article_title}</h2>
       <div className="breakingNews-references">
         <p className="breakingNews-references-content">
