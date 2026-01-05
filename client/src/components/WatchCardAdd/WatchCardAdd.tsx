@@ -46,6 +46,9 @@ function WatchCardAdd() {
   };
   return (
     <div className="watch-card-add__main">
+      <div className="watch-card-add__button">
+        <button type="button">Ajouter une montre</button>
+      </div>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

@@ -1,0 +1,16 @@
+.watch-card-add__button {
+  padding: 3rem;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+.watch-card-add__button button {
+  padding: 0.5rem 1rem;
+  font-family: var(--font-secondary);
+  border-radius: 10px;
+  border: 1px solid #e0c58f;
+  color: #e0c58f;
+  background: #010510;
+  cursor: pointer;
+}
