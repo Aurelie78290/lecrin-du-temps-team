@@ -3,7 +3,7 @@ import { Outlet, useLocation } from "react-router";
 import "./App.css";
 import { useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
-import ThemeChange from "./components/ThemeChange/ThemeChange";
+// import ThemeChange from "./components/ThemeChange/ThemeChange";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
         )}
         <main className="main-content">
           <Outlet />
-          <ThemeChange />
+          {/* <ThemeChange /> */}
         </main>
       </div>
     </ThemeProvider>
