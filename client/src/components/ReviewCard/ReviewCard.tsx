@@ -1,5 +1,8 @@
+import { useTheme } from "../../contexts/ThemeContext";
+
 import "./ReviewCard.css";
-import star from "../../assets/images/starReview.svg";
+import starDark from "../../assets/images/starReviewDark.svg";
+import starLight from "../../assets/images/starReviewLight.svg";
 
 interface ReviewI {
   idreviews: number;
@@ -11,24 +14,18 @@ interface ReviewCardProps {
   review: ReviewI;
 }
 
-// Pour tester l'affichage
-// const review = {
-//   idreviews: 1,
-//   review_title: "un site exceptionnel",
-//   note: 5,
-//   comment:
-//     "L'écrin du temps est LE site parfais pour trouver des montres d'exception tout en ayant sa collection à portée de vue.",
-// };
-
 function ReviewCard({ review }: ReviewCardProps) {
+  const { theme } = useTheme();
+  const starIcon = theme === "light" ? starLight : starDark;
+
   return (
     <div className="ReviewCard">
       <div className="ReviewCard-note">
-        {Array.from({ length: review.note }, () => (
+        {Array.from({ length: review.note }, (_, index) => (
           <img
-            key={review.idreviews}
-            src={star}
-            alt={`Note de ${review.note} sur 5`}
+            key={`${review.idreviews}-${index}`}
+            src={starIcon}
+            alt={`Étoile ${index + 1} sur 5`}
             className="ReviewCard-star"
           />
         ))}

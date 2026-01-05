@@ -3,7 +3,6 @@ import DisplayAllReviews from "../../components/DisplayAllReviews/DisplayAllRevi
 function About() {
   return (
     <div>
-      <h1>Page About</h1>
       <DisplayAllReviews />
     </div>
   );
