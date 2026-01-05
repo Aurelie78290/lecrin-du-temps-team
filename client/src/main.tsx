@@ -8,7 +8,6 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 // Import the main app component
 import App from "./App";
 import About from "./pages/About/About";
-import Collection from "./pages/Collection/Collection";
 import CollectionWatchIndex from "./pages/CollectionWatchIndex/CollectionWatchIndex";
 import Contact from "./pages/Contact/Contact";
 import Error404 from "./pages/Error404/Error404";
@@ -48,7 +47,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/Collection",
-        element: <Collection />,
+        element: <CollectionWatchIndex />,
       },
       {
         path: "/CollectionWathIndex/:id",

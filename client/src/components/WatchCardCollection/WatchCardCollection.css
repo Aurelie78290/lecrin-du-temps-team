@@ -1,0 +1,12 @@
+.watches-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.watch-card-collection__main h1 {
+  font-family: var(--font-primary);
+  color: white;
+  font-weight: 200;
+}
