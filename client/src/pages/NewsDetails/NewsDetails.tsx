@@ -1,5 +1,5 @@
 function NewsDetails() {
-  return <div />;
+  return <></>;
 }
 
 export default NewsDetails;

@@ -1,10 +1,23 @@
+<<<<<<< HEAD
 import { Outlet } from "react-router";
+=======
+import { Outlet, useLocation } from "react-router";
+
+>>>>>>> dev
 import "./App.css";
-import ThemeChange from "./components/ThemeChange/ThemeChange";
-import Home from "./pages/Home/Home";
+import { useState } from "react";
+import Navbar from "./components/Navbar/Navbar";
+// import ThemeChange from "./components/ThemeChange/ThemeChange";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 function App() {
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
+
+  const location = useLocation();
+  const pagesWithoutSidebar = ["/"];
+  const showSidebar = !pagesWithoutSidebar.includes(location.pathname);
   return (
+<<<<<<< HEAD
     <>
       <main>
         <Home />
@@ -12,6 +25,21 @@ function App() {
         <Outlet />
       </main>
     </>
+=======
+    <ThemeProvider>
+      <div
+        className={`app-layout ${sidebarExpanded ? "sidebar-expanded" : ""} ${!showSidebar ? "no-sidebar" : ""}`}
+      >
+        {showSidebar && (
+          <Navbar expanded={sidebarExpanded} setExpanded={setSidebarExpanded} />
+        )}
+        <main className="main-content">
+          <Outlet />
+          {/* <ThemeChange /> */}
+        </main>
+      </div>
+    </ThemeProvider>
+>>>>>>> dev
   );
 }
 

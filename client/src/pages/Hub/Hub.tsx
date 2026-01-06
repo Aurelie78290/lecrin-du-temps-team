@@ -1,5 +1,5 @@
 function Hub() {
-  return <div />;
+  return <></>;
 }
 
 export default Hub;

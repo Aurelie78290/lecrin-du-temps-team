@@ -1,5 +1,5 @@
 function ShopPayment() {
-  return <div />;
+  return <></>;
 }
 
 export default ShopPayment;

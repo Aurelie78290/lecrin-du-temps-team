@@ -1,5 +1,5 @@
 function ShopBasket() {
-  return <div />;
+  return <></>;
 }
 
 export default ShopBasket;

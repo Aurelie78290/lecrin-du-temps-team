@@ -52,3 +52,24 @@ p {
 }
 
 /* SI VOUS REALISEZ SUR VOS COMPOSANTS UN STYLE REUTILISABLE (BOUTON OU AUTRE), AJOUTEZ LE ICI, MERCI <3 */
+
+/* classe css pour la navbar */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  margin-left: 115px; /* Largeur sidebar fermée */
+  flex: 1;
+  transition: margin-left 0.3s ease; /* Même durée que ta sidebar */
+  padding: 2rem;
+}
+
+.app-layout.sidebar-expanded .main-content {
+  margin-left: 220px; /* Largeur sidebar ouverte */
+}
+
+.app-layout.no-sidebar .main-content {
+  margin-left: 0;
+}

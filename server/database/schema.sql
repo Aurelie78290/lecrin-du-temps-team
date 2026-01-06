@@ -26,9 +26,10 @@ CREATE TABLE `articles` (
   `idarticles` int NOT NULL AUTO_INCREMENT,
   `article_title` varchar(100) DEFAULT NULL,
   `subtitle` varchar(100) DEFAULT NULL,
-  `release_date` datetime DEFAULT NULL,
+  `release_date` date DEFAULT NULL,
   `content` longtext,
   `reference_source` varchar(45) DEFAULT NULL,
+  `photo` varchar(255) DEFAULT NULL,
   `user_iduser` int NOT NULL,
   PRIMARY KEY (`idarticles`),
   KEY `fk_articles_user1_idx` (`user_iduser`),
@@ -42,8 +43,28 @@ CREATE TABLE `articles` (
 
 LOCK TABLES `articles` WRITE;
 /*!40000 ALTER TABLE `articles` DISABLE KEYS */;
+INSERT INTO `articles` VALUES (1,'Rolex Submariner : une icône intemporelle','La Rolex Submariner, montre de plongée légendaire, allie robustesse, élégance et précision, séduisant amateurs, collectionneurs et sportifs depuis plus de 70 ans.','2025-05-10','Depuis sa création en 1953, la Rolex Submariner est devenue une référence absolue dans le monde de l’horlogerie. Conçue pour résister aux conditions extrêmes de la plongée sous-marine, elle séduit aujourd’hui autant les sportifs que les collectionneurs.','Rolex','https://i.pinimg.com/1200x/51/f4/52/51f4525c5f44c86aa4ddf8087ff7040e.jpg',3),(2,'Patek Philippe : l’art de la transmission','Patek Philippe incarne l’excellence suisse, combinant héritage, techniques horlogères avancées et montres conçues pour traverser les générations avec raffinement.','2025-08-15','Patek Philippe est synonyme d’excellence horlogère depuis 1839. Chaque montre est conçue pour durer et se transmettre de génération en génération.','Le Point','https://i.pinimg.com/1200x/b0/49/27/b0492785efa2860ac95002605145d103.jpg',3),(3,'Audemars Piguet Royal Oak','La Royal Oak, montre iconique, a révolutionné le luxe avec son design octogonal, son bracelet intégré et son style sport-chic devenu un classique intemporel.','2025-10-20','Présentée en 1972, la Royal Oak d’Audemars Piguet a bouleversé les codes de l’horlogerie de luxe avec son boîtier octogonal et son bracelet intégré.  ','Horloger','https://i.pinimg.com/1200x/ab/0b/47/ab0b470061b50522bbaff7e4d3126530.jpg',3),(4,'Omega Speedmaster : la montre lunaire','La Speedmaster, premier chronographe sur la Lune, allie précision, robustesse et design emblématique, célébrant l’exploration spatiale et l’excellence horlogère.','2025-11-25','L’Omega Speedmaster est célèbre pour avoir accompagné les astronautes lors des missions Apollo. Testée et approuvée par la NASA, elle est devenue la première montre portée sur la Lune en 1969.  ','Le Monde','https://i.pinimg.com/1200x/22/e8/f9/22e8f9163b1027f5273ca20f82546adc.jpg',3),(5,'Les 10 meilleures marques de montres de tous les temps','Un classement détaillé des maisons horlogères les plus prestigieuses, explorant leur histoire, leur influence et leurs créations emblématiques à travers le temps.','2025-12-01','L’univers de l’horlogerie de luxe regorge de marques prestigieuses qui ont marqué l’histoire. Voici un classement des 10 maisons incontournables :  ','Le Point','https://i.pinimg.com/736x/1f/18/a1/1f18a10cc0617ae6066e8b28701813e2.jpg',3);
 /*!40000 ALTER TABLE `articles` ENABLE KEYS */;
 UNLOCK TABLES;
+
+INSERT INTO articles (
+  article_title,
+  subtitle,
+  release_date,
+  content,
+  reference_source,
+  photo,
+  user_iduser
+)
+VALUES (
+  'Richard Mille : l’horlogerie du futur',
+  'Richard Mille combine design futuriste et technologies avancées, créant des montres légères, performantes et spectaculaires, véritables exploits d’ingénierie contemporaine.',
+  '2026-01-05',
+  'Richard Mille a révolutionné l’horlogerie contemporaine en combinant innovation technique, matériaux high-tech et design futuriste. Chaque montre est conçue comme un exploit d’ingénierie...',
+  'Richard Mille',
+  'https://i.pinimg.com/736x/25/11/05/251105e10415063dfc556b9f7187c7ea.jpg',
+  3
+);
 
 --
 -- Table structure for table `cart`
@@ -190,6 +211,14 @@ CREATE TABLE `faq` (
 
 LOCK TABLES `faq` WRITE;
 /*!40000 ALTER TABLE `faq` DISABLE KEYS */;
+INSERT INTO `faq` (question, answer) 
+VALUES ('Comment acheter une montre sur le site l''Écrin du temps?', 'Parcourez notre catalogue, ajoutez votre montre au panier et suivez les étapes de paiement sécurisé. Un e-mail de confirmation vous sera envoyé.'),
+('Que comprend le prix de vente d''une montre?', 'Le prix inclut la montre, son certificat d''authenticité, l''écrin d''origine, une garantie de 24 mois et le contrôle technique de nos experts.'),
+('À quoi correspond le numéro de référence d''une montre de luxe?', 'C''est l''identifiant unique du modèle qui précise la marque, la collection et les matériaux utilisés. C''est essentiel pour la traçabilité.'),
+('Dois-je être inscrit sur l''Écrin du Temps pour passer commande?', 'Oui, l''inscription est obligatoire. La création d''un compte client nous permet de sécuriser vos transactions et de gérer vos garanties.'),
+('Comment faire part de mes doutes concernant l''authenticité d''une montre?', 'L''authenticité est notre priorité. Utilisez la section "Contact" située juste en dessous de cette FAQ pour nous envoyer un message direct.'),
+('Quels sont les délais de livraison et les frais d''expédition d''une montre?', 'Expédition sous 48h et livraison en 3 à 5 jours. Les frais sont calculés au panier selon la valeur et la destination.'),
+('Suis-je assuré(e) en cas de dommage ou de vol pendant le transport?', 'Absolument. Toutes nos expéditions sont couvertes par une assurance "ad valorem" à hauteur de la valeur réelle de la montre.');
 /*!40000 ALTER TABLE `faq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,6 +402,74 @@ CREATE TABLE `photo` (
 
 LOCK TABLES `photo` WRITE;
 /*!40000 ALTER TABLE `photo` DISABLE KEYS */;
+INSERT INTO photo (
+  url_photo1,
+  url_photo2,
+  url_photo3,
+  url_photo4,
+  url_photo5
+) VALUES
+
+-- 1 Rolex Submariner
+('watches/1/photo1.webp','watches/1/photo2.webp','watches/1/photo3.webp','watches/1/photo4.webp','watches/1/photo5.webp'),
+
+-- 2 Rolex GMT Batman
+('watches/2/photo1.webp','watches/2/photo2.webp','watches/2/photo3.webp','watches/2/photo4.webp','watches/2/photo5.webp'),
+
+-- 3 Omega Speedmaster
+('watches/3/photo1.webp','watches/3/photo2.webp','watches/3/photo3.webp','watches/3/photo4.webp','watches/3/photo5.webp'),
+
+-- 4 Omega Seamaster
+('watches/4/photo1.webp','watches/4/photo2.webp','watches/4/photo3.webp','watches/4/photo4.webp','watches/4/photo5.webp'),
+
+-- 5 Cartier Santos
+('watches/5/photo1.webp','watches/5/photo2.webp','watches/5/photo3.webp','watches/5/photo4.webp','watches/5/photo5.webp'),
+
+-- 6 Cartier Tank
+('watches/6/photo1.webp','watches/6/photo2.webp','watches/6/photo3.webp','watches/6/photo4.webp','watches/6/photo5.webp'),
+
+-- 7 Seiko Prospex
+('watches/7/photo1.webp','watches/7/photo2.webp','watches/7/photo3.webp','watches/7/photo4.webp','watches/7/photo5.webp'),
+
+-- 8 Seiko 5 GMT
+('watches/8/photo1.webp','watches/8/photo2.webp','watches/8/photo3.webp','watches/8/photo4.webp','watches/8/photo5.webp'),
+
+-- 9 Tudor Black Bay 58
+('watches/9/photo1.webp','watches/9/photo2.webp','watches/9/photo3.webp','watches/9/photo4.webp','watches/9/photo5.webp'),
+
+-- 10 Tudor Black Bay 41
+('watches/10/photo1.webp','watches/10/photo2.webp','watches/10/photo3.webp','watches/10/photo4.webp','watches/10/photo5.webp'),
+
+-- 11 TAG Heuer Carrera
+('watches/11/photo1.webp','watches/11/photo2.webp','watches/11/photo3.webp','watches/11/photo4.webp','watches/11/photo5.webp'),
+
+-- 12 TAG Heuer Formula 1
+('watches/12/photo1.webp','watches/12/photo2.webp','watches/12/photo3.webp','watches/12/photo4.webp','watches/12/photo5.webp'),
+
+-- 13 IWC Portugieser
+('watches/13/photo1.webp','watches/13/photo2.webp','watches/13/photo3.webp','watches/13/photo4.webp','watches/13/photo5.webp'),
+
+-- 14 IWC Mark XX
+('watches/14/photo1.webp','watches/14/photo2.webp','watches/14/photo3.webp','watches/14/photo4.webp','watches/14/photo5.webp'),
+
+-- 15 Breitling Navitimer
+('watches/15/photo1.webp','watches/15/photo2.webp','watches/15/photo3.webp','watches/15/photo4.webp','watches/15/photo5.webp'),
+
+-- 16 Breitling Superocean
+('watches/16/photo1.webp','watches/16/photo2.webp','watches/16/photo3.webp','watches/16/photo4.webp','watches/16/photo5.webp'),
+
+-- 17 Grand Seiko Snowflake
+('watches/17/photo1.webp','watches/17/photo2.webp','watches/17/photo3.webp','watches/17/photo4.webp','watches/17/photo5.webp'),
+
+-- 18 Grand Seiko Elegance GMT
+('watches/18/photo1.webp','watches/18/photo2.webp','watches/18/photo3.webp','watches/18/photo4.webp','watches/18/photo5.webp'),
+
+-- 19 Longines Moonphase
+('watches/19/photo1.webp','watches/19/photo2.webp','watches/19/photo3.webp','watches/19/photo4.webp','watches/19/photo5.webp'),
+
+-- 20 Longines HydroConquest
+('watches/20/photo1.webp','watches/20/photo2.webp','watches/20/photo3.webp','watches/20/photo4.webp','watches/20/photo5.webp');
+
 /*!40000 ALTER TABLE `photo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -420,6 +517,7 @@ CREATE TABLE `reviews` (
   KEY `fk_reviews_user1_idx` (`user_iduser`),
   CONSTRAINT `fk_reviews_user1` FOREIGN KEY (`user_iduser`) REFERENCES `user` (`iduser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+-- TRUNCATE TABLE 'reviews';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -428,6 +526,11 @@ CREATE TABLE `reviews` (
 
 LOCK TABLES `reviews` WRITE;
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
+INSERT INTO reviews (review_title, note, comment, user_iduser) 
+VALUES ('Avis client',5,"La montre était exactement comme décrite par le vendeur. J'ai apprécié les nombreuses photos haute résolution qu'il a fournies et sa réponse rapide à mes questions sur l'historique de révision. La plateforme de l'Ecrin du temps a facilité la mise en relation sécurisée.",2),
+('Avis client',4,"C'était la première fois que j'achetais une montre d'occasion aussi chère en ligne à un particulier. Le processus de paiement sécurisé m'a permis d'inspecter la montre avan que le vendeur ne reçoit les fonds. un gage de confiance indispensable pour ce type de transaction. Très professionnel.",2),
+('Avis vendeur',3,"J'ai opté pour le service de conciergerie où l’Écrin du temps s'occupe de tout (photos professionnelles, description, négociation). Cela justifie amplement la commission. La montre a été vendue rapidement et je n'ai eu à m'occuper de rien, à part l'envoi sécurisé au centre d'authentification. Une solution parfaite pour vendre une pièce de très haute valeur sans stress.",2),
+('Avis vendeur',5,"J'ai vendu ma Cartier en moins de deux semaines via cette plateforme. La commission est juste, et le fait que l'acheteur ait un système de séquestre garantit une vente sérieuse. J'ai été payée immédiatement après la confirmation de l'authentification. Interface de vente très claire et excellent support client pour m'aider à remplir l'annonce.",2);
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -492,9 +595,13 @@ TRUNCATE TABLE `user`;
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role) 
+<<<<<<< HEAD
 VALUES ('Anaïs','B','1980-01-01','Developpeur Web','anaisberthome@gmail.com','admin');
 INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role) 
 VALUES ('Romain','Debas','1988-02-02','Developpeur Web','debasromain@gmail.com','admin')
+=======
+VALUES ('Anaïs','B','1980-01-01','Developpeur Web','anaisberthome@gmail.com','admin'),('Joachim','Masson','1980-01-01','Developpeur Web','joachim.masson.17@gmail.com','admin'),('Aurélie','Dumotier','1986-02-14','Developpeur Web','aurelie.dumotier@gmail.com','admin');
+>>>>>>> dev
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -570,6 +677,122 @@ CREATE TABLE `watch` (
 
 LOCK TABLES `watch` WRITE;
 /*!40000 ALTER TABLE `watch` DISABLE KEYS */;
+
+INSERT INTO watch (
+  user_id,
+  brand,
+  model,
+  ref_no,
+  production_year,
+  is_limited_edition,
+  edition_number,
+  photo_id,
+  watch_gender,
+  watch_sell_status,
+  watch_price,
+  case_material_id,
+  diameter_mm,
+  thickness_mm,
+  water_resistance_bar,
+  dial_color,
+  dial_finish_id,
+  hour_marker_type_id,
+  strap_material_id,
+  strap_color,
+  clasp_type_id,
+  lug_width_mm,
+  watch_condition,
+  certificate_id,
+  movement_type_id,
+  caliber,
+  functions_id,
+  power_reserve_hours,
+  frequency_hz,
+  jewel_count,
+  market_data_id,
+  order_archive_id,
+  order_archive_watch_id
+) VALUES
+
+-- 1 Rolex Submariner No-Date
+(1,'Rolex','Submariner No-Date',124060,'2022-01-01',0,NULL,1,'Homme','En vente',12450,
+1,41,12,30,'Noir',1,1,1,'Acier',1,21,'Très bon état',1,1,'3230',1,70,4,31,1,1,1),
+
+-- 2 Rolex GMT-Master II Batman
+(1,'Rolex','GMT-Master II Batman',126710,'2021-01-01',0,NULL,2,'Homme','En vente',15990,
+1,40,12,10,'Noir',1,1,1,'Acier',1,20,'Excellent état',1,1,'3285',3,70,4,31,1,1,1),
+
+-- 3 Omega Speedmaster Moonwatch
+(1,'Omega','Speedmaster Moonwatch',31042,'2020-01-01',0,NULL,3,'Homme','En vente',6750,
+1,42,13,5,'Noir',1,2,1,'Acier',1,20,'Très bon état',1,2,'3861',2,50,3,26,1,1,1),
+
+-- 4 Omega Seamaster Diver 300M
+(1,'Omega','Seamaster Diver 300M',21042,'2022-01-01',0,NULL,4,'Homme','En vente',4650,
+1,42,14,30,'Noir',2,1,1,'Acier',1,20,'Excellent état',1,1,'8800',1,55,3,35,1,1,1),
+
+-- 5 Cartier Santos Medium
+(1,'Cartier','Santos Medium',4848,'2023-01-01',0,NULL,5,'Unisexe','En vente',6250,
+1,35,9,10,'Argent',1,3,1,'Acier',1,18,'Excellent état',1,1,'1847 MC',1,42,4,23,1,1,1),
+
+-- 6 Cartier Tank Must Large
+(1,'Cartier','Tank Must Large',9992,'2022-01-01',0,NULL,6,'Unisexe','En vente',3350,
+1,34,7,3,'Argent',3,3,2,'Noir',2,19,'Très bon état',1,3,'Quartz Cartier',1,NULL,NULL,NULL,1,1,1),
+
+-- 7 Seiko Prospex Diver
+(1,'Seiko','Prospex Diver 200m',1431,'2021-01-01',0,NULL,7,'Homme','En vente',850,
+1,41,13,20,'Gris',1,1,1,'Acier',1,20,'Bon état',1,1,'6R35',1,70,3,24,1,1,1),
+
+-- 8 Seiko 5 Sports GMT
+(1,'Seiko','5 Sports GMT',3003,'2023-01-01',0,NULL,8,'Homme','En vente',420,
+1,43,14,10,'Noir',2,2,1,'Acier',1,22,'Très bon état',1,1,'4R34',3,41,3,24,1,1,1),
+
+-- 9 Tudor Black Bay 58
+(1,'Tudor','Black Bay 58',9030,'2020-01-01',0,NULL,9,'Homme','En vente',3150,
+1,39,12,20,'Noir',1,1,1,'Acier',1,20,'Très bon état',1,1,'MT5402',1,70,4,27,1,1,1),
+
+-- 10 Tudor Black Bay 41
+(1,'Tudor','Black Bay 41 Burgundy',7941,'2023-01-01',0,NULL,10,'Homme','En vente',3850,
+1,41,14,20,'Bordeaux',2,1,1,'Acier',1,21,'Excellent état',1,1,'MT5602',1,70,4,25,1,1,1),
+
+-- 11 TAG Heuer Carrera Chronograph
+(1,'TAG Heuer','Carrera Chronograph 42',2010,'2021-01-01',0,NULL,11,'Homme','En vente',4650,
+1,42,14,10,'Bleu',2,1,1,'Acier',1,22,'Très bon état',1,1,'Heuer 02',2,80,4,33,1,1,1),
+
+-- 12 TAG Heuer Formula 1 Quartz
+(1,'TAG Heuer','Formula 1 Quartz',1110,'2019-01-01',0,NULL,12,'Homme','En vente',1100,
+1,41,12,20,'Noir',1,2,1,'Acier',1,20,'Bon état',1,3,'Quartz',1,NULL,NULL,NULL,1,1,1),
+
+-- 13 IWC Portugieser Chronograph
+(1,'IWC','Portugieser Chronograph',3716,'2022-01-01',0,NULL,13,'Homme','En vente',6150,
+1,41,13,3,'Vert',2,1,2,'Vert',2,20,'Excellent état',1,1,'69355',2,46,4,33,1,1,1),
+
+-- 14 IWC Pilot Mark XX
+(1,'IWC','Pilot Mark XX',3283,'2023-01-01',0,NULL,14,'Homme','En vente',4950,
+1,40,11,10,'Noir',1,2,2,'Brun',2,20,'Excellent état',1,1,'32111',1,120,4,21,1,1,1),
+
+-- 15 Breitling Navitimer B01
+(1,'Breitling','Navitimer B01',1341,'2020-01-01',0,NULL,15,'Homme','En vente',6850,
+1,43,14,3,'Noir',4,4,1,'Acier',1,22,'Très bon état',1,1,'B01',2,70,4,47,1,1,1),
+
+-- 16 Breitling Superocean 44
+(1,'Breitling','Superocean 44',1910,'2021-01-01',0,NULL,16,'Homme','En vente',3250,
+1,44,13,100,'Bleu',2,2,1,'Acier',1,22,'Très bon état',1,1,'Breitling 17',1,38,4,26,1,1,1),
+
+-- 17 Grand Seiko Snowflake
+(1,'Grand Seiko','Snowflake',211,'2018-01-01',0,NULL,17,'Homme','En vente',5350,
+2,41,13,10,'Blanc',4,1,3,'Titane',1,20,'Très bon état',1,1,'9R65',1,72,0,30,1,1,1),
+
+-- 18 Grand Seiko Elegance GMT
+(1,'Grand Seiko','Elegance GMT',221,'2019-01-01',0,NULL,18,'Homme','En vente',3950,
+1,40,14,3,'Crème',3,4,2,'Brun',2,19,'Très bon état',1,1,'9S66',3,72,4,35,1,1,1),
+
+-- 19 Longines Master Moonphase
+(1,'Longines','Master Moonphase',2628,'2020-01-01',0,NULL,19,'Homme','En vente',1850,
+1,40,11,3,'Argent',3,3,1,'Acier',1,21,'Bon état',1,1,'L899',4,64,3,21,1,1,1),
+
+-- 20 Longines HydroConquest
+(1,'Longines','HydroConquest 41',3781,'2022-01-01',0,NULL,20,'Homme','En vente',1350,
+1,41,12,30,'Vert',2,1,1,'Acier',1,21,'Très bon état',1,1,'L888',1,72,3,21,1,1,1);
 /*!40000 ALTER TABLE `watch` ENABLE KEYS */;
 UNLOCK TABLES;
 

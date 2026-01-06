@@ -1,5 +1,5 @@
 function UserProfil() {
-  return <div />;
+  return <></>;
 }
 
 export default UserProfil;

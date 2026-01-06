@@ -1,5 +1,5 @@
 function Collection() {
-  return <div />;
+  return <></>;
 }
 
 export default Collection;

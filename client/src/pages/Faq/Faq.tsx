@@ -1,5 +1,5 @@
 function Faq() {
-  return <div />;
+  return <></>;
 }
 
 export default Faq;

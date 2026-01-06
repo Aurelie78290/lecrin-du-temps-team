@@ -1,5 +1,5 @@
 function CollectionWatchIndex() {
-  return <div />;
+  return <></>;
 }
 
 export default CollectionWatchIndex;
