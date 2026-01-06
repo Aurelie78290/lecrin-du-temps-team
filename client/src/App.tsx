@@ -1,11 +1,10 @@
+import Navbar from "./components/Navbar/Navbar";
 import { Outlet, useLocation } from "react-router";
 
 import "./App.css";
 import { useState } from "react";
-import Navbar from "./components/Navbar/Navbar";
-// import ThemeChange from "./components/ThemeChange/ThemeChange";
+import "./App.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
-
 function App() {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
 
@@ -14,20 +13,15 @@ function App() {
   const showSidebar = !pagesWithoutSidebar.includes(location.pathname);
   return (
     <ThemeProvider>
-      <div className="background__main">
-        <div
-          className={`app-layout ${sidebarExpanded ? "sidebar-expanded" : ""} ${!showSidebar ? "no-sidebar" : ""}`}
-        >
-          {showSidebar && (
-            <Navbar
-              expanded={sidebarExpanded}
-              setExpanded={setSidebarExpanded}
-            />
-          )}
-          <main className="main-content">
-            <Outlet />
-          </main>
-        </div>
+      <div
+        className={`app-layout ${sidebarExpanded ? "sidebar-expanded" : ""} ${!showSidebar ? "no-sidebar" : ""}`}
+      >
+        {showSidebar && (
+          <Navbar expanded={sidebarExpanded} setExpanded={setSidebarExpanded} />
+        )}
+        <main className="main-content">
+          <Outlet />
+        </main>
       </div>
     </ThemeProvider>
   );
