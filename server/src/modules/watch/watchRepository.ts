@@ -192,6 +192,7 @@ class WatchRepository {
         watch.brand,
         watch.model,
         watch.watch_price,
+        null,
         watch.photo_id,
         watch.watch_condition,
       ],
