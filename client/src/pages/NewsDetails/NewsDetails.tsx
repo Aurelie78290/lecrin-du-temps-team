@@ -16,9 +16,8 @@ interface Article {
 function NewsDetails() {
   const [article, setArticle] = useState<Article | null>(null);
   const { id } = useParams<{ id: string }>();
-  const formatDate = (dateString: string) => {
-    return dateString.split("T")[0];
-  };
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString("fr-FR");
 
   useEffect(() => {
     if (!id) return;
@@ -53,18 +52,14 @@ function NewsDetails() {
           {formatDate(article.release_date)}
         </p>
       </div>
+      <p className="NewsDetails-subtitle">{article.subtitle}</p>
       <div className="NewsDetails-container">
         <img
           src={article.photo}
           alt={article.article_title}
           className="NewsDetails-photo"
         />
-        <div>
-          {/* <p className="NewsDetails-subtitle">
-            <strong>{article.subtitle}</strong>
-          </p> */}
-          <p className="NewsDetails-content">{article.content}</p>
-        </div>
+        <p className="NewsDetails-content">{article.content}</p>
       </div>
     </section>
   );

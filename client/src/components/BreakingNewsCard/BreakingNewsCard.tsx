@@ -18,9 +18,8 @@ interface BreakingNewsCardProps {
 }
 
 function BreakingNewsCard({ article, className }: BreakingNewsCardProps) {
-  const formatDate = (dateString: string) => {
-    return dateString.split("T")[0];
-  };
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString("fr-FR");
 
   return (
     <article className={`breakingNews-section ${className ?? ""}`}>
