@@ -108,7 +108,12 @@ CREATE TABLE `case_material` (
   PRIMARY KEY (`idcase_material`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO case_material (case_material_name) VALUES
+('Acier inoxydable'),
+('Titane'),
+('Or jaune'),
+('Or rose'),
+('Céramique');
 --
 -- Dumping data for table `case_material`
 --
@@ -134,7 +139,10 @@ CREATE TABLE `certificate_id` (
   CONSTRAINT `fk_certificate_id_photo_certif1` FOREIGN KEY (`photo_certif_idphoto_certif`) REFERENCES `photo_certif` (`idphoto_certif`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO certificate_id (certificate_name, photo_certif_idphoto_certif) VALUES
+('Certificat d''authenticité', 1),
+('Papiers d''origine', 1),
+('Sans certificat', 1);
 --
 -- Dumping data for table `certificate_id`
 --
@@ -157,7 +165,12 @@ CREATE TABLE `clasp_type` (
   PRIMARY KEY (`idclasp_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO clasp_type (clasp_type_name) VALUES
+('Boucle déployante'),
+('Boucle ardillon'),
+('Boucle papillon'),
+('Boucle déployante avec sécurité'),
+('Boucle coulissante');
 --
 -- Dumping data for table `clasp_type`
 --
@@ -190,6 +203,11 @@ LOCK TABLES `dial_finish` WRITE;
 /*!40000 ALTER TABLE `dial_finish` ENABLE KEYS */;
 UNLOCK TABLES;
 
+INSERT INTO dial_finish (dial_finish_name) VALUES
+('Soleillé'),
+('Mat'),
+('Laqué'),
+('Guilloché');
 --
 -- Table structure for table `faq`
 --
@@ -235,7 +253,11 @@ CREATE TABLE `functions` (
   PRIMARY KEY (`idfunctions`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO functions (function_name) VALUES
+('Heure / minute / seconde'),
+('Chronographe'),
+('GMT'),
+('Phase de lune');
 --
 -- Dumping data for table `functions`
 --
@@ -258,7 +280,12 @@ CREATE TABLE `hour_maker_type` (
   PRIMARY KEY (`idhour_maker_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO hour_maker_type (hour_maker_type_name) VALUES
+('Index bâtons'),
+('Chiffres arabes'),
+('Chiffres romains'),
+('Index ronds'),
+('Mixte');
 --
 -- Dumping data for table `hour_maker_type`
 --
@@ -332,7 +359,10 @@ CREATE TABLE `movement_type` (
   PRIMARY KEY (`idmovement_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO movement_type (movement_type) VALUES
+('Automatique'),
+('Manuel'),
+('Quartz');
 --
 -- Dumping data for table `movement_type`
 --
@@ -490,7 +520,14 @@ CREATE TABLE `photo_certif` (
   PRIMARY KEY (`idphoto_certif`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO photo_certif (
+  url_photo_certif1,
+  url_photo_certif2,
+  url_photo_certif3,
+  url_photo_certif4,
+  url_photo_certif5
+) VALUES
+(NULL, NULL, NULL, NULL, NULL);
 --
 -- Dumping data for table `photo_certif`
 --
@@ -547,7 +584,12 @@ CREATE TABLE `strap_material` (
   PRIMARY KEY (`idstrap_material`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO strap_material (strap_material_name) VALUES
+('Acier'),
+('Cuir'),
+('Caoutchouc'),
+('Textile'),
+('Titane');
 --
 -- Dumping data for table `strap_material`
 --
