@@ -5,13 +5,18 @@ import WatchCardAdd from "../WatchCardAdd/WatchCardAdd";
 
 function WatchCardCollection() {
   const [watches, setWatches] = useState<Watch[]>([]);
+  const [trigger, setTrigger] = useState(0);
   const apiBaseUrl = "http://localhost:3310";
 
   useEffect(() => {
     fetch(`${apiBaseUrl}/api/watches`)
       .then((res) => res.json())
       .then((data) => setWatches(data));
-  }, []);
+  }, [trigger]);
+
+  const handleWatchAdded = () => {
+    setTrigger((prev) => prev + 1);
+  };
 
   return (
     <div className="watch-card-collection__main">
@@ -26,7 +31,7 @@ function WatchCardCollection() {
           />
         ))}
       </div>
-      <WatchCardAdd />
+      <WatchCardAdd onWatchAdded={handleWatchAdded} />
     </div>
   );
 }

@@ -1,7 +1,11 @@
 import { useState } from "react";
 import "./WatchCardAdd.css";
 
-function WatchCardAdd() {
+interface watchCardAddProps {
+  onWatchAdded: () => void;
+}
+
+function WatchCardAdd({ onWatchAdded }: watchCardAddProps) {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
   const [price, setPrice] = useState("");
@@ -44,6 +48,8 @@ function WatchCardAdd() {
     } catch (error) {
       console.error(error);
     }
+    onWatchAdded();
+    setOpenPopup(!openPopup);
   };
   return (
     <div>
