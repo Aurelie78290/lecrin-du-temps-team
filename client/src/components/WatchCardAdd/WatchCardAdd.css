@@ -14,3 +14,45 @@
   background: #010510;
   cursor: pointer;
 }
+
+.watch-card-add__main {
+  background: linear-gradient(to bottom, #010510 55%, #010c2a 100%);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  border: solid 1px #e0c58f;
+}
+.watch-card-add__content {
+  display: flex;
+  flex-direction: column;
+  height: 22rem;
+  width: 22rem;
+  overflow: hidden;
+  padding: 0.5rem 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.watch-card-add__content h2 {
+  font-weight: 200;
+  margin-bottom: 0;
+}
+
+.watch-card-add__content form {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  gap: 2rem;
+}
+
+.watch-card-add__content button {
+  padding: 0.5rem 1rem;
+  font-family: var(--font-secondary);
+  border-radius: 10px;
+  border: 1px solid #e0c58f;
+  color: #e0c58f;
+  background: #010510;
+  cursor: pointer;
+}

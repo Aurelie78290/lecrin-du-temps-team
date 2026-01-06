@@ -24,10 +24,17 @@ class WatchRepository {
   async create(watch: Omit<Watch, "idwatch">) {
     const [result] = await databaseClient.query<Result>(
       `
-      INSERT INTO watch (user_id, brand, model, watch_price, photo_id)
-      VALUES (?, ?, ?, ?, ?)
+      INSERT INTO watch (user_id, brand, model, watch_price, photo_id, watch_condition)
+      VALUES (?, ?, ?, ?, ?, ?)
       `,
-      [watch.user_id, watch.brand, watch.model, watch.watch_price, null],
+      [
+        watch.user_id,
+        watch.brand,
+        watch.model,
+        watch.watch_price,
+        null,
+        watch.watch_condition,
+      ],
     );
 
     return result.insertId;
