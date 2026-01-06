@@ -22,6 +22,7 @@ import ShopBasket from "./pages/ShopBasket/ShopBasket";
 import ShopPayment from "./pages/ShopPayment/ShopPayment";
 import ShopWatchIndex from "./pages/ShopWatchIndex/ShopWatchIndex";
 import UserProfil from "./pages/UserProfil/UserProfil";
+import WatchDetails from "./pages/WatchDetails/WatchDetails";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: <Error404 />,
+      },
+      {
+        path: "/Shop/:id",
+        element: <WatchDetails />,
       },
     ],
   },
