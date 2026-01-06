@@ -21,7 +21,7 @@ const TeamMembers = () => {
 
   const fetchTeamMembers = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/team-members");
+      const response = await fetch("http://localhost:3310/api/team-members");
 
       if (!response.ok) {
         throw new Error("Erreur lors du chargement");

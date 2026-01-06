@@ -5,13 +5,9 @@ import TeamMembers from "../../components/TeamMembers/TeamMembers";
 function About() {
   return (
     <div>
-<<<<<<< HEAD
       <h1>Page About</h1>
-      {/* <ReviewCard /> */}
-      {<TeamMembers />}
-=======
+      <TeamMembers />
       <DisplayAllReviews />
->>>>>>> dev
     </div>
   );
 }

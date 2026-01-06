@@ -19,7 +19,7 @@ export interface TeamMember {
   userType: string | null;
 }
 
-class TeamMemberRepository {
+class TeamMembersRepository {
   async readAll(): Promise<TeamMember[]> {
     const [rows] = await databaseClient.query<Rows>(
       `SELECT
@@ -30,10 +30,10 @@ class TeamMemberRepository {
             user_role,
             user_type
             FROM user
-            WHERE user_role IN ('team-member', 'admin')
+            WHERE user_role = 'admin'
             ORDER BY iduser ASC`,
     );
-    return (rows as TeamMemberRow[]).map(this.formatTeamMember);
+    return rows as TeamMember[];
   }
 
   async read(id: number): Promise<TeamMember | null> {
@@ -46,7 +46,7 @@ class TeamMemberRepository {
         user_role,
         user_type
         FROM user
-        WHERE iduser = ? AND user_role IN ('team-member', 'admin')`,
+        WHERE iduser = ? AND user_role IN 'admin'`,
       [id],
     );
 
@@ -103,4 +103,4 @@ class TeamMemberRepository {
   }
 }
 
-export default new TeamMemberRepository();
+export default new TeamMembersRepository();

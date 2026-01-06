@@ -595,13 +595,9 @@ TRUNCATE TABLE `user`;
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role) 
-<<<<<<< HEAD
-VALUES ('Anaïs','B','1980-01-01','Developpeur Web','anaisberthome@gmail.com','admin');
-INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role) 
-VALUES ('Romain','Debas','1988-02-02','Developpeur Web','debasromain@gmail.com','admin')
-=======
-VALUES ('Anaïs','B','1980-01-01','Developpeur Web','anaisberthome@gmail.com','admin'),('Joachim','Masson','1980-01-01','Developpeur Web','joachim.masson.17@gmail.com','admin'),('Aurélie','Dumotier','1986-02-14','Developpeur Web','aurelie.dumotier@gmail.com','admin');
->>>>>>> dev
+VALUES ('Anaïs','B','1980-01-01','Developpeur Web','anaisberthome@gmail.com','admin'),
+('Joachim','Masson','1980-01-01','Developpeur Web','joachim.masson.17@gmail.com','admin'),
+('Aurélie','Dumotier','1986-02-14','Developpeur Web','aurelie.dumotier@gmail.com','admin');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
