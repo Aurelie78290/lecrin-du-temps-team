@@ -1,0 +1,86 @@
+.watch-card-add__button {
+  padding: 3rem;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+.watch-card-add__button button {
+  padding: 0.5rem 1rem;
+  font-family: var(--font-secondary);
+  border-radius: 10px;
+  border: 1px solid #e0c58f;
+  color: #e0c58f;
+  background: #010510;
+  cursor: pointer;
+}
+
+.watch-card-add__main {
+  background: linear-gradient(to bottom, #010510 55%, #010c2a 100%);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  border: solid 1px #e0c58f;
+  z-index: 1000;
+}
+.watch-card-add__content {
+  display: flex;
+  flex-direction: column;
+  height: 22rem;
+  width: 22rem;
+  overflow: hidden;
+  padding: 0.5rem 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close-button {
+  position: absolute;
+  right: 0;
+  background: unset;
+  border: none;
+  border-radius: 3px;
+  margin: 0.5rem;
+  color: #e0c58f;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.watch-card-add__content h2 {
+  font-weight: 200;
+  margin-bottom: 0;
+}
+
+.watch-card-add__content form {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  gap: 2rem;
+}
+
+.watch-card-add__content button {
+  cursor: pointer;
+}
+
+.watch-card-add__content button:hover {
+  background: #010c2a;
+}
+
+.watch-card-add__content input:focus {
+  outline: none;
+  border-color: #e0c58f;
+  background: #010c2a;
+}
+
+.watch-card-add__content button,
+input {
+  padding: 0.5rem 1rem;
+  font-family: var(--font-secondary);
+  border-radius: 10px;
+  border: 1px solid #e0c58f;
+  color: #e0c58f;
+  background: #010510;
+  transition: background 0.2s ease;
+}

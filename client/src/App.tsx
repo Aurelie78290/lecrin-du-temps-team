@@ -1,11 +1,10 @@
+import Navbar from "./components/Navbar/Navbar";
 import { Outlet, useLocation } from "react-router";
 
 import "./App.css";
 import { useState } from "react";
-import Navbar from "./components/Navbar/Navbar";
-// import ThemeChange from "./components/ThemeChange/ThemeChange";
+import "./App.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
-
 function App() {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
 
@@ -22,7 +21,6 @@ function App() {
         )}
         <main className="main-content">
           <Outlet />
-          {/* <ThemeChange /> */}
         </main>
       </div>
     </ThemeProvider>

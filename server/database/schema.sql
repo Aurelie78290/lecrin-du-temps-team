@@ -594,7 +594,9 @@ TRUNCATE TABLE `user`;
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role) 
-VALUES ('Anaïs','B','1980-01-01','Developpeur Web','anaisberthome@gmail.com','admin'),('Joachim','Masson','1980-01-01','Developpeur Web','joachim.masson.17@gmail.com','admin'),('Aurélie','Dumotier','1986-02-14','Developpeur Web','aurelie.dumotier@gmail.com','admin');
+VALUES ('Anaïs','B','1980-01-01','Developpeur Web','anaisberthome@gmail.com','admin'),
+('Joachim','Masson','1980-01-01','Developpeur Web','joachim.masson.17@gmail.com','admin'),
+('Aurélie','Dumotier','1986-02-14','Developpeur Web','aurelie.dumotier@gmail.com','admin');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -637,9 +639,9 @@ CREATE TABLE `watch` (
   `power_reserve_hours` int DEFAULT NULL,
   `frequency_hz` int DEFAULT NULL,
   `jewel_count` int DEFAULT NULL,
-  `market_data_id` int NOT NULL,
-  `order_archive_id` int NOT NULL,
-  `order_archive_watch_id` int NOT NULL,
+  `market_data_id` int NULL,
+  `order_archive_id` int NULL,
+  `order_archive_watch_id` int NULL,
   PRIMARY KEY (`idwatch`),
   KEY `fk_watch_market_data1_idx` (`market_data_id`),
   KEY `fk_watch_case_material1_idx` (`case_material_id`),
