@@ -39,7 +39,7 @@
 .close-button {
   position: absolute;
   right: 0;
-  background: black;
+  background: unset;
   border: none;
   border-radius: 3px;
   margin: 0.5rem;
@@ -60,6 +60,20 @@
   gap: 2rem;
 }
 
+.watch-card-add__content button {
+  cursor: pointer;
+}
+
+.watch-card-add__content button:hover {
+  background: #010c2a;
+}
+
+.watch-card-add__content input:focus {
+  outline: none;
+  border-color: #e0c58f;
+  background: #010c2a;
+}
+
 .watch-card-add__content button,
 input {
   padding: 0.5rem 1rem;
@@ -68,5 +82,5 @@ input {
   border: 1px solid #e0c58f;
   color: #e0c58f;
   background: #010510;
-  cursor: pointer;
+  transition: background 0.2s ease;
 }

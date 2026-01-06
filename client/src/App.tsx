@@ -14,16 +14,20 @@ function App() {
   const showSidebar = !pagesWithoutSidebar.includes(location.pathname);
   return (
     <ThemeProvider>
-      <div
-        className={`app-layout ${sidebarExpanded ? "sidebar-expanded" : ""} ${!showSidebar ? "no-sidebar" : ""}`}
-      >
-        {showSidebar && (
-          <Navbar expanded={sidebarExpanded} setExpanded={setSidebarExpanded} />
-        )}
-        <main className="main-content">
-          <Outlet />
-          {/* <ThemeChange /> */}
-        </main>
+      <div className="background__main">
+        <div
+          className={`app-layout ${sidebarExpanded ? "sidebar-expanded" : ""} ${!showSidebar ? "no-sidebar" : ""}`}
+        >
+          {showSidebar && (
+            <Navbar
+              expanded={sidebarExpanded}
+              setExpanded={setSidebarExpanded}
+            />
+          )}
+          <main className="main-content">
+            <Outlet />
+          </main>
+        </div>
       </div>
     </ThemeProvider>
   );
