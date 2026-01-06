@@ -1,21 +1,20 @@
 .NewsDetails-section {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 2rem;
   align-items: center;
-  width: 60%;
   height: auto;
   padding: 1rem 0;
+  gap: 1rem;
+  width: 60%;
 }
 
 .NewsDetails-title {
-  font-size: 2.8rem;
   font-weight: 500;
   text-transform: uppercase;
   text-align: center;
   margin: 2rem 0;
+  font-size: 3rem;
 }
 
 .NewsDetails-references {
@@ -33,24 +32,89 @@
   width: 90%;
   text-align: center;
   font-size: 1.1rem;
+  color: var(--primary-color);
+  background: linear-gradient(210deg, var(--accent-color) 0%, #010c2a 160%);
+  opacity: 0.6;
+  padding: 0.75rem;
+  margin-top: 0;
+  margin-bottom: 3rem;
+  clip-path: polygon(
+    0% 0% /* coin haut gauche */,
+    100% 0% /* coin haut droit */,
+    100% 80% /* coin bas droit incliné */,
+    98% 100% /* coin bas droit cassé */,
+    0% 100% /* coin bas gauche */
+  );
 }
 
 .NewsDetails-container {
   width: 90%;
   line-height: 1.8;
-  font-size: 1rem;
   text-align: justify;
+  overflow: hidden;
   p {
     margin-top: 0.25rem;
     white-space: pre-line;
   }
 }
 
-.NewsDetails-photo {
+.NewsDetails-container .NewsDetails-photo {
   float: left;
-  width: 260px;
   height: auto;
-  margin-top: 0.5rem;
-  margin-right: 1.45rem;
-  margin-bottom: 0.75rem;
+  width: 260px;
+  margin: 0 1.45rem 1rem 0;
+}
+
+@media (max-width: 1023px) {
+  .NewsDetails-section {
+    width: 80%;
+    gap: 1.5rem;
+  }
+
+  .NewsDetails-title {
+    font-size: 2.4rem;
+  }
+
+  .NewsDetails-container .NewsDetails-photo {
+    width: 220px;
+    margin: 0 1rem 0.5rem 0;
+  }
+
+  .NewsDetails-container {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 779px) {
+  .NewsDetails-section {
+    width: 95%;
+    gap: 1rem;
+  }
+
+  .NewsDetails-title {
+    font-size: 2rem;
+    margin: 1.5rem 0;
+  }
+
+  .NewsDetails-container {
+    display: block;
+    font-size: 0.95rem;
+  }
+
+  .NewsDetails-container .NewsDetails-photo {
+    float: none;
+    display: block;
+    margin: 0 auto 1rem;
+    width: 80%;
+  }
+
+  .NewsDetails-container .NewsDetails-content {
+    width: 100%;
+  }
+
+  .NewsDetails-subtitle,
+  .NewsDetails-references {
+    width: 100%;
+    text-align: center;
+  }
 }
