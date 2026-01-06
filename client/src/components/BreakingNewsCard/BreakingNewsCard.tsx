@@ -18,9 +18,8 @@ interface BreakingNewsCardProps {
 }
 
 function BreakingNewsCard({ article, className }: BreakingNewsCardProps) {
-  const formatDate = (dateString: string) => {
-    return dateString.split("T")[0];
-  };
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString("fr-FR");
 
   return (
     <article className={`breakingNews-section ${className ?? ""}`}>
@@ -41,7 +40,7 @@ function BreakingNewsCard({ article, className }: BreakingNewsCardProps) {
         />
       </div>
       <p className="breakingNews-subtitle">{article.subtitle}</p>
-      <Link to={`/news/${article.idarticles}`}>Lire l’article</Link>
+      <Link to={`/NewsDetails/${article.idarticles}`}>Lire l’article</Link>
     </article>
   );
 }
