@@ -8,7 +8,6 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 // Import the main app component
 import App from "./App";
 import About from "./pages/About/About";
-import Collection from "./pages/Collection/Collection";
 import CollectionWatchIndex from "./pages/CollectionWatchIndex/CollectionWatchIndex";
 import Contact from "./pages/Contact/Contact";
 import Error404 from "./pages/Error404/Error404";
@@ -22,6 +21,7 @@ import ShopBasket from "./pages/ShopBasket/ShopBasket";
 import ShopPayment from "./pages/ShopPayment/ShopPayment";
 import ShopWatchIndex from "./pages/ShopWatchIndex/ShopWatchIndex";
 import UserProfil from "./pages/UserProfil/UserProfil";
+import WatchDetails from "./pages/WatchDetails/WatchDetails";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/Collection",
-        element: <Collection />,
+        element: <CollectionWatchIndex />,
       },
       {
         path: "/CollectionWathIndex/:id",
@@ -97,6 +97,10 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: <Error404 />,
+      },
+      {
+        path: "/Shop/:id",
+        element: <WatchDetails />,
       },
     ],
   },

@@ -1,11 +1,19 @@
 .watch-card {
-  background: var(--primary-color);
-  border: 1px solid color-mix(in srgb, var(--secondary-color) 20%, transparent);
+  background: color-mix(in srgb, var(--primary-color) 80%, transparent);
+  backdrop-filter: blur(10px);
+  border: 1px solid color-mix(in srgb, var(--secondary-color) 50%, transparent);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 8px 24px
     color-mix(in srgb, var(--secondary-color) 10%, transparent);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.watch-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
 .watch-card:hover {

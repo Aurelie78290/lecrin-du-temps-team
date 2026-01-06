@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import "./WatchCard.css";
 
 export type Watch = {
@@ -28,30 +29,29 @@ export default function WatchCard({ watch, apiBaseUrl }: WatchCardProps) {
       : `${new Intl.NumberFormat("fr-FR").format(watch.watch_price)} €`;
 
   return (
-    <article className="watch-card">
-      <div className="watch-card-media">
-        <span className="watch-card-badge">En vente</span>
+    <Link to={`/shop/${watch.idwatch}`} className="watch-card-link">
+      <article className="watch-card">
+        <div className="watch-card-media">
+          <span className="watch-card-badge">En vente</span>
 
-        {cover && (
-          <img
-            src={`${apiBaseUrl}/uploads/${cover}`}
-            alt={`Montre ${watch.brand} ${watch.model}`}
-            loading="lazy"
-          />
-        )}
-      </div>
+          {cover && (
+            <img
+              src={`${apiBaseUrl}/uploads/${cover}`}
+              alt={`Montre ${watch.brand} ${watch.model}`}
+              loading="lazy"
+            />
+          )}
+        </div>
 
-      <div className="watch-card-body">
-        <div className="watch-card-brand">{watch.brand}</div>
-        <div className="watch-card-model">{watch.model}</div>
+        <div className="watch-card-body">
+          <div className="watch-card-brand">{watch.brand}</div>
+          <div className="watch-card-model">{watch.model}</div>
 
-        <div className="watch-card-row">
-          <div className="watch-card-price">{price}</div>
-          <div className="watch-card-condition">
-            {watch.watch_condition ?? "—"}
+          <div className="watch-card-row">
+            <div className="watch-card-price">{price}</div>
           </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </Link>
   );
 }

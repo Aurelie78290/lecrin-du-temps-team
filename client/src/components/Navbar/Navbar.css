@@ -27,7 +27,6 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  margin-bottom: 2rem;
 }
 
 .sidebar .logo {
@@ -154,6 +153,14 @@
 .social-links {
   display: none;
   gap: 1.5rem;
+}
+
+.theme-change-display {
+  display: none;
+}
+
+.sidebar.expanded .theme-change-display {
+  display: flex;
 }
 
 .sidebar.expanded .social-links {

@@ -1,0 +1,114 @@
+.watchdetails-page {
+  padding: 24px;
+}
+
+.watchdetails-back {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.watchdetails-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.watchdetails-title {
+  margin: 0;
+}
+
+.watchdetails-price {
+  font-size: 1.4rem;
+}
+
+.watchdetails-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.watchdetails-card {
+  background: var(--primary-color);
+  border-radius: 16px;
+  padding: 16px;
+  width: 80%;
+}
+
+.watchdetails-section-title {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+
+.watchdetails-main img {
+  width: 100%;
+  display: block;
+  border-radius: 14px;
+}
+
+.watchdetails-empty {
+  padding: 24px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.watchdetails-thumbs {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.watchdetails-thumb {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.watchdetails-thumb img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  display: block;
+}
+
+.watchdetails-thumb.is-active {
+  outline: 2px solid currentColor;
+}
+
+.watchdetails-dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.watchdetails-dl > div {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.watchdetails-dl dt {
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.watchdetails-dl dd {
+  margin: 0;
+}
+
+.watchdetails-actions {
+  display: grid;
+  gap: 12px;
+}
+
+.watchdetails-buy {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+}

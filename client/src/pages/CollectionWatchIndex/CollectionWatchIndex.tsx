@@ -1,5 +1,11 @@
+import WatchCardCollection from "../../components/WatchCardCollection/WatchCardCollection";
+
 function CollectionWatchIndex() {
-  return <></>;
+  return (
+    <>
+      <WatchCardCollection />
+    </>
+  );
 }
 
 export default CollectionWatchIndex;
