@@ -3,9 +3,10 @@ import "./WatchCardAdd.css";
 
 interface watchCardAddProps {
   onWatchAdded: () => void;
+  onPopupToggle: (openPopup: boolean) => void;
 }
 
-function WatchCardAdd({ onWatchAdded }: watchCardAddProps) {
+function WatchCardAdd({ onWatchAdded, onPopupToggle }: watchCardAddProps) {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
   const [price, setPrice] = useState("");
@@ -13,6 +14,15 @@ function WatchCardAdd({ onWatchAdded }: watchCardAddProps) {
   const [openPopup, setOpenPopup] = useState(false);
 
   const apiBaseUrl = "http://localhost:3310";
+
+  const openingPopup = () => {
+    setOpenPopup(true);
+    onPopupToggle(true);
+  };
+  const closingPopup = () => {
+    setOpenPopup(false);
+    onPopupToggle(false);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,17 +59,22 @@ function WatchCardAdd({ onWatchAdded }: watchCardAddProps) {
       console.error(error);
     }
     onWatchAdded();
-    setOpenPopup(!openPopup);
+    closingPopup();
   };
   return (
     <div>
       <div className="watch-card-add__button">
-        <button type="button" onClick={() => setOpenPopup(!openPopup)}>
-          Ajouter une montre
-        </button>
+        {!openPopup && (
+          <button type="button" onClick={openingPopup}>
+            Ajouter une montre
+          </button>
+        )}
       </div>
       {openPopup && (
         <div className="watch-card-add__main">
+          <button type="button" className="close-button" onClick={closingPopup}>
+            X
+          </button>
           <div className="watch-card-add__content">
             <h2>Ajouter votre montre</h2>
             <form onSubmit={handleSubmit} id="watch-adder">
@@ -91,13 +106,7 @@ function WatchCardAdd({ onWatchAdded }: watchCardAddProps) {
                 onChange={(e) => setCondition(e.target.value)}
               />
             </form>{" "}
-            <button
-              type="submit"
-              form="watch-adder"
-              // onClick={() => {
-              //   setOpenPopup(!openPopup);
-              // }}
-            >
+            <button type="submit" form="watch-adder">
               Ajouter
             </button>
           </div>

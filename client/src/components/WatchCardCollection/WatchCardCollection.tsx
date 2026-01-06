@@ -6,8 +6,10 @@ import WatchCardAdd from "../WatchCardAdd/WatchCardAdd";
 function WatchCardCollection() {
   const [watches, setWatches] = useState<Watch[]>([]);
   const [trigger, setTrigger] = useState(0);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const apiBaseUrl = "http://localhost:3310";
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: uses a trigger outside the useeffect, false error.
   useEffect(() => {
     fetch(`${apiBaseUrl}/api/watches`)
       .then((res) => res.json())
@@ -20,18 +22,24 @@ function WatchCardCollection() {
 
   return (
     <div className="watch-card-collection__main">
-      <h1>BIENVENUE DANS VOTRE COLLECTION, ROMAIN</h1>
-      <div className="watches-grid">
-        {" "}
-        {watches.map((watch) => (
-          <WatchCard
-            key={watch.idwatch}
-            watch={watch}
-            apiBaseUrl={apiBaseUrl}
-          />
-        ))}
+      {isPopupOpen && <div className="overlay" />}
+      <div className={isPopupOpen ? "content content--dimmed" : "content"}>
+        <h1>BIENVENUE DANS VOTRE COLLECTION, ROMAIN</h1>
+        <div className="watches-grid">
+          {" "}
+          {watches.map((watch) => (
+            <WatchCard
+              key={watch.idwatch}
+              watch={watch}
+              apiBaseUrl={apiBaseUrl}
+            />
+          ))}
+        </div>
       </div>
-      <WatchCardAdd onWatchAdded={handleWatchAdded} />
+      <WatchCardAdd
+        onWatchAdded={handleWatchAdded}
+        onPopupToggle={setIsPopupOpen}
+      />
     </div>
   );
 }
