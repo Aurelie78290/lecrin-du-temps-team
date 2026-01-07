@@ -29,7 +29,12 @@ export default function Shop() {
 
         <div className="shop-grid">
           {watches.map((watch) => (
-            <WatchCard key={watch.idwatch} watch={watch} apiBaseUrl={API_URL} />
+            <WatchCard
+              key={watch.idwatch}
+              watch={watch}
+              apiBaseUrl={API_URL}
+              context="shop"
+            />
           ))}
         </div>
       </div>

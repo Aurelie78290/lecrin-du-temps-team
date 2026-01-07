@@ -18,9 +18,14 @@ export type Watch = {
 type WatchCardProps = {
   watch: Watch;
   apiBaseUrl: string;
+  context: "shop" | "collection";
 };
 
-export default function WatchCard({ watch, apiBaseUrl }: WatchCardProps) {
+export default function WatchCard({
+  watch,
+  apiBaseUrl,
+  context,
+}: WatchCardProps) {
   const cover = watch.url_photo1;
 
   const price =
@@ -28,8 +33,13 @@ export default function WatchCard({ watch, apiBaseUrl }: WatchCardProps) {
       ? "—"
       : `${new Intl.NumberFormat("fr-FR").format(watch.watch_price)} €`;
 
+  const linkTo =
+    context === "collection"
+      ? `/collection/${watch.idwatch}`
+      : `/shop/${watch.idwatch}`;
+
   return (
-    <Link to={`/shop/${watch.idwatch}`} className="watch-card-link">
+    <Link to={linkTo} className="watch-card-link">
       <article className="watch-card">
         <div className="watch-card-media">
           <span className="watch-card-badge">En vente</span>

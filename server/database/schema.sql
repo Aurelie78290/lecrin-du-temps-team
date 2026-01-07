@@ -17,7 +17,7 @@
 
 --
 -- Table structure for table `articles`
-
+--
 DROP TABLE IF EXISTS `articles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -384,6 +384,12 @@ CREATE TABLE `order_archive` (
 
 LOCK TABLES `order_archive` WRITE;
 /*!40000 ALTER TABLE `order_archive` DISABLE KEYS */;
+INSERT INTO `order_archive` (user_saler_id, user_order_id, price, purchase_date, watch_id, user_iduser) 
+VALUES (2, 3, 4000, 20251225, 2, 2),
+(2, 3, 4000, 20260107, 3, 2),
+(2, 3, 4000, 20260108, 4, 2),
+(2, 3, 4000, 20260109, 5, 2),
+(2, 3, 4000, 20260202, 6, 2);
 /*!40000 ALTER TABLE `order_archive` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -603,10 +609,13 @@ TRUNCATE TABLE `user`;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role) 
-VALUES ('Anaïs','B','1980-01-01','Developpeur Web','anaisberthome@gmail.com','admin'),
-('Joachim','Masson','1980-01-01','Developpeur Web','joachim.masson.17@gmail.com','admin'),
-('Aurélie','Dumotier','1986-02-14','Developpeur Web','aurelie.dumotier@gmail.com','admin');
+INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role, user_describe) 
+VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisberthome@gmail.com','admin', "Historienne de l'art, elle veille à la qualité des articles et au respect de l'héritage des manufactures. Elle déniche les pièces rares."),
+('Joachim','Masson','1980-01-01','Expert Technique & Authentification','joachim.masson.17@gmail.com','admin', "Ancien horloger certifié, il est le garant de la véracité technique et aide à identifier les contrefaçons (le 'LC' pour Legit Check)."),
+('Aurélie','Dumotier','1986-02-14','Responsable Communauté & Évenements','aurelie.dumotier@gmail.com','admin', "Spécialiste en communication de luxe, elle gère les membres VIP et organise les rencontres physiques entre passionnés (les 'GTG')."),
+('Thomas','P','2000-01-01','Développeur & Webmaster','thomas.p@gmail.com','admin', "Passionné de 'Toolwatches', il assure la fluidité du site, la sécurité des transactions et l'optimisation de l'interface utilisateur."),
+('Mathieu', 'H', '2000-01-01', 'Analyste Marché & Cote', 'mathieu.h@gmail.com','admin', "Expert en économie, il suit l'évolution des prix et les ventes aux enchères pour conseiller les membres sur l'investissement horloger."),
+('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenriats', 'romain.debas@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.");
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -804,6 +813,121 @@ UNLOCK TABLES;
 --
 -- Table structure for table `watch_has_cart`
 --
+
+DROP TABLE IF EXISTS `brand`;
+
+CREATE TABLE `brand` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL UNIQUE,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+INSERT INTO brand (name) VALUES
+-- Luxe & Haute Horlogerie Suisse
+('Rolex'),
+('Patek Philippe'),
+('Audemars Piguet'),
+('Vacheron Constantin'),
+('A. Lange & Söhne'),
+('Jaeger-LeCoultre'),
+('Blancpain'),
+('Breguet'),
+('Omega'),
+('Cartier'),
+('IWC'),
+('Panerai'),
+('Zenith'),
+('Hublot'),
+('TAG Heuer'),
+('Breitling'),
+('Chopard'),
+('Girard-Perregaux'),
+('Ulysse Nardin'),
+('Piaget'),
+('Baume & Mercier'),
+('Longines'),
+('Tudor'),
+('Oris'),
+('Bell & Ross'),
+('Maurice Lacroix'),
+('Frederique Constant'),
+('Raymond Weil'),
+('Tissot'),
+('Mido'),
+('Certina'),
+('Hamilton'),
+('Rado'),
+('Richard Mille'),
+('MB&F'),
+('H. Moser & Cie'),
+('Arnold & Son'),
+('Speake-Marin'),
+('Laurent Ferrier'),
+('F.P. Journe'),
+('Greubel Forsey'),
+('De Bethune'),
+('Christophe Claret'),
+('HYT'),
+('Czapek'),
+
+-- Japonaises
+('Seiko'),
+('Grand Seiko'),
+('Citizen'),
+('Casio'),
+('G-Shock'),
+('Orient'),
+('Minase'),
+('Credor'),
+
+-- Allemandes
+('Glashütte Original'),
+('Nomos'),
+('Junghans'),
+('Sinn'),
+('Stowa'),
+('MeisterSinger'),
+('Mühle-Glashütte'),
+('Tutima'),
+('Laco'),
+('Junkers'),
+('Zeppelin'),
+('Hanhart'),
+
+-- Américaines
+('Timex'),
+('Bulova'),
+('Shinola'),
+('Weiss'),
+('RGM'),
+('Vortic'),
+('Marathon'),
+('Ball'),
+
+-- Françaises
+('Pequignet'),
+('Yema'),
+('Herbelin'),
+('Lip'),
+('Baltic'),
+('Routine'),
+('Briston'),
+('Pierre Lannier'),
+('March LA.B'),
+
+-- Britanniques
+('Bremont'),
+('Christopher Ward'),
+('Pinion'),
+('Fears'),
+('Vertex'),
+('Schofield'),
+
+-- Italiennes
+('Bulgari'),
+('Anonimo'),
+('U-Boat'),
+('Locman');
 
 DROP TABLE IF EXISTS `watch_has_cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
