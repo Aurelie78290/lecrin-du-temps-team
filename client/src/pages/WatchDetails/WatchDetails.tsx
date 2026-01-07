@@ -157,8 +157,6 @@ export default function WatchDetails() {
       <div className="watchdetails-layout">
         {/* Galerie */}
         <section className="watchdetails-card">
-          <h2 className="watchdetails-section-title">Photos</h2>
-
           <div className="watchdetails-main">
             {activePhoto ? (
               <img
