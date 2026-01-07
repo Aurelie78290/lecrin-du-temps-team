@@ -59,5 +59,7 @@ router.post("/api/faq", faqActions.add);
 router.delete("/faq/:id", faqActions.destroy);
 
 /* ************************************************************************* */
+import brandsActions from "./modules/brands/brandsActions";
+router.get("/api/brands", brandsActions.browse);
 
 export default router;
