@@ -30,10 +30,10 @@ function ContactForm() {
   return (
     <section className="ContactForm-section">
       <h1 className="ContactForm-title">Toujours à votre écoute.</h1>
-      <p className="ContactForm-subtitle">
+      <h2 className="ContactForm-subtitle">
         Si vous ne trouvez pas rapidement la réponse à votre question, n'hésitez
         pas à nous contacter directement.
-      </p>
+      </h2>
       <form className="ContactForm" onSubmit={handleSubmit}>
         <label>
           Numéro de commande (optionnel)
@@ -98,9 +98,11 @@ function ContactForm() {
           />
         </label>
         <p id="contact-instructions" className="ContactFormInstructions">
-          Tous les champs marqués d'un astérisque sont obligatoires.
+          * Tous les champs marqués d'un astérisque sont obligatoires.
         </p>
-        <button type="submit">Envoyer la demande</button>
+        <button type="submit" className="ContactForm-button">
+          Envoyer
+        </button>
       </form>
     </section>
   );
