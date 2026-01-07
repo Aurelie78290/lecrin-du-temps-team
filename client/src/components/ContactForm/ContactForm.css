@@ -1,0 +1,39 @@
+.ContactForm-section h1 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.ContactForm-subtitle {
+  text-align: center;
+}
+
+.ContactForm {
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.ContactForm label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.ContactForm input,
+.ContactForm textarea {
+  margin-top: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-style: italic;
+}
+
+.ContactForm textarea {
+  resize: vertical;
+  min-height: 120px;
+  background-color: gold;
+}
