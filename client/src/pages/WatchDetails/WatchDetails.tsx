@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useMatch, useParams } from "react-router";
 import "./WatchDetails.css";
 
 const API_URL = "http://localhost:3310";
@@ -67,6 +67,9 @@ const labelOrId = (
 export default function WatchDetails() {
   const { id } = useParams();
 
+  const inShop = !!useMatch("/shop/:id");
+  const inCollection = !!useMatch("/collection/:id");
+
   const [watch, setWatch] = useState<Record<string, unknown> | null>(null);
   const [activePhoto, setActivePhoto] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -129,8 +132,11 @@ export default function WatchDetails() {
 
   return (
     <div className="watchdetails-page">
-      <Link className="watchdetails-back" to="/Shop">
-        ← Retour boutique
+      <Link
+        className="watchdetails-back"
+        to={inCollection ? "/Collection" : "/Shop"}
+      >
+        ← Retour {inCollection ? "collection" : "boutique"}
       </Link>
 
       <header className="watchdetails-header">
@@ -344,14 +350,30 @@ export default function WatchDetails() {
         </section>
 
         <section className="watchdetails-card watchdetails-actions">
-          <button
-            type="button"
-            className="watchdetails-buy"
-            disabled={asNumberOrNull(watch.watch_price) == null}
-            onClick={() => console.log("Acheter", watch.idwatch)}
-          >
-            Acheter
-          </button>
+          {inShop && (
+            <button
+              type="button"
+              className="watchdetails-buy"
+              disabled={asNumberOrNull(watch.watch_price) == null}
+              onClick={() => console.log("Acheter", watch.idwatch)}
+            >
+              Acheter
+            </button>
+          )}
+
+          {inCollection && (
+            <button
+              type="button"
+              className="watchdetails-sell"
+              onClick={() => console.log("Mettre en vente", watch.idwatch)}
+            >
+              Mettre en vente
+            </button>
+          )}
+
+          {!inShop && !inCollection && (
+            <div className="watchdetails-empty">Action indisponible</div>
+          )}
         </section>
       </div>
     </div>

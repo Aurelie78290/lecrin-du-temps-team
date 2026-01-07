@@ -32,6 +32,7 @@ function WatchCardCollection() {
               key={watch.idwatch}
               watch={watch}
               apiBaseUrl={apiBaseUrl}
+              context="collection"
             />
           ))}
         </div>
