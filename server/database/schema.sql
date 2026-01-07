@@ -384,6 +384,12 @@ CREATE TABLE `order_archive` (
 
 LOCK TABLES `order_archive` WRITE;
 /*!40000 ALTER TABLE `order_archive` DISABLE KEYS */;
+INSERT INTO `order_archive` (user_saler_id, user_order_id, price, purchase_date, watch_id, user_iduser) 
+VALUES (2, 3, 4000, 20251225, 2, 2),
+(2, 3, 4000, 20260107, 3, 2),
+(2, 3, 4000, 20260108, 4, 2),
+(2, 3, 4000, 20260109, 5, 2),
+(2, 3, 4000, 20260202, 6, 2);
 /*!40000 ALTER TABLE `order_archive` ENABLE KEYS */;
 UNLOCK TABLES;
 

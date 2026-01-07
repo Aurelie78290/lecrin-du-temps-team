@@ -66,4 +66,11 @@ router.delete("/faq/:id", faqActions.destroy);
 
 /* ************************************************************************* */
 
+// Define reviews routes
+import MonthlySales from "./modules/MonthlySales/MonthlySalesActions";
+
+router.get("/api/monthlySales", MonthlySales.browse);
+
+/* ************************************************************************* */
+
 export default router;
