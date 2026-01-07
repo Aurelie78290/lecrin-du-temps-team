@@ -65,6 +65,8 @@ router.post("/api/faq", faqActions.add);
 router.delete("/faq/:id", faqActions.destroy);
 
 /* ************************************************************************* */
+import brandsActions from "./modules/brands/brandsActions";
+router.get("/api/brands", brandsActions.browse);
 
 // Define MonthlySales routes
 import MonthlySalesActions from "./modules/MonthlySales/MonthlySalesActions";
