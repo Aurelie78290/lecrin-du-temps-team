@@ -377,6 +377,12 @@ CREATE TABLE `order_archive` (
 
 LOCK TABLES `order_archive` WRITE;
 /*!40000 ALTER TABLE `order_archive` DISABLE KEYS */;
+INSERT INTO `order_archive` (user_saler_id, user_order_id, price, purchase_date, watch_id, user_iduser) 
+VALUES (2, 3, 4000, 20251225, 2, 2),
+(2, 3, 4000, 20260107, 3, 2),
+(2, 3, 4000, 20260108, 4, 2),
+(2, 3, 4000, 20260109, 5, 2),
+(2, 3, 4000, 20260202, 6, 2);
 /*!40000 ALTER TABLE `order_archive` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -596,11 +602,13 @@ TRUNCATE TABLE `user`;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role) 
-VALUES ('Anaïs','B','1980-01-01','Developpeur Web','anaisberthome@gmail.com','admin'),
-('Joachim','Masson','1980-01-01','Developpeur Web','joachim.masson.17@gmail.com','admin'),
-('Aurélie','Dumotier','1986-02-14','Developpeur Web','aurelie.dumotier@gmail.com','admin'),
-('Thomas','Pujol','2002-07-04','Developpeur Web','thomas.pujol0407@gmail.com','admin');
+INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role, user_describe) 
+VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisberthome@gmail.com','admin', "Historienne de l'art, elle veille à la qualité des articles et au respect de l'héritage des manufactures. Elle déniche les pièces rares."),
+('Joachim','Masson','1980-01-01','Expert Technique & Authentification','joachim.masson.17@gmail.com','admin', "Ancien horloger certifié, il est le garant de la véracité technique et aide à identifier les contrefaçons (le 'LC' pour Legit Check)."),
+('Aurélie','Dumotier','1986-02-14','Responsable Communauté & Évenements','aurelie.dumotier@gmail.com','admin', "Spécialiste en communication de luxe, elle gère les membres VIP et organise les rencontres physiques entre passionnés (les 'GTG')."),
+('Thomas','P','2000-01-01','Développeur & Webmaster','thomas.p@gmail.com','admin', "Passionné de 'Toolwatches', il assure la fluidité du site, la sécurité des transactions et l'optimisation de l'interface utilisateur."),
+('Mathieu', 'H', '2000-01-01', 'Analyste Marché & Cote', 'mathieu.h@gmail.com','admin', "Expert en économie, il suit l'évolution des prix et les ventes aux enchères pour conseiller les membres sur l'investissement horloger."),
+('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenriats', 'romain.debas@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.");
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 

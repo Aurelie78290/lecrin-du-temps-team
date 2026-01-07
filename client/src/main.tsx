@@ -10,6 +10,7 @@ import App from "./App";
 import About from "./pages/About/About";
 import CollectionWatchIndex from "./pages/CollectionWatchIndex/CollectionWatchIndex";
 import Contact from "./pages/Contact/Contact";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import Error404 from "./pages/Error404/Error404";
 import Faq from "./pages/Faq/Faq";
 import Home from "./pages/Home/Home";
@@ -101,6 +102,14 @@ const router = createBrowserRouter([
       {
         path: "/Shop/:id",
         element: <WatchDetails />,
+      },
+      {
+        path: "/Collection/:id",
+        element: <WatchDetails />,
+      },
+      {
+        path: "/Dashboard",
+        element: <Dashboard />,
       },
     ],
   },
