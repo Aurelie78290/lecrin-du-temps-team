@@ -25,7 +25,7 @@ function News() {
 
   return (
     <div>
-      <section>
+      <section className="News-section">
         <h1 className="news-title">Chroniques horlogères</h1>
         <div className="news-grid">
           {news.map((article, index) => (
