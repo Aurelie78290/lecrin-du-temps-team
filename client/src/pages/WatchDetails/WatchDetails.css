@@ -34,15 +34,20 @@
   border-radius: 16px;
   padding: 16px;
   width: 80%;
+  min-height: auto;
 }
 
 .watchdetails-section-title {
   margin: 0 0 12px;
   font-size: 1.1rem;
 }
-
+.watchdetails-main {
+  display: flex;
+  justify-content: center;
+}
 .watchdetails-main img {
-  width: 100%;
+  width: auto;
+  height: 500px;
   display: block;
   border-radius: 14px;
 }
@@ -56,6 +61,7 @@
 .watchdetails-thumbs {
   margin-top: 12px;
   display: flex;
+  justify-content: center;
   gap: 10px;
   flex-wrap: wrap;
 }
