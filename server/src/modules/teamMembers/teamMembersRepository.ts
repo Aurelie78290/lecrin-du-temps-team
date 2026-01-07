@@ -1,5 +1,5 @@
-import databaseClient from "../../../../database/client";
-import type { Result, Rows } from "../../../../database/client";
+import databaseClient from "../../../database/client";
+import type { Result, Rows } from "../../../database/client";
 
 interface TeamMemberRow {
   iduser: number;
@@ -33,7 +33,7 @@ class TeamMembersRepository {
             WHERE user_role = 'admin'
             ORDER BY iduser ASC`,
     );
-    return rows as TeamMember[];
+    return (rows as TeamMemberRow[]).map((row) => this.formatTeamMember(row));
   }
 
   async read(id: number): Promise<TeamMember | null> {
@@ -46,7 +46,7 @@ class TeamMembersRepository {
         user_role,
         user_type
         FROM user
-        WHERE iduser = ? AND user_role IN 'admin'`,
+        WHERE iduser = ? AND user_role = 'admin'`,
       [id],
     );
 
@@ -68,25 +68,41 @@ class TeamMembersRepository {
     };
   }
 
+  async create(member: Omit<TeamMember, "id">): Promise<Result> {
+    const [result] = await databaseClient.query<Result>(
+      `INSERT INTO user (firstname, user_photo, user_describe, user_role, user_type)
+      VALUES (?, ?, ?, ?, ?)`,
+      [
+        member.firstname,
+        member.photo,
+        member.bio,
+        member.role,
+        member.userType,
+      ],
+    );
+    return result;
+  }
+
   async update(id: number, data: Partial<TeamMember>): Promise<Result> {
     const fields: string[] = [];
     const values: (string | number | null)[] = [];
 
-    if (data.bio !== undefined) {
-      fields.push("user_describe = ?");
-      values.push(data.bio);
-    }
+    const mapping: Record<string, string> = {
+      bio: "user_describe",
+      photo: "user_photo",
+      userType: "user_type",
+      role: "user_role",
+    };
 
-    if (data.photo !== undefined) {
-      fields.push("user_photo = ?");
-      values.push(data.photo);
+    for (const [key, value] of Object.entries(data)) {
+      if (value !== undefined && mapping[key]) {
+        fields.push(`${mapping[key]} = ?`);
+        values.push(value);
+      }
     }
-    if (data.userType !== undefined) {
-      fields.push("user_type = ?");
-      values.push(data.userType);
-    }
+    if (fields.length === 0) return { affectedRows: 0 } as Result;
+
     values.push(id);
-
     const [result] = await databaseClient.query<Result>(
       `UPDATE user SET ${fields.join(", ")} WHERE iduser = ?`,
       values,
@@ -94,10 +110,10 @@ class TeamMembersRepository {
     return result;
   }
 
-  async updateRole(id: number, role: string): Promise<Result> {
+  async delete(id: number): Promise<Result> {
     const [result] = await databaseClient.query<Result>(
-      "UPDATE user SET user_role = ? WHERE iduser = ?",
-      [role, id],
+      "DELETE FROM user WHERE iduser = ?",
+      [id],
     );
     return result;
   }
