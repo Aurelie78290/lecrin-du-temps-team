@@ -8,14 +8,20 @@ const router = express.Router();
 
 // Define item-related routes
 import itemActions from "./modules/item/itemActions";
-import teamMembersActions from "./modules/item/teamMembers/teamMembersActions";
 
 router.get("/api/items", itemActions.browse);
 router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
+/* ************************************************************************* */
+// Define team members routes
+import teamMembersActions from "./modules/teamMembers/teamMembersActions";
+
 router.get("/api/team-members", teamMembersActions.browse);
 router.get("/api/team-members/:id", teamMembersActions.read);
+router.put("/api/team-members/:id", teamMembersActions.edit);
+router.post("/api/team-members", teamMembersActions.add);
+router.delete("/api/team-members/:id", teamMembersActions.destroy);
 
 /* ************************************************************************* */
 

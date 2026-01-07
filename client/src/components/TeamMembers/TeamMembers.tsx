@@ -56,40 +56,26 @@ const TeamMembers = () => {
 
   return (
     <div className="team-container">
-      <section className="team-header">
+      <div className="team-header">
         <h1>Notre Équipe</h1>
         <p className="subtitle">
           {TeamMembers.length}{" "}
           {TeamMembers.length > 1 ? "experts passionnés" : "expert passionné"}{" "}
           au service de l'excellence
         </p>
-      </section>
+      </div>
 
       <div className="team-grid">
         {TeamMembers.map((user) => (
           <div key={user.id} className="team-card">
             <div className="card-image">
               {user.photo ? (
-                <img
-                  src={user.photo}
-                  alt={user.firstname}
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                    if (e.currentTarget.nextElementSibling) {
-                      (
-                        e.currentTarget.nextElementSibling as HTMLElement
-                      ).style.display = "flex";
-                    }
-                  }}
-                />
+                <img src={user.photo} alt={user.firstname} />
               ) : null}
-              {user.role === "admin" && (
-                <span className="admin-badge">Admin</span>
-              )}
             </div>
 
             <div className="card-content">
-              <h3>${user.firstname}</h3>
+              <h3>{user.firstname}</h3>
               <p className="job">{user.userType || "Membre de l'équipe"}</p>
               {user.bio && <p className="bio">{user.bio}</p>}
             </div>
