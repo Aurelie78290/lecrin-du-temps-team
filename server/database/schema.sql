@@ -17,7 +17,7 @@
 
 --
 -- Table structure for table `articles`
-
+--
 DROP TABLE IF EXISTS `articles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -813,6 +813,121 @@ UNLOCK TABLES;
 --
 -- Table structure for table `watch_has_cart`
 --
+
+DROP TABLE IF EXISTS `brand`;
+
+CREATE TABLE `brand` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL UNIQUE,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+INSERT INTO brand (name) VALUES
+-- Luxe & Haute Horlogerie Suisse
+('Rolex'),
+('Patek Philippe'),
+('Audemars Piguet'),
+('Vacheron Constantin'),
+('A. Lange & Söhne'),
+('Jaeger-LeCoultre'),
+('Blancpain'),
+('Breguet'),
+('Omega'),
+('Cartier'),
+('IWC'),
+('Panerai'),
+('Zenith'),
+('Hublot'),
+('TAG Heuer'),
+('Breitling'),
+('Chopard'),
+('Girard-Perregaux'),
+('Ulysse Nardin'),
+('Piaget'),
+('Baume & Mercier'),
+('Longines'),
+('Tudor'),
+('Oris'),
+('Bell & Ross'),
+('Maurice Lacroix'),
+('Frederique Constant'),
+('Raymond Weil'),
+('Tissot'),
+('Mido'),
+('Certina'),
+('Hamilton'),
+('Rado'),
+('Richard Mille'),
+('MB&F'),
+('H. Moser & Cie'),
+('Arnold & Son'),
+('Speake-Marin'),
+('Laurent Ferrier'),
+('F.P. Journe'),
+('Greubel Forsey'),
+('De Bethune'),
+('Christophe Claret'),
+('HYT'),
+('Czapek'),
+
+-- Japonaises
+('Seiko'),
+('Grand Seiko'),
+('Citizen'),
+('Casio'),
+('G-Shock'),
+('Orient'),
+('Minase'),
+('Credor'),
+
+-- Allemandes
+('Glashütte Original'),
+('Nomos'),
+('Junghans'),
+('Sinn'),
+('Stowa'),
+('MeisterSinger'),
+('Mühle-Glashütte'),
+('Tutima'),
+('Laco'),
+('Junkers'),
+('Zeppelin'),
+('Hanhart'),
+
+-- Américaines
+('Timex'),
+('Bulova'),
+('Shinola'),
+('Weiss'),
+('RGM'),
+('Vortic'),
+('Marathon'),
+('Ball'),
+
+-- Françaises
+('Pequignet'),
+('Yema'),
+('Herbelin'),
+('Lip'),
+('Baltic'),
+('Routine'),
+('Briston'),
+('Pierre Lannier'),
+('March LA.B'),
+
+-- Britanniques
+('Bremont'),
+('Christopher Ward'),
+('Pinion'),
+('Fears'),
+('Vertex'),
+('Schofield'),
+
+-- Italiennes
+('Bulgari'),
+('Anonimo'),
+('U-Boat'),
+('Locman');
 
 DROP TABLE IF EXISTS `watch_has_cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
