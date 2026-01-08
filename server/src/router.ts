@@ -68,6 +68,9 @@ router.delete("/faq/:id", faqActions.destroy);
 import brandsActions from "./modules/brands/brandsActions";
 router.get("/api/brands", brandsActions.browse);
 
+import modelsActions from "./modules/models/modelsActions";
+router.get("/api/models", modelsActions.browse);
+
 // Define MonthlySales routes
 import MonthlySalesActions from "./modules/MonthlySales/MonthlySalesActions";
 
