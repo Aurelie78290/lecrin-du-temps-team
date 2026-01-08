@@ -65,11 +65,23 @@ router.post("/api/faq", faqActions.add);
 router.delete("/faq/:id", faqActions.destroy);
 
 /* ************************************************************************* */
+import brandsActions from "./modules/brands/brandsActions";
+router.get("/api/brands", brandsActions.browse);
 
-// Define reviews routes
-import MonthlySales from "./modules/MonthlySales/MonthlySalesActions";
+import modelsActions from "./modules/models/modelsActions";
+router.get("/api/models", modelsActions.browse);
 
-router.get("/api/monthlySales", MonthlySales.browse);
+// Define MonthlySales routes
+import MonthlySalesActions from "./modules/MonthlySales/MonthlySalesActions";
+
+router.get("/api/monthlySales", MonthlySalesActions.browse);
+
+/* ************************************************************************* */
+
+// Define PendingTransactions routes
+import PendingTransactionsActions from "./modules/PendingTransactions/PendingTransactionsActions";
+
+router.get("/api/PendingTransactions", PendingTransactionsActions.browse);
 
 /* ************************************************************************* */
 

@@ -20,14 +20,14 @@ function MonthlySales() {
   }, []);
 
   return (
-    <section className="MonthlySales">
+    <article className="MonthlySales">
       <p>Chiffre d'affaires du mois :</p>
       <p>
         {totalMonthlySales.length > 0
           ? `${Number(totalMonthlySales[0].monthly_revenue).toLocaleString("fr-FR")} €`
           : "Donnée en cours ce chargement"}
       </p>
-    </section>
+    </article>
   );
 }
 
