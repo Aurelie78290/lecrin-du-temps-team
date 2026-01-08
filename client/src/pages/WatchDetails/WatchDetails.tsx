@@ -383,34 +383,33 @@ export default function WatchDetails() {
             </dl>
           </section>
         </div>
-
-        <section className="watchdetails-card watchdetails-actions">
-          {inShop && (
-            <button
-              type="button"
-              className="watchdetails-buy"
-              disabled={asNumberOrNull(watch.watch_price) == null}
-              onClick={() => console.log("Acheter", watch.idwatch)}
-            >
-              Acheter
-            </button>
-          )}
-
-          {inCollection && (
-            <button
-              type="button"
-              className="watchdetails-sell"
-              onClick={() => console.log("Mettre en vente", watch.idwatch)}
-            >
-              Mettre en vente
-            </button>
-          )}
-
-          {!inShop && !inCollection && (
-            <div className="watchdetails-empty">Action indisponible</div>
-          )}
-        </section>
       </div>
+      <section className="watchdetails-card watchdetails-actions">
+        {inShop && (
+          <button
+            type="button"
+            className="watchdetails-buy"
+            disabled={asNumberOrNull(watch.watch_price) == null}
+            onClick={() => console.log("Acheter", watch.idwatch)}
+          >
+            Acheter
+          </button>
+        )}
+
+        {inCollection && (
+          <button
+            type="button"
+            className="watchdetails-sell"
+            onClick={() => console.log("Mettre en vente", watch.idwatch)}
+          >
+            Mettre en vente
+          </button>
+        )}
+
+        {!inShop && !inCollection && (
+          <div className="watchdetails-empty">Action indisponible</div>
+        )}
+      </section>
     </div>
   );
 }
