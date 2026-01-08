@@ -14,7 +14,7 @@
   text-align: center;
   font-weight: 300;
   margin: 2rem 0 1rem 0;
-  width: 50%;
+  width: 700px;
 }
 
 .ContactForm {
@@ -70,4 +70,100 @@
 .ContactForm-button:hover {
   background-color: var(--secondary-color);
   color: var(--primary-color);
+}
+
+.ContactForm input:hover,
+.ContactForm textarea:hover {
+  transform: translateY(-1px);
+}
+
+/* Version Responsive */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .ContactForm-section {
+    padding: 2rem 1.5rem;
+  }
+
+  .ContactForm-subtitle {
+    width: 80%;
+    font-size: 1rem;
+    margin: 2rem auto 1.5rem auto;
+  }
+
+  .ContactForm {
+    width: 100%;
+    max-width: 640px;
+    padding: 2rem;
+  }
+
+  .ContactForm label {
+    font-size: 1.05rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .ContactForm input,
+  .ContactForm textarea {
+    font-size: 0.95rem;
+    padding: 0.7rem 0.6rem;
+  }
+
+  .ContactForm textarea {
+    min-height: 130px;
+  }
+
+  .ContactFormInstructions {
+    font-size: 0.9rem;
+  }
+
+  .ContactForm-button {
+    display: block;
+    margin: 1.5rem auto 0 auto;
+    width: 180px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .ContactForm-section {
+    padding: 1rem;
+  }
+
+  .ContactForm-subtitle {
+    width: 100%;
+    margin: 1.5rem 0 1rem 0;
+    font-size: 0.95rem;
+  }
+
+  .ContactForm {
+    width: 100%;
+    padding: 1.25rem;
+    margin: 0;
+  }
+
+  .ContactForm label {
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .ContactForm input,
+  .ContactForm textarea {
+    font-size: 1rem;
+    padding: 0.75rem 0.5rem;
+  }
+
+  .ContactForm textarea {
+    min-height: 140px;
+  }
+
+  .ContactFormInstructions {
+    font-size: 0.85rem;
+  }
+
+  .ContactForm button {
+    width: 100%;
+    text-align: center;
+    max-width: 220px;
+    display: block;
+    margin: 2rem auto 0 auto;
+  }
 }
