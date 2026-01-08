@@ -53,7 +53,7 @@
   /* background: var(--primary-color); */
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid var(--secondary-color);
+  border: 1px solid var(--border-color);
   transition: transform 0.35 ease, box-shadow 0.35 ease;
 }
 
