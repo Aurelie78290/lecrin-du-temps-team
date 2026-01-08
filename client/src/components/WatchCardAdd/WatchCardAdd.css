@@ -22,7 +22,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 10px;
-  border: solid 1px #e0c58f;
+  border: solid 1px var(--border-color);
   z-index: 1000;
 }
 .watch-card-add__content {
@@ -70,7 +70,7 @@
 
 .watch-card-add__content input:focus {
   outline: none;
-  border-color: #e0c58f;
+  border-color: var(--border-color);
   background: #010c2a;
 }
 
@@ -79,7 +79,7 @@ input {
   padding: 0.5rem 1rem;
   font-family: var(--font-secondary);
   border-radius: 10px;
-  border: 1px solid #e0c58f;
+  border: 1px solid var(--border-color);
   color: #e0c58f;
   background: #010510;
   transition: background 0.2s ease;
