@@ -1,15 +1,19 @@
+import emailjs from "emailjs-com";
 import { useState } from "react";
 import "./ContactForm.css";
 
 function ContactForm() {
-  const [formData, setFormData] = useState({
-    orderNumber: "",
+  const initialFormData = {
     name: "",
     firstname: "",
-    phone: "",
     email: "",
+    phone: "",
+    orderNumber: "",
     message: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -25,15 +29,36 @@ function ContactForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
+
+    emailjs
+      .send(
+        "service_n08sf07",
+        "template_nus5wxl",
+        formData,
+        "mu4sY2ibq8MbronjD",
+      )
+      .then(() => {
+        setIsSubmitted(true);
+        setFormData(initialFormData);
+
+        // Pour faire disparaitre le message au bout de 3 secondes
+        setTimeout(() => {
+          setIsSubmitted(false);
+        }, 5000);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l’envoi :", error);
+      });
   };
 
   return (
     <section className="ContactForm-section">
       <h1 className="ContactForm-title">Toujours à votre écoute.</h1>
-      <p className="ContactForm-subtitle">
+      <h2 className="ContactForm-subtitle">
         Si vous ne trouvez pas rapidement la réponse à votre question, n'hésitez
         pas à nous contacter directement.
-      </p>
+      </h2>
+
       <form className="ContactForm" onSubmit={handleSubmit}>
         <label>
           Numéro de commande (optionnel)
@@ -98,9 +123,18 @@ function ContactForm() {
           />
         </label>
         <p id="contact-instructions" className="ContactFormInstructions">
-          Tous les champs marqués d'un astérisque sont obligatoires.
+          * Tous les champs marqués d'un astérisque sont obligatoires.
         </p>
-        <button type="submit">Envoyer la demande</button>
+        <div className="ContactForm-validation">
+          <button type="submit" className="ContactForm-button">
+            Envoyer
+          </button>
+          {isSubmitted && (
+            <p className="ContactForm-success">
+              ✅ Votre message a bien été envoyé !
+            </p>
+          )}
+        </div>
       </form>
     </section>
   );
