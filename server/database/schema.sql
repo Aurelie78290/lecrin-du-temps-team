@@ -637,6 +637,9 @@ CREATE TABLE `user` (
   `user_photo` varchar(2048) DEFAULT NULL,
   `user_describe` longtext,
   `password` varchar(150) DEFAULT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`iduser`),
   UNIQUE KEY `e_mail_UNIQUE` (`e_mail`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
