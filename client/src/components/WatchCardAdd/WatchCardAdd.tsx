@@ -15,6 +15,12 @@ type Brand = {
   name: string;
 };
 
+type Model = {
+  id: number;
+  brand_id: number;
+  name: string;
+};
+
 // ============================================
 // COMPOSANT PRINCIPAL
 // ============================================
@@ -26,6 +32,7 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
   const [brand, setBrand] = useState("");
   const [brandId, setBrandId] = useState<number | null>(null);
   const [model, setModel] = useState("");
+  const [modelId, setModelId] = useState<number | null>(null);
   const [price, setPrice] = useState("");
   const [condition, setCondition] = useState("");
 
@@ -38,7 +45,9 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
   // États pour l'autocomplétion
   // --------------------------------------------
   const [brands, setBrands] = useState<Brand[]>([]); // Liste complète des marques depuis l'API
-  const [showSuggestions, setShowSuggestions] = useState(false); // Affiche/cache la liste déroulante
+  const [models, setModels] = useState<Model[]>([]);
+  const [showSuggestionsBrand, setShowSuggestionsBrand] = useState(false); // Affiche/cache la liste déroulante
+  const [showSuggestionsModel, setShowSuggestionsModel] = useState(false); // Affiche/cache la liste déroulante
   const [highlightedIndex, setHighlightedIndex] = useState(0); // Index de l'élément surligné (navigation clavier)
 
   // Ref pour détecter les clics en dehors de l'autocomplétion
@@ -61,6 +70,11 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
     fetch(`${apiBaseUrl}/api/brands`)
       .then((res) => res.json())
       .then(setBrands)
+      .catch(console.error);
+
+    fetch(`${apiBaseUrl}/api/models`)
+      .then((res) => res.json())
+      .then(setModels)
       .catch(console.error);
   }, []);
 
@@ -94,7 +108,8 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
         autocompleteRef.current &&
         !autocompleteRef.current.contains(event.target as Node)
       ) {
-        setShowSuggestions(false);
+        setShowSuggestionsBrand(false);
+        setShowSuggestionsModel(false);
       }
     }
 
@@ -118,6 +133,15 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
         )
       : [];
 
+  const filteredModels =
+    model.length >= 1 && brandId
+      ? models.filter(
+          (m) =>
+            m.brand_id === brandId && // Filtre par marque sélectionnée
+            m.name.toLowerCase().startsWith(model.toLowerCase()),
+        )
+      : [];
+
   // ============================================
   // HANDLERS (gestionnaires d'événements)
   // ============================================
@@ -131,7 +155,16 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
   const handleSelectBrand = (selectedBrand: Brand) => {
     setBrand(selectedBrand.name);
     setBrandId(selectedBrand.id);
-    setShowSuggestions(false);
+    setShowSuggestionsBrand(false);
+
+    setModel("");
+    setModelId(null);
+  };
+
+  const handleSelectModel = (selectedModel: Model) => {
+    setModel(selectedModel.name);
+    setModelId(selectedModel.id);
+    setShowSuggestionsModel(false);
   };
 
   /**
@@ -143,7 +176,7 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
    */
   const handleKeyDown = (e: React.KeyboardEvent) => {
     // Si pas de suggestions affichées, on ne fait rien
-    if (!showSuggestions || filteredBrands.length === 0) return;
+    if (!showSuggestionsBrand || filteredBrands.length === 0) return;
 
     switch (e.key) {
       case "ArrowDown":
@@ -166,7 +199,7 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
         break;
 
       case "Escape":
-        setShowSuggestions(false);
+        setShowSuggestionsBrand(false);
         break;
     }
   };
@@ -195,7 +228,8 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
     setCondition("");
 
     // Ferme les suggestions
-    setShowSuggestions(false);
+    setShowSuggestionsBrand(false);
+    setShowSuggestionsModel(false);
   };
 
   /**
@@ -287,16 +321,18 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
                   onChange={(e) => {
                     setBrand(e.target.value);
                     setBrandId(null); // Reset l'ID si l'utilisateur modifie le texte
-                    setShowSuggestions(true);
+                    setShowSuggestionsBrand(true);
                     setHighlightedIndex(0); // Remet la sélection au premier élément
                   }}
-                  onFocus={() => brand.length >= 1 && setShowSuggestions(true)}
+                  onFocus={() =>
+                    brand.length >= 1 && setShowSuggestionsBrand(true)
+                  }
                   onKeyDown={handleKeyDown}
                   required
                 />
 
                 {/* Liste des suggestions (visible si showSuggestions = true ET il y a des résultats) */}
-                {showSuggestions && filteredBrands.length > 0 && (
+                {showSuggestionsBrand && filteredBrands.length > 0 && (
                   <ul className="autocomplete__list">
                     {filteredBrands.map((b, index) => (
                       <li key={b.id} className="autocomplete__item">
@@ -317,7 +353,7 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
                 )}
 
                 {/* Message "Aucune marque trouvée" */}
-                {showSuggestions &&
+                {showSuggestionsBrand &&
                   brand.length >= 1 &&
                   filteredBrands.length === 0 && (
                     <div className="autocomplete__no-results">
@@ -327,13 +363,51 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
               </div>
 
               {/* --- Autres champs --- */}
-              <input
-                type="text"
-                placeholder="Modèle"
-                value={model}
-                onChange={(e) => setModel(e.target.value)}
-                required
-              />
+              <div className="autocomplete">
+                <input
+                  type="text"
+                  placeholder="Modèle"
+                  value={model}
+                  onChange={(e) => {
+                    setModel(e.target.value);
+                    setModelId(null); // Reset l'ID si l'utilisateur modifie le texte
+                    setShowSuggestionsModel(true);
+                    setHighlightedIndex(0);
+                  }} // Remet la sélection au premier élément
+                  disabled={!brandId}
+                  required
+                />
+
+                {/* Liste des suggestions (visible si showSuggestions = true ET il y a des résultats) */}
+                {showSuggestionsModel && filteredModels.length > 0 && (
+                  <ul className="autocomplete__list">
+                    {filteredModels.map((m, index) => (
+                      <li key={m.id} className="autocomplete__item">
+                        <button
+                          type="button"
+                          onClick={() => handleSelectModel(m)}
+                          className={`autocomplete__option ${
+                            index === highlightedIndex
+                              ? "autocomplete__option--highlighted"
+                              : ""
+                          }`}
+                        >
+                          {m.name}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* Message "Aucune marque trouvée" */}
+                {showSuggestionsModel &&
+                  model.length >= 1 &&
+                  filteredModels.length === 0 && (
+                    <div className="autocomplete__no-results">
+                      Aucun modèle trouvée
+                    </div>
+                  )}
+              </div>
 
               <input
                 type="number"

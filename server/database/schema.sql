@@ -814,121 +814,849 @@ UNLOCK TABLES;
 -- Table structure for table `watch_has_cart`
 --
 
+DROP TABLE IF EXISTS `model`;
 DROP TABLE IF EXISTS `brand`;
 
 CREATE TABLE `brand` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   `name` VARCHAR(100) NOT NULL UNIQUE,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
-INSERT INTO brand (name) VALUES
+INSERT INTO brand (id, name) VALUES
 -- Luxe & Haute Horlogerie Suisse
-('Rolex'),
-('Patek Philippe'),
-('Audemars Piguet'),
-('Vacheron Constantin'),
-('A. Lange & Söhne'),
-('Jaeger-LeCoultre'),
-('Blancpain'),
-('Breguet'),
-('Omega'),
-('Cartier'),
-('IWC'),
-('Panerai'),
-('Zenith'),
-('Hublot'),
-('TAG Heuer'),
-('Breitling'),
-('Chopard'),
-('Girard-Perregaux'),
-('Ulysse Nardin'),
-('Piaget'),
-('Baume & Mercier'),
-('Longines'),
-('Tudor'),
-('Oris'),
-('Bell & Ross'),
-('Maurice Lacroix'),
-('Frederique Constant'),
-('Raymond Weil'),
-('Tissot'),
-('Mido'),
-('Certina'),
-('Hamilton'),
-('Rado'),
-('Richard Mille'),
-('MB&F'),
-('H. Moser & Cie'),
-('Arnold & Son'),
-('Speake-Marin'),
-('Laurent Ferrier'),
-('F.P. Journe'),
-('Greubel Forsey'),
-('De Bethune'),
-('Christophe Claret'),
-('HYT'),
-('Czapek'),
+(1, 'Rolex'),
+(2, 'Patek Philippe'),
+(3, 'Audemars Piguet'),
+(4, 'Vacheron Constantin'),
+(5, 'A. Lange & Söhne'),
+(6, 'Jaeger-LeCoultre'),
+(7, 'Blancpain'),
+(8, 'Breguet'),
+(9, 'Omega'),
+(10, 'Cartier'),
+(11, 'IWC'),
+(12, 'Panerai'),
+(13, 'Zenith'),
+(14, 'Hublot'),
+(15, 'TAG Heuer'),
+(16, 'Breitling'),
+(17, 'Chopard'),
+(18, 'Girard-Perregaux'),
+(19, 'Ulysse Nardin'),
+(20, 'Piaget'),
+(21, 'Baume & Mercier'),
+(22, 'Longines'),
+(23, 'Tudor'),
+(24, 'Oris'),
+(25, 'Bell & Ross'),
+(26, 'Maurice Lacroix'),
+(27, 'Frederique Constant'),
+(28, 'Raymond Weil'),
+(29, 'Tissot'),
+(30, 'Mido'),
+(31, 'Certina'),
+(32, 'Hamilton'),
+(33, 'Rado'),
+(34, 'Richard Mille'),
+(35, 'MB&F'),
+(36, 'H. Moser & Cie'),
+(37, 'Arnold & Son'),
+(38, 'Speake-Marin'),
+(39, 'Laurent Ferrier'),
+(40, 'F.P. Journe'),
+(41, 'Greubel Forsey'),
+(42, 'De Bethune'),
+(43, 'Christophe Claret'),
+(44, 'HYT'),
+(45, 'Czapek'),
 
 -- Japonaises
-('Seiko'),
-('Grand Seiko'),
-('Citizen'),
-('Casio'),
-('G-Shock'),
-('Orient'),
-('Minase'),
-('Credor'),
+(46, 'Seiko'),
+(47, 'Grand Seiko'),
+(48, 'Citizen'),
+(49, 'Casio'),
+(50, 'G-Shock'),
+(51, 'Orient'),
+(52, 'Minase'),
+(53, 'Credor'),
 
 -- Allemandes
-('Glashütte Original'),
-('Nomos'),
-('Junghans'),
-('Sinn'),
-('Stowa'),
-('MeisterSinger'),
-('Mühle-Glashütte'),
-('Tutima'),
-('Laco'),
-('Junkers'),
-('Zeppelin'),
-('Hanhart'),
+(54, 'Glashütte Original'),
+(55, 'Nomos'),
+(56, 'Junghans'),
+(57, 'Sinn'),
+(58, 'Stowa'),
+(59, 'MeisterSinger'),
+(60, 'Mühle-Glashütte'),
+(61, 'Tutima'),
+(62, 'Laco'),
+(63, 'Junkers'),
+(64, 'Zeppelin'),
+(65, 'Hanhart'),
 
 -- Américaines
-('Timex'),
-('Bulova'),
-('Shinola'),
-('Weiss'),
-('RGM'),
-('Vortic'),
-('Marathon'),
-('Ball'),
+(66, 'Timex'),
+(67, 'Bulova'),
+(68, 'Shinola'),
+(69, 'Weiss'),
+(70, 'RGM'),
+(71, 'Vortic'),
+(72, 'Marathon'),
+(73, 'Ball'),
 
 -- Françaises
-('Pequignet'),
-('Yema'),
-('Herbelin'),
-('Lip'),
-('Baltic'),
-('Routine'),
-('Briston'),
-('Pierre Lannier'),
-('March LA.B'),
+(74, 'Pequignet'),
+(75, 'Yema'),
+(76, 'Herbelin'),
+(77, 'Lip'),
+(78, 'Baltic'),
+(79, 'Routine'),
+(80, 'Briston'),
+(81, 'Pierre Lannier'),
+(82, 'March LA.B'),
 
 -- Britanniques
-('Bremont'),
-('Christopher Ward'),
-('Pinion'),
-('Fears'),
-('Vertex'),
-('Schofield'),
+(83, 'Bremont'),
+(84, 'Christopher Ward'),
+(85, 'Pinion'),
+(86, 'Fears'),
+(87, 'Vertex'),
+(88, 'Schofield'),
 
 -- Italiennes
-('Bulgari'),
-('Anonimo'),
-('U-Boat'),
-('Locman');
+(89, 'Bulgari'),
+(90, 'Anonimo'),
+(91, 'U-Boat'),
+(92, 'Locman');
 
+CREATE TABLE `model` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `brand_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`brand_id`) REFERENCES `brand`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+INSERT INTO model (name, brand_id) VALUES
+-- ============================================
+-- ROLEX (1)
+-- ============================================
+('Submariner', 1),
+('Submariner Date', 1),
+('Daytona', 1),
+('Datejust', 1),
+('Datejust 36', 1),
+('Datejust 41', 1),
+('GMT-Master II', 1),
+('Explorer', 1),
+('Explorer II', 1),
+('Sea-Dweller', 1),
+('Deepsea', 1),
+('Air-King', 1),
+('Oyster Perpetual', 1),
+('Oyster Perpetual 36', 1),
+('Oyster Perpetual 41', 1),
+('Sky-Dweller', 1),
+('Yacht-Master', 1),
+('Yacht-Master II', 1),
+('Milgauss', 1),
+('Cellini', 1),
+('Cellini Moonphase', 1),
+('Day-Date', 1),
+('Day-Date 36', 1),
+('Day-Date 40', 1),
+('Lady-Datejust', 1),
+('Pearlmaster', 1),
+
+-- ============================================
+-- PATEK PHILIPPE (2)
+-- ============================================
+('Nautilus', 2),
+('Nautilus 5711', 2),
+('Nautilus 5712', 2),
+('Nautilus Chronograph', 2),
+('Aquanaut', 2),
+('Aquanaut Luce', 2),
+('Calatrava', 2),
+('Grand Complications', 2),
+('Perpetual Calendar', 2),
+('World Time', 2),
+('Annual Calendar', 2),
+('Twenty~4', 2),
+('Golden Ellipse', 2),
+('Gondolo', 2),
+('Complications', 2),
+
+-- ============================================
+-- AUDEMARS PIGUET (3)
+-- ============================================
+('Royal Oak', 3),
+('Royal Oak 15500', 3),
+('Royal Oak Jumbo', 3),
+('Royal Oak Chronograph', 3),
+('Royal Oak Offshore', 3),
+('Royal Oak Offshore Diver', 3),
+('Royal Oak Offshore Chronograph', 3),
+('Royal Oak Perpetual Calendar', 3),
+('Royal Oak Tourbillon', 3),
+('Code 11.59', 3),
+('Millenary', 3),
+('Jules Audemars', 3),
+
+-- ============================================
+-- VACHERON CONSTANTIN (4)
+-- ============================================
+('Overseas', 4),
+('Overseas Chronograph', 4),
+('Overseas Dual Time', 4),
+('Patrimony', 4),
+('Patrimony Perpetual Calendar', 4),
+('Traditionnelle', 4),
+('Historiques', 4),
+('FiftySix', 4),
+('Égérie', 4),
+('Métiers d''Art', 4),
+('Les Cabinotiers', 4),
+
+-- ============================================
+-- A. LANGE & SÖHNE (5)
+-- ============================================
+('Lange 1', 5),
+('Lange 1 Daymatic', 5),
+('Lange 1 Moon Phase', 5),
+('Saxonia', 5),
+('Saxonia Thin', 5),
+('Saxonia Outsize Date', 5),
+('Zeitwerk', 5),
+('Datograph', 5),
+('Datograph Perpetual', 5),
+('1815', 5),
+('1815 Chronograph', 5),
+('Richard Lange', 5),
+('Odysseus', 5),
+
+-- ============================================
+-- JAEGER-LECOULTRE (6)
+-- ============================================
+('Reverso', 6),
+('Reverso Classic', 6),
+('Reverso Tribute', 6),
+('Master Control', 6),
+('Master Ultra Thin', 6),
+('Master Compressor', 6),
+('Polaris', 6),
+('Polaris Chronograph', 6),
+('Polaris Mariner', 6),
+('Duomètre', 6),
+('Atmos', 6),
+('Rendez-Vous', 6),
+('Geophysic', 6),
+
+-- ============================================
+-- BLANCPAIN (7)
+-- ============================================
+('Fifty Fathoms', 7),
+('Fifty Fathoms Bathyscaphe', 7),
+('Fifty Fathoms Automatique', 7),
+('Villeret', 7),
+('Villeret Quantième Perpétuel', 7),
+('Villeret Ultraplate', 7),
+('Léman', 7),
+('L-Evolution', 7),
+('Air Command', 7),
+
+-- ============================================
+-- BREGUET (8)
+-- ============================================
+('Classique', 8),
+('Classique Complications', 8),
+('Marine', 8),
+('Marine Chronograph', 8),
+('Tradition', 8),
+('Type XX', 8),
+('Type XXI', 8),
+('Héritage', 8),
+('Reine de Naples', 8),
+('La Musicale', 8),
+
+-- ============================================
+-- OMEGA (9)
+-- ============================================
+('Speedmaster', 9),
+('Speedmaster Professional', 9),
+('Speedmaster Moonwatch', 9),
+('Speedmaster Racing', 9),
+('Speedmaster 57', 9),
+('Speedmaster Dark Side of the Moon', 9),
+('Seamaster', 9),
+('Seamaster 300', 9),
+('Seamaster Diver 300M', 9),
+('Seamaster Planet Ocean', 9),
+('Seamaster Aqua Terra', 9),
+('Seamaster Railmaster', 9),
+('Seamaster Ultra Deep', 9),
+('Constellation', 9),
+('Constellation Globemaster', 9),
+('De Ville', 9),
+('De Ville Prestige', 9),
+('De Ville Trésor', 9),
+('De Ville Hour Vision', 9),
+
+-- ============================================
+-- CARTIER (10)
+-- ============================================
+('Santos', 10),
+('Santos de Cartier', 10),
+('Santos-Dumont', 10),
+('Tank', 10),
+('Tank Française', 10),
+('Tank Américaine', 10),
+('Tank Louis Cartier', 10),
+('Tank Must', 10),
+('Ballon Bleu', 10),
+('Panthère', 10),
+('Pasha', 10),
+('Drive de Cartier', 10),
+('Clé de Cartier', 10),
+('Ronde', 10),
+('Rotonde de Cartier', 10),
+('Crash', 10),
+('Baignoire', 10),
+
+-- ============================================
+-- IWC (11)
+-- ============================================
+('Portugieser', 11),
+('Portugieser Chronograph', 11),
+('Portugieser Automatic', 11),
+('Portugieser Perpetual Calendar', 11),
+('Pilot', 11),
+('Pilot Mark XX', 11),
+('Big Pilot', 11),
+('Pilot Chronograph', 11),
+('Pilot Spitfire', 11),
+('Pilot Top Gun', 11),
+('Aquatimer', 11),
+('Ingenieur', 11),
+('Da Vinci', 11),
+('Portofino', 11),
+('Portofino Chronograph', 11),
+
+-- ============================================
+-- PANERAI (12)
+-- ============================================
+('Luminor', 12),
+('Luminor Marina', 12),
+('Luminor Due', 12),
+('Luminor Chrono', 12),
+('Luminor GMT', 12),
+('Luminor Submersible', 12),
+('Radiomir', 12),
+('Submersible', 12),
+('Submersible Quarantaquattro', 12),
+
+-- ============================================
+-- ZENITH (13)
+-- ============================================
+('El Primero', 13),
+('Chronomaster', 13),
+('Chronomaster Sport', 13),
+('Chronomaster Open', 13),
+('Chronomaster Original', 13),
+('Defy', 13),
+('Defy Classic', 13),
+('Defy Skyline', 13),
+('Defy Extreme', 13),
+('Pilot', 13),
+('Pilot Type 20', 13),
+('Elite', 13),
+
+-- ============================================
+-- HUBLOT (14)
+-- ============================================
+('Big Bang', 14),
+('Big Bang Unico', 14),
+('Big Bang Integral', 14),
+('Big Bang King', 14),
+('Classic Fusion', 14),
+('Classic Fusion Chronograph', 14),
+('Classic Fusion Ultra-Thin', 14),
+('Spirit of Big Bang', 14),
+('Square Bang', 14),
+('MP Collection', 14),
+
+-- ============================================
+-- TAG HEUER (15)
+-- ============================================
+('Carrera', 15),
+('Carrera Chronograph', 15),
+('Carrera Heuer 02', 15),
+('Monaco', 15),
+('Monaco Chronograph', 15),
+('Aquaracer', 15),
+('Aquaracer Professional 300', 15),
+('Aquaracer Professional 200', 15),
+('Formula 1', 15),
+('Formula 1 Chronograph', 15),
+('Autavia', 15),
+('Link', 15),
+('Connected', 15),
+
+-- ============================================
+-- BREITLING (16)
+-- ============================================
+('Navitimer', 16),
+('Navitimer B01', 16),
+('Navitimer Automatic', 16),
+('Chronomat', 16),
+('Chronomat B01', 16),
+('Superocean', 16),
+('Superocean Heritage', 16),
+('Avenger', 16),
+('Avenger Chronograph', 16),
+('Premier', 16),
+('Premier B01', 16),
+('Endurance Pro', 16),
+('Professional', 16),
+('Aerospace', 16),
+('Colt', 16),
+('Top Time', 16),
+
+-- ============================================
+-- CHOPARD (17)
+-- ============================================
+('Alpine Eagle', 17),
+('Alpine Eagle XL', 17),
+('L.U.C', 17),
+('L.U.C XP', 17),
+('L.U.C Perpetual', 17),
+('Mille Miglia', 17),
+('Happy Sport', 17),
+('Happy Diamonds', 17),
+('Superfast', 17),
+('Classic Racing', 17),
+('Imperiale', 17),
+
+-- ============================================
+-- GIRARD-PERREGAUX (18)
+-- ============================================
+('Laureato', 18),
+('Laureato Chronograph', 18),
+('Laureato Skeleton', 18),
+('1966', 18),
+('Vintage 1945', 18),
+('Cat''s Eye', 18),
+('Bridges', 18),
+('Three Bridges', 18),
+('Tourbillon', 18),
+
+-- ============================================
+-- ULYSSE NARDIN (19)
+-- ============================================
+('Marine', 19),
+('Marine Chronometer', 19),
+('Marine Torpilleur', 19),
+('Diver', 19),
+('Diver X', 19),
+('Executive', 19),
+('Freak', 19),
+('Freak X', 19),
+('Classico', 19),
+('Blast', 19),
+
+-- ============================================
+-- PIAGET (20)
+-- ============================================
+('Altiplano', 20),
+('Altiplano Ultimate', 20),
+('Polo', 20),
+('Polo S', 20),
+('Polo Date', 20),
+('Polo Skeleton', 20),
+('Limelight', 20),
+('Limelight Gala', 20),
+('Possession', 20),
+('Emperador', 20),
+
+-- ============================================
+-- BAUME & MERCIER (21)
+-- ============================================
+('Riviera', 21),
+('Clifton', 21),
+('Clifton Baumatic', 21),
+('Classima', 21),
+('Hampton', 21),
+('Promesse', 21),
+
+-- ============================================
+-- LONGINES (22)
+-- ============================================
+('Master Collection', 22),
+('HydroConquest', 22),
+('Conquest', 22),
+('Spirit', 22),
+('Spirit Zulu Time', 22),
+('Heritage', 22),
+('Legend Diver', 22),
+('DolceVita', 22),
+('Flagship', 22),
+('Elegant Collection', 22),
+('Record', 22),
+('Ultra-Chron', 22),
+
+-- ============================================
+-- TUDOR (23)
+-- ============================================
+('Black Bay', 23),
+('Black Bay 58', 23),
+('Black Bay GMT', 23),
+('Black Bay Pro', 23),
+('Black Bay Chrono', 23),
+('Black Bay Ceramic', 23),
+('Black Bay Bronze', 23),
+('Pelagos', 23),
+('Pelagos FXD', 23),
+('Pelagos 39', 23),
+('Ranger', 23),
+('Royal', 23),
+('1926', 23),
+('Style', 23),
+('Glamour', 23),
+
+-- ============================================
+-- ORIS (24)
+-- ============================================
+('Divers Sixty-Five', 24),
+('Aquis', 24),
+('Aquis Date', 24),
+('Aquis GMT', 24),
+('Aquis Depth Gauge', 24),
+('Big Crown', 24),
+('Big Crown Pointer Date', 24),
+('Big Crown ProPilot', 24),
+('Artelier', 24),
+('ProPilot X', 24),
+
+-- ============================================
+-- BELL & ROSS (25)
+-- ============================================
+('BR 01', 25),
+('BR 03', 25),
+('BR 05', 25),
+('BR V1', 25),
+('BR V2', 25),
+('BR V3', 25),
+('BR X1', 25),
+('Vintage', 25),
+
+-- ============================================
+-- TISSOT (29)
+-- ============================================
+('PRX', 29),
+('PRX Powermatic 80', 29),
+('Gentleman', 29),
+('Gentleman Powermatic 80', 29),
+('Seastar', 29),
+('Seastar 1000', 29),
+('Seastar 2000', 29),
+('Le Locle', 29),
+('Visodate', 29),
+('Heritage', 29),
+('T-Race', 29),
+('T-Touch', 29),
+('Supersport', 29),
+('Chrono XL', 29),
+('Chemin des Tourelles', 29),
+('Carson', 29),
+('Classic Dream', 29),
+('Everytime', 29),
+
+-- ============================================
+-- HAMILTON (32)
+-- ============================================
+('Khaki Field', 32),
+('Khaki Field Mechanical', 32),
+('Khaki Field Automatic', 32),
+('Khaki Aviation', 32),
+('Khaki Aviation Pilot', 32),
+('Khaki Navy', 32),
+('Khaki Navy Scuba', 32),
+('Jazzmaster', 32),
+('Jazzmaster Open Heart', 32),
+('Jazzmaster Viewmatic', 32),
+('Ventura', 32),
+('Ventura Elvis80', 32),
+('American Classic', 32),
+('Intra-Matic', 32),
+('PSR', 32),
+
+-- ============================================
+-- SEIKO (46)
+-- ============================================
+('Prospex', 46),
+('Prospex Speedtimer', 46),
+('Prospex Diver', 46),
+('Prospex Alpinist', 46),
+('Prospex LX', 46),
+('Presage', 46),
+('Presage Sharp Edged', 46),
+('Presage Cocktail Time', 46),
+('Astron', 46),
+('Astron GPS Solar', 46),
+('5 Sports', 46),
+('King Seiko', 46),
+('Seiko Selection', 46),
+
+-- ============================================
+-- GRAND SEIKO (47)
+-- ============================================
+('Heritage Collection', 47),
+('Elegance Collection', 47),
+('Sport Collection', 47),
+('Evolution 9', 47),
+('Spring Drive', 47),
+('Snowflake', 47),
+
+-- ============================================
+-- CITIZEN (48)
+-- ============================================
+('Promaster', 48),
+('Promaster Diver', 48),
+('Promaster Sky', 48),
+('Promaster Land', 48),
+('Eco-Drive', 48),
+('Eco-Drive One', 48),
+('Attesa', 48),
+('Exceed', 48),
+('Satellite Wave', 48),
+('Series 8', 48),
+('Tsuyosa', 48),
+
+-- ============================================
+-- CASIO (49)
+-- ============================================
+('Edifice', 49),
+('Oceanus', 49),
+('Pro Trek', 49),
+('Wave Ceptor', 49),
+('Vintage', 49),
+('Databank', 49),
+
+-- ============================================
+-- G-SHOCK (50)
+-- ============================================
+('GA-2100', 50),
+('DW-5600', 50),
+('DW-6900', 50),
+('GW-M5610', 50),
+('GM-2100', 50),
+('GMW-B5000', 50),
+('MR-G', 50),
+('MT-G', 50),
+('Mudmaster', 50),
+('Rangeman', 50),
+('Frogman', 50),
+('Gravitymaster', 50),
+('Gulfmaster', 50),
+('G-Steel', 50),
+('CasiOak', 50),
+
+-- ============================================
+-- ORIENT (51)
+-- ============================================
+('Bambino', 51),
+('Kamasu', 51),
+('Mako', 51),
+('Ray', 51),
+('Triton', 51),
+('Sun & Moon', 51),
+('Star', 51),
+('Defender', 51),
+('Symphony', 51),
+('Contemporary', 51),
+
+-- ============================================
+-- GLASHÜTTE ORIGINAL (54)
+-- ============================================
+('Senator', 54),
+('Senator Excellence', 54),
+('Senator Chronometer', 54),
+('PanoMatic', 54),
+('PanoMaticLunar', 54),
+('PanoInverse', 54),
+('Seventies', 54),
+('SeaQ', 54),
+('Spezialist', 54),
+('Lady Serenade', 54),
+('Pavonina', 54),
+
+-- ============================================
+-- NOMOS (55)
+-- ============================================
+('Tangente', 55),
+('Tangente Neomatik', 55),
+('Orion', 55),
+('Orion Neomatik', 55),
+('Club', 55),
+('Club Sport', 55),
+('Club Campus', 55),
+('Ludwig', 55),
+('Metro', 55),
+('Tetra', 55),
+('Zürich', 55),
+('Ahoi', 55),
+('Autobahn', 55),
+
+-- ============================================
+-- JUNGHANS (56)
+-- ============================================
+('Max Bill', 56),
+('Max Bill Automatic', 56),
+('Max Bill Chronoscope', 56),
+('Meister', 56),
+('Meister Pilot', 56),
+('Meister Chronoscope', 56),
+('Form', 56),
+('Force', 56),
+('1972', 56),
+
+-- ============================================
+-- SINN (57)
+-- ============================================
+('104', 57),
+('104 St Sa', 57),
+('144', 57),
+('356', 57),
+('556', 57),
+('556 A', 57),
+('556 I', 57),
+('757', 57),
+('857', 57),
+('903', 57),
+('EZM', 57),
+('EZM 3', 57),
+('U1', 57),
+('U2', 57),
+('U50', 57),
+('UX', 57),
+
+-- ============================================
+-- TIMEX (66)
+-- ============================================
+('Marlin', 66),
+('Marlin Automatic', 66),
+('Q Timex', 66),
+('Waterbury', 66),
+('Expedition', 66),
+('Expedition North', 66),
+('Weekender', 66),
+('Easy Reader', 66),
+('MK1', 66),
+('Ironman', 66),
+('M79', 66),
+('Navi', 66),
+('Standard', 66),
+
+-- ============================================
+-- BULOVA (67)
+-- ============================================
+('Precisionist', 67),
+('Lunar Pilot', 67),
+('Surveyor', 67),
+('Sutton', 67),
+('Classic', 67),
+('Marine Star', 67),
+('Archive', 67),
+('Curv', 67),
+('Accutron', 67),
+('Mil-Ships', 67),
+
+-- ============================================
+-- YEMA (75)
+-- ============================================
+('Superman', 75),
+('Superman French Air Force', 75),
+('Superman Heritage', 75),
+('Navygraf', 75),
+('Flygraf', 75),
+('Spacegraf', 75),
+('Rallygraf', 75),
+('Wristmaster', 75),
+
+-- ============================================
+-- BALTIC (78)
+-- ============================================
+('Aquascaphe', 78),
+('Aquascaphe GMT', 78),
+('Aquascaphe Dual Crown', 78),
+('Bicompax', 78),
+('Tricompax', 78),
+('HMS', 78),
+('MR01', 78),
+
+-- ============================================
+-- BREMONT (83)
+-- ============================================
+('MBII', 83),
+('MBIII', 83),
+('Solo', 83),
+('Supermarine', 83),
+('Supermarine S300', 83),
+('Supermarine S500', 83),
+('ALT1-C', 83),
+('ALT1-P', 83),
+('ALT1-Z', 83),
+('ALT1-ZT', 83),
+('Airco', 83),
+('Boeing', 83),
+
+-- ============================================
+-- CHRISTOPHER WARD (84)
+-- ============================================
+('C60 Trident', 84),
+('C60 Trident Pro', 84),
+('C63 Sealander', 84),
+('C63 Sealander GMT', 84),
+('C65 Trident', 84),
+('C1 Moonglow', 84),
+('C9 Big Five', 84),
+
+-- ============================================
+-- BULGARI (89)
+-- ============================================
+('Octo', 89),
+('Octo Finissimo', 89),
+('Octo Roma', 89),
+('Serpenti', 89),
+('Serpenti Seduttori', 89),
+('BVLGARI BVLGARI', 89),
+('Lvcea', 89),
+('Divas'' Dream', 89),
+('Aluminium', 89),
+
+-- ============================================
+-- RICHARD MILLE (34)
+-- ============================================
+('RM 010', 34),
+('RM 011', 34),
+('RM 027', 34),
+('RM 035', 34),
+('RM 055', 34),
+('RM 67-01', 34),
+('RM 67-02', 34),
+('RM 69', 34),
+
+-- ============================================
+-- F.P. JOURNE (40)
+-- ============================================
+('Chronomètre Bleu', 40),
+('Chronomètre Souverain', 40),
+('Octa', 40),
+('Tourbillon Souverain', 40),
+('Resonance', 40),
+('Centigraphe', 40),
+('Elegante', 40);
 DROP TABLE IF EXISTS `watch_has_cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
