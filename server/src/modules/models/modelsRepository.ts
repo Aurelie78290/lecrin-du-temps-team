@@ -4,6 +4,7 @@ import type { Result, Rows } from "../../../database/client";
 interface Models {
   id: number;
   name: string;
+  brand_id: string;
 }
 
 class modelsRepository {
@@ -21,7 +22,7 @@ class modelsRepository {
   async readAll() {
     const [rows] = await databaseClient.query<Rows & Models[]>(
       `
-      SELECT brand_id, name FROM model;
+      SELECT brand_id, name, id FROM model ORDER BY name;
         
       `,
     );
