@@ -117,7 +117,12 @@ CREATE TABLE `case_material` (
   PRIMARY KEY (`idcase_material`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO case_material (case_material_name) VALUES
+('Acier inoxydable'),
+('Titane'),
+('Or jaune'),
+('Or rose'),
+('Céramique');
 --
 -- Dumping data for table `case_material`
 --
@@ -152,7 +157,10 @@ LOCK TABLES `certificate_id` WRITE;
 /*!40000 ALTER TABLE `certificate_id` DISABLE KEYS */;
 /*!40000 ALTER TABLE `certificate_id` ENABLE KEYS */;
 UNLOCK TABLES;
-
+INSERT INTO certificate_id (certificate_name, photo_certif_idphoto_certif) VALUES
+('Certificat d''authenticité', 1),
+('Papiers d''origine', 1),
+('Sans certificat', 1);
 --
 -- Table structure for table `clasp_type`
 --
@@ -166,7 +174,11 @@ CREATE TABLE `clasp_type` (
   PRIMARY KEY (`idclasp_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO clasp_type (clasp_type_name) VALUES
+('Boucle déployante'),
+('Boucle ardillon'),
+('Fermoir papillon'),
+('Fermoir pliant');
 --
 -- Dumping data for table `clasp_type`
 --
@@ -189,7 +201,11 @@ CREATE TABLE `dial_finish` (
   PRIMARY KEY (`iddial_finish`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO dial_finish (dial_finish_name) VALUES
+('Soleillé'),
+('Mat'),
+('Laqué'),
+('Guilloché');
 --
 -- Dumping data for table `dial_finish`
 --
@@ -253,7 +269,11 @@ LOCK TABLES `functions` WRITE;
 /*!40000 ALTER TABLE `functions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `functions` ENABLE KEYS */;
 UNLOCK TABLES;
-
+INSERT INTO functions (function_name) VALUES
+('Heure / minute / seconde'),
+('Chronographe'),
+('GMT'),
+('Phase de lune');
 --
 -- Table structure for table `hour_maker_type`
 --
@@ -267,7 +287,12 @@ CREATE TABLE `hour_maker_type` (
   PRIMARY KEY (`idhour_maker_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO hour_maker_type (hour_maker_type_name) VALUES
+('Index bâtons'),
+('Chiffres arabes'),
+('Chiffres romains'),
+('Index ronds'),
+('Mixte');
 --
 -- Dumping data for table `hour_maker_type`
 --
@@ -341,7 +366,10 @@ CREATE TABLE `movement_type` (
   PRIMARY KEY (`idmovement_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO movement_type (movement_type) VALUES
+('Automatique'),
+('Manuel'),
+('Quartz');
 --
 -- Dumping data for table `movement_type`
 --
@@ -505,7 +533,14 @@ CREATE TABLE `photo_certif` (
   PRIMARY KEY (`idphoto_certif`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO photo_certif (
+  url_photo_certif1,
+  url_photo_certif2,
+  url_photo_certif3,
+  url_photo_certif4,
+  url_photo_certif5
+) VALUES
+(NULL, NULL, NULL, NULL, NULL);
 --
 -- Dumping data for table `photo_certif`
 --
@@ -562,7 +597,12 @@ CREATE TABLE `strap_material` (
   PRIMARY KEY (`idstrap_material`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO strap_material (strap_material_name) VALUES
+('Acier'),
+('Cuir'),
+('Caoutchouc'),
+('Textile'),
+('Titane');
 --
 -- Dumping data for table `strap_material`
 --
@@ -597,6 +637,9 @@ CREATE TABLE `user` (
   `user_photo` varchar(2048) DEFAULT NULL,
   `user_describe` longtext,
   `password` varchar(150) DEFAULT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`iduser`),
   UNIQUE KEY `e_mail_UNIQUE` (`e_mail`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
@@ -609,13 +652,13 @@ TRUNCATE TABLE `user`;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role, user_describe) 
-VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisberthome@gmail.com','admin', "Historienne de l'art, elle veille à la qualité des articles et au respect de l'héritage des manufactures. Elle déniche les pièces rares."),
-('Joachim','Masson','1980-01-01','Expert Technique & Authentification','joachim.masson.17@gmail.com','admin', "Ancien horloger certifié, il est le garant de la véracité technique et aide à identifier les contrefaçons (le 'LC' pour Legit Check)."),
-('Aurélie','Dumotier','1986-02-14','Responsable Communauté & Évenements','aurelie.dumotier@gmail.com','admin', "Spécialiste en communication de luxe, elle gère les membres VIP et organise les rencontres physiques entre passionnés (les 'GTG')."),
-('Thomas','P','2000-01-01','Développeur & Webmaster','thomas.p@gmail.com','admin', "Passionné de 'Toolwatches', il assure la fluidité du site, la sécurité des transactions et l'optimisation de l'interface utilisateur."),
-('Mathieu', 'H', '2000-01-01', 'Analyste Marché & Cote', 'mathieu.h@gmail.com','admin', "Expert en économie, il suit l'évolution des prix et les ventes aux enchères pour conseiller les membres sur l'investissement horloger."),
-('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenriats', 'romain.debas@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.");
+INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role, user_describe, created_at) 
+VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisberthome@gmail.com','admin', "Historienne de l'art, elle veille à la qualité des articles et au respect de l'héritage des manufactures. Elle déniche les pièces rares.", '2025-12-15 10:30:00'),
+('Joachim','Masson','1980-01-01','Expert Technique & Authentification','joachim.masson.17@gmail.com','admin', "Ancien horloger certifié, il est le garant de la véracité technique et aide à identifier les contrefaçons (le 'LC' pour Legit Check).", '2025-06-20 14:15:00'),
+('Aurélie','Dumotier','1986-02-14','Responsable Communauté & Évenements','aurelie.dumotier@gmail.com','admin', "Spécialiste en communication de luxe, elle gère les membres VIP et organise les rencontres physiques entre passionnés (les 'GTG').", '2025-09-22 14:15:00'),
+('Thomas','P','2000-01-01','Développeur & Webmaster','thomas.p@gmail.com','admin', "Passionné de 'Toolwatches', il assure la fluidité du site, la sécurité des transactions et l'optimisation de l'interface utilisateur.", '2025-10-20 16:45:00'),
+('Mathieu', 'H', '2000-01-01', 'Analyste Marché & Cote', 'mathieu.h@gmail.com','admin', "Expert en économie, il suit l'évolution des prix et les ventes aux enchères pour conseiller les membres sur l'investissement horloger.", '2025-11-08 11:10:00'),
+('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenriats', 'romain.debas@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.", '2026-01-02 08:30:00');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -629,8 +672,8 @@ DROP TABLE IF EXISTS `watch`;
 CREATE TABLE `watch` (
   `idwatch` int NOT NULL AUTO_INCREMENT,
   `user_id` int DEFAULT NULL,
-  `brand` varchar(45) NOT NULL,
-  `model` varchar(100) NOT NULL,
+  `brand_id` int NOT NULL,
+  `model_id` int NOT NULL,
   `ref_no` int DEFAULT NULL,
   `production_year` date DEFAULT NULL,
   `is_limited_edition` tinyint DEFAULT NULL,
@@ -662,6 +705,8 @@ CREATE TABLE `watch` (
   `order_archive_id` int NULL,
   `order_archive_watch_id` int NULL,
   PRIMARY KEY (`idwatch`),
+  KEY `fk_watch_brand_idx` (`brand_id`),
+  KEY `fk_watch_model_idx` (`model_id`),
   KEY `fk_watch_market_data1_idx` (`market_data_id`),
   KEY `fk_watch_case_material1_idx` (`case_material_id`),
   KEY `fk_watch_dial_finish1_idx` (`dial_finish_id`),
@@ -672,6 +717,8 @@ CREATE TABLE `watch` (
   KEY `fk_watch_certificate_id1_idx` (`certificate_id`),
   KEY `fk_watch_movement_type1_idx` (`movement_type_id`),
   KEY `fk_watch_functions1_idx` (`functions_id`),
+  CONSTRAINT `fk_watch_brand` FOREIGN KEY (`brand_id`) REFERENCES `brand`(`id`),
+  CONSTRAINT `fk_watch_model` FOREIGN KEY (`model_id`) REFERENCES `model`(`id`),
   CONSTRAINT `fk_watch_case_material1` FOREIGN KEY (`case_material_id`) REFERENCES `case_material` (`idcase_material`),
   CONSTRAINT `fk_watch_certificate_id1` FOREIGN KEY (`certificate_id`) REFERENCES `certificate_id` (`idcertificate_id`),
   CONSTRAINT `fk_watch_clasp_type1` FOREIGN KEY (`clasp_type_id`) REFERENCES `clasp_type` (`idclasp_type`),
@@ -694,8 +741,8 @@ LOCK TABLES `watch` WRITE;
 
 INSERT INTO watch (
   user_id,
-  brand,
-  model,
+  brand_id,
+  model_id,
   ref_no,
   production_year,
   is_limited_edition,
@@ -728,207 +775,934 @@ INSERT INTO watch (
   order_archive_watch_id
 ) VALUES
 
--- 1 Rolex Submariner No-Date
-(1,'Rolex','Submariner No-Date',124060,'2022-01-01',0,NULL,1,'Homme','En vente',12450,
-1,41,12,30,'Noir',1,1,1,'Acier',1,21,'Très bon état',1,1,'3230',1,70,4,31,1,1,1),
+-- 1 Rolex Submariner (brand_id=1, model_id=1)
+(1, 1, 1, 124060, '2022-01-01', 0, NULL, 1, 'Homme', 'En vente', 12450,
+1, 41, 12, 30, 'Noir', 1, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 1, '3230', 1, 70, 4, 31, 1, 1, 1),
 
--- 2 Rolex GMT-Master II Batman
-(1,'Rolex','GMT-Master II Batman',126710,'2021-01-01',0,NULL,2,'Homme','En vente',15990,
-1,40,12,10,'Noir',1,1,1,'Acier',1,20,'Excellent état',1,1,'3285',3,70,4,31,1,1,1),
+-- 2 Rolex GMT-Master II (brand_id=1, model_id=7)
+(1, 1, 7, 126710, '2021-01-01', 0, NULL, 2, 'Homme', 'En vente', 15990,
+1, 40, 12, 10, 'Noir', 1, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, 1, '3285', 3, 70, 4, 31, 1, 1, 1),
 
--- 3 Omega Speedmaster Moonwatch
-(1,'Omega','Speedmaster Moonwatch',31042,'2020-01-01',0,NULL,3,'Homme','En vente',6750,
-1,42,13,5,'Noir',1,2,1,'Acier',1,20,'Très bon état',1,2,'3861',2,50,3,26,1,1,1),
+-- 3 Omega Speedmaster Moonwatch (brand_id=9, model_id=93)
+(1, 9, 93, 31042, '2020-01-01', 0, NULL, 3, 'Homme', 'En vente', 6750,
+1, 42, 13, 5, 'Noir', 1, 2, 1, 'Acier', 1, 20, 'Très bon état', 1, 2, '3861', 2, 50, 3, 26, 1, 1, 1),
 
--- 4 Omega Seamaster Diver 300M
-(1,'Omega','Seamaster Diver 300M',21042,'2022-01-01',0,NULL,4,'Homme','En vente',4650,
-1,42,14,30,'Noir',2,1,1,'Acier',1,20,'Excellent état',1,1,'8800',1,55,3,35,1,1,1),
+-- 4 Omega Seamaster Diver 300M (brand_id=9, model_id=99)
+(1, 9, 99, 21042, '2022-01-01', 0, NULL, 4, 'Homme', 'En vente', 4650,
+1, 42, 14, 30, 'Noir', 2, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, 1, '8800', 1, 55, 3, 35, 1, 1, 1),
 
--- 5 Cartier Santos Medium
-(1,'Cartier','Santos Medium',4848,'2023-01-01',0,NULL,5,'Unisexe','En vente',6250,
-1,35,9,10,'Argent',1,3,1,'Acier',1,18,'Excellent état',1,1,'1847 MC',1,42,4,23,1,1,1),
+-- 5 Cartier Santos (brand_id=10, model_id=109)
+(1, 10, 109, 4848, '2023-01-01', 0, NULL, 5, 'Unisexe', 'En vente', 6250,
+1, 35, 9, 10, 'Argent', 1, 3, 1, 'Acier', 1, 18, 'Excellent état', 1, 1, '1847 MC', 1, 42, 4, 23, 1, 1, 1),
 
--- 6 Cartier Tank Must Large
-(1,'Cartier','Tank Must Large',9992,'2022-01-01',0,NULL,6,'Unisexe','En vente',3350,
-1,34,7,3,'Argent',3,3,2,'Noir',2,19,'Très bon état',1,3,'Quartz Cartier',1,NULL,NULL,NULL,1,1,1),
+-- 6 Cartier Tank Must (brand_id=10, model_id=116)
+(1, 10, 116, 9992, '2022-01-01', 0, NULL, 6, 'Unisexe', 'En vente', 3350,
+1, 34, 7, 3, 'Argent', 3, 3, 2, 'Noir', 2, 19, 'Très bon état', 1, 3, 'Quartz Cartier', 1, NULL, NULL, NULL, 1, 1, 1),
 
--- 7 Seiko Prospex Diver
-(1,'Seiko','Prospex Diver 200m',1431,'2021-01-01',0,NULL,7,'Homme','En vente',850,
-1,41,13,20,'Gris',1,1,1,'Acier',1,20,'Bon état',1,1,'6R35',1,70,3,24,1,1,1),
+-- 7 Seiko Prospex Diver (brand_id=46, model_id=330)
+(1, 46, 330, 1431, '2021-01-01', 0, NULL, 7, 'Homme', 'En vente', 850,
+1, 41, 13, 20, 'Gris', 1, 1, 1, 'Acier', 1, 20, 'Bon état', 1, 1, '6R35', 1, 70, 3, 24, 1, 1, 1),
 
--- 8 Seiko 5 Sports GMT
-(1,'Seiko','5 Sports GMT',3003,'2023-01-01',0,NULL,8,'Homme','En vente',420,
-1,43,14,10,'Noir',2,2,1,'Acier',1,22,'Très bon état',1,1,'4R34',3,41,3,24,1,1,1),
+-- 8 Seiko 5 Sports (brand_id=46, model_id=338)
+(1, 46, 338, 3003, '2023-01-01', 0, NULL, 8, 'Homme', 'En vente', 420,
+1, 43, 14, 10, 'Noir', 2, 2, 1, 'Acier', 1, 22, 'Très bon état', 1, 1, '4R34', 3, 41, 3, 24, 1, 1, 1),
 
--- 9 Tudor Black Bay 58
-(1,'Tudor','Black Bay 58',9030,'2020-01-01',0,NULL,9,'Homme','En vente',3150,
-1,39,12,20,'Noir',1,1,1,'Acier',1,20,'Très bon état',1,1,'MT5402',1,70,4,27,1,1,1),
+-- 9 Tudor Black Bay 58 (brand_id=23, model_id=195)
+(1, 23, 195, 9030, '2020-01-01', 0, NULL, 9, 'Homme', 'En vente', 3150,
+1, 39, 12, 20, 'Noir', 1, 1, 1, 'Acier', 1, 20, 'Très bon état', 1, 1, 'MT5402', 1, 70, 4, 27, 1, 1, 1),
 
--- 10 Tudor Black Bay 41
-(1,'Tudor','Black Bay 41 Burgundy',7941,'2023-01-01',0,NULL,10,'Homme','En vente',3850,
-1,41,14,20,'Bordeaux',2,1,1,'Acier',1,21,'Excellent état',1,1,'MT5602',1,70,4,25,1,1,1),
+-- 10 Tudor Black Bay (brand_id=23, model_id=194)
+(1, 23, 194, 7941, '2023-01-01', 0, NULL, 10, 'Homme', 'En vente', 3850,
+1, 41, 14, 20, 'Bordeaux', 2, 1, 1, 'Acier', 1, 21, 'Excellent état', 1, 1, 'MT5602', 1, 70, 4, 25, 1, 1, 1),
 
--- 11 TAG Heuer Carrera Chronograph
-(1,'TAG Heuer','Carrera Chronograph 42',2010,'2021-01-01',0,NULL,11,'Homme','En vente',4650,
-1,42,14,10,'Bleu',2,1,1,'Acier',1,22,'Très bon état',1,1,'Heuer 02',2,80,4,33,1,1,1),
+-- 11 TAG Heuer Carrera Chronograph (brand_id=15, model_id=153)
+(1, 15, 153, 2010, '2021-01-01', 0, NULL, 11, 'Homme', 'En vente', 4650,
+1, 42, 14, 10, 'Bleu', 2, 1, 1, 'Acier', 1, 22, 'Très bon état', 1, 1, 'Heuer 02', 2, 80, 4, 33, 1, 1, 1),
 
--- 12 TAG Heuer Formula 1 Quartz
-(1,'TAG Heuer','Formula 1 Quartz',1110,'2019-01-01',0,NULL,12,'Homme','En vente',1100,
-1,41,12,20,'Noir',1,2,1,'Acier',1,20,'Bon état',1,3,'Quartz',1,NULL,NULL,NULL,1,1,1),
+-- 12 TAG Heuer Formula 1 (brand_id=15, model_id=160)
+(1, 15, 160, 1110, '2019-01-01', 0, NULL, 12, 'Homme', 'En vente', 1100,
+1, 41, 12, 20, 'Noir', 1, 2, 1, 'Acier', 1, 20, 'Bon état', 1, 3, 'Quartz', 1, NULL, NULL, NULL, 1, 1, 1),
 
--- 13 IWC Portugieser Chronograph
-(1,'IWC','Portugieser Chronograph',3716,'2022-01-01',0,NULL,13,'Homme','En vente',6150,
-1,41,13,3,'Vert',2,1,2,'Vert',2,20,'Excellent état',1,1,'69355',2,46,4,33,1,1,1),
+-- 13 IWC Portugieser Chronograph (brand_id=11, model_id=127)
+(1, 11, 127, 3716, '2022-01-01', 0, NULL, 13, 'Homme', 'En vente', 6150,
+1, 41, 13, 3, 'Vert', 2, 1, 2, 'Vert', 2, 20, 'Excellent état', 1, 1, '69355', 2, 46, 4, 33, 1, 1, 1),
 
--- 14 IWC Pilot Mark XX
-(1,'IWC','Pilot Mark XX',3283,'2023-01-01',0,NULL,14,'Homme','En vente',4950,
-1,40,11,10,'Noir',1,2,2,'Brun',2,20,'Excellent état',1,1,'32111',1,120,4,21,1,1,1),
+-- 14 IWC Pilot Mark XX (brand_id=11, model_id=131)
+(1, 11, 131, 3283, '2023-01-01', 0, NULL, 14, 'Homme', 'En vente', 4950,
+1, 40, 11, 10, 'Noir', 1, 2, 2, 'Brun', 2, 20, 'Excellent état', 1, 1, '32111', 1, 120, 4, 21, 1, 1, 1),
 
--- 15 Breitling Navitimer B01
-(1,'Breitling','Navitimer B01',1341,'2020-01-01',0,NULL,15,'Homme','En vente',6850,
-1,43,14,3,'Noir',4,4,1,'Acier',1,22,'Très bon état',1,1,'B01',2,70,4,47,1,1,1),
+-- 15 Breitling Navitimer B01 (brand_id=16, model_id=167)
+(1, 16, 167, 1341, '2020-01-01', 0, NULL, 15, 'Homme', 'En vente', 6850,
+1, 43, 14, 3, 'Noir', 4, 4, 1, 'Acier', 1, 22, 'Très bon état', 1, 1, 'B01', 2, 70, 4, 47, 1, 1, 1),
 
--- 16 Breitling Superocean 44
-(1,'Breitling','Superocean 44',1910,'2021-01-01',0,NULL,16,'Homme','En vente',3250,
-1,44,13,100,'Bleu',2,2,1,'Acier',1,22,'Très bon état',1,1,'Breitling 17',1,38,4,26,1,1,1),
+-- 16 Breitling Superocean (brand_id=16, model_id=171)
+(1, 16, 171, 1910, '2021-01-01', 0, NULL, 16, 'Homme', 'En vente', 3250,
+1, 44, 13, 100, 'Bleu', 2, 2, 1, 'Acier', 1, 22, 'Très bon état', 1, 1, 'Breitling 17', 1, 38, 4, 26, 1, 1, 1),
 
--- 17 Grand Seiko Snowflake
-(1,'Grand Seiko','Snowflake',211,'2018-01-01',0,NULL,17,'Homme','En vente',5350,
-2,41,13,10,'Blanc',4,1,3,'Titane',1,20,'Très bon état',1,1,'9R65',1,72,0,30,1,1,1),
+-- 17 Grand Seiko Snowflake (brand_id=47, model_id=346)
+(1, 47, 346, 211, '2018-01-01', 0, NULL, 17, 'Homme', 'En vente', 5350,
+2, 41, 13, 10, 'Blanc', 4, 1, 3, 'Titane', 1, 20, 'Très bon état', 1, 1, '9R65', 1, 72, 0, 30, 1, 1, 1),
 
--- 18 Grand Seiko Elegance GMT
-(1,'Grand Seiko','Elegance GMT',221,'2019-01-01',0,NULL,18,'Homme','En vente',3950,
-1,40,14,3,'Crème',3,4,2,'Brun',2,19,'Très bon état',1,1,'9S66',3,72,4,35,1,1,1),
+-- 18 Grand Seiko Elegance (brand_id=47, model_id=342)
+(1, 47, 342, 221, '2019-01-01', 0, NULL, 18, 'Homme', 'En vente', 3950,
+1, 40, 14, 3, 'Crème', 3, 4, 2, 'Brun', 2, 19, 'Très bon état', 1, 1, '9S66', 3, 72, 4, 35, 1, 1, 1),
 
--- 19 Longines Master Moonphase
-(1,'Longines','Master Moonphase',2628,'2020-01-01',0,NULL,19,'Homme','En vente',1850,
-1,40,11,3,'Argent',3,3,1,'Acier',1,21,'Bon état',1,1,'L899',4,64,3,21,1,1,1),
+-- 19 Longines Master Collection (brand_id=22, model_id=186)
+(1, 22, 186, 2628, '2020-01-01', 0, NULL, 19, 'Homme', 'En vente', 1850,
+1, 40, 11, 3, 'Argent', 3, 3, 1, 'Acier', 1, 21, 'Bon état', 1, 1, 'L899', 4, 64, 3, 21, 1, 1, 1),
 
--- 20 Longines HydroConquest
-(1,'Longines','HydroConquest 41',3781,'2022-01-01',0,NULL,20,'Homme','En vente',1350,
-1,41,12,30,'Vert',2,1,1,'Acier',1,21,'Très bon état',1,1,'L888',1,72,3,21,1,1,1);
-/*!40000 ALTER TABLE `watch` ENABLE KEYS */;
+-- 20 Longines HydroConquest (brand_id=22, model_id=187)
+(1, 22, 187, 3781, '2022-01-01', 0, NULL, 20, 'Homme', 'En vente', 1350,
+1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 1, 'L888', 1, 72, 3, 21, 1, 1, 1);
 UNLOCK TABLES;
 
 --
 -- Table structure for table `watch_has_cart`
 --
 
+DROP TABLE IF EXISTS `model`;
 DROP TABLE IF EXISTS `brand`;
 
 CREATE TABLE `brand` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   `name` VARCHAR(100) NOT NULL UNIQUE,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
-INSERT INTO brand (name) VALUES
+INSERT INTO brand (id, name) VALUES
 -- Luxe & Haute Horlogerie Suisse
-('Rolex'),
-('Patek Philippe'),
-('Audemars Piguet'),
-('Vacheron Constantin'),
-('A. Lange & Söhne'),
-('Jaeger-LeCoultre'),
-('Blancpain'),
-('Breguet'),
-('Omega'),
-('Cartier'),
-('IWC'),
-('Panerai'),
-('Zenith'),
-('Hublot'),
-('TAG Heuer'),
-('Breitling'),
-('Chopard'),
-('Girard-Perregaux'),
-('Ulysse Nardin'),
-('Piaget'),
-('Baume & Mercier'),
-('Longines'),
-('Tudor'),
-('Oris'),
-('Bell & Ross'),
-('Maurice Lacroix'),
-('Frederique Constant'),
-('Raymond Weil'),
-('Tissot'),
-('Mido'),
-('Certina'),
-('Hamilton'),
-('Rado'),
-('Richard Mille'),
-('MB&F'),
-('H. Moser & Cie'),
-('Arnold & Son'),
-('Speake-Marin'),
-('Laurent Ferrier'),
-('F.P. Journe'),
-('Greubel Forsey'),
-('De Bethune'),
-('Christophe Claret'),
-('HYT'),
-('Czapek'),
+(1, 'Rolex'),
+(2, 'Patek Philippe'),
+(3, 'Audemars Piguet'),
+(4, 'Vacheron Constantin'),
+(5, 'A. Lange & Söhne'),
+(6, 'Jaeger-LeCoultre'),
+(7, 'Blancpain'),
+(8, 'Breguet'),
+(9, 'Omega'),
+(10, 'Cartier'),
+(11, 'IWC'),
+(12, 'Panerai'),
+(13, 'Zenith'),
+(14, 'Hublot'),
+(15, 'TAG Heuer'),
+(16, 'Breitling'),
+(17, 'Chopard'),
+(18, 'Girard-Perregaux'),
+(19, 'Ulysse Nardin'),
+(20, 'Piaget'),
+(21, 'Baume & Mercier'),
+(22, 'Longines'),
+(23, 'Tudor'),
+(24, 'Oris'),
+(25, 'Bell & Ross'),
+(26, 'Maurice Lacroix'),
+(27, 'Frederique Constant'),
+(28, 'Raymond Weil'),
+(29, 'Tissot'),
+(30, 'Mido'),
+(31, 'Certina'),
+(32, 'Hamilton'),
+(33, 'Rado'),
+(34, 'Richard Mille'),
+(35, 'MB&F'),
+(36, 'H. Moser & Cie'),
+(37, 'Arnold & Son'),
+(38, 'Speake-Marin'),
+(39, 'Laurent Ferrier'),
+(40, 'F.P. Journe'),
+(41, 'Greubel Forsey'),
+(42, 'De Bethune'),
+(43, 'Christophe Claret'),
+(44, 'HYT'),
+(45, 'Czapek'),
 
 -- Japonaises
-('Seiko'),
-('Grand Seiko'),
-('Citizen'),
-('Casio'),
-('G-Shock'),
-('Orient'),
-('Minase'),
-('Credor'),
+(46, 'Seiko'),
+(47, 'Grand Seiko'),
+(48, 'Citizen'),
+(49, 'Casio'),
+(50, 'G-Shock'),
+(51, 'Orient'),
+(52, 'Minase'),
+(53, 'Credor'),
 
 -- Allemandes
-('Glashütte Original'),
-('Nomos'),
-('Junghans'),
-('Sinn'),
-('Stowa'),
-('MeisterSinger'),
-('Mühle-Glashütte'),
-('Tutima'),
-('Laco'),
-('Junkers'),
-('Zeppelin'),
-('Hanhart'),
+(54, 'Glashütte Original'),
+(55, 'Nomos'),
+(56, 'Junghans'),
+(57, 'Sinn'),
+(58, 'Stowa'),
+(59, 'MeisterSinger'),
+(60, 'Mühle-Glashütte'),
+(61, 'Tutima'),
+(62, 'Laco'),
+(63, 'Junkers'),
+(64, 'Zeppelin'),
+(65, 'Hanhart'),
 
 -- Américaines
-('Timex'),
-('Bulova'),
-('Shinola'),
-('Weiss'),
-('RGM'),
-('Vortic'),
-('Marathon'),
-('Ball'),
+(66, 'Timex'),
+(67, 'Bulova'),
+(68, 'Shinola'),
+(69, 'Weiss'),
+(70, 'RGM'),
+(71, 'Vortic'),
+(72, 'Marathon'),
+(73, 'Ball'),
 
 -- Françaises
-('Pequignet'),
-('Yema'),
-('Herbelin'),
-('Lip'),
-('Baltic'),
-('Routine'),
-('Briston'),
-('Pierre Lannier'),
-('March LA.B'),
+(74, 'Pequignet'),
+(75, 'Yema'),
+(76, 'Herbelin'),
+(77, 'Lip'),
+(78, 'Baltic'),
+(79, 'Routine'),
+(80, 'Briston'),
+(81, 'Pierre Lannier'),
+(82, 'March LA.B'),
 
 -- Britanniques
-('Bremont'),
-('Christopher Ward'),
-('Pinion'),
-('Fears'),
-('Vertex'),
-('Schofield'),
+(83, 'Bremont'),
+(84, 'Christopher Ward'),
+(85, 'Pinion'),
+(86, 'Fears'),
+(87, 'Vertex'),
+(88, 'Schofield'),
 
 -- Italiennes
-('Bulgari'),
-('Anonimo'),
-('U-Boat'),
-('Locman');
+(89, 'Bulgari'),
+(90, 'Anonimo'),
+(91, 'U-Boat'),
+(92, 'Locman');
 
+CREATE TABLE `model` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `brand_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`brand_id`) REFERENCES `brand`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+INSERT INTO model (name, brand_id) VALUES
+-- ============================================
+-- ROLEX (1)
+-- ============================================
+('Submariner', 1),
+('Submariner Date', 1),
+('Daytona', 1),
+('Datejust', 1),
+('Datejust 36', 1),
+('Datejust 41', 1),
+('GMT-Master II', 1),
+('Explorer', 1),
+('Explorer II', 1),
+('Sea-Dweller', 1),
+('Deepsea', 1),
+('Air-King', 1),
+('Oyster Perpetual', 1),
+('Oyster Perpetual 36', 1),
+('Oyster Perpetual 41', 1),
+('Sky-Dweller', 1),
+('Yacht-Master', 1),
+('Yacht-Master II', 1),
+('Milgauss', 1),
+('Cellini', 1),
+('Cellini Moonphase', 1),
+('Day-Date', 1),
+('Day-Date 36', 1),
+('Day-Date 40', 1),
+('Lady-Datejust', 1),
+('Pearlmaster', 1),
+
+-- ============================================
+-- PATEK PHILIPPE (2)
+-- ============================================
+('Nautilus', 2),
+('Nautilus 5711', 2),
+('Nautilus 5712', 2),
+('Nautilus Chronograph', 2),
+('Aquanaut', 2),
+('Aquanaut Luce', 2),
+('Calatrava', 2),
+('Grand Complications', 2),
+('Perpetual Calendar', 2),
+('World Time', 2),
+('Annual Calendar', 2),
+('Twenty~4', 2),
+('Golden Ellipse', 2),
+('Gondolo', 2),
+('Complications', 2),
+
+-- ============================================
+-- AUDEMARS PIGUET (3)
+-- ============================================
+('Royal Oak', 3),
+('Royal Oak 15500', 3),
+('Royal Oak Jumbo', 3),
+('Royal Oak Chronograph', 3),
+('Royal Oak Offshore', 3),
+('Royal Oak Offshore Diver', 3),
+('Royal Oak Offshore Chronograph', 3),
+('Royal Oak Perpetual Calendar', 3),
+('Royal Oak Tourbillon', 3),
+('Code 11.59', 3),
+('Millenary', 3),
+('Jules Audemars', 3),
+
+-- ============================================
+-- VACHERON CONSTANTIN (4)
+-- ============================================
+('Overseas', 4),
+('Overseas Chronograph', 4),
+('Overseas Dual Time', 4),
+('Patrimony', 4),
+('Patrimony Perpetual Calendar', 4),
+('Traditionnelle', 4),
+('Historiques', 4),
+('FiftySix', 4),
+('Égérie', 4),
+('Métiers d''Art', 4),
+('Les Cabinotiers', 4),
+
+-- ============================================
+-- A. LANGE & SÖHNE (5)
+-- ============================================
+('Lange 1', 5),
+('Lange 1 Daymatic', 5),
+('Lange 1 Moon Phase', 5),
+('Saxonia', 5),
+('Saxonia Thin', 5),
+('Saxonia Outsize Date', 5),
+('Zeitwerk', 5),
+('Datograph', 5),
+('Datograph Perpetual', 5),
+('1815', 5),
+('1815 Chronograph', 5),
+('Richard Lange', 5),
+('Odysseus', 5),
+
+-- ============================================
+-- JAEGER-LECOULTRE (6)
+-- ============================================
+('Reverso', 6),
+('Reverso Classic', 6),
+('Reverso Tribute', 6),
+('Master Control', 6),
+('Master Ultra Thin', 6),
+('Master Compressor', 6),
+('Polaris', 6),
+('Polaris Chronograph', 6),
+('Polaris Mariner', 6),
+('Duomètre', 6),
+('Atmos', 6),
+('Rendez-Vous', 6),
+('Geophysic', 6),
+
+-- ============================================
+-- BLANCPAIN (7)
+-- ============================================
+('Fifty Fathoms', 7),
+('Fifty Fathoms Bathyscaphe', 7),
+('Fifty Fathoms Automatique', 7),
+('Villeret', 7),
+('Villeret Quantième Perpétuel', 7),
+('Villeret Ultraplate', 7),
+('Léman', 7),
+('L-Evolution', 7),
+('Air Command', 7),
+
+-- ============================================
+-- BREGUET (8)
+-- ============================================
+('Classique', 8),
+('Classique Complications', 8),
+('Marine', 8),
+('Marine Chronograph', 8),
+('Tradition', 8),
+('Type XX', 8),
+('Type XXI', 8),
+('Héritage', 8),
+('Reine de Naples', 8),
+('La Musicale', 8),
+
+-- ============================================
+-- OMEGA (9)
+-- ============================================
+('Speedmaster', 9),
+('Speedmaster Professional', 9),
+('Speedmaster Moonwatch', 9),
+('Speedmaster Racing', 9),
+('Speedmaster 57', 9),
+('Speedmaster Dark Side of the Moon', 9),
+('Seamaster', 9),
+('Seamaster 300', 9),
+('Seamaster Diver 300M', 9),
+('Seamaster Planet Ocean', 9),
+('Seamaster Aqua Terra', 9),
+('Seamaster Railmaster', 9),
+('Seamaster Ultra Deep', 9),
+('Constellation', 9),
+('Constellation Globemaster', 9),
+('De Ville', 9),
+('De Ville Prestige', 9),
+('De Ville Trésor', 9),
+('De Ville Hour Vision', 9),
+
+-- ============================================
+-- CARTIER (10)
+-- ============================================
+('Santos', 10),
+('Santos de Cartier', 10),
+('Santos-Dumont', 10),
+('Tank', 10),
+('Tank Française', 10),
+('Tank Américaine', 10),
+('Tank Louis Cartier', 10),
+('Tank Must', 10),
+('Ballon Bleu', 10),
+('Panthère', 10),
+('Pasha', 10),
+('Drive de Cartier', 10),
+('Clé de Cartier', 10),
+('Ronde', 10),
+('Rotonde de Cartier', 10),
+('Crash', 10),
+('Baignoire', 10),
+
+-- ============================================
+-- IWC (11)
+-- ============================================
+('Portugieser', 11),
+('Portugieser Chronograph', 11),
+('Portugieser Automatic', 11),
+('Portugieser Perpetual Calendar', 11),
+('Pilot', 11),
+('Pilot Mark XX', 11),
+('Big Pilot', 11),
+('Pilot Chronograph', 11),
+('Pilot Spitfire', 11),
+('Pilot Top Gun', 11),
+('Aquatimer', 11),
+('Ingenieur', 11),
+('Da Vinci', 11),
+('Portofino', 11),
+('Portofino Chronograph', 11),
+
+-- ============================================
+-- PANERAI (12)
+-- ============================================
+('Luminor', 12),
+('Luminor Marina', 12),
+('Luminor Due', 12),
+('Luminor Chrono', 12),
+('Luminor GMT', 12),
+('Luminor Submersible', 12),
+('Radiomir', 12),
+('Submersible', 12),
+('Submersible Quarantaquattro', 12),
+
+-- ============================================
+-- ZENITH (13)
+-- ============================================
+('El Primero', 13),
+('Chronomaster', 13),
+('Chronomaster Sport', 13),
+('Chronomaster Open', 13),
+('Chronomaster Original', 13),
+('Defy', 13),
+('Defy Classic', 13),
+('Defy Skyline', 13),
+('Defy Extreme', 13),
+('Pilot', 13),
+('Pilot Type 20', 13),
+('Elite', 13),
+
+-- ============================================
+-- HUBLOT (14)
+-- ============================================
+('Big Bang', 14),
+('Big Bang Unico', 14),
+('Big Bang Integral', 14),
+('Big Bang King', 14),
+('Classic Fusion', 14),
+('Classic Fusion Chronograph', 14),
+('Classic Fusion Ultra-Thin', 14),
+('Spirit of Big Bang', 14),
+('Square Bang', 14),
+('MP Collection', 14),
+
+-- ============================================
+-- TAG HEUER (15)
+-- ============================================
+('Carrera', 15),
+('Carrera Chronograph', 15),
+('Carrera Heuer 02', 15),
+('Monaco', 15),
+('Monaco Chronograph', 15),
+('Aquaracer', 15),
+('Aquaracer Professional 300', 15),
+('Aquaracer Professional 200', 15),
+('Formula 1', 15),
+('Formula 1 Chronograph', 15),
+('Autavia', 15),
+('Link', 15),
+('Connected', 15),
+
+-- ============================================
+-- BREITLING (16)
+-- ============================================
+('Navitimer', 16),
+('Navitimer B01', 16),
+('Navitimer Automatic', 16),
+('Chronomat', 16),
+('Chronomat B01', 16),
+('Superocean', 16),
+('Superocean Heritage', 16),
+('Avenger', 16),
+('Avenger Chronograph', 16),
+('Premier', 16),
+('Premier B01', 16),
+('Endurance Pro', 16),
+('Professional', 16),
+('Aerospace', 16),
+('Colt', 16),
+('Top Time', 16),
+
+-- ============================================
+-- CHOPARD (17)
+-- ============================================
+('Alpine Eagle', 17),
+('Alpine Eagle XL', 17),
+('L.U.C', 17),
+('L.U.C XP', 17),
+('L.U.C Perpetual', 17),
+('Mille Miglia', 17),
+('Happy Sport', 17),
+('Happy Diamonds', 17),
+('Superfast', 17),
+('Classic Racing', 17),
+('Imperiale', 17),
+
+-- ============================================
+-- GIRARD-PERREGAUX (18)
+-- ============================================
+('Laureato', 18),
+('Laureato Chronograph', 18),
+('Laureato Skeleton', 18),
+('1966', 18),
+('Vintage 1945', 18),
+('Cat''s Eye', 18),
+('Bridges', 18),
+('Three Bridges', 18),
+('Tourbillon', 18),
+
+-- ============================================
+-- ULYSSE NARDIN (19)
+-- ============================================
+('Marine', 19),
+('Marine Chronometer', 19),
+('Marine Torpilleur', 19),
+('Diver', 19),
+('Diver X', 19),
+('Executive', 19),
+('Freak', 19),
+('Freak X', 19),
+('Classico', 19),
+('Blast', 19),
+
+-- ============================================
+-- PIAGET (20)
+-- ============================================
+('Altiplano', 20),
+('Altiplano Ultimate', 20),
+('Polo', 20),
+('Polo S', 20),
+('Polo Date', 20),
+('Polo Skeleton', 20),
+('Limelight', 20),
+('Limelight Gala', 20),
+('Possession', 20),
+('Emperador', 20),
+
+-- ============================================
+-- BAUME & MERCIER (21)
+-- ============================================
+('Riviera', 21),
+('Clifton', 21),
+('Clifton Baumatic', 21),
+('Classima', 21),
+('Hampton', 21),
+('Promesse', 21),
+
+-- ============================================
+-- LONGINES (22)
+-- ============================================
+('Master Collection', 22),
+('HydroConquest', 22),
+('Conquest', 22),
+('Spirit', 22),
+('Spirit Zulu Time', 22),
+('Heritage', 22),
+('Legend Diver', 22),
+('DolceVita', 22),
+('Flagship', 22),
+('Elegant Collection', 22),
+('Record', 22),
+('Ultra-Chron', 22),
+
+-- ============================================
+-- TUDOR (23)
+-- ============================================
+('Black Bay', 23),
+('Black Bay 58', 23),
+('Black Bay GMT', 23),
+('Black Bay Pro', 23),
+('Black Bay Chrono', 23),
+('Black Bay Ceramic', 23),
+('Black Bay Bronze', 23),
+('Pelagos', 23),
+('Pelagos FXD', 23),
+('Pelagos 39', 23),
+('Ranger', 23),
+('Royal', 23),
+('1926', 23),
+('Style', 23),
+('Glamour', 23),
+
+-- ============================================
+-- ORIS (24)
+-- ============================================
+('Divers Sixty-Five', 24),
+('Aquis', 24),
+('Aquis Date', 24),
+('Aquis GMT', 24),
+('Aquis Depth Gauge', 24),
+('Big Crown', 24),
+('Big Crown Pointer Date', 24),
+('Big Crown ProPilot', 24),
+('Artelier', 24),
+('ProPilot X', 24),
+
+-- ============================================
+-- BELL & ROSS (25)
+-- ============================================
+('BR 01', 25),
+('BR 03', 25),
+('BR 05', 25),
+('BR V1', 25),
+('BR V2', 25),
+('BR V3', 25),
+('BR X1', 25),
+('Vintage', 25),
+
+-- ============================================
+-- TISSOT (29)
+-- ============================================
+('PRX', 29),
+('PRX Powermatic 80', 29),
+('Gentleman', 29),
+('Gentleman Powermatic 80', 29),
+('Seastar', 29),
+('Seastar 1000', 29),
+('Seastar 2000', 29),
+('Le Locle', 29),
+('Visodate', 29),
+('Heritage', 29),
+('T-Race', 29),
+('T-Touch', 29),
+('Supersport', 29),
+('Chrono XL', 29),
+('Chemin des Tourelles', 29),
+('Carson', 29),
+('Classic Dream', 29),
+('Everytime', 29),
+
+-- ============================================
+-- HAMILTON (32)
+-- ============================================
+('Khaki Field', 32),
+('Khaki Field Mechanical', 32),
+('Khaki Field Automatic', 32),
+('Khaki Aviation', 32),
+('Khaki Aviation Pilot', 32),
+('Khaki Navy', 32),
+('Khaki Navy Scuba', 32),
+('Jazzmaster', 32),
+('Jazzmaster Open Heart', 32),
+('Jazzmaster Viewmatic', 32),
+('Ventura', 32),
+('Ventura Elvis80', 32),
+('American Classic', 32),
+('Intra-Matic', 32),
+('PSR', 32),
+
+-- ============================================
+-- SEIKO (46)
+-- ============================================
+('Prospex', 46),
+('Prospex Speedtimer', 46),
+('Prospex Diver', 46),
+('Prospex Alpinist', 46),
+('Prospex LX', 46),
+('Presage', 46),
+('Presage Sharp Edged', 46),
+('Presage Cocktail Time', 46),
+('Astron', 46),
+('Astron GPS Solar', 46),
+('5 Sports', 46),
+('King Seiko', 46),
+('Seiko Selection', 46),
+
+-- ============================================
+-- GRAND SEIKO (47)
+-- ============================================
+('Heritage Collection', 47),
+('Elegance Collection', 47),
+('Sport Collection', 47),
+('Evolution 9', 47),
+('Spring Drive', 47),
+('Snowflake', 47),
+
+-- ============================================
+-- CITIZEN (48)
+-- ============================================
+('Promaster', 48),
+('Promaster Diver', 48),
+('Promaster Sky', 48),
+('Promaster Land', 48),
+('Eco-Drive', 48),
+('Eco-Drive One', 48),
+('Attesa', 48),
+('Exceed', 48),
+('Satellite Wave', 48),
+('Series 8', 48),
+('Tsuyosa', 48),
+
+-- ============================================
+-- CASIO (49)
+-- ============================================
+('Edifice', 49),
+('Oceanus', 49),
+('Pro Trek', 49),
+('Wave Ceptor', 49),
+('Vintage', 49),
+('Databank', 49),
+
+-- ============================================
+-- G-SHOCK (50)
+-- ============================================
+('GA-2100', 50),
+('DW-5600', 50),
+('DW-6900', 50),
+('GW-M5610', 50),
+('GM-2100', 50),
+('GMW-B5000', 50),
+('MR-G', 50),
+('MT-G', 50),
+('Mudmaster', 50),
+('Rangeman', 50),
+('Frogman', 50),
+('Gravitymaster', 50),
+('Gulfmaster', 50),
+('G-Steel', 50),
+('CasiOak', 50),
+
+-- ============================================
+-- ORIENT (51)
+-- ============================================
+('Bambino', 51),
+('Kamasu', 51),
+('Mako', 51),
+('Ray', 51),
+('Triton', 51),
+('Sun & Moon', 51),
+('Star', 51),
+('Defender', 51),
+('Symphony', 51),
+('Contemporary', 51),
+
+-- ============================================
+-- GLASHÜTTE ORIGINAL (54)
+-- ============================================
+('Senator', 54),
+('Senator Excellence', 54),
+('Senator Chronometer', 54),
+('PanoMatic', 54),
+('PanoMaticLunar', 54),
+('PanoInverse', 54),
+('Seventies', 54),
+('SeaQ', 54),
+('Spezialist', 54),
+('Lady Serenade', 54),
+('Pavonina', 54),
+
+-- ============================================
+-- NOMOS (55)
+-- ============================================
+('Tangente', 55),
+('Tangente Neomatik', 55),
+('Orion', 55),
+('Orion Neomatik', 55),
+('Club', 55),
+('Club Sport', 55),
+('Club Campus', 55),
+('Ludwig', 55),
+('Metro', 55),
+('Tetra', 55),
+('Zürich', 55),
+('Ahoi', 55),
+('Autobahn', 55),
+
+-- ============================================
+-- JUNGHANS (56)
+-- ============================================
+('Max Bill', 56),
+('Max Bill Automatic', 56),
+('Max Bill Chronoscope', 56),
+('Meister', 56),
+('Meister Pilot', 56),
+('Meister Chronoscope', 56),
+('Form', 56),
+('Force', 56),
+('1972', 56),
+
+-- ============================================
+-- SINN (57)
+-- ============================================
+('104', 57),
+('104 St Sa', 57),
+('144', 57),
+('356', 57),
+('556', 57),
+('556 A', 57),
+('556 I', 57),
+('757', 57),
+('857', 57),
+('903', 57),
+('EZM', 57),
+('EZM 3', 57),
+('U1', 57),
+('U2', 57),
+('U50', 57),
+('UX', 57),
+
+-- ============================================
+-- TIMEX (66)
+-- ============================================
+('Marlin', 66),
+('Marlin Automatic', 66),
+('Q Timex', 66),
+('Waterbury', 66),
+('Expedition', 66),
+('Expedition North', 66),
+('Weekender', 66),
+('Easy Reader', 66),
+('MK1', 66),
+('Ironman', 66),
+('M79', 66),
+('Navi', 66),
+('Standard', 66),
+
+-- ============================================
+-- BULOVA (67)
+-- ============================================
+('Precisionist', 67),
+('Lunar Pilot', 67),
+('Surveyor', 67),
+('Sutton', 67),
+('Classic', 67),
+('Marine Star', 67),
+('Archive', 67),
+('Curv', 67),
+('Accutron', 67),
+('Mil-Ships', 67),
+
+-- ============================================
+-- YEMA (75)
+-- ============================================
+('Superman', 75),
+('Superman French Air Force', 75),
+('Superman Heritage', 75),
+('Navygraf', 75),
+('Flygraf', 75),
+('Spacegraf', 75),
+('Rallygraf', 75),
+('Wristmaster', 75),
+
+-- ============================================
+-- BALTIC (78)
+-- ============================================
+('Aquascaphe', 78),
+('Aquascaphe GMT', 78),
+('Aquascaphe Dual Crown', 78),
+('Bicompax', 78),
+('Tricompax', 78),
+('HMS', 78),
+('MR01', 78),
+
+-- ============================================
+-- BREMONT (83)
+-- ============================================
+('MBII', 83),
+('MBIII', 83),
+('Solo', 83),
+('Supermarine', 83),
+('Supermarine S300', 83),
+('Supermarine S500', 83),
+('ALT1-C', 83),
+('ALT1-P', 83),
+('ALT1-Z', 83),
+('ALT1-ZT', 83),
+('Airco', 83),
+('Boeing', 83),
+
+-- ============================================
+-- CHRISTOPHER WARD (84)
+-- ============================================
+('C60 Trident', 84),
+('C60 Trident Pro', 84),
+('C63 Sealander', 84),
+('C63 Sealander GMT', 84),
+('C65 Trident', 84),
+('C1 Moonglow', 84),
+('C9 Big Five', 84),
+
+-- ============================================
+-- BULGARI (89)
+-- ============================================
+('Octo', 89),
+('Octo Finissimo', 89),
+('Octo Roma', 89),
+('Serpenti', 89),
+('Serpenti Seduttori', 89),
+('BVLGARI BVLGARI', 89),
+('Lvcea', 89),
+('Divas'' Dream', 89),
+('Aluminium', 89),
+
+-- ============================================
+-- RICHARD MILLE (34)
+-- ============================================
+('RM 010', 34),
+('RM 011', 34),
+('RM 027', 34),
+('RM 035', 34),
+('RM 055', 34),
+('RM 67-01', 34),
+('RM 67-02', 34),
+('RM 69', 34),
+
+-- ============================================
+-- F.P. JOURNE (40)
+-- ============================================
+('Chronomètre Bleu', 40),
+('Chronomètre Souverain', 40),
+('Octa', 40),
+('Tourbillon Souverain', 40),
+('Resonance', 40),
+('Centigraphe', 40),
+('Elegante', 40);
 DROP TABLE IF EXISTS `watch_has_cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;

@@ -1,12 +1,13 @@
 import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
 
-interface Brand {
+interface Models {
   id: number;
   name: string;
+  brand_id: string;
 }
 
-class brandsRepository {
+class modelsRepository {
   // ======================
   // C - Create
   // ======================
@@ -19,15 +20,15 @@ class brandsRepository {
   // R - Read all (LISTING)
   // ======================
   async readAll() {
-    const [rows] = await databaseClient.query<Rows & Brand[]>(
+    const [rows] = await databaseClient.query<Rows & Models[]>(
       `
-      SELECT id, name FROM brand ORDER BY name;
+      SELECT brand_id, name, id FROM model ORDER BY name;
         
       `,
     );
 
-    return rows as Brand[];
+    return rows as Models[];
   }
 }
 
-export default new brandsRepository();
+export default new modelsRepository();
