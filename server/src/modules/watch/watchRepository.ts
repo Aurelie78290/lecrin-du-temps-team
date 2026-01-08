@@ -100,8 +100,8 @@ import type { Result, Rows } from "../../../database/client";
 
 export type WatchCreateInput = {
   user_id: number | null;
-  brand: string;
-  model: string;
+  brand_id: number;
+  model_id: number;
   watch_price: number | null;
   photo_id: number | null;
   watch_condition: string | null;
@@ -184,15 +184,14 @@ class WatchRepository {
   async create(watch: WatchCreateInput) {
     const [result] = await databaseClient.query<Result>(
       `
-      INSERT INTO watch (user_id, brand, model, watch_price, photo_id, watch_condition)
-      VALUES (?, ?, ?, ?, ?, ?)
-      `,
+    INSERT INTO watch (user_id, brand_id, model_id, watch_price, photo_id, watch_condition)
+    VALUES (?, ?, ?, ?, ?, ?)
+    `,
       [
         watch.user_id,
-        watch.brand,
-        watch.model,
+        watch.brand_id,
+        watch.model_id,
         watch.watch_price,
-        null,
         watch.photo_id,
         watch.watch_condition,
       ],
@@ -254,16 +253,18 @@ class WatchRepository {
   async readAll() {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT
-        w.idwatch,
-        w.brand,
-        w.model,
-        w.watch_price,
-        w.watch_condition,
-        p.url_photo1
-      FROM watch w
-      LEFT JOIN photo p ON p.idphoto = w.photo_id
-      `,
+    SELECT
+      w.idwatch,
+      b.name AS brand,
+      m.name AS model,
+      w.watch_price,
+      w.watch_condition,
+      p.url_photo1
+    FROM watch w
+    JOIN brand b ON b.id = w.brand_id
+    JOIN model m ON m.id = w.model_id
+    LEFT JOIN photo p ON p.idphoto = w.photo_id
+    `,
     );
 
     return rows as WatchListItem[];
