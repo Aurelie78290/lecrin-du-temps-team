@@ -1,3 +1,4 @@
+import emailjs from "emailjs-com";
 import { useState } from "react";
 import "./ContactForm.css";
 
@@ -29,13 +30,25 @@ function ContactForm() {
     e.preventDefault();
     console.log(formData);
 
-    setIsSubmitted(true);
-    setFormData(initialFormData);
+    emailjs
+      .send(
+        "service_n08sf07",
+        "template_nus5wxl",
+        formData,
+        "mu4sY2ibq8MbronjD",
+      )
+      .then(() => {
+        setIsSubmitted(true);
+        setFormData(initialFormData);
 
-    // Pour faire disparaitre le message au bout de 3 secondes
-    setTimeout(() => {
-      setIsSubmitted(false);
-    }, 5000);
+        // Pour faire disparaitre le message au bout de 3 secondes
+        setTimeout(() => {
+          setIsSubmitted(false);
+        }, 5000);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l’envoi :", error);
+      });
   };
 
   return (
