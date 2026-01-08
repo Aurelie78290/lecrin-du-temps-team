@@ -26,7 +26,7 @@ function PendingTransactions() {
 
   return (
     <article className="PendingTransactions">
-      <p>Nombre de transactions en cours</p>
+      <p>Nombre de transactions en cours :</p>
       <p>{pending}</p>
     </article>
   );
