@@ -21,7 +21,7 @@ class brandsRepository {
   async readAll() {
     const [rows] = await databaseClient.query<Rows & Brand[]>(
       `
-      SELECT id, name FROM brand;
+      SELECT id, name FROM brand ORDER BY name;
         
       `,
     );

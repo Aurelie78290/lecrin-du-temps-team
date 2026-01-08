@@ -174,32 +174,60 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
    * - Enter : sélectionne l'élément surligné
    * - Escape : ferme la liste
    */
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    // Si pas de suggestions affichées, on ne fait rien
+  /**
+   * Gère la navigation au clavier pour les MARQUES
+   */
+  const handleBrandKeyDown = (e: React.KeyboardEvent) => {
     if (!showSuggestionsBrand || filteredBrands.length === 0) return;
 
     switch (e.key) {
       case "ArrowDown":
-        e.preventDefault(); // Empêche le scroll de la page
-        setHighlightedIndex(
-          (prev) => (prev < filteredBrands.length - 1 ? prev + 1 : 0), // Retour au début si on dépasse
+        e.preventDefault();
+        setHighlightedIndex((prev) =>
+          prev < filteredBrands.length - 1 ? prev + 1 : 0,
         );
         break;
-
       case "ArrowUp":
         e.preventDefault();
-        setHighlightedIndex(
-          (prev) => (prev > 0 ? prev - 1 : filteredBrands.length - 1), // Va à la fin si on remonte trop
+        setHighlightedIndex((prev) =>
+          prev > 0 ? prev - 1 : filteredBrands.length - 1,
         );
         break;
-
       case "Enter":
-        e.preventDefault(); // IMPORTANT : empêche la soumission du formulaire
+        e.preventDefault();
         handleSelectBrand(filteredBrands[highlightedIndex]);
         break;
-
       case "Escape":
         setShowSuggestionsBrand(false);
+        break;
+    }
+  };
+
+  /**
+   * Gère la navigation au clavier pour les MODÈLES
+   */
+  const handleModelKeyDown = (e: React.KeyboardEvent) => {
+    if (!showSuggestionsModel || filteredModels.length === 0) return;
+
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        setHighlightedIndex((prev) =>
+          prev < filteredModels.length - 1 ? prev + 1 : 0,
+        );
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        setHighlightedIndex((prev) =>
+          prev > 0 ? prev - 1 : filteredModels.length - 1,
+        );
+        break;
+      case "Enter":
+        e.preventDefault();
+        handleSelectModel(filteredModels[highlightedIndex]);
+        break;
+      case "Escape":
+        setShowSuggestionsModel(false);
         break;
     }
   };
@@ -243,7 +271,7 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
 
     const newWatch = {
       brand_id: brandId, // On envoie l'ID de la marque, pas le nom
-      model,
+      model_id: modelId,
       watch_price: price ? Number(price) : null,
       watch_condition: condition || null,
     };
@@ -327,7 +355,7 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
                   onFocus={() =>
                     brand.length >= 1 && setShowSuggestionsBrand(true)
                   }
-                  onKeyDown={handleKeyDown}
+                  onKeyDown={handleBrandKeyDown}
                   required
                 />
 
@@ -375,6 +403,10 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
                     setHighlightedIndex(0);
                   }} // Remet la sélection au premier élément
                   disabled={!brandId}
+                  onFocus={() =>
+                    model.length >= 1 && setShowSuggestionsModel(true)
+                  }
+                  onKeyDown={handleModelKeyDown}
                   required
                 />
 
@@ -382,7 +414,10 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
                 {showSuggestionsModel && filteredModels.length > 0 && (
                   <ul className="autocomplete__list">
                     {filteredModels.map((m, index) => (
-                      <li key={m.id} className="autocomplete__item">
+                      <li
+                        key={`model-${m.id}-${index}`}
+                        className="autocomplete__item"
+                      >
                         <button
                           type="button"
                           onClick={() => handleSelectModel(m)}
