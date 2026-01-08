@@ -21,6 +21,7 @@
   width: 720px;
   margin: 1rem auto;
   padding: 2rem;
+  padding-bottom: 0;
 }
 
 .ContactForm label {
@@ -54,6 +55,15 @@
   font-size: 0.9rem;
 }
 
+.ContactForm-validation {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 2rem;
+}
+
 .ContactForm-button {
   margin-top: 0.5rem;
   background-color: var(--primary-color);
@@ -75,6 +85,17 @@
 .ContactForm input:hover,
 .ContactForm textarea:hover {
   transform: translateY(-1px);
+}
+
+.ContactForm-success {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid var(--secondary-color);
+  color: var(--text-color);
+  font-size: 0.95rem;
+  text-align: center;
 }
 
 /* Version Responsive */

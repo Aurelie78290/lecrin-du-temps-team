@@ -2,14 +2,17 @@ import { useState } from "react";
 import "./ContactForm.css";
 
 function ContactForm() {
-  const [formData, setFormData] = useState({
-    orderNumber: "",
+  const initialFormData = {
     name: "",
     firstname: "",
-    phone: "",
     email: "",
+    phone: "",
+    orderNumber: "",
     message: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -25,6 +28,14 @@ function ContactForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
+
+    setIsSubmitted(true);
+    setFormData(initialFormData);
+
+    // Pour faire disparaitre le message au bout de 3 secondes
+    setTimeout(() => {
+      setIsSubmitted(false);
+    }, 5000);
   };
 
   return (
@@ -34,6 +45,7 @@ function ContactForm() {
         Si vous ne trouvez pas rapidement la réponse à votre question, n'hésitez
         pas à nous contacter directement.
       </h2>
+
       <form className="ContactForm" onSubmit={handleSubmit}>
         <label>
           Numéro de commande (optionnel)
@@ -100,9 +112,16 @@ function ContactForm() {
         <p id="contact-instructions" className="ContactFormInstructions">
           * Tous les champs marqués d'un astérisque sont obligatoires.
         </p>
-        <button type="submit" className="ContactForm-button">
-          Envoyer
-        </button>
+        <div className="ContactForm-validation">
+          <button type="submit" className="ContactForm-button">
+            Envoyer
+          </button>
+          {isSubmitted && (
+            <p className="ContactForm-success">
+              ✅ Votre message a bien été envoyé !
+            </p>
+          )}
+        </div>
       </form>
     </section>
   );
