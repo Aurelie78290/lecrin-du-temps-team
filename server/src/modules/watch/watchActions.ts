@@ -46,16 +46,16 @@ const add: RequestHandler = async (req, res, next) => {
   try {
     const newWatch = {
       user_id: req.body.user_id ?? null,
-      brand: req.body.brand,
-      model: req.body.model,
+      brand_id: req.body.brand_id,
+      model_id: req.body.model_id,
       watch_price: req.body.watch_price ?? null,
       photo_id: req.body.photo_id ?? null,
       watch_condition: req.body.watch_condition ?? null,
     };
 
-    // Validation minimale (important)
-    if (!newWatch.brand || !newWatch.model) {
-      res.status(400).json({ message: "brand et model sont requis" });
+    // Validation minimale
+    if (!newWatch.brand_id || !newWatch.model_id) {
+      res.status(400).json({ message: "brand_id et model_id sont requis" });
       return;
     }
 
@@ -66,7 +66,6 @@ const add: RequestHandler = async (req, res, next) => {
     next(err);
   }
 };
-
 export default {
   browse,
   read,

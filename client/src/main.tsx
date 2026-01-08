@@ -104,6 +104,10 @@ const router = createBrowserRouter([
         element: <WatchDetails />,
       },
       {
+        path: "/Collection/:id",
+        element: <WatchDetails />,
+      },
+      {
         path: "/Dashboard",
         element: <Dashboard />,
       },
