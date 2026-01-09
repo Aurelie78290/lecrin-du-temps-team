@@ -22,6 +22,19 @@ type Model = {
 };
 
 // ============================================
+// Tableaux
+// ============================================
+
+const WATCH_CONDITIONS = [
+  "Neuf",
+  "Excellent état",
+  "Très bon état",
+  "Bon état",
+  "État correct",
+  "À réviser",
+] as const;
+
+// ============================================
 // COMPOSANT PRINCIPAL
 // ============================================
 
@@ -40,6 +53,18 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
   // État du popup (ouvert/fermé)
   // --------------------------------------------
   const [openPopup, setOpenPopup] = useState(false);
+
+  // --------------------------------------------
+  // État pour les images
+  // --------------------------------------------
+  const [watchImage, setWatchImage] = useState<File | null>(null);
+  const [watchImagePreview, setWatchImagePreview] = useState<string | null>(
+    null,
+  );
+  const [certificateImage, setCertificateImage] = useState<File | null>(null);
+  const [certificateImagePreview, setCertificateImagePreview] = useState<
+    string | null
+  >(null);
 
   // --------------------------------------------
   // États pour l'autocomplétion
@@ -233,6 +258,39 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
   };
 
   /**
+   * Gère la sélection d'une image et crée une prévisualisation
+   */
+  const handleImageChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setImage: React.Dispatch<React.SetStateAction<File | null>>,
+    setPreview: React.Dispatch<React.SetStateAction<string | null>>,
+  ) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      setImage(file);
+      //Crée une URL temporaire pour la prévisualisation
+      const previewUrl = URL.createObjectURL(file);
+      setPreview(previewUrl);
+    }
+  };
+
+  /**
+   * Supprime une image sélectionnée
+   */
+  const removeImage = (
+    setImage: React.Dispatch<React.SetStateAction<File | null>>,
+    setPreview: React.Dispatch<React.SetStateAction<string | null>>,
+    preview: string | null,
+  ) => {
+    setImage(null);
+    if (preview) {
+      URL.revokeObjectURL(preview); //Libère la mémoire
+    }
+    setPreview(null);
+  };
+
+  /**
    * Ouvre le popup et informe le parent.
    */
   const openingPopup = () => {
@@ -255,6 +313,14 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
     setPrice("");
     setCondition("");
 
+    //reset les images et libère la mémoire
+    if (watchImagePreview) URL.revokeObjectURL(watchImagePreview);
+    if (certificateImagePreview) URL.revokeObjectURL(certificateImagePreview);
+    setWatchImage(null);
+    setWatchImagePreview(null);
+    setCertificateImage(null);
+    setCertificateImagePreview(null);
+
     // Ferme les suggestions
     setShowSuggestionsBrand(false);
     setShowSuggestionsModel(false);
@@ -262,27 +328,32 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
 
   /**
    * Soumission du formulaire.
-   * - Envoie les données au backend via POST
+   * - Envoie les données au backend via POST avec FormData
    * - Reset le formulaire en cas de succès
    * - Ferme le popup
    */
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Empêche le rechargement de la page
+    e.preventDefault();
 
-    const newWatch = {
-      brand_id: brandId, // On envoie l'ID de la marque, pas le nom
-      model_id: modelId,
-      watch_price: price ? Number(price) : null,
-      watch_condition: condition || null,
-    };
+    // Utilise FormData pour envoyer les fichiers
+    const formData = new FormData();
+
+    // Ajoute les champs texte
+    if (brandId) formData.append("brand_id", brandId.toString());
+    if (modelId) formData.append("model_id", modelId.toString());
+    if (price) formData.append("watch_price", price);
+    if (condition) formData.append("watch_condition", condition);
+
+    // Ajoute les images
+    if (watchImage) formData.append("watch_image", watchImage);
+    if (certificateImage)
+      formData.append("certificate_image", certificateImage);
 
     try {
       const response = await fetch(`${apiBaseUrl}/api/watches`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newWatch),
+        // Pas de Content-Type header ! Le navigateur le gère automatiquement avec FormData
+        body: formData,
       });
 
       if (!response.ok) {
@@ -295,7 +366,7 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
       console.error(error);
     }
 
-    // Informe le parent qu'une montre a été ajoutée (pour rafraîchir la liste)
+    // Informe le parent qu'une montre a été ajoutée
     onWatchAdded();
     closingPopup();
   };
@@ -452,12 +523,109 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
                 required
               />
 
-              <input
-                type="text"
-                placeholder="État"
+              <select
                 value={condition}
                 onChange={(e) => setCondition(e.target.value)}
-              />
+                required
+              >
+                <option value="">Sélectionnez un état</option>
+                {WATCH_CONDITIONS.map((cond) => (
+                  <option value={cond} key={cond}>
+                    {" "}
+                    {cond}
+                  </option>
+                ))}
+              </select>
+              <div className="watch-card-add__images">
+                {/* Photo de la montre */}
+                <div className="image-upload">
+                  <label htmlFor="watch-image" className="image-upload__label">
+                    {watchImagePreview ? (
+                      <div className="image-upload__preview">
+                        <img
+                          src={watchImagePreview}
+                          alt="Prévisualisation montre"
+                        />
+                        <button
+                          type="button"
+                          className="image-upload__remove"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            removeImage(
+                              setWatchImage,
+                              setWatchImagePreview,
+                              watchImagePreview,
+                            );
+                          }}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="image-upload__placeholder">
+                        <span>Photo</span>
+                      </div>
+                    )}
+                  </label>
+                  <input
+                    type="file"
+                    id="watch-image"
+                    accept="image/*"
+                    onChange={(e) =>
+                      handleImageChange(e, setWatchImage, setWatchImagePreview)
+                    }
+                    hidden
+                  />
+                </div>
+
+                {/* Certificat */}
+                <div className="image-upload">
+                  <label
+                    htmlFor="certificate-image"
+                    className="image-upload__label"
+                  >
+                    {certificateImagePreview ? (
+                      <div className="image-upload__preview">
+                        <img
+                          src={certificateImagePreview}
+                          alt="Prévisualisation certificat"
+                        />
+                        <button
+                          type="button"
+                          className="image-upload__remove"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            removeImage(
+                              setCertificateImage,
+                              setCertificateImagePreview,
+                              certificateImagePreview,
+                            );
+                          }}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="image-upload__placeholder">
+                        <span>Certificat</span>
+                      </div>
+                    )}
+                  </label>
+                  <input
+                    type="file"
+                    id="certificate-image"
+                    accept="image/*"
+                    onChange={(e) =>
+                      handleImageChange(
+                        e,
+                        setCertificateImage,
+                        setCertificateImagePreview,
+                      )
+                    }
+                    hidden
+                  />
+                </div>
+              </div>
             </form>
 
             {/* Bouton de soumission (lié au form via l'attribut "form") */}
