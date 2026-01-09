@@ -161,7 +161,7 @@ export default function WatchDetails() {
             className="watchdetails-back"
             to={inCollection ? "/Collection" : "/Shop"}
           >
-            ← Retour {inCollection ? "collection" : "boutique"}
+            ← Retour {inCollection ? "Collection" : "Boutique"}
           </Link>
 
           <header className="watchdetails-header">
@@ -169,9 +169,10 @@ export default function WatchDetails() {
               {formatValue(watch.brand)} {formatValue(watch.model)}
             </h1>
             <div className="watchdetails-price">
-              {formatPrice(asNumberOrNull(watch.watch_price))}
+              Prix: {formatPrice(asNumberOrNull(watch.watch_price))}
             </div>
           </header>
+
           <div className="watchdetails-layout-flex">
             <section className="watchdetails-card watchdetails-card-w40">
               {/* <h2 className="watchdetails-section-title">
