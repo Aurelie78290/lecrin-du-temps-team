@@ -2,6 +2,13 @@ import type { RequestHandler } from "express";
 
 // Import access to data
 import watchRepository from "./watchRepository";
+import photoRepository from "../photo/photoRepository";
+
+//Type
+interface UploadedFiles {
+  watch_image?: Express.Multer.File[];
+  certificate_image?: Express.Multer.File[];
+}
 
 // =======================
 // B - Browse (Read All)
@@ -44,13 +51,16 @@ const read: RequestHandler = async (req, res, next) => {
 // =======================
 const add: RequestHandler = async (req, res, next) => {
   try {
+    // 1. Récupérer les fichiers uploadés
+    const files = req.files as UploadedFiles;
+
+    // 2. Créer la montre d'abord
     const newWatch = {
-      user_id: req.body.user_id ?? null,
-      brand_id: req.body.brand_id,
-      model_id: req.body.model_id,
-      watch_price: req.body.watch_price ?? null,
-      photo_id: req.body.photo_id ?? null,
-      watch_condition: req.body.watch_condition ?? null,
+      user_id: req.body.user_id ? Number(req.body.user_id) : null,
+      brand_id: Number(req.body.brand_id),
+      model_id: Number(req.body.model_id),
+      watch_price: req.body.watch_price ? Number(req.body.watch_price) : null,
+      watch_condition: req.body.watch_condition || null,
     };
 
     // Validation minimale
@@ -59,9 +69,22 @@ const add: RequestHandler = async (req, res, next) => {
       return;
     }
 
-    const insertId = await watchRepository.create(newWatch);
+    // 3. Insérer la montre en base et récupérer son ID
+    const watchId = await watchRepository.create(newWatch);
 
-    res.status(201).json({ insertId });
+    // 4. Si une image de montre est uploadée, l'enregistrer
+    if (files?.watch_image?.[0]) {
+      const url = `/uploads/watches/${files.watch_image[0].filename}`;
+      await photoRepository.create(url, "watch", watchId);
+    }
+
+    // 5. Si un certificat est uploadé, l'enregistrer
+    if (files?.certificate_image?.[0]) {
+      const url = `/uploads/certificates/${files.certificate_image[0].filename}`;
+      await photoRepository.create(url, "certificate", watchId);
+    }
+
+    res.status(201).json({ insertId: watchId });
   } catch (err) {
     next(err);
   }

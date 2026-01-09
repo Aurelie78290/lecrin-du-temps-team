@@ -1,100 +1,3 @@
-// import databaseClient from "../../../database/client";
-
-// import type { Result, Rows } from "../../../database/client";
-
-// export type Watch = {
-//   idwatch: number;
-//   user_id: number | null;
-//   brand: string;
-//   model: string;
-//   watch_price: number | null;
-//   watch_condition: string | null;
-
-//   url_photo1?: string;
-//   url_photo2?: string;
-//   url_photo3?: string;
-//   url_photo4?: string;
-//   url_photo5?: string;
-// };
-
-// class WatchRepository {
-//   // ======================
-//   // C - Create
-//   // ======================
-//   async create(watch: Omit<Watch, "idwatch">) {
-//     const [result] = await databaseClient.query<Result>(
-//       `
-//       INSERT INTO watch (user_id, brand, model, watch_price, photo_id)
-//       VALUES (?, ?, ?, ?, ?)
-//       `,
-//       [watch.user_id, watch.brand, watch.model, watch.watch_price, null],
-//     );
-
-//     return result.insertId;
-//   }
-
-//   // ======================
-//   // R - Read one
-//   // ======================
-//   async read(id: number) {
-//     const [rows] = await databaseClient.query<Rows>(
-//       `
-//       SELECT
-//         w.idwatch,
-//         w.user_id,
-//         w.brand,
-//         w.model,
-//         w.watch_price,
-//         w.watch_condition,
-//         p.url_photo1,
-//         p.url_photo2,
-//         p.url_photo3,
-//         p.url_photo4,
-//         p.url_photo5
-//       FROM watch w
-//       LEFT JOIN photo p ON p.idphoto = w.photo_id
-//       WHERE w.idwatch = ?
-//       `,
-//       [id],
-//     );
-
-//     return rows[0] as Watch;
-//   }
-
-//   // ======================
-//   // R - Read all
-//   // ======================
-//   async readAll() {
-//     const [rows] = await databaseClient.query<Rows>(
-//       `
-//       SELECT
-//         w.idwatch,
-//         w.brand,
-//         w.model,
-//         w.watch_price,
-//         w.watch_condition,
-//         p.url_photo1
-//       FROM watch w
-//       LEFT JOIN photo p ON p.idphoto = w.photo_id
-//       `,
-//     );
-
-//     return rows as Watch[];
-//   }
-
-//   // ======================
-//   // U - Update (optionnel)
-//   // ======================
-//   // async update(watch: Watch) {}
-
-//   // ======================
-//   // D - Delete (optionnel)
-//   // ======================
-//   // async delete(id: number) {}
-// }
-
-// export default new WatchRepository();
-
 import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
 
@@ -103,7 +6,6 @@ export type WatchCreateInput = {
   brand_id: number;
   model_id: number;
   watch_price: number | null;
-  photo_id: number | null;
   watch_condition: string | null;
 };
 
@@ -113,7 +15,7 @@ export type WatchListItem = {
   model: string;
   watch_price: number | null;
   watch_condition: string | null;
-  url_photo1?: string | null;
+  photo_url: string | null;
 };
 
 export type WatchDetails = {
@@ -184,15 +86,14 @@ class WatchRepository {
   async create(watch: WatchCreateInput) {
     const [result] = await databaseClient.query<Result>(
       `
-    INSERT INTO watch (user_id, brand_id, model_id, watch_price, photo_id, watch_condition)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO watch (user_id, brand_id, model_id, watch_price, watch_condition)
+    VALUES (?, ?, ?, ?, ?)
     `,
       [
         watch.user_id,
         watch.brand_id,
         watch.model_id,
         watch.watch_price,
-        watch.photo_id,
         watch.watch_condition,
       ],
     );
@@ -259,11 +160,10 @@ class WatchRepository {
       m.name AS model,
       w.watch_price,
       w.watch_condition,
-      p.url_photo1
+      (SELECT url FROM photo WHERE watch_id = w.idwatch AND type = 'watch' LIMIT 1) AS photo_url
     FROM watch w
     JOIN brand b ON b.id = w.brand_id
     JOIN model m ON m.id = w.model_id
-    LEFT JOIN photo p ON p.idphoto = w.photo_id
     `,
     );
 

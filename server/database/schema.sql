@@ -397,96 +397,7 @@ UNLOCK TABLES;
 -- Table structure for table `photo`
 --
 
-DROP TABLE IF EXISTS `photo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `photo` (
-  `idphoto` int NOT NULL AUTO_INCREMENT,
-  `url_photo1` varchar(2048) DEFAULT NULL,
-  `url_photo2` varchar(2048) DEFAULT NULL,
-  `url_photo3` varchar(2048) DEFAULT NULL,
-  `url_photo4` varchar(2048) DEFAULT NULL,
-  `url_photo5` varchar(2048) DEFAULT NULL,
-  PRIMARY KEY (`idphoto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `photo`
---
-
-LOCK TABLES `photo` WRITE;
-/*!40000 ALTER TABLE `photo` DISABLE KEYS */;
-INSERT INTO photo (
-  url_photo1,
-  url_photo2,
-  url_photo3,
-  url_photo4,
-  url_photo5
-) VALUES
-
--- 1 Rolex Submariner
-('watches/1/photo1.webp','watches/1/photo2.webp','watches/1/photo3.webp','watches/1/photo4.webp','watches/1/photo5.webp'),
-
--- 2 Rolex GMT Batman
-('watches/2/photo1.webp','watches/2/photo2.webp','watches/2/photo3.webp','watches/2/photo4.webp','watches/2/photo5.webp'),
-
--- 3 Omega Speedmaster
-('watches/3/photo1.webp','watches/3/photo2.webp','watches/3/photo3.webp','watches/3/photo4.webp','watches/3/photo5.webp'),
-
--- 4 Omega Seamaster
-('watches/4/photo1.webp','watches/4/photo2.webp','watches/4/photo3.webp','watches/4/photo4.webp','watches/4/photo5.webp'),
-
--- 5 Cartier Santos
-('watches/5/photo1.webp','watches/5/photo2.webp','watches/5/photo3.webp','watches/5/photo4.webp','watches/5/photo5.webp'),
-
--- 6 Cartier Tank
-('watches/6/photo1.webp','watches/6/photo2.webp','watches/6/photo3.webp','watches/6/photo4.webp','watches/6/photo5.webp'),
-
--- 7 Seiko Prospex
-('watches/7/photo1.webp','watches/7/photo2.webp','watches/7/photo3.webp','watches/7/photo4.webp','watches/7/photo5.webp'),
-
--- 8 Seiko 5 GMT
-('watches/8/photo1.webp','watches/8/photo2.webp','watches/8/photo3.webp','watches/8/photo4.webp','watches/8/photo5.webp'),
-
--- 9 Tudor Black Bay 58
-('watches/9/photo1.webp','watches/9/photo2.webp','watches/9/photo3.webp','watches/9/photo4.webp','watches/9/photo5.webp'),
-
--- 10 Tudor Black Bay 41
-('watches/10/photo1.webp','watches/10/photo2.webp','watches/10/photo3.webp','watches/10/photo4.webp','watches/10/photo5.webp'),
-
--- 11 TAG Heuer Carrera
-('watches/11/photo1.webp','watches/11/photo2.webp','watches/11/photo3.webp','watches/11/photo4.webp','watches/11/photo5.webp'),
-
--- 12 TAG Heuer Formula 1
-('watches/12/photo1.webp','watches/12/photo2.webp','watches/12/photo3.webp','watches/12/photo4.webp','watches/12/photo5.webp'),
-
--- 13 IWC Portugieser
-('watches/13/photo1.webp','watches/13/photo2.webp','watches/13/photo3.webp','watches/13/photo4.webp','watches/13/photo5.webp'),
-
--- 14 IWC Mark XX
-('watches/14/photo1.webp','watches/14/photo2.webp','watches/14/photo3.webp','watches/14/photo4.webp','watches/14/photo5.webp'),
-
--- 15 Breitling Navitimer
-('watches/15/photo1.webp','watches/15/photo2.webp','watches/15/photo3.webp','watches/15/photo4.webp','watches/15/photo5.webp'),
-
--- 16 Breitling Superocean
-('watches/16/photo1.webp','watches/16/photo2.webp','watches/16/photo3.webp','watches/16/photo4.webp','watches/16/photo5.webp'),
-
--- 17 Grand Seiko Snowflake
-('watches/17/photo1.webp','watches/17/photo2.webp','watches/17/photo3.webp','watches/17/photo4.webp','watches/17/photo5.webp'),
-
--- 18 Grand Seiko Elegance GMT
-('watches/18/photo1.webp','watches/18/photo2.webp','watches/18/photo3.webp','watches/18/photo4.webp','watches/18/photo5.webp'),
-
--- 19 Longines Moonphase
-('watches/19/photo1.webp','watches/19/photo2.webp','watches/19/photo3.webp','watches/19/photo4.webp','watches/19/photo5.webp'),
-
--- 20 Longines HydroConquest
-('watches/20/photo1.webp','watches/20/photo2.webp','watches/20/photo3.webp','watches/20/photo4.webp','watches/20/photo5.webp');
-
-/*!40000 ALTER TABLE `photo` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `photo_certif`
@@ -635,7 +546,6 @@ CREATE TABLE `watch` (
   `production_year` date DEFAULT NULL,
   `is_limited_edition` tinyint DEFAULT NULL,
   `edition_number` varchar(45) DEFAULT NULL,
-  `photo_id` int DEFAULT NULL,
   `watch_gender` varchar(45) DEFAULT NULL,
   `watch_sell_status` varchar(45) DEFAULT NULL,
   `watch_price` int DEFAULT NULL,
@@ -651,7 +561,6 @@ CREATE TABLE `watch` (
   `clasp_type_id` int DEFAULT NULL,
   `lug_width_mm` int DEFAULT NULL,
   `watch_condition` varchar(45) DEFAULT NULL,
-  `certificate_id` int DEFAULT NULL,
   `movement_type_id` int DEFAULT NULL,
   `caliber` varchar(45) DEFAULT NULL,
   `functions_id` int DEFAULT NULL,
@@ -668,23 +577,19 @@ CREATE TABLE `watch` (
   KEY `fk_watch_case_material1_idx` (`case_material_id`),
   KEY `fk_watch_dial_finish1_idx` (`dial_finish_id`),
   KEY `fk_watch_hour_maker_type1_idx` (`hour_marker_type_id`),
-  KEY `fk_watch_photo1_idx` (`photo_id`),
   KEY `fk_watch_strap_material1_idx` (`strap_material_id`),
   KEY `fk_watch_clasp_type1_idx` (`clasp_type_id`),
-  KEY `fk_watch_certificate_id1_idx` (`certificate_id`),
   KEY `fk_watch_movement_type1_idx` (`movement_type_id`),
   KEY `fk_watch_functions1_idx` (`functions_id`),
   CONSTRAINT `fk_watch_brand` FOREIGN KEY (`brand_id`) REFERENCES `brand`(`id`),
   CONSTRAINT `fk_watch_model` FOREIGN KEY (`model_id`) REFERENCES `model`(`id`),
   CONSTRAINT `fk_watch_case_material1` FOREIGN KEY (`case_material_id`) REFERENCES `case_material` (`idcase_material`),
-  CONSTRAINT `fk_watch_certificate_id1` FOREIGN KEY (`certificate_id`) REFERENCES `certificate_id` (`idcertificate_id`),
   CONSTRAINT `fk_watch_clasp_type1` FOREIGN KEY (`clasp_type_id`) REFERENCES `clasp_type` (`idclasp_type`),
   CONSTRAINT `fk_watch_dial_finish1` FOREIGN KEY (`dial_finish_id`) REFERENCES `dial_finish` (`iddial_finish`),
   CONSTRAINT `fk_watch_functions1` FOREIGN KEY (`functions_id`) REFERENCES `functions` (`idfunctions`),
   CONSTRAINT `fk_watch_hour_maker_type1` FOREIGN KEY (`hour_marker_type_id`) REFERENCES `hour_maker_type` (`idhour_maker_type`),
   CONSTRAINT `fk_watch_market_data1` FOREIGN KEY (`market_data_id`) REFERENCES `market_data` (`idmarket_data`),
   CONSTRAINT `fk_watch_movement_type1` FOREIGN KEY (`movement_type_id`) REFERENCES `movement_type` (`idmovement_type`),
-  CONSTRAINT `fk_watch_photo1` FOREIGN KEY (`photo_id`) REFERENCES `photo` (`idphoto`),
   CONSTRAINT `fk_watch_strap_material1` FOREIGN KEY (`strap_material_id`) REFERENCES `strap_material` (`idstrap_material`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -704,7 +609,6 @@ INSERT INTO watch (
   production_year,
   is_limited_edition,
   edition_number,
-  photo_id,
   watch_gender,
   watch_sell_status,
   watch_price,
@@ -720,7 +624,6 @@ INSERT INTO watch (
   clasp_type_id,
   lug_width_mm,
   watch_condition,
-  certificate_id,
   movement_type_id,
   caliber,
   functions_id,
@@ -733,84 +636,84 @@ INSERT INTO watch (
 ) VALUES
 
 -- 1 Rolex Submariner (brand_id=1, model_id=1)
-(1, 1, 1, 124060, '2022-01-01', 0, NULL, 1, 'Homme', 'En vente', 12450,
-1, 41, 12, 30, 'Noir', 1, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 1, '3230', 1, 70, 4, 31, 1, 1, 1),
+(1, 1, 1, 124060, '2022-01-01', 0, NULL, 'Homme', 'En vente', 12450,
+1, 41, 12, 30, 'Noir', 1, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, '3230', 1, 70, 4, 31, 1, 1, 1),
 
 -- 2 Rolex GMT-Master II (brand_id=1, model_id=7)
-(1, 1, 7, 126710, '2021-01-01', 0, NULL, 2, 'Homme', 'En vente', 15990,
-1, 40, 12, 10, 'Noir', 1, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, 1, '3285', 3, 70, 4, 31, 1, 1, 1),
+(1, 1, 7, 126710, '2021-01-01', 0, NULL, 'Homme', 'En vente', 15990,
+1, 40, 12, 10, 'Noir', 1, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, '3285', 3, 70, 4, 31, 1, 1, 1),
 
 -- 3 Omega Speedmaster Moonwatch (brand_id=9, model_id=93)
-(1, 9, 93, 31042, '2020-01-01', 0, NULL, 3, 'Homme', 'En vente', 6750,
-1, 42, 13, 5, 'Noir', 1, 2, 1, 'Acier', 1, 20, 'Très bon état', 1, 2, '3861', 2, 50, 3, 26, 1, 1, 1),
+(1, 9, 93, 31042, '2020-01-01', 0, NULL, 'Homme', 'En vente', 6750,
+1, 42, 13, 5, 'Noir', 1, 2, 1, 'Acier', 1, 20, 'Très bon état', 2, '3861', 2, 50, 3, 26, 1, 1, 1),
 
 -- 4 Omega Seamaster Diver 300M (brand_id=9, model_id=99)
-(1, 9, 99, 21042, '2022-01-01', 0, NULL, 4, 'Homme', 'En vente', 4650,
-1, 42, 14, 30, 'Noir', 2, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, 1, '8800', 1, 55, 3, 35, 1, 1, 1),
+(1, 9, 99, 21042, '2022-01-01', 0, NULL, 'Homme', 'En vente', 4650,
+1, 42, 14, 30, 'Noir', 2, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, '8800', 1, 55, 3, 35, 1, 1, 1),
 
 -- 5 Cartier Santos (brand_id=10, model_id=109)
-(1, 10, 109, 4848, '2023-01-01', 0, NULL, 5, 'Unisexe', 'En vente', 6250,
-1, 35, 9, 10, 'Argent', 1, 3, 1, 'Acier', 1, 18, 'Excellent état', 1, 1, '1847 MC', 1, 42, 4, 23, 1, 1, 1),
+(1, 10, 109, 4848, '2023-01-01', 0, NULL, 'Unisexe', 'En vente', 6250,
+1, 35, 9, 10, 'Argent', 1, 3, 1, 'Acier', 1, 18, 'Excellent état', 1, '1847 MC', 1, 42, 4, 23, 1, 1, 1),
 
 -- 6 Cartier Tank Must (brand_id=10, model_id=116)
-(1, 10, 116, 9992, '2022-01-01', 0, NULL, 6, 'Unisexe', 'En vente', 3350,
-1, 34, 7, 3, 'Argent', 3, 3, 2, 'Noir', 2, 19, 'Très bon état', 1, 3, 'Quartz Cartier', 1, NULL, NULL, NULL, 1, 1, 1),
+(1, 10, 116, 9992, '2022-01-01', 0, NULL, 'Unisexe', 'En vente', 3350,
+1, 34, 7, 3, 'Argent', 3, 3, 2, 'Noir', 2, 19, 'Très bon état', 3, 'Quartz Cartier', 1, NULL, NULL, NULL, 1, 1, 1),
 
 -- 7 Seiko Prospex Diver (brand_id=46, model_id=330)
-(1, 46, 330, 1431, '2021-01-01', 0, NULL, 7, 'Homme', 'En vente', 850,
-1, 41, 13, 20, 'Gris', 1, 1, 1, 'Acier', 1, 20, 'Bon état', 1, 1, '6R35', 1, 70, 3, 24, 1, 1, 1),
+(1, 46, 330, 1431, '2021-01-01', 0, NULL, 'Homme', 'En vente', 850,
+1, 41, 13, 20, 'Gris', 1, 1, 1, 'Acier', 1, 20, 'Bon état', 1, '6R35', 1, 70, 3, 24, 1, 1, 1),
 
 -- 8 Seiko 5 Sports (brand_id=46, model_id=338)
-(1, 46, 338, 3003, '2023-01-01', 0, NULL, 8, 'Homme', 'En vente', 420,
-1, 43, 14, 10, 'Noir', 2, 2, 1, 'Acier', 1, 22, 'Très bon état', 1, 1, '4R34', 3, 41, 3, 24, 1, 1, 1),
+(1, 46, 338, 3003, '2023-01-01', 0, NULL, 'Homme', 'En vente', 420,
+1, 43, 14, 10, 'Noir', 2, 2, 1, 'Acier', 1, 22, 'Très bon état', 1, '4R34', 3, 41, 3, 24, 1, 1, 1),
 
 -- 9 Tudor Black Bay 58 (brand_id=23, model_id=195)
-(1, 23, 195, 9030, '2020-01-01', 0, NULL, 9, 'Homme', 'En vente', 3150,
-1, 39, 12, 20, 'Noir', 1, 1, 1, 'Acier', 1, 20, 'Très bon état', 1, 1, 'MT5402', 1, 70, 4, 27, 1, 1, 1),
+(1, 23, 195, 9030, '2020-01-01', 0, NULL, 'Homme', 'En vente', 3150,
+1, 39, 12, 20, 'Noir', 1, 1, 1, 'Acier', 1, 20, 'Très bon état', 1, 'MT5402', 1, 70, 4, 27, 1, 1, 1),
 
 -- 10 Tudor Black Bay (brand_id=23, model_id=194)
-(1, 23, 194, 7941, '2023-01-01', 0, NULL, 10, 'Homme', 'En vente', 3850,
-1, 41, 14, 20, 'Bordeaux', 2, 1, 1, 'Acier', 1, 21, 'Excellent état', 1, 1, 'MT5602', 1, 70, 4, 25, 1, 1, 1),
+(1, 23, 194, 7941, '2023-01-01', 0, NULL, 'Homme', 'En vente', 3850,
+1, 41, 14, 20, 'Bordeaux', 2, 1, 1, 'Acier', 1, 21, 'Excellent état', 1, 'MT5602', 1, 70, 4, 25, 1, 1, 1),
 
 -- 11 TAG Heuer Carrera Chronograph (brand_id=15, model_id=153)
-(1, 15, 153, 2010, '2021-01-01', 0, NULL, 11, 'Homme', 'En vente', 4650,
-1, 42, 14, 10, 'Bleu', 2, 1, 1, 'Acier', 1, 22, 'Très bon état', 1, 1, 'Heuer 02', 2, 80, 4, 33, 1, 1, 1),
+(1, 15, 153, 2010, '2021-01-01', 0, NULL, 'Homme', 'En vente', 4650,
+1, 42, 14, 10, 'Bleu', 2, 1, 1, 'Acier', 1, 22, 'Très bon état', 1, 'Heuer 02', 2, 80, 4, 33, 1, 1, 1),
 
 -- 12 TAG Heuer Formula 1 (brand_id=15, model_id=160)
-(1, 15, 160, 1110, '2019-01-01', 0, NULL, 12, 'Homme', 'En vente', 1100,
-1, 41, 12, 20, 'Noir', 1, 2, 1, 'Acier', 1, 20, 'Bon état', 1, 3, 'Quartz', 1, NULL, NULL, NULL, 1, 1, 1),
+(1, 15, 160, 1110, '2019-01-01', 0, NULL, 'Homme', 'En vente', 1100,
+1, 41, 12, 20, 'Noir', 1, 2, 1, 'Acier', 1, 20, 'Bon état', 3, 'Quartz', 1, NULL, NULL, NULL, 1, 1, 1),
 
 -- 13 IWC Portugieser Chronograph (brand_id=11, model_id=127)
-(1, 11, 127, 3716, '2022-01-01', 0, NULL, 13, 'Homme', 'En vente', 6150,
-1, 41, 13, 3, 'Vert', 2, 1, 2, 'Vert', 2, 20, 'Excellent état', 1, 1, '69355', 2, 46, 4, 33, 1, 1, 1),
+(1, 11, 127, 3716, '2022-01-01', 0, NULL, 'Homme', 'En vente', 6150,
+1, 41, 13, 3, 'Vert', 2, 1, 2, 'Vert', 2, 20, 'Excellent état', 1, '69355', 2, 46, 4, 33, 1, 1, 1),
 
 -- 14 IWC Pilot Mark XX (brand_id=11, model_id=131)
-(1, 11, 131, 3283, '2023-01-01', 0, NULL, 14, 'Homme', 'En vente', 4950,
-1, 40, 11, 10, 'Noir', 1, 2, 2, 'Brun', 2, 20, 'Excellent état', 1, 1, '32111', 1, 120, 4, 21, 1, 1, 1),
+(1, 11, 131, 3283, '2023-01-01', 0, NULL, 'Homme', 'En vente', 4950,
+1, 40, 11, 10, 'Noir', 1, 2, 2, 'Brun', 2, 20, 'Excellent état', 1, '32111', 1, 120, 4, 21, 1, 1, 1),
 
 -- 15 Breitling Navitimer B01 (brand_id=16, model_id=167)
-(1, 16, 167, 1341, '2020-01-01', 0, NULL, 15, 'Homme', 'En vente', 6850,
-1, 43, 14, 3, 'Noir', 4, 4, 1, 'Acier', 1, 22, 'Très bon état', 1, 1, 'B01', 2, 70, 4, 47, 1, 1, 1),
+(1, 16, 167, 1341, '2020-01-01', 0, NULL, 'Homme', 'En vente', 6850,
+1, 43, 14, 3, 'Noir', 4, 4, 1, 'Acier', 1, 22, 'Très bon état', 1, 'B01', 2, 70, 4, 47, 1, 1, 1),
 
 -- 16 Breitling Superocean (brand_id=16, model_id=171)
-(1, 16, 171, 1910, '2021-01-01', 0, NULL, 16, 'Homme', 'En vente', 3250,
-1, 44, 13, 100, 'Bleu', 2, 2, 1, 'Acier', 1, 22, 'Très bon état', 1, 1, 'Breitling 17', 1, 38, 4, 26, 1, 1, 1),
+(1, 16, 171, 1910, '2021-01-01', 0, NULL, 'Homme', 'En vente', 3250,
+1, 44, 13, 100, 'Bleu', 2, 2, 1, 'Acier', 1, 22, 'Très bon état', 1, 'Breitling 17', 1, 38, 4, 26, 1, 1, 1),
 
 -- 17 Grand Seiko Snowflake (brand_id=47, model_id=346)
-(1, 47, 346, 211, '2018-01-01', 0, NULL, 17, 'Homme', 'En vente', 5350,
-2, 41, 13, 10, 'Blanc', 4, 1, 3, 'Titane', 1, 20, 'Très bon état', 1, 1, '9R65', 1, 72, 0, 30, 1, 1, 1),
+(1, 47, 346, 211, '2018-01-01', 0, NULL, 'Homme', 'En vente', 5350,
+2, 41, 13, 10, 'Blanc', 4, 1, 3, 'Titane', 1, 20, 'Très bon état', 1, '9R65', 1, 72, 0, 30, 1, 1, 1),
 
 -- 18 Grand Seiko Elegance (brand_id=47, model_id=342)
-(1, 47, 342, 221, '2019-01-01', 0, NULL, 18, 'Homme', 'En vente', 3950,
-1, 40, 14, 3, 'Crème', 3, 4, 2, 'Brun', 2, 19, 'Très bon état', 1, 1, '9S66', 3, 72, 4, 35, 1, 1, 1),
+(1, 47, 342, 221, '2019-01-01', 0, NULL, 'Homme', 'En vente', 3950,
+1, 40, 14, 3, 'Crème', 3, 4, 2, 'Brun', 2, 19, 'Très bon état', 1, '9S66', 3, 72, 4, 35, 1, 1, 1),
 
 -- 19 Longines Master Collection (brand_id=22, model_id=186)
-(1, 22, 186, 2628, '2020-01-01', 0, NULL, 19, 'Homme', 'En vente', 1850,
-1, 40, 11, 3, 'Argent', 3, 3, 1, 'Acier', 1, 21, 'Bon état', 1, 1, 'L899', 4, 64, 3, 21, 1, 1, 1),
+(1, 22, 186, 2628, '2020-01-01', 0, NULL, 'Homme', 'En vente', 1850,
+1, 40, 11, 3, 'Argent', 3, 3, 1, 'Acier', 1, 21, 'Bon état', 1, 'L899', 4, 64, 3, 21, 1, 1, 1),
 
 -- 20 Longines HydroConquest (brand_id=22, model_id=187)
-(1, 22, 187, 3781, '2022-01-01', 0, NULL, 20, 'Homme', 'En vente', 1350,
-1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 1, 'L888', 1, 72, 3, 21, 1, 1, 1);
+(1, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'En vente', 1350,
+1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1);
 UNLOCK TABLES;
 
 --
@@ -1660,6 +1563,169 @@ INSERT INTO model (name, brand_id) VALUES
 ('Resonance', 40),
 ('Centigraphe', 40),
 ('Elegante', 40);
+
+DROP TABLE IF EXISTS `photo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `photo` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `url` VARCHAR(2048) NOT NULL,
+  `type` ENUM('watch', 'certificate') NOT NULL,
+  `watch_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_photo_watch_idx` (`watch_id`),
+  CONSTRAINT `fk_photo_watch` FOREIGN KEY (`watch_id`) REFERENCES `watch`(`idwatch`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `photo`
+--
+
+LOCK TABLES `photo` WRITE;
+/*!40000 ALTER TABLE `photo` DISABLE KEYS */;
+INSERT INTO photo (url, type, watch_id) VALUES
+-- Montre 1 : Rolex Submariner
+('/uploads/watches/1/photo1.webp', 'watch', 1),
+('/uploads/watches/1/photo2.webp', 'watch', 1),
+('/uploads/watches/1/photo3.webp', 'watch', 1),
+('/uploads/watches/1/photo4.webp', 'watch', 1),
+('/uploads/watches/1/photo5.webp', 'watch', 1),
+
+-- Montre 2 : Rolex GMT Batman
+('/uploads/watches/2/photo1.webp', 'watch', 2),
+('/uploads/watches/2/photo2.webp', 'watch', 2),
+('/uploads/watches/2/photo3.webp', 'watch', 2),
+('/uploads/watches/2/photo4.webp', 'watch', 2),
+('/uploads/watches/2/photo5.webp', 'watch', 2),
+
+-- Montre 3 : Omega Speedmaster
+('/uploads/watches/3/photo1.webp', 'watch', 3),
+('/uploads/watches/3/photo2.webp', 'watch', 3),
+('/uploads/watches/3/photo3.webp', 'watch', 3),
+('/uploads/watches/3/photo4.webp', 'watch', 3),
+('/uploads/watches/3/photo5.webp', 'watch', 3),
+
+-- Montre 4 : Omega Seamaster
+('/uploads/watches/4/photo1.webp', 'watch', 4),
+('/uploads/watches/4/photo2.webp', 'watch', 4),
+('/uploads/watches/4/photo3.webp', 'watch', 4),
+('/uploads/watches/4/photo4.webp', 'watch', 4),
+('/uploads/watches/4/photo5.webp', 'watch', 4),
+
+-- Montre 5 : Cartier Santos
+('/uploads/watches/5/photo1.webp', 'watch', 5),
+('/uploads/watches/5/photo2.webp', 'watch', 5),
+('/uploads/watches/5/photo3.webp', 'watch', 5),
+('/uploads/watches/5/photo4.webp', 'watch', 5),
+('/uploads/watches/5/photo5.webp', 'watch', 5),
+
+-- Montre 6 : Cartier Tank
+('/uploads/watches/6/photo1.webp', 'watch', 6),
+('/uploads/watches/6/photo2.webp', 'watch', 6),
+('/uploads/watches/6/photo3.webp', 'watch', 6),
+('/uploads/watches/6/photo4.webp', 'watch', 6),
+('/uploads/watches/6/photo5.webp', 'watch', 6),
+
+-- Montre 7 : Seiko Prospex
+('/uploads/watches/7/photo1.webp', 'watch', 7),
+('/uploads/watches/7/photo2.webp', 'watch', 7),
+('/uploads/watches/7/photo3.webp', 'watch', 7),
+('/uploads/watches/7/photo4.webp', 'watch', 7),
+('/uploads/watches/7/photo5.webp', 'watch', 7),
+
+-- Montre 8 : Seiko 5 GMT
+('/uploads/watches/8/photo1.webp', 'watch', 8),
+('/uploads/watches/8/photo2.webp', 'watch', 8),
+('/uploads/watches/8/photo3.webp', 'watch', 8),
+('/uploads/watches/8/photo4.webp', 'watch', 8),
+('/uploads/watches/8/photo5.webp', 'watch', 8),
+
+-- Montre 9 : Tudor Black Bay 58
+('/uploads/watches/9/photo1.webp', 'watch', 9),
+('/uploads/watches/9/photo2.webp', 'watch', 9),
+('/uploads/watches/9/photo3.webp', 'watch', 9),
+('/uploads/watches/9/photo4.webp', 'watch', 9),
+('/uploads/watches/9/photo5.webp', 'watch', 9),
+
+-- Montre 10 : Tudor Black Bay 41
+('/uploads/watches/10/photo1.webp', 'watch', 10),
+('/uploads/watches/10/photo2.webp', 'watch', 10),
+('/uploads/watches/10/photo3.webp', 'watch', 10),
+('/uploads/watches/10/photo4.webp', 'watch', 10),
+('/uploads/watches/10/photo5.webp', 'watch', 10),
+
+-- Montre 11 : TAG Heuer Carrera
+('/uploads/watches/11/photo1.webp', 'watch', 11),
+('/uploads/watches/11/photo2.webp', 'watch', 11),
+('/uploads/watches/11/photo3.webp', 'watch', 11),
+('/uploads/watches/11/photo4.webp', 'watch', 11),
+('/uploads/watches/11/photo5.webp', 'watch', 11),
+
+-- Montre 12 : TAG Heuer Formula 1
+('/uploads/watches/12/photo1.webp', 'watch', 12),
+('/uploads/watches/12/photo2.webp', 'watch', 12),
+('/uploads/watches/12/photo3.webp', 'watch', 12),
+('/uploads/watches/12/photo4.webp', 'watch', 12),
+('/uploads/watches/12/photo5.webp', 'watch', 12),
+
+-- Montre 13 : IWC Portugieser
+('/uploads/watches/13/photo1.webp', 'watch', 13),
+('/uploads/watches/13/photo2.webp', 'watch', 13),
+('/uploads/watches/13/photo3.webp', 'watch', 13),
+('/uploads/watches/13/photo4.webp', 'watch', 13),
+('/uploads/watches/13/photo5.webp', 'watch', 13),
+
+-- Montre 14 : IWC Mark XX
+('/uploads/watches/14/photo1.webp', 'watch', 14),
+('/uploads/watches/14/photo2.webp', 'watch', 14),
+('/uploads/watches/14/photo3.webp', 'watch', 14),
+('/uploads/watches/14/photo4.webp', 'watch', 14),
+('/uploads/watches/14/photo5.webp', 'watch', 14),
+
+-- Montre 15 : Breitling Navitimer
+('/uploads/watches/15/photo1.webp', 'watch', 15),
+('/uploads/watches/15/photo2.webp', 'watch', 15),
+('/uploads/watches/15/photo3.webp', 'watch', 15),
+('/uploads/watches/15/photo4.webp', 'watch', 15),
+('/uploads/watches/15/photo5.webp', 'watch', 15),
+
+-- Montre 16 : Breitling Superocean
+('/uploads/watches/16/photo1.webp', 'watch', 16),
+('/uploads/watches/16/photo2.webp', 'watch', 16),
+('/uploads/watches/16/photo3.webp', 'watch', 16),
+('/uploads/watches/16/photo4.webp', 'watch', 16),
+('/uploads/watches/16/photo5.webp', 'watch', 16),
+
+-- Montre 17 : Grand Seiko Snowflake
+('/uploads/watches/17/photo1.webp', 'watch', 17),
+('/uploads/watches/17/photo2.webp', 'watch', 17),
+('/uploads/watches/17/photo3.webp', 'watch', 17),
+('/uploads/watches/17/photo4.webp', 'watch', 17),
+('/uploads/watches/17/photo5.webp', 'watch', 17),
+
+-- Montre 18 : Grand Seiko Elegance GMT
+('/uploads/watches/18/photo1.webp', 'watch', 18),
+('/uploads/watches/18/photo2.webp', 'watch', 18),
+('/uploads/watches/18/photo3.webp', 'watch', 18),
+('/uploads/watches/18/photo4.webp', 'watch', 18),
+('/uploads/watches/18/photo5.webp', 'watch', 18),
+
+-- Montre 19 : Longines Moonphase
+('/uploads/watches/19/photo1.webp', 'watch', 19),
+('/uploads/watches/19/photo2.webp', 'watch', 19),
+('/uploads/watches/19/photo3.webp', 'watch', 19),
+('/uploads/watches/19/photo4.webp', 'watch', 19),
+('/uploads/watches/19/photo5.webp', 'watch', 19),
+
+-- Montre 20 : Longines HydroConquest
+('/uploads/watches/20/photo1.webp', 'watch', 20),
+('/uploads/watches/20/photo2.webp', 'watch', 20),
+('/uploads/watches/20/photo3.webp', 'watch', 20),
+('/uploads/watches/20/photo4.webp', 'watch', 20),
+('/uploads/watches/20/photo5.webp', 'watch', 20);
+/*!40000 ALTER TABLE `photo` ENABLE KEYS */;
+UNLOCK TABLES;
 DROP TABLE IF EXISTS `watch_has_cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
