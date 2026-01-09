@@ -7,12 +7,7 @@ export type Watch = {
   model: string;
   watch_price: number | null;
   watch_condition?: string | null;
-
-  url_photo1?: string | null;
-  url_photo2?: string | null;
-  url_photo3?: string | null;
-  url_photo4?: string | null;
-  url_photo5?: string | null;
+  photo_url: string | null;
 };
 
 type WatchCardProps = {
@@ -26,7 +21,7 @@ export default function WatchCard({
   apiBaseUrl,
   context,
 }: WatchCardProps) {
-  const cover = watch.url_photo1;
+  const cover = watch.photo_url;
 
   const price =
     watch.watch_price == null
@@ -46,7 +41,7 @@ export default function WatchCard({
 
           {cover && (
             <img
-              src={`${apiBaseUrl}/uploads/${cover}`}
+              src={`${apiBaseUrl}${cover}`}
               alt={`Montre ${watch.brand} ${watch.model}`}
               loading="lazy"
             />

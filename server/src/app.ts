@@ -80,7 +80,7 @@ import path from "node:path";
 
 // server appel pictures watches
 
-const uploadsRoot = path.join(__dirname, "../../server/public/assets/uploads");
+const uploadsRoot = path.join(__dirname, "../public/assets/uploads");
 
 if (fs.existsSync(uploadsRoot)) {
   app.use("/uploads", express.static(uploadsRoot));
