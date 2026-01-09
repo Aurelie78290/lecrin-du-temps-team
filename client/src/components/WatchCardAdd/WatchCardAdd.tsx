@@ -198,6 +198,7 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
     setModelId(selectedModel.id);
     setShowSuggestionsModel(false);
   };
+  console.info(modelId);
 
   /**
    * Gère la navigation au clavier dans la liste de suggestions.

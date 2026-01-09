@@ -1,3 +1,4 @@
+import DashboardNewMembers from "../../components/DashboardNewMembers/DashboardNewMembers";
 import MonthlySales from "../../components/MonthlySales/MonthlySales";
 import PendingTransactions from "../../components/PendingTransactions/PendingTransactions";
 
@@ -7,8 +8,11 @@ function Dashboard() {
   return (
     <>
       <h1> Bienvenue Admin, dans la page dashboard</h1>
-      <MonthlySales />
-      <PendingTransactions />
+      <section className="Dashboard_section_high">
+        <MonthlySales />
+        <PendingTransactions />
+        <DashboardNewMembers />
+      </section>
     </>
   );
 }

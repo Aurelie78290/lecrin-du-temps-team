@@ -4,7 +4,7 @@
     rgba(20, 30, 48, 0.8),
     rgba(15, 25, 40, 0.9)
   );
-  border: 1px solid #e0c58f;
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1rem;
   position: relative;
@@ -84,14 +84,13 @@
   border-radius: 30px;
   text-align: center;
   transition: all 0.3s ease;
-  margin-top: ;
   align-self: center;
   width: fit-content;
 }
 
 .breakingNews-section a:hover {
   background: rgba(224, 197, 143, 0.15);
-  border-color: #e0c58f;
+  border-color: var(--border-color);
   box-shadow: 0 0 20px rgba(224, 197, 143, 0.2);
 }
 

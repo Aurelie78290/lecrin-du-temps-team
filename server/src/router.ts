@@ -85,11 +85,18 @@ router.get("/api/monthlySales", MonthlySalesActions.browse);
 
 /* ************************************************************************* */
 
-// Define PendingTransactions routes
+// Define PendingTransactions route
 import PendingTransactionsActions from "./modules/PendingTransactions/PendingTransactionsActions";
 import { upload } from "../middleware/upload";
 
 router.get("/api/PendingTransactions", PendingTransactionsActions.browse);
+
+/* ************************************************************************* */
+
+// Define adminNewMembers route
+import AdminNewMembersActions from "./modules/adminNewMembers/adminNewMembersActions";
+
+router.get("/api/AdminNewMembers", AdminNewMembersActions.browse);
 
 /* ************************************************************************* */
 
