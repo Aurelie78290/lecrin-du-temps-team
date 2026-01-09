@@ -76,7 +76,8 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
   const [highlightedIndex, setHighlightedIndex] = useState(0); // Index de l'élément surligné (navigation clavier)
 
   // Ref pour détecter les clics en dehors de l'autocomplétion
-  const autocompleteRef = useRef<HTMLDivElement>(null);
+  const autocompleteBrandRef = useRef<HTMLDivElement>(null);
+  const autocompleteModelRef = useRef<HTMLDivElement>(null);
 
   // --------------------------------------------
   // Configuration API
@@ -128,11 +129,17 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
    */
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      // Si le clic est en dehors du wrapper d'autocomplétion, on ferme
-      if (
-        autocompleteRef.current &&
-        !autocompleteRef.current.contains(event.target as Node)
-      ) {
+      const target = event.target as Node;
+
+      const clickedOutsideBrand =
+        autocompleteBrandRef.current &&
+        !autocompleteBrandRef.current.contains(target);
+
+      const clickedOutsideModel =
+        autocompleteModelRef.current &&
+        !autocompleteModelRef.current.contains(target);
+
+      if (clickedOutsideBrand && clickedOutsideModel) {
         setShowSuggestionsBrand(false);
         setShowSuggestionsModel(false);
       }
@@ -412,7 +419,7 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
             ---------------------------------------- */}
             <form onSubmit={handleSubmit} id="watch-adder">
               {/* --- Champ Marque avec autocomplétion --- */}
-              <div className="autocomplete" ref={autocompleteRef}>
+              <div className="autocomplete" ref={autocompleteBrandRef}>
                 <input
                   type="text"
                   placeholder="Marque"
@@ -462,7 +469,7 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
               </div>
 
               {/* --- Autres champs --- */}
-              <div className="autocomplete">
+              <div className="autocomplete" ref={autocompleteModelRef}>
                 <input
                   type="text"
                   placeholder="Modèle"

@@ -98,13 +98,9 @@ export default function WatchDetails() {
         //stock toute la montre.
         setWatch(data);
 
-        const p1 = asStringOrNull(data.url_photo1);
-        const p2 = asStringOrNull(data.url_photo2);
-        const p3 = asStringOrNull(data.url_photo3);
-        const p4 = asStringOrNull(data.url_photo4);
-        const p5 = asStringOrNull(data.url_photo5);
-
-        setActivePhoto(p1 ?? p2 ?? p3 ?? p4 ?? p5 ?? null); // cherche la 1ere photo non null
+        // Les photos sont maintenant dans un tableau data.photos
+        const photosArray = data.photos as string[] | undefined;
+        setActivePhoto(photosArray?.[0] ?? null); // Prend la première photo
       })
       .catch((err: unknown) => {
         setError(err instanceof Error ? err.message : "Erreur inconnue");
@@ -115,13 +111,9 @@ export default function WatchDetails() {
   const photos = useMemo(() => {
     // useMemo évite de recalculer la liste tant que watch ne change pas
     if (!watch) return [];
-    return [
-      asStringOrNull(watch.url_photo1),
-      asStringOrNull(watch.url_photo2),
-      asStringOrNull(watch.url_photo3),
-      asStringOrNull(watch.url_photo4),
-      asStringOrNull(watch.url_photo5),
-    ].filter((p): p is string => typeof p === "string" && p.length > 0);
+    // Les photos sont maintenant dans un tableau watch.photos
+    const photosArray = watch.photos as string[] | undefined;
+    return photosArray ?? [];
   }, [watch]);
 
   if (loading) return <div className="watchdetails-state">Chargement…</div>;
@@ -162,7 +154,7 @@ export default function WatchDetails() {
           <div className="watchdetails-main">
             {activePhoto ? (
               <img
-                src={`${API_URL}/uploads/${activePhoto}`}
+                src={`${API_URL}${activePhoto}`}
                 alt={`Montre ${formatValue(watch.brand)} ${formatValue(
                   watch.model,
                 )}`}
@@ -184,7 +176,7 @@ export default function WatchDetails() {
                   }`}
                   onClick={() => setActivePhoto(p)} //Classe is-active si c’est la photo sélectionnée
                 >
-                  <img src={`${API_URL}/uploads/${p}`} alt="" />
+                  <img src={`${API_URL}${p}`} alt="" />
                 </button>
               ))}
             </div>
