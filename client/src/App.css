@@ -75,3 +75,15 @@ p {
 .app-layout.no-sidebar .main-content {
   margin-left: 0;
 }
+/* =========================
+   MOBILE
+   ========================= */
+@media (max-width: 600px) {
+  .main-content {
+    margin-left: 0; /* Sidebar en overlay */
+    padding: 1rem; /* Padding plus compact */
+  }
+  .app-layout.sidebar-expanded .main-content {
+    margin-left: 0;
+  }
+}
