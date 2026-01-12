@@ -1,27 +1,38 @@
-/* Sidebar principale */
+/* =========================
+   SIDEBAR PRINCIPALE
+   ========================= */
 .sidebar {
-  position: fixed;
+  position: fixed; /* Sidebar fixée à l'écran */
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 115px;
+  height: 100vh; /* Prend toute la hauteur du viewport */
+  width: 115px; /* Largeur par défaut (sidebar fermée) */
   padding: 1.5rem 1rem;
+
+  /* Fond désactivé (gradient possible) */
   /* background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%); */
+
   border: solid 1px var(--secondary-color);
-  border-radius: 0 1.5rem 1.5rem 0;
-  display: flex;
+  border-radius: 0 1.5rem 1.5rem 0; /* Coins arrondis côté droit */
+
+  display: flex; /* Layout flex vertical */
   flex-direction: column;
-  transition: width 0.3s ease;
-  overflow: hidden;
+
+  transition: width 0.3s ease; /* Animation quand la largeur change */
+  overflow: hidden; /* Cache le texte quand la sidebar est fermée */
   box-sizing: border-box;
-  z-index: 100;
+
+  z-index: 100; /* Passe au-dessus du contenu */
 }
 
+/* Sidebar ouverte */
 .sidebar.expanded {
-  width: 220px;
+  width: 220px; /* Largeur quand elle est déployée */
 }
 
-/* Header */
+/* =========================
+   HEADER (logo + bouton)
+   ========================= */
 .sidebar-header {
   display: flex;
   align-items: center;
@@ -34,12 +45,14 @@
   height: 50px;
 }
 
+/* Même alignement quand la sidebar est ouverte */
 .sidebar.expanded .sidebar-header {
   justify-content: center;
 }
 
+/* Bouton pour ouvrir / fermer la sidebar */
 .toggle-btn {
-  display: none;
+  display: none; /* Caché par défaut */
   background: transparent;
   border: 1px solid #c9a227;
   color: #c9a227;
@@ -51,67 +64,85 @@
   line-height: 1;
 }
 
+/* Le bouton apparaît seulement quand la sidebar est ouverte */
 .sidebar.expanded .toggle-btn {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Menu */
+/* =========================
+   MENU PRINCIPAL
+   ========================= */
 .menu {
-  list-style: none;
+  list-style: none; /* Supprime les puces */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+
   margin: 0;
   padding: 0;
   gap: 1.5rem;
-  flex: 1;
+
+  flex: 1; /* Prend l'espace disponible (footer en bas) */
 }
 
 .menu li {
   margin: 0.5rem 0;
 }
 
+/* Lien du menu */
 .menu a {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; /* Icône centrée quand sidebar fermée */
+
   margin-left: 0.8rem;
   padding: 0.75rem;
   border-radius: 0.75rem;
+
   text-decoration: none;
   color: white;
   font-family: var(--font-secondary);
+
   transition: background 0.2s ease;
 }
 
+/* Quand la sidebar est ouverte :
+   icône à gauche + texte visible */
 .sidebar.expanded .menu a {
   justify-content: flex-start;
 }
 
+/* Hover sur un item */
 .menu a:hover {
   background: rgba(201, 162, 39, 0.1);
 }
 
+/* Item actif (par défaut, fermé) */
 .menu li.active a {
   background: transparent;
 }
 
+/* Icône active : assombrie */
 .menu li.active a img {
   filter: brightness(0);
 }
 
+/* Item actif quand sidebar ouverte */
 .sidebar.expanded .menu li.active a {
   background: var(--secondary-color);
 }
 
+/* Reset des effets sur l'icône en mode ouvert */
 .sidebar.expanded .menu li.active a img {
   background: transparent;
   padding: 0;
   box-shadow: 0 0 0 0px rgba(201, 162, 39, 0.2);
 }
+
+/* Wrapper autour de l'icône */
 .icon-wrapper {
   display: flex;
   align-items: center;
@@ -119,30 +150,35 @@
   border-radius: 0.5rem;
 }
 
+/* Icône active entourée */
 .menu li.active .icon-wrapper {
   background: var(--secondary-color);
   box-shadow: 0 0 0 8px var(--secondary-color);
 }
 
+/* Icône */
 .menu a img {
   width: 24px;
   height: 24px;
-  flex-shrink: 0;
+  flex-shrink: 0; /* Empêche le shrink en flex */
 }
 
+/* Texte du menu */
 .menu a span {
   margin-left: 1rem;
-
-  white-space: nowrap;
-  opacity: 0;
+  white-space: nowrap; /* Empêche le retour à la ligne */
+  opacity: 0; /* Caché quand sidebar fermée */
   transition: opacity 0.2s ease;
 }
 
+/* Texte visible quand sidebar ouverte */
 .sidebar.expanded .menu a span {
   opacity: 1;
 }
 
-/* Footer */
+/* =========================
+   FOOTER
+   ========================= */
 .sidebar-footer {
   display: flex;
   flex-direction: column;
@@ -150,15 +186,18 @@
   gap: 1rem;
 }
 
+/* Réseaux sociaux (cachés par défaut) */
 .social-links {
   display: none;
   gap: 1.5rem;
 }
 
+/* Sélecteur de thème (caché par défaut) */
 .theme-change-display {
   display: none;
 }
 
+/* Affiché uniquement quand sidebar ouverte */
 .sidebar.expanded .theme-change-display {
   display: flex;
 }
@@ -167,6 +206,7 @@
   display: flex;
 }
 
+/* Icônes sociales */
 .social-links a img {
   width: 20px;
   height: 20px;
@@ -178,11 +218,12 @@
   opacity: 1;
 }
 
+/* Liens légaux */
 .legal-links {
   display: none;
-
   flex-direction: column;
   align-items: center;
+
   font-size: 0.7rem;
   color: white;
 }
@@ -193,6 +234,45 @@
   font-family: var(--font-secondary);
 }
 
+/* Liens visibles uniquement quand sidebar ouverte */
 .sidebar.expanded .legal-links {
   display: flex;
+}
+
+.burger-btn {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 200;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 100;
+  }
+
+  .sidebar.expanded {
+    transform: translateX(0);
+  }
+
+  .burger-btn {
+    display: block;
+  }
+
+  .sidebar {
+    background: var(--background-color);
+  }
 }

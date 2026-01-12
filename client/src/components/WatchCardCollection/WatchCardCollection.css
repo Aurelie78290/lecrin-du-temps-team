@@ -9,6 +9,7 @@
   font-family: var(--font-primary);
   color: white;
   font-weight: 200;
+  font-size: 2.7vw;
 }
 
 .overlay {
@@ -25,4 +26,15 @@
   opacity: 0.3;
   pointer-events: none; /* empêche les clics */
   transition: opacity 0.3s ease;
+}
+
+@media (max-width: 600px) {
+  .watches-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .watch-card-collection__main h1 {
+    margin-left: 5rem;
+    margin-top: 0.8rem;
+  }
 }
