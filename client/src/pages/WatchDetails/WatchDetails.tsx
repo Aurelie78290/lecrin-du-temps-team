@@ -1,6 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useMatch, useParams } from "react-router";
+import { Link, useMatch, useNavigate, useParams } from "react-router";
 import "./WatchDetails.css";
+
+type Watch = Record<string, unknown> & {
+  idwatch: number;
+  photos?: string[];
+};
 
 const API_URL = "http://localhost:3310";
 
@@ -71,11 +76,31 @@ export default function WatchDetails() {
   const inShop = !!useMatch("/shop/:id");
   const inCollection = !!useMatch("/collection/:id");
 
-  const [watch, setWatch] = useState<Record<string, unknown> | null>(null);
+  const [watch, setWatch] = useState<Watch | null>(null);
   //pr la photo affichée en grand
   const [activePhoto, setActivePhoto] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const handleDelete = async (id: number) => {
+    if (!window.confirm("Supprimer cette montre ?")) return;
+
+    const res = await fetch(`${API_URL}/api/watches/${id}`, {
+      method: "DELETE",
+    });
+    const body = await res.text().catch(() => "");
+
+    console.log("DELETE URL:", `${API_URL}/api/watches/${id}`);
+    console.log("DELETE status:", res.status, res.statusText);
+    console.log("DELETE body:", body);
+
+    if (!res.ok) {
+      alert(`Erreur suppression (${res.status}) : ${body || res.statusText}`);
+      return;
+    }
+
+    navigate("/collection");
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -83,25 +108,22 @@ export default function WatchDetails() {
     setLoading(true);
     setError(null);
     //appeler API en fonction de l'ID, si pas d'id : rien
+
     fetch(`${API_URL}/api/watches/${id}`)
       .then(async (res) => {
         if (!res.ok) {
-          // Si erreur lis le body texte pour avoir plus de détails.
           const body = await res.text().catch(() => "");
           throw new Error(
             `Erreur API ${res.status} ${res.statusText} ${body}`.trim(),
           );
         }
-        return res.json() as Promise<Record<string, unknown>>;
+        return res.json() as Promise<Watch>;
       })
       .then((data) => {
-        //stock toute la montre.
         setWatch(data);
-
-        // Les photos sont maintenant dans un tableau data.photos
-        const photosArray = data.photos as string[] | undefined;
-        setActivePhoto(photosArray?.[0] ?? null); // Prend la première photo
+        setActivePhoto(data.photos?.[0] ?? null);
       })
+
       .catch((err: unknown) => {
         setError(err instanceof Error ? err.message : "Erreur inconnue");
       })
@@ -409,13 +431,31 @@ export default function WatchDetails() {
             )}
 
             {inCollection && (
-              <button
-                type="button"
-                className="watchdetails-sell"
-                onClick={() => console.log("Mettre en vente", watch.idwatch)}
-              >
-                Mettre en vente
-              </button>
+              <div className="watchdetails-actions">
+                <button
+                  type="button"
+                  className="watchdetails-sell"
+                  onClick={() => console.log("Mettre en vente", watch.idwatch)}
+                >
+                  Mettre en vente
+                </button>
+
+                <button
+                  type="button"
+                  className="watchdetails-edit"
+                  onClick={() => navigate(`/watches/${watch.idwatch}/edit`)}
+                >
+                  Modifier
+                </button>
+
+                <button
+                  type="button"
+                  className="watchdetails-delete"
+                  onClick={() => handleDelete(watch.idwatch)}
+                >
+                  Supprimer
+                </button>
+              </div>
             )}
 
             {!inShop && !inCollection && (

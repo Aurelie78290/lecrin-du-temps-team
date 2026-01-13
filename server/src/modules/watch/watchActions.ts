@@ -1,9 +1,8 @@
 import type { RequestHandler } from "express";
 
+import photoRepository from "../photo/photoRepository";
 // Import access to data
 import watchRepository from "./watchRepository";
-import photoRepository from "../photo/photoRepository";
-
 //Type
 interface UploadedFiles {
   watch_image?: Express.Multer.File[];
@@ -89,8 +88,39 @@ const add: RequestHandler = async (req, res, next) => {
     next(err);
   }
 };
+
+// =======================
+// D - Destroy (Delete)
+// =======================
+const destroy: RequestHandler = async (req, res, next) => {
+  try {
+    const watchId = Number(req.params.id);
+    if (Number.isNaN(watchId)) {
+      res.sendStatus(400);
+      return;
+    }
+
+    // 1) supprimer ce qui bloque les FK
+    await watchRepository.deleteOrderArchiveByWatchId(watchId);
+    await photoRepository.deleteByWatchId(watchId);
+
+    // 2) supprimer la watch
+    const deleted = await watchRepository.deleteById(watchId);
+
+    if (!deleted) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   browse,
   read,
   add,
+  destroy,
 };

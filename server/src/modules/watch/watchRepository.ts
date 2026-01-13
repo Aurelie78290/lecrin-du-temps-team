@@ -176,6 +176,32 @@ class WatchRepository {
 
     return rows as WatchListItem[];
   }
+
+  // // ======================
+  // // D - Delete (photos)
+  // // ======================
+  // async deletePhotosByWatchId(watchId: number) {
+  //   await databaseClient.query<Result>("DELETE FROM photo WHERE watch_id = ?", [
+  //     watchId,
+  //   ]);
+  // }
+
+  // ======================
+  // D - Delete (watch)
+  // ======================
+  async deleteOrderArchiveByWatchId(watchId: number) {
+    await databaseClient.query<Result>(
+      "DELETE FROM order_archive WHERE watch_id = ?",
+      [watchId],
+    );
+  }
+  async deleteById(id: number) {
+    const [result] = await databaseClient.query<Result>(
+      "DELETE FROM watch WHERE idwatch = ?",
+      [id],
+    );
+    return result.affectedRows > 0;
+  }
 }
 
 export default new WatchRepository();

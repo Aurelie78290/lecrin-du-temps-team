@@ -149,7 +149,9 @@
 }
 
 .watchdetails-buy,
-.watchdetails-sell {
+.watchdetails-sell,
+.watchdetails-edit,
+.watchdetails-delete {
   width: 200px;
   padding: 12px 14px;
   border-radius: 14px;

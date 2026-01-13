@@ -51,6 +51,7 @@ import watchActions from "./modules/watch/watchActions";
 
 router.get("/api/watches", watchActions.browse);
 router.get("/api/watches/:id", watchActions.read);
+router.delete("/api/watches/:id", watchActions.destroy);
 router.post(
   "/api/watches",
   upload.fields([
@@ -85,9 +86,9 @@ router.get("/api/monthlySales", MonthlySalesActions.browse);
 
 /* ************************************************************************* */
 
+import { upload } from "../middleware/upload";
 // Define PendingTransactions route
 import PendingTransactionsActions from "./modules/PendingTransactions/PendingTransactionsActions";
-import { upload } from "../middleware/upload";
 
 router.get("/api/PendingTransactions", PendingTransactionsActions.browse);
 
