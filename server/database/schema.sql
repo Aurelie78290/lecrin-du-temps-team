@@ -766,10 +766,34 @@ INSERT INTO watch (
 (1, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'En vente', 1350,
 1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1);
 UNLOCK TABLES;
+CREATE TABLE user_has_watch (
+  user_id INT NOT NULL,
+  watch_id INT NOT NULL,
+  PRIMARY KEY (user_id, watch_id),
+  FOREIGN KEY (user_id) REFERENCES user(iduser) ON DELETE CASCADE,
+  FOREIGN KEY (watch_id) REFERENCES watch(idwatch) ON DELETE CASCADE
+);
 
---
--- Table structure for table `watch_has_cart`
---
+UPDATE watch SET watch_sell_status = 'En vente' WHERE idwatch BETWEEN 1 AND 20;
+
+INSERT IGNORE INTO user_has_watch (user_id, watch_id)
+SELECT 1, idwatch FROM watch WHERE idwatch BETWEEN 1 AND 20;
+-- ALTER TABLE watch
+-- ADD COLUMN scope ENUM('SHOP', 'COLLECTION') NOT NULL DEFAULT 'SHOP'
+-- AFTER user_id;
+
+-- -- SHOP
+-- UPDATE watch
+-- SET scope = 'SHOP', user_id = NULL
+-- WHERE idwatch BETWEEN 1 AND 20;
+
+-- -- COLLECTION (user 1)
+-- UPDATE watch
+-- SET scope = 'COLLECTION', user_id = 1
+-- WHERE idwatch BETWEEN 1 AND 20;
+-- --
+-- -- Table structure for table `watch_has_cart`
+-- --
 
 DROP TABLE IF EXISTS `model`;
 DROP TABLE IF EXISTS `brand`;

@@ -1,9 +1,8 @@
 import type { RequestHandler } from "express";
 
+import photoRepository from "../photo/photoRepository";
 // Import access to data
 import watchRepository from "./watchRepository";
-import photoRepository from "../photo/photoRepository";
-
 //Type
 interface UploadedFiles {
   watch_image?: Express.Multer.File[];
@@ -16,6 +15,31 @@ interface UploadedFiles {
 const browse: RequestHandler = async (_req, res, next) => {
   try {
     const watches = await watchRepository.readAll();
+    res.json(watches);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const browseShop: RequestHandler = async (_req, res, next) => {
+  try {
+    const watches = await watchRepository.readAll(); // readAll filtre SHOP
+    res.json(watches);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const browseCollection: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.params.userId);
+
+    if (Number.isNaN(userId)) {
+      res.sendStatus(400);
+      return;
+    }
+
+    const watches = await watchRepository.readAllCollection(userId);
     res.json(watches);
   } catch (err) {
     next(err);
@@ -89,8 +113,62 @@ const add: RequestHandler = async (req, res, next) => {
     next(err);
   }
 };
+
+// =======================
+// D - Destroy (Delete)
+// =======================
+const destroy: RequestHandler = async (req, res, next) => {
+  try {
+    const watchId = Number(req.params.id);
+    if (Number.isNaN(watchId)) {
+      res.sendStatus(400);
+      return;
+    }
+
+    // 1) supprimer ce qui bloque les FK
+    await watchRepository.deleteOrderArchiveByWatchId(watchId);
+    await photoRepository.deleteByWatchId(watchId);
+
+    // 2) supprimer la watch
+    const deleted = await watchRepository.deleteById(watchId);
+
+    if (!deleted) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// =======================
+// Remove from collection (unlink only)
+// =======================
+const removeFromCollection: RequestHandler = async (req, res, next) => {
+  try {
+    const watchId = Number(req.params.watchId);
+    const userId = Number(req.query.userId); // ?userId=1
+
+    if (Number.isNaN(watchId) || Number.isNaN(userId)) {
+      res.status(400).json({ message: "userId et watchId requis" });
+      return;
+    }
+
+    await watchRepository.removeFromCollection(userId, watchId);
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   browse,
   read,
   add,
+  destroy,
+  browseShop,
+  browseCollection,
+  removeFromCollection, // ✅ AJOUTE ÇA
 };
