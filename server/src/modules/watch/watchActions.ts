@@ -21,6 +21,31 @@ const browse: RequestHandler = async (_req, res, next) => {
   }
 };
 
+const browseShop: RequestHandler = async (_req, res, next) => {
+  try {
+    const watches = await watchRepository.readAll(); // readAll filtre SHOP
+    res.json(watches);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const browseCollection: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.params.userId);
+
+    if (Number.isNaN(userId)) {
+      res.sendStatus(400);
+      return;
+    }
+
+    const watches = await watchRepository.readAllCollection(userId);
+    res.json(watches);
+  } catch (err) {
+    next(err);
+  }
+};
+
 // =======================
 // R - Read (Read One)
 // =======================
@@ -123,4 +148,6 @@ export default {
   read,
   add,
   destroy,
+  browseShop,
+  browseCollection,
 };

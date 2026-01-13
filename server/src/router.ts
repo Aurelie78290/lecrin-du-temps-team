@@ -51,7 +51,12 @@ import watchActions from "./modules/watch/watchActions";
 
 router.get("/api/watches", watchActions.browse);
 router.get("/api/watches/:id", watchActions.read);
+
+router.get("/api/shop/watches", watchActions.browseShop);
+router.get("/api/collection/watches/:userId", watchActions.browseCollection);
+
 router.delete("/api/watches/:id", watchActions.destroy);
+
 router.post(
   "/api/watches",
   upload.fields([

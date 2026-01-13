@@ -759,6 +759,19 @@ INSERT INTO watch (
 1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1);
 UNLOCK TABLES;
 
+ALTER TABLE watch
+ADD COLUMN scope ENUM('SHOP', 'COLLECTION') NOT NULL DEFAULT 'SHOP'
+AFTER user_id;
+
+-- SHOP
+UPDATE watch
+SET scope = 'SHOP', user_id = NULL
+WHERE idwatch BETWEEN 1 AND 15;
+
+-- COLLECTION (user 1)
+UPDATE watch
+SET scope = 'COLLECTION', user_id = 1
+WHERE idwatch BETWEEN 16 AND 20;
 --
 -- Table structure for table `watch_has_cart`
 --

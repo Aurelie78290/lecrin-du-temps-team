@@ -156,7 +156,7 @@ class WatchRepository {
   }
 
   // ======================
-  // R - Read all (LISTING)
+  // R - Read all (Boutique)
   // ======================
   async readAll() {
     const [rows] = await databaseClient.query<Rows>(
@@ -171,20 +171,37 @@ class WatchRepository {
     FROM watch w
     JOIN brand b ON b.id = w.brand_id
     JOIN model m ON m.id = w.model_id
+    WHERE w.scope = 'SHOP'
     `,
     );
 
     return rows as WatchListItem[];
   }
 
-  // // ======================
-  // // D - Delete (photos)
-  // // ======================
-  // async deletePhotosByWatchId(watchId: number) {
-  //   await databaseClient.query<Result>("DELETE FROM photo WHERE watch_id = ?", [
-  //     watchId,
-  //   ]);
-  // }
+  // ======================
+  // R - Read all (Shop)
+  // ======================
+  async readAllCollection(userId: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      `
+    SELECT
+      w.idwatch,
+      b.name AS brand,
+      m.name AS model,
+      w.watch_price,
+      w.watch_condition,
+      (SELECT url FROM photo WHERE watch_id = w.idwatch AND type = 'watch' LIMIT 1) AS photo_url
+    FROM watch w
+    JOIN brand b ON b.id = w.brand_id
+    JOIN model m ON m.id = w.model_id
+    WHERE w.scope = 'COLLECTION'
+      AND w.user_id = ?
+    `,
+      [userId],
+    );
+
+    return rows as WatchListItem[];
+  }
 
   // ======================
   // D - Delete (watch)
