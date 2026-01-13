@@ -14,6 +14,8 @@ type WatchCardProps = {
   watch: Watch;
   apiBaseUrl: string;
   context: "shop" | "collection";
+  userId?: number; // utile seulement en collection
+  onChange?: () => void; // pour refresh après delete
 };
 
 export default function WatchCard({

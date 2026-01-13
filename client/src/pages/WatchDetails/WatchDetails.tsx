@@ -72,34 +72,50 @@ const labelOrId = (
 
 export default function WatchDetails() {
   const { id } = useParams();
-
   const inShop = !!useMatch("/shop/:id");
   const inCollection = !!useMatch("/collection/:id");
-
+  // const location = useLocation();
+  const watchId = Number(id);
+  const userId = 1; // temporaire
   const [watch, setWatch] = useState<Watch | null>(null);
   //pr la photo affichée en grand
   const [activePhoto, setActivePhoto] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const handleDelete = async (id: number) => {
-    if (!window.confirm("Supprimer cette montre ?")) return;
-
-    const res = await fetch(`${API_URL}/api/watches/${id}`, {
-      method: "DELETE",
-    });
-    const body = await res.text().catch(() => "");
-
-    console.log("DELETE URL:", `${API_URL}/api/watches/${id}`);
-    console.log("DELETE status:", res.status, res.statusText);
-    console.log("DELETE body:", body);
-
-    if (!res.ok) {
-      alert(`Erreur suppression (${res.status}) : ${body || res.statusText}`);
+  const handleDelete = async () => {
+    if (!Number.isFinite(watchId)) return;
+    if (
+      !window.confirm(
+        inCollection
+          ? "Retirer de la collection ?"
+          : "Supprimer cette montre ?",
+      )
+    )
       return;
-    }
 
-    navigate("/collection");
+    try {
+      const url = inCollection
+        ? `${API_URL}/api/collection/watches/${watchId}?userId=${userId}`
+        : `${API_URL}/api/watches/${watchId}`;
+
+      const res = await fetch(url, { method: "DELETE" });
+      const body = await res.text().catch(() => "");
+
+      console.log("DELETE URL:", url);
+      console.log("DELETE status:", res.status, res.statusText);
+      console.log("DELETE body:", body);
+
+      if (!res.ok) {
+        alert(`Erreur suppression (${res.status}) : ${body || res.statusText}`);
+        return;
+      }
+
+      navigate(inCollection ? "/collection" : "/shop");
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de la suppression");
+    }
   };
 
   useEffect(() => {
@@ -451,9 +467,9 @@ export default function WatchDetails() {
                 <button
                   type="button"
                   className="watchdetails-delete"
-                  onClick={() => handleDelete(watch.idwatch)}
+                  onClick={handleDelete}
                 >
-                  Supprimer
+                  {inCollection ? "Retirer de la collection" : "Supprimer"}
                 </button>
               </div>
             )}

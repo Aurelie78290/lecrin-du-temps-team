@@ -143,6 +143,26 @@ const destroy: RequestHandler = async (req, res, next) => {
   }
 };
 
+// =======================
+// Remove from collection (unlink only)
+// =======================
+const removeFromCollection: RequestHandler = async (req, res, next) => {
+  try {
+    const watchId = Number(req.params.watchId);
+    const userId = Number(req.query.userId); // ?userId=1
+
+    if (Number.isNaN(watchId) || Number.isNaN(userId)) {
+      res.status(400).json({ message: "userId et watchId requis" });
+      return;
+    }
+
+    await watchRepository.removeFromCollection(userId, watchId);
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   browse,
   read,
@@ -150,4 +170,5 @@ export default {
   destroy,
   browseShop,
   browseCollection,
+  removeFromCollection, // ✅ AJOUTE ÇA
 };

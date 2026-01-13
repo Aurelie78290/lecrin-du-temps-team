@@ -161,17 +161,24 @@ class WatchRepository {
   async readAll() {
     const [rows] = await databaseClient.query<Rows>(
       `
-    SELECT
-      w.idwatch,
-      b.name AS brand,
-      m.name AS model,
-      w.watch_price,
-      w.watch_condition,
-      (SELECT url FROM photo WHERE watch_id = w.idwatch AND type = 'watch' LIMIT 1) AS photo_url
-    FROM watch w
-    JOIN brand b ON b.id = w.brand_id
-    JOIN model m ON m.id = w.model_id
-    WHERE w.scope = 'SHOP'
+SELECT
+  w.idwatch,
+  b.name AS brand,
+  m.name AS model,
+  w.watch_price,
+  w.watch_condition,
+  (
+    SELECT url
+    FROM photo
+    WHERE watch_id = w.idwatch
+      AND type = 'watch'
+    LIMIT 1
+  ) AS photo_url
+FROM watch w
+JOIN brand b ON b.id = w.brand_id
+JOIN model m ON m.id = w.model_id
+WHERE w.watch_sell_status = 'En vente';
+
     `,
     );
 
@@ -184,18 +191,25 @@ class WatchRepository {
   async readAllCollection(userId: number) {
     const [rows] = await databaseClient.query<Rows>(
       `
-    SELECT
-      w.idwatch,
-      b.name AS brand,
-      m.name AS model,
-      w.watch_price,
-      w.watch_condition,
-      (SELECT url FROM photo WHERE watch_id = w.idwatch AND type = 'watch' LIMIT 1) AS photo_url
-    FROM watch w
-    JOIN brand b ON b.id = w.brand_id
-    JOIN model m ON m.id = w.model_id
-    WHERE w.scope = 'COLLECTION'
-      AND w.user_id = ?
+SELECT
+  w.idwatch,
+  b.name AS brand,
+  m.name AS model,
+  w.watch_price,
+  w.watch_condition,
+  (
+    SELECT url
+    FROM photo
+    WHERE watch_id = w.idwatch
+      AND type = 'watch'
+    LIMIT 1
+  ) AS photo_url
+FROM watch w
+JOIN user_has_watch uhw ON uhw.watch_id = w.idwatch
+JOIN brand b ON b.id = w.brand_id
+JOIN model m ON m.id = w.model_id
+WHERE uhw.user_id = ?;
+
     `,
       [userId],
     );
@@ -218,6 +232,13 @@ class WatchRepository {
       [id],
     );
     return result.affectedRows > 0;
+  }
+
+  async removeFromCollection(userId: number, watchId: number) {
+    await databaseClient.query(
+      "DELETE FROM user_has_watch WHERE user_id = ? AND watch_id = ?",
+      [userId, watchId],
+    );
   }
 }
 
