@@ -11,7 +11,7 @@ class ReviewsRepository {
   async readAll() {
     // Execute the SQL SELECT query to retrieve all trasactions and dates from the "order_archive" table
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT DATE(purchase_date) AS jour, COUNT(*) AS nombre_de_transactions FROM order_archive WHERE purchase_date >= CURRENT_DATE - INTERVAL 30 DAY GROUP BY DATE(purchase_date) ORDER BY jour DESC;",
+      "SELECT DATE(purchase_date) AS jour, COUNT(*) AS nombre_de_transactions FROM order_archive WHERE purchase_date >= CURRENT_DATE - INTERVAL 30 DAY GROUP BY DATE(purchase_date) ORDER BY jour ASC;",
     );
 
     // Return the array of order_archive
