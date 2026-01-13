@@ -417,7 +417,14 @@ VALUES (2, 3, 4000, 20251225, 2, 2),
 (2, 3, 4000, 20260107, 3, 2),
 (2, 3, 4000, 20260108, 4, 2),
 (2, 3, 4000, 20260109, 5, 2),
-(2, 3, 4000, 20260202, 6, 2);
+(2, 3, 4000, 20260202, 6, 2),
+(7, 3, 5000, 20250902, 7, 7),
+(7, 3, 5000, 20260103, 8, 7),
+(7, 3, 5000, 20260103, 9, 7),
+(7, 3, 5000, 20260103, 10, 7),
+(2, 7, 5000, 20260102, 11, 2),
+(2, 7, 5000, 20260110, 12, 2),
+(2, 7, 5000, 20260102, 13, 2);
 /*!40000 ALTER TABLE `order_archive` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -569,7 +576,8 @@ VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisber
 ('Aurélie','Dumotier','1986-02-14','Responsable Communauté & Évenements','aurelie.dumotier@gmail.com','admin', "Spécialiste en communication de luxe, elle gère les membres VIP et organise les rencontres physiques entre passionnés (les 'GTG').", '2025-09-22 14:15:00'),
 ('Thomas','P','2000-01-01','Développeur & Webmaster','thomas.p@gmail.com','admin', "Passionné de 'Toolwatches', il assure la fluidité du site, la sécurité des transactions et l'optimisation de l'interface utilisateur.", '2025-10-20 16:45:00'),
 ('Mathieu', 'H', '2000-01-01', 'Analyste Marché & Cote', 'mathieu.h@gmail.com','admin', "Expert en économie, il suit l'évolution des prix et les ventes aux enchères pour conseiller les membres sur l'investissement horloger.", '2025-11-08 11:10:00'),
-('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenriats', 'romain.debas@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.", '2026-01-02 08:30:00');
+('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenriats', 'romain.debas@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.", '2026-01-02 08:30:00'),
+('Jean', 'Dubois', '1980-01-01', 'cutsomer', 'jean.dubois@gmail.com','customer', "Collectionneur de montre", '2025-09-01 08:30:00');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 

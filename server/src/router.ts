@@ -108,4 +108,11 @@ router.get("/api/AdminNewMembers", AdminNewMembersActions.browse);
 
 /* ************************************************************************* */
 
+// Define adminVolTran route
+import adminVolTran from "./modules/adminVolTran/adminVolTranActions";
+
+router.get("/api/adminVolTran", adminVolTran.browse);
+
+/* ************************************************************************* */
+
 export default router;
