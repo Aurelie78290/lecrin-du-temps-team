@@ -85,9 +85,9 @@ router.get("/api/monthlySales", MonthlySalesActions.browse);
 
 /* ************************************************************************* */
 
+import { upload } from "../middleware/upload";
 // Define PendingTransactions route
 import PendingTransactionsActions from "./modules/PendingTransactions/PendingTransactionsActions";
-import { upload } from "../middleware/upload";
 
 router.get("/api/PendingTransactions", PendingTransactionsActions.browse);
 
@@ -97,6 +97,13 @@ router.get("/api/PendingTransactions", PendingTransactionsActions.browse);
 import AdminNewMembersActions from "./modules/adminNewMembers/adminNewMembersActions";
 
 router.get("/api/AdminNewMembers", AdminNewMembersActions.browse);
+
+/* ************************************************************************* */
+
+// Define adminVolTran route
+import adminVolTran from "./modules/adminVolTran/adminVolTranActions";
+
+router.get("/api/adminVolTran", adminVolTran.browse);
 
 /* ************************************************************************* */
 

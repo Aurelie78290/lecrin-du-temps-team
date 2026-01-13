@@ -1,4 +1,5 @@
 import DashboardNewMembers from "../../components/DashboardNewMembers/DashboardNewMembers";
+import DashboardVolTran from "../../components/DashboardVolTran/DashboardVolTran";
 import MonthlySales from "../../components/MonthlySales/MonthlySales";
 import PendingTransactions from "../../components/PendingTransactions/PendingTransactions";
 
@@ -12,6 +13,7 @@ function Dashboard() {
         <MonthlySales />
         <PendingTransactions />
         <DashboardNewMembers />
+        <DashboardVolTran />
       </section>
     </>
   );

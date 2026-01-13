@@ -19,7 +19,7 @@ function DashboardNewMembers() {
 
   const nbNewMem =
     nbNewMembers.length === 0
-      ? "Donnée en cours ce chargement"
+      ? "Donnée en cours de chargement"
       : nbNewMembers[0].new_members_count === 0
         ? "Pas de nouveau membre"
         : nbNewMembers[0].new_members_count;
