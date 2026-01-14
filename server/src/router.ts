@@ -75,9 +75,9 @@ import faqActions from "./modules/faq/faqActions";
 
 router.get("/api/faq", faqActions.browse);
 router.get("/api/faq/:id", faqActions.read);
-router.put("/faq/:id", faqActions.edit);
+router.put("/api/faq/:id", faqActions.edit);
 router.post("/api/faq", faqActions.add);
-router.delete("/faq/:id", faqActions.destroy);
+router.delete("/api/faq/:id", faqActions.destroy);
 
 /* ************************************************************************* */
 import brandsActions from "./modules/brands/brandsActions";
@@ -112,6 +112,15 @@ router.get("/api/AdminNewMembers", AdminNewMembersActions.browse);
 import adminVolTran from "./modules/adminVolTran/adminVolTranActions";
 
 router.get("/api/adminVolTran", adminVolTran.browse);
+
+/* ************************************************************************* */
+
+// Define pendingAdd route
+import pendingAddActions from "./modules/pendingAdd/pendingAddActions";
+
+router.get("/api/pendingAdd", pendingAddActions.browse);
+router.get("/api/pendingAdd/:id", pendingAddActions.read);
+router.put("/api/pendingAdd/:id", pendingAddActions.edit);
 
 /* ************************************************************************* */
 

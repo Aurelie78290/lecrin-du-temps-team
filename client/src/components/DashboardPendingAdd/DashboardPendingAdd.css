@@ -1,0 +1,28 @@
+.DashboardPendingAdd-article {
+  border-radius: 15px;
+  border-style: solid;
+  border-color: var(--border-color);
+  border-width: 1px;
+  padding: 0 2rem;
+}
+
+.DashboardPendingAdd-title {
+  text-align: center;
+  padding-bottom: 2rem;
+}
+
+.DashboardPendingAdd-add p {
+  margin: 0;
+}
+
+.DashboardPendingAdd-add {
+  background-color: #919090;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+}
+
+.DashboardPendingAdd-linkto {
+  text-decoration: none;
+  color: var(--border-color);
+}
