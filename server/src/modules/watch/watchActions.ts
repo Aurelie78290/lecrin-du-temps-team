@@ -78,6 +78,13 @@ const add: RequestHandler = async (req, res, next) => {
     // 1. Récupérer les fichiers uploadés
     const files = req.files as UploadedFiles;
 
+    // userId (collection) : on le lit une fois
+    const userId =
+      req.body.userId != null
+        ? Number(req.body.userId)
+        : req.body.user_id != null
+          ? Number(req.body.user_id)
+          : null;
     // 2. Créer la montre d'abord
     const newWatch = {
       user_id: req.body.user_id ? Number(req.body.user_id) : null,
@@ -96,6 +103,9 @@ const add: RequestHandler = async (req, res, next) => {
     // 3. Insérer la montre en base et récupérer son ID
     const watchId = await watchRepository.create(newWatch);
 
+    if (userId != null && !Number.isNaN(userId)) {
+      await watchRepository.addToCollection(userId, watchId);
+    }
     // 4. Si une image de montre est uploadée, l'enregistrer
     if (files?.watch_image?.[0]) {
       const url = `/uploads/watches/${files.watch_image[0].filename}`;
@@ -108,6 +118,9 @@ const add: RequestHandler = async (req, res, next) => {
       await photoRepository.create(url, "certificate", watchId);
     }
 
+    if (userId != null && Number.isFinite(userId)) {
+      await watchRepository.addToCollection(userId, watchId);
+    }
     res.status(201).json({ insertId: watchId });
   } catch (err) {
     next(err);
