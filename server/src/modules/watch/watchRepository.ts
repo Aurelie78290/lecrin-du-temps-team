@@ -2,7 +2,6 @@ import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
 
 export type WatchCreateInput = {
-  user_id: number | null;
   brand_id: number;
   model_id: number;
   watch_price: number | null;
@@ -81,11 +80,10 @@ class WatchRepository {
   async create(watch: WatchCreateInput) {
     const [result] = await databaseClient.query<Result>(
       `
-    INSERT INTO watch (user_id, brand_id, model_id, watch_price, watch_condition)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO watch (brand_id, model_id, watch_price, watch_condition)
+    VALUES (?, ?, ?, ?)
     `,
       [
-        watch.user_id,
         watch.brand_id,
         watch.model_id,
         watch.watch_price,
@@ -96,6 +94,19 @@ class WatchRepository {
     return result.insertId;
   }
 
+  // ======================
+  // C - Add to collection
+  // ======================
+  async addToCollection(userId: number, watchId: number) {
+    await databaseClient.query(
+      `
+    INSERT INTO user_has_watch (user_id, watch_id)
+    VALUES (?, ?)
+    ON DUPLICATE KEY UPDATE user_id = user_id
+    `,
+      [userId, watchId],
+    );
+  }
   // ======================
   // R - Read one (DETAILS)
   // ======================
