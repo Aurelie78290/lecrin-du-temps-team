@@ -29,106 +29,116 @@ function Navbar({
     return location.pathname === path;
   };
   return (
-    <nav
-      className={`sidebar ${expanded ? "expanded" : ""}`}
-      onMouseEnter={() => setExpanded(true)}
-      onMouseLeave={() => setExpanded(false)}
-    >
-      {/* Header : logo + toggle */}
-      <div className="sidebar-header">
-        <img src={logo} alt="Écrin du temps" className="logo" />
-      </div>
-
-      {/* Menu principal */}
-      <ul className="menu">
-        <li className={isActive("/") ? "active" : ""}>
-          <Link to="/">
-            <div className="icon-wrapper">
-              <img src={home} alt="" />
-            </div>
-            <span>Accueil</span>
-          </Link>
-        </li>
-        <li className={isActive("/Collection") ? "active" : ""}>
-          <Link to="/Collection">
-            <div className="icon-wrapper">
-              <img src={watch} alt="" />
-            </div>
-            <span>Collection</span>
-          </Link>
-        </li>
-        <li className={isActive("/Shop") ? "active" : ""}>
-          <Link to="/Shop">
-            <div className="icon-wrapper">
-              <img src={handbag} alt="" />
-            </div>
-            <span>Boutique</span>
-          </Link>
-        </li>
-        <li className={isActive("/News") ? "active" : ""}>
-          <Link to="/News">
-            <div className="icon-wrapper">
-              <img src={book} alt="" />
-            </div>
-            <span>Articles</span>
-          </Link>
-        </li>
-        <li className={isActive("/UserProfil") ? "active" : ""}>
-          <Link to="/UserProfil">
-            <div className="icon-wrapper">
-              <img src={person} alt="" />
-            </div>
-            <span>Profil</span>
-          </Link>
-        </li>
-        <li className={isActive("/Contact") ? "active" : ""}>
-          <Link to="/Contact">
-            <div className="icon-wrapper">
-              <img src={envelope} alt="" />
-            </div>
-            <span>Contact</span>
-          </Link>
-        </li>
-        <li className={isActive("/About") ? "active" : ""}>
-          <Link to="/About">
-            <div className="icon-wrapper">
-              <img src={info} alt="" />
-            </div>
-            <span>A propos</span>
-          </Link>
-        </li>
-      </ul>
-
-      {/* Footer : dark mode + réseaux + mentions */}
-      <div className="sidebar-footer">
-        <div className="theme-change-display">
-          <ThemeChange />
+    <div>
+      <button
+        type="button"
+        className="burger-btn"
+        onClick={() => setExpanded(!expanded)}
+      >
+        {" "}
+        ☰
+      </button>
+      <nav
+        className={`sidebar ${expanded ? "expanded" : ""}`}
+        onMouseEnter={() => window.innerWidth > 600 && setExpanded(true)}
+        onMouseLeave={() => window.innerWidth > 600 && setExpanded(false)}
+      >
+        {/* Header : logo + toggle */}
+        <div className="sidebar-header">
+          <img src={logo} alt="Écrin du temps" className="logo" />
         </div>
 
-        <div className="social-links">
-          <a href="/">
-            <img src={linkedin} alt="LinkedIn" />
-          </a>
-          <a href="/">
-            <img src={instagram} alt="Instagram" />
-          </a>
-          <a href="/">
-            <img src={facebook} alt="Facebook" />
-          </a>
-          <a href="/">
-            <img src={tiktok} alt="TikTok" />
-          </a>
+        {/* Menu principal */}
+        <ul className="menu">
+          <li className={isActive("/") ? "active" : ""}>
+            <Link to="/" onClick={() => setExpanded(false)}>
+              <div className="icon-wrapper">
+                <img src={home} alt="" />
+              </div>
+              <span>Accueil</span>
+            </Link>
+          </li>
+          <li className={isActive("/Collection") ? "active" : ""}>
+            <Link to="/Collection" onClick={() => setExpanded(false)}>
+              <div className="icon-wrapper">
+                <img src={watch} alt="" />
+              </div>
+              <span>Collection</span>
+            </Link>
+          </li>
+          <li className={isActive("/Shop") ? "active" : ""}>
+            <Link to="/Shop" onClick={() => setExpanded(false)}>
+              <div className="icon-wrapper">
+                <img src={handbag} alt="" />
+              </div>
+              <span>Boutique</span>
+            </Link>
+          </li>
+          <li className={isActive("/News") ? "active" : ""}>
+            <Link to="/News" onClick={() => setExpanded(false)}>
+              <div className="icon-wrapper">
+                <img src={book} alt="" />
+              </div>
+              <span>Articles</span>
+            </Link>
+          </li>
+          <li className={isActive("/UserProfil") ? "active" : ""}>
+            <Link to="/UserProfil" onClick={() => setExpanded(false)}>
+              <div className="icon-wrapper">
+                <img src={person} alt="" />
+              </div>
+              <span>Profil</span>
+            </Link>
+          </li>
+          <li className={isActive("/Contact") ? "active" : ""}>
+            <Link to="/Contact" onClick={() => setExpanded(false)}>
+              <div className="icon-wrapper">
+                <img src={envelope} alt="" />
+              </div>
+              <span>Contact</span>
+            </Link>
+          </li>
+          <li className={isActive("/About") ? "active" : ""}>
+            <Link to="/About" onClick={() => setExpanded(false)}>
+              <div className="icon-wrapper">
+                <img src={info} alt="" />
+              </div>
+              <span>A propos</span>
+            </Link>
+          </li>
+        </ul>
+
+        {/* Footer : dark mode + réseaux + mentions */}
+        <div className="sidebar-footer">
+          <div className="theme-change-display">
+            <ThemeChange />
+          </div>
+
+          <div className="social-links">
+            <a href="/">
+              <img src={linkedin} alt="LinkedIn" />
+            </a>
+            <a href="/">
+              <img src={instagram} alt="Instagram" />
+            </a>
+            <a href="/">
+              <img src={facebook} alt="Facebook" />
+            </a>
+            <a href="/">
+              <img src={tiktok} alt="TikTok" />
+            </a>
+          </div>
+          <div className="legal-links">
+            <Link to="/mention">
+              <span>Mentions légales</span>
+            </Link>
+            <Link to="/CGU">
+              <span>CGU</span>
+            </Link>
+          </div>
         </div>
-        <div className="legal-links">
-          <Link to="/mention">
-            <span>Mentions légales</span>
-          </Link>
-          <Link to="/CGU">
-            <span>CGU</span>
-          </Link>
-        </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 }
 

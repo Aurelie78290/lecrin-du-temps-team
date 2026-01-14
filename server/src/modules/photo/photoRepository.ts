@@ -39,6 +39,12 @@ class PhotoRepository {
     );
     return rows as Photo[];
   }
+
+  async deleteByWatchId(watchId: number) {
+    await databaseClient.query("DELETE FROM photo WHERE watch_id = ?", [
+      watchId,
+    ]);
+  }
 }
 
 export default new PhotoRepository();

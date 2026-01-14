@@ -51,6 +51,14 @@ import watchActions from "./modules/watch/watchActions";
 
 router.get("/api/watches", watchActions.browse);
 router.get("/api/watches/:id", watchActions.read);
+
+router.get("/api/shop/watches", watchActions.browseShop);
+router.get("/api/collection/watches/:userId", watchActions.browseCollection);
+
+router.delete(
+  "/api/collection/watches/:watchId",
+  watchActions.removeFromCollection,
+);
 router.post(
   "/api/watches",
   upload.fields([
@@ -85,9 +93,9 @@ router.get("/api/monthlySales", MonthlySalesActions.browse);
 
 /* ************************************************************************* */
 
+import { upload } from "../middleware/upload";
 // Define PendingTransactions route
 import PendingTransactionsActions from "./modules/PendingTransactions/PendingTransactionsActions";
-import { upload } from "../middleware/upload";
 
 router.get("/api/PendingTransactions", PendingTransactionsActions.browse);
 
@@ -97,6 +105,13 @@ router.get("/api/PendingTransactions", PendingTransactionsActions.browse);
 import AdminNewMembersActions from "./modules/adminNewMembers/adminNewMembersActions";
 
 router.get("/api/AdminNewMembers", AdminNewMembersActions.browse);
+
+/* ************************************************************************* */
+
+// Define adminVolTran route
+import adminVolTran from "./modules/adminVolTran/adminVolTranActions";
+
+router.get("/api/adminVolTran", adminVolTran.browse);
 
 /* ************************************************************************* */
 

@@ -2,7 +2,6 @@ import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
 
 export type WatchCreateInput = {
-  user_id: number | null;
   brand_id: number;
   model_id: number;
   watch_price: number | null;
@@ -81,11 +80,10 @@ class WatchRepository {
   async create(watch: WatchCreateInput) {
     const [result] = await databaseClient.query<Result>(
       `
-    INSERT INTO watch (user_id, brand_id, model_id, watch_price, watch_condition)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO watch (brand_id, model_id, watch_price, watch_condition)
+    VALUES (?, ?, ?, ?)
     `,
       [
-        watch.user_id,
         watch.brand_id,
         watch.model_id,
         watch.watch_price,
@@ -96,6 +94,19 @@ class WatchRepository {
     return result.insertId;
   }
 
+  // ======================
+  // C - Add to collection
+  // ======================
+  async addToCollection(userId: number, watchId: number) {
+    await databaseClient.query(
+      `
+    INSERT INTO user_has_watch (user_id, watch_id)
+    VALUES (?, ?)
+    ON DUPLICATE KEY UPDATE user_id = user_id
+    `,
+      [userId, watchId],
+    );
+  }
   // ======================
   // R - Read one (DETAILS)
   // ======================
@@ -156,25 +167,89 @@ class WatchRepository {
   }
 
   // ======================
-  // R - Read all (LISTING)
+  // R - Read all (Boutique)
   // ======================
   async readAll() {
     const [rows] = await databaseClient.query<Rows>(
       `
-    SELECT
-      w.idwatch,
-      b.name AS brand,
-      m.name AS model,
-      w.watch_price,
-      w.watch_condition,
-      (SELECT url FROM photo WHERE watch_id = w.idwatch AND type = 'watch' LIMIT 1) AS photo_url
-    FROM watch w
-    JOIN brand b ON b.id = w.brand_id
-    JOIN model m ON m.id = w.model_id
+SELECT
+  w.idwatch,
+  b.name AS brand,
+  m.name AS model,
+  w.watch_price,
+  w.watch_condition,
+  (
+    SELECT url
+    FROM photo
+    WHERE watch_id = w.idwatch
+      AND type = 'watch'
+    LIMIT 1
+  ) AS photo_url
+FROM watch w
+JOIN brand b ON b.id = w.brand_id
+JOIN model m ON m.id = w.model_id
+WHERE w.watch_sell_status = 'En vente';
+
     `,
     );
 
     return rows as WatchListItem[];
+  }
+
+  // ======================
+  // R - Read all (Shop)
+  // ======================
+  async readAllCollection(userId: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      `
+SELECT
+  w.idwatch,
+  b.name AS brand,
+  m.name AS model,
+  w.watch_price,
+  w.watch_condition,
+  (
+    SELECT url
+    FROM photo
+    WHERE watch_id = w.idwatch
+      AND type = 'watch'
+    LIMIT 1
+  ) AS photo_url
+FROM watch w
+JOIN user_has_watch uhw ON uhw.watch_id = w.idwatch
+JOIN brand b ON b.id = w.brand_id
+JOIN model m ON m.id = w.model_id
+WHERE uhw.user_id = ?;
+
+    `,
+      [userId],
+    );
+
+    return rows as WatchListItem[];
+  }
+
+  // ======================
+  // D - Delete (watch)
+  // ======================
+  async deleteOrderArchiveByWatchId(watchId: number) {
+    await databaseClient.query<Result>(
+      "DELETE FROM order_archive WHERE watch_id = ?",
+      [watchId],
+    );
+  }
+  async deleteById(id: number) {
+    const [result] = await databaseClient.query<Result>(
+      "DELETE FROM watch WHERE idwatch = ?",
+      [id],
+    );
+    return result.affectedRows > 0;
+  }
+
+  async removeFromCollection(userId: number, watchId: number) {
+    await databaseClient.query(
+      "DELETE FROM user_has_watch WHERE user_id = ? AND watch_id = ?",
+      [userId, watchId],
+    );
   }
 }
 

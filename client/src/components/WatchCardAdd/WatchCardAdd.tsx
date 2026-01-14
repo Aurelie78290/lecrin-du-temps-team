@@ -342,10 +342,10 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    const userId = 1; // TODO: remplacer par l'user connecté plus tard
     // Utilise FormData pour envoyer les fichiers
     const formData = new FormData();
-
+    formData.append("userId", String(userId)); // ✅ IMPORTANT
     // Ajoute les champs texte
     if (brandId) formData.append("brand_id", brandId.toString());
     if (modelId) formData.append("model_id", modelId.toString());
