@@ -8,6 +8,7 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 // Import the main app component
 import App from "./App";
 import About from "./pages/About/About";
+import Cgu from "./pages/CGU/Cgu";
 import CollectionWatchIndex from "./pages/CollectionWatchIndex/CollectionWatchIndex";
 import Contact from "./pages/Contact/Contact";
 import Dashboard from "./pages/Dashboard/Dashboard";
@@ -15,6 +16,7 @@ import Error404 from "./pages/Error404/Error404";
 import Faq from "./pages/Faq/Faq";
 import Home from "./pages/Home/Home";
 import Hub from "./pages/Hub/Hub";
+import LegalNotices from "./pages/LegalNotices/LegalNotices";
 import News from "./pages/News/News";
 import NewsDetails from "./pages/NewsDetails/NewsDetails";
 import Shop from "./pages/Shop/Shop";
@@ -110,6 +112,14 @@ const router = createBrowserRouter([
       {
         path: "/Dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/LegalNotices",
+        element: <LegalNotices />,
+      },
+      {
+        path: "/Cgu",
+        element: <Cgu />,
       },
     ],
   },
