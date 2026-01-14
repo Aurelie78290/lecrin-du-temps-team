@@ -129,10 +129,10 @@ function Navbar({
             </a>
           </div>
           <div className="legal-links">
-            <Link to="/mention">
+            <Link to="/LegalNotices">
               <span>Mentions légales</span>
             </Link>
-            <Link to="/CGU">
+            <Link to="/Cgu">
               <span>CGU</span>
             </Link>
           </div>
