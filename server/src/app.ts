@@ -20,9 +20,17 @@ const app = express();
 
 import cors from "cors";
 
-if (process.env.CLIENT_URL != null) {
-  app.use(cors({ origin: [process.env.CLIENT_URL] }));
-}
+// if (process.env.CLIENT_URL != null) {
+//   app.use(cors({ origin: [process.env.CLIENT_URL] }));
+// }
+const clienturl = process.env.CLIENT_URL || "http://localhost:3000";
+app.use(
+  cors({
+    origin: clienturl,
+    credentials: true,
+    optionsSuccessStatus: 200,
+  }),
+);
 
 // If you need to allow extra origins, you can add something like this:
 
@@ -51,8 +59,9 @@ app.use(
 // 4. `express.raw()`: Parses requests with raw binary data.
 
 // Uncomment one or more of these options depending on the format of the data sent by your client:
-
+import cookieParser from "cookie-parser";
 app.use(express.json());
+app.use(cookieParser());
 // app.use(express.urlencoded());
 // app.use(express.text());
 // app.use(express.raw());
