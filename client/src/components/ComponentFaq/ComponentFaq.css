@@ -25,7 +25,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom-color: var(--secondary-color);
+  border-bottom-color: var(--border-color);
   border-bottom-style: solid;
   border-bottom-width: 1px;
 }

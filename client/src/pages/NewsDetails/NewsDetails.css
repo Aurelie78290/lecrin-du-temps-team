@@ -1,12 +1,13 @@
 .NewsDetails-section {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   height: auto;
   padding: 1rem 0;
   gap: 1rem;
-  width: 60%;
+  max-width: 60%;
+  margin: 0 auto;
 }
 
 .NewsDetails-title {

@@ -4,6 +4,7 @@
   --background-color: linear-gradient(to bottom, #d9cbc2 65%, #f5f0e9 100%);
   --primary-color: #f5f0e9;
   --text-color: #010510;
+  --border-color: #685d4c;
 
   /* ===== COLORS IN COMMON ===== */
   --secondary-color: #010510;
@@ -21,6 +22,7 @@
   --background-color: linear-gradient(to bottom, #010510 55%, #010c2a 100%);
   --primary-color: #010c2a;
   --text-color: #f5f0e9;
+  --border-color: #e0c58f;
 
   /* ===== COLORS IN COMMON ===== */
   --secondary-color: #e0c58f;
@@ -72,4 +74,16 @@ p {
 
 .app-layout.no-sidebar .main-content {
   margin-left: 0;
+}
+/* =========================
+   MOBILE
+   ========================= */
+@media (max-width: 600px) {
+  .main-content {
+    margin-left: 0; /* Sidebar en overlay */
+    padding: 1rem; /* Padding plus compact */
+  }
+  .app-layout.sidebar-expanded .main-content {
+    margin-left: 0;
+  }
 }

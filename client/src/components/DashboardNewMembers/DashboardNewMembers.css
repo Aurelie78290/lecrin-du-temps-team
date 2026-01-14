@@ -1,0 +1,8 @@
+.DashboardNewMembers {
+  border-radius: 15px;
+  border-style: solid;
+  border-color: var(--border-color);
+  border-width: 1px;
+  padding: 0 2rem;
+  text-align: center;
+}

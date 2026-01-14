@@ -7,14 +7,14 @@ const API_URL = "http://localhost:3310";
 export default function Shop() {
   const [watches, setWatches] = useState<Watch[]>([]);
   const [loading, setLoading] = useState(true);
+  const apiBaseUrl = "http://localhost:3310";
 
   useEffect(() => {
-    fetch(`${API_URL}/api/watches`)
+    fetch(`${apiBaseUrl}/api/shop/watches`)
       .then((res) => res.json())
-      .then(setWatches)
+      .then((data) => setWatches(data))
       .finally(() => setLoading(false));
   }, []);
-
   return (
     <div>
       <div className="shop-page">

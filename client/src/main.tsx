@@ -8,6 +8,7 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 // Import the main app component
 import App from "./App";
 import About from "./pages/About/About";
+import Cgu from "./pages/CGU/Cgu";
 import CollectionWatchIndex from "./pages/CollectionWatchIndex/CollectionWatchIndex";
 import Contact from "./pages/Contact/Contact";
 import Dashboard from "./pages/Dashboard/Dashboard";
@@ -15,7 +16,7 @@ import Error404 from "./pages/Error404/Error404";
 import Faq from "./pages/Faq/Faq";
 import Home from "./pages/Home/Home";
 import Hub from "./pages/Hub/Hub";
-import LoginSignUp from "./components/LogInSignUp/LogInSignUp";
+import LegalNotices from "./pages/LegalNotices/LegalNotices";
 import News from "./pages/News/News";
 import NewsDetails from "./pages/NewsDetails/NewsDetails";
 import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
@@ -95,10 +96,6 @@ const router = createBrowserRouter([
         element: <Faq />,
       },
       {
-        path: "/Login",
-        element: <LoginSignUp />,
-      },
-      {
         path: "/UserProfil",
         element /* Ajout d'une protection, il faut être connecté */: (
           <ProtectedRoutes>
@@ -125,6 +122,14 @@ const router = createBrowserRouter([
             <Dashboard />
           </ProtectedRoutes>
         ),
+      },
+      {
+        path: "/LegalNotices",
+        element: <LegalNotices />,
+      },
+      {
+        path: "/Cgu",
+        element: <Cgu />,
       },
     ],
   },

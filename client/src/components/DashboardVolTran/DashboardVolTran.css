@@ -1,0 +1,19 @@
+.DashboardVolTran {
+  border-radius: 15px;
+  border-style: solid;
+  border-color: var(--border-color);
+  border-width: 1px;
+  padding: 0 2rem;
+  text-align: center;
+  grid-column: span 2;
+}
+
+.DashboardVolTran-Graphique {
+  padding: 20px;
+}
+
+@media screen and (max-width: 800px) {
+  .DashboardVolTran-Graphique {
+    width: 80%;
+  }
+}

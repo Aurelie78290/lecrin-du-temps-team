@@ -59,7 +59,22 @@ import watchActions from "./modules/watch/watchActions";
 
 router.get("/api/watches", watchActions.browse);
 router.get("/api/watches/:id", watchActions.read);
-router.post("/api/watches", watchActions.add);
+
+router.get("/api/shop/watches", watchActions.browseShop);
+router.get("/api/collection/watches/:userId", watchActions.browseCollection);
+
+router.delete(
+  "/api/collection/watches/:watchId",
+  watchActions.removeFromCollection,
+);
+router.post(
+  "/api/watches",
+  upload.fields([
+    { name: "watch_image", maxCount: 1 },
+    { name: "certificate_image", maxCount: 1 },
+  ]),
+  watchActions.add,
+);
 
 /* ************************************************************************* */
 
@@ -86,10 +101,25 @@ router.get("/api/monthlySales", MonthlySalesActions.browse);
 
 /* ************************************************************************* */
 
-// Define PendingTransactions routes
+import { upload } from "../middleware/upload";
+// Define PendingTransactions route
 import PendingTransactionsActions from "./modules/PendingTransactions/PendingTransactionsActions";
 
 router.get("/api/PendingTransactions", PendingTransactionsActions.browse);
+
+/* ************************************************************************* */
+
+// Define adminNewMembers route
+import AdminNewMembersActions from "./modules/adminNewMembers/adminNewMembersActions";
+
+router.get("/api/AdminNewMembers", AdminNewMembersActions.browse);
+
+/* ************************************************************************* */
+
+// Define adminVolTran route
+import adminVolTran from "./modules/adminVolTran/adminVolTranActions";
+
+router.get("/api/adminVolTran", adminVolTran.browse);
 
 /* ************************************************************************* */
 
