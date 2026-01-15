@@ -1,10 +1,18 @@
 import express from "express";
+import isAuth from "./middlewares/authMiddleware";
 
 const router = express.Router();
 
 /* ************************************************************************* */
 // Define Your API Routes Here
 /* ************************************************************************* */
+
+// Define the auth routes //
+import userActions from "./modules/User/userActions";
+router.post("/api/users", userActions.add); // Signup //
+router.post("/api/login", userActions.login); // Login //
+router.get("/api/auth/me", isAuth, userActions.checkAuth); // Check de la session //
+router.get("/api/logout", userActions.logout); // Logout //
 
 // Define item-related routes
 import itemActions from "./modules/item/itemActions";

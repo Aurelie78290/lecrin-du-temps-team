@@ -1,0 +1,56 @@
+.cgu-page {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.cgu-title {
+  text-transform: uppercase;
+  font-size: 2.8rem;
+}
+
+.cgu-content {
+  border: 0.8px solid rgba(224, 197, 143, 0.3);
+  border-radius: 5px;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+  background-color: #0a1f3d88;
+  p {
+    font-size: 0.9rem;
+    font-weight: 300;
+  }
+}
+
+.cgu-subtitle {
+  font-size: 1.6rem;
+  border-bottom: 0.8px solid rgba(224, 197, 143, 0.3);
+  margin: 10px 0 10px 0;
+  padding-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .cgu-page {
+    padding: 15px;
+    margin: 20px auto;
+  }
+
+  .cgu-head {
+    padding-bottom: 0;
+  }
+
+  .cgu-title {
+    font-size: 1.8em;
+  }
+
+  .cgu-subtitle {
+    font-size: 1.2em;
+  }
+
+  .cgu-content {
+    padding: 12px 15px;
+  }
+}
