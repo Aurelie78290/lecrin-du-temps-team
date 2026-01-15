@@ -578,7 +578,8 @@ VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisber
 ('Mathieu', 'H', '2000-01-01', 'Analyste Marché & Cote', 'mathieu.h@gmail.com','admin', "Expert en économie, il suit l'évolution des prix et les ventes aux enchères pour conseiller les membres sur l'investissement horloger.", '', ''),
 ('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenriats', 'romain.debas@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.", '', ''),
 ('romain', 'dodo', '', '', 'test@test.com', 'user', '', '', '$2b$10$YQWyYMtItnsmh5nINQLJau22ZKqfbfD2oYnxy5pBxjxERGl/.Vjia'),
-('Jean', 'Dubois', '1980-01-01', 'cutsomer', 'jean.dubois@gmail.com','customer', "Collectionneur de montre", '2025-09-01 08:30:00', '');
+('Jean', 'Dubois', '1980-01-01', 'cutsomer', 'jean.dubois@gmail.com','customer', "Collectionneur de montre", '2025-09-01 08:30:00', ''),
+('Aurélie', 'DUMOTIER', '', '', 'aurelie@test.com', 'admin', '', '', '$2b$10$abe.6Swei6O1Rw44IzG.a.HzJZ.oY37bhF5/OfreONKXnnAOWaT.W');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
