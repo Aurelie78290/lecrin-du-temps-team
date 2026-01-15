@@ -765,7 +765,19 @@ INSERT INTO watch (
 
 -- 20 Longines HydroConquest (brand_id=22, model_id=187)
 (1, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'En vente', 1350,
-1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1);
+1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1),
+
+-- 21 Longines HydroConquest (brand_id=22, model_id=187) Model test pour la validation des annonces
+(1, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'A valider', 3,
+1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1),
+
+-- 22 IWC Pilot Mark XX (brand_id=11, model_id=131) Model test pour la validation des annonces
+(1, 11, 131, 3283, '2023-01-01', 0, NULL, 'Homme', 'A valider', 6,
+1, 40, 11, 10, 'Noir', 1, 2, 2, 'Brun', 2, 20, 'Excellent état', 1, '32111', 1, 120, 4, 21, 1, 1, 1),
+
+-- 23 Cartier Tank Must (brand_id=10, model_id=116) Model test pour la validation des annonces
+(1, 10, 116, 9992, '2022-01-01', 0, NULL, 'Unisexe', 'A valider', 9,
+1, 34, 7, 3, 'Argent', 3, 3, 2, 'Noir', 2, 19, 'Très bon état', 3, 'Quartz Cartier', 1, NULL, NULL, NULL, 1, 1, 1);
 UNLOCK TABLES;
 CREATE TABLE user_has_watch (
   user_id INT NOT NULL,

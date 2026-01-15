@@ -36,7 +36,7 @@ function DashboardNewMembers() {
   });
   return (
     <article className="DashboardNewMembers">
-      <p> Nombre de nouveaux membres depuis le {dateFormatee}:</p>
+      <p> Nombre de nouveaux membres depuis le {dateFormatee} :</p>
       <p>{nbNewMem}</p>
     </article>
   );
