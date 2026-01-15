@@ -2,9 +2,9 @@ import type React from "react";
 import { useState } from "react";
 import "./Home.css";
 import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router";
 import logo from "../../../public/logo.svg";
 import watchImage from "../../assets/images/watchImage.png";
-import { useNavigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import api from "../../services/api";
 

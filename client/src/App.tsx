@@ -1,11 +1,11 @@
-import Navbar from "./components/Navbar/Navbar";
 import { Outlet, useLocation } from "react-router";
+import Navbar from "./components/Navbar/Navbar";
 
 import "./App.css";
 import { useState } from "react";
 import "./App.css";
-import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 function App() {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
