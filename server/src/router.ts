@@ -68,6 +68,15 @@ router.post(
   watchActions.add,
 );
 
+router.put(
+  "/api/watches/:id",
+  upload.fields([
+    { name: "watch_image", maxCount: 1 },
+    { name: "certificate_image", maxCount: 1 },
+  ]),
+  watchActions.update,
+);
+
 /* ************************************************************************* */
 
 // Define articles-related routes

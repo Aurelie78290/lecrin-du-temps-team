@@ -23,7 +23,7 @@ import ShopPayment from "./pages/ShopPayment/ShopPayment";
 import ShopWatchIndex from "./pages/ShopWatchIndex/ShopWatchIndex";
 import UserProfil from "./pages/UserProfil/UserProfil";
 import WatchDetails from "./pages/WatchDetails/WatchDetails";
-
+import WatchEdit from "./pages/WatchEdit/WatchEdit";
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
 
@@ -106,6 +106,10 @@ const router = createBrowserRouter([
       {
         path: "/Collection/:id",
         element: <WatchDetails />,
+      },
+      {
+        path: "/watches/:id/edit",
+        element: <WatchEdit />,
       },
       {
         path: "/Dashboard",

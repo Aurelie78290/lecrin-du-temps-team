@@ -73,6 +73,20 @@ export type WatchDetails = {
   functions_id?: number | null;
 };
 
+export type WatchUpdateInput = Partial<{
+  brand_id: number;
+  model_id: number;
+  watch_price: number | null;
+  watch_condition: string | null;
+
+  watch_sell_status: string | null;
+  production_year: string | null;
+  ref_no: string | null;
+
+  is_limited_edition: number | null; // 0/1
+  edition_number: number | null;
+}>;
+
 class WatchRepository {
   // ======================
   // C - Create
@@ -228,6 +242,25 @@ WHERE uhw.user_id = ?;
     return rows as WatchListItem[];
   }
 
+  // ======================
+  // U - Update (watch)
+  // ======================
+  async updateById(idwatch: number, updates: WatchUpdateInput) {
+    const keys = Object.keys(updates) as (keyof WatchUpdateInput)[];
+
+    if (keys.length === 0) return false;
+
+    // construit: "brand_id = ?, model_id = ?, watch_price = ?"
+    const setClause = keys.map((k) => `${String(k)} = ?`).join(", ");
+    const values = keys.map((k) => updates[k]);
+
+    const [result] = await databaseClient.query<Result>(
+      `UPDATE watch SET ${setClause} WHERE idwatch = ?`,
+      [...values, idwatch],
+    );
+
+    return result.affectedRows > 0;
+  }
   // ======================
   // D - Delete (watch)
   // ======================

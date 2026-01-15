@@ -459,7 +459,14 @@ export default function WatchDetails() {
                 <button
                   type="button"
                   className="watchdetails-edit"
-                  onClick={() => navigate(`/watches/${watch.idwatch}/edit`)}
+                  onClick={() =>
+                    navigate(`/watches/${watch.idwatch}/edit`, {
+                      state: {
+                        from: inCollection ? "collection" : "shop",
+                        id: watch.idwatch,
+                      },
+                    })
+                  }
                 >
                   Modifier
                 </button>
