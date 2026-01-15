@@ -1,12 +1,32 @@
 import api from "../../services/api";
-import { useState, useEffect } from "react";
+import EditProfilPopUp from "../../components/EditProfilPopUp/EditProfilPopUp";
+import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./UserProfil.css";
 
 const UserProfil = () => {
-  const { user, logout } = useAuth();
+  const { user, login, logout } = useAuth();
   const navigate = useNavigate();
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleUpdate = async (updatedData: {
+    firstname: string;
+    lastname: string;
+    email: string;
+  }) => {
+    if (!user) return;
+    try {
+      await api.put("/api/users/me", updatedData);
+      login({ ...user, ...updatedData });
+      setIsPopupOpen(false);
+      alert("Informations mises à jour");
+    } catch (err) {
+      alert("erreur lors de la mise à jour");
+    }
+  };
+
+  if (!user) return <p>Chargement...</p>;
 
   // Ici on gère le logout //
   const handleLogout = async () => {
@@ -34,6 +54,23 @@ const UserProfil = () => {
       <button type="button" onClick={handleLogout} className="logout-btn">
         Se déconnecter
       </button>
+      <button
+        type="button"
+        className="popup-btn"
+        onClick={() => setIsPopupOpen(true)}
+      >
+        Modifier mes informations
+      </button>
+      <EditProfilPopUp
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        onSave={handleUpdate}
+        initialData={{
+          firstname: user.firstname || "",
+          lastname: user.lastname || "",
+          email: user.email || "",
+        }}
+      />
       <div className="cards-infos-container">
         <div className="profil-infos-card">
           <h3>Données personnelles</h3>
@@ -70,7 +107,6 @@ const UserProfil = () => {
             <p>Ville</p>
           </div>
         </div>
-
         <div className="profil-infos-card">
           <h3>Mes commandes</h3>
           <div className="profil-infos-content">

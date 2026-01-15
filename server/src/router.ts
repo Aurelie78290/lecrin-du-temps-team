@@ -11,8 +11,9 @@ const router = express.Router();
 import userActions from "./modules/User/userActions";
 router.post("/api/users", userActions.add); // Signup //
 router.post("/api/login", userActions.login); // Login //
-router.get("/api/auth/me", isAuth, userActions.checkAuth); // Check de la session //
 router.get("/api/logout", userActions.logout); // Logout //
+router.get("/api/auth/me", isAuth, userActions.checkAuth); // Check de la session //
+router.put("/api/users/me", isAuth, userActions.edit); // Modification d'informmation personnelle //
 
 // Define item-related routes
 import itemActions from "./modules/item/itemActions";
