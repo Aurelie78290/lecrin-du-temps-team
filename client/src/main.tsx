@@ -24,6 +24,7 @@ import Shop from "./pages/Shop/Shop";
 import ShopBasket from "./pages/ShopBasket/ShopBasket";
 import ShopPayment from "./pages/ShopPayment/ShopPayment";
 import ShopWatchIndex from "./pages/ShopWatchIndex/ShopWatchIndex";
+import UserProfil from "./pages/UserProfil/UserProfil";
 // import UserProfil from "./pages/UserProfil/UserProfil";
 import WatchDetails from "./pages/WatchDetails/WatchDetails";
 import WatchEdit from "./pages/WatchEdit/WatchEdit";
