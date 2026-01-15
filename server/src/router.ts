@@ -61,19 +61,30 @@ router.get("/api/watches", watchActions.browse);
 router.get("/api/watches/:id", watchActions.read);
 
 router.get("/api/shop/watches", watchActions.browseShop);
-router.get("/api/collection/watches/:userId", watchActions.browseCollection);
-
+router.get("/api/collection/watches", isAuth, watchActions.browseCollection);
 router.delete(
   "/api/collection/watches/:watchId",
+  isAuth,
   watchActions.removeFromCollection,
 );
+
 router.post(
   "/api/watches",
+  isAuth,
   upload.fields([
     { name: "watch_image", maxCount: 1 },
     { name: "certificate_image", maxCount: 1 },
   ]),
   watchActions.add,
+);
+
+router.put(
+  "/api/watches/:id",
+  upload.fields([
+    { name: "watch_image", maxCount: 1 },
+    { name: "certificate_image", maxCount: 1 },
+  ]),
+  watchActions.update,
 );
 
 /* ************************************************************************* */

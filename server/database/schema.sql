@@ -782,15 +782,14 @@ UNLOCK TABLES;
 CREATE TABLE user_has_watch (
   user_id INT NOT NULL,
   watch_id INT NOT NULL,
-  PRIMARY KEY (user_id, watch_id),
-  FOREIGN KEY (user_id) REFERENCES user(iduser) ON DELETE CASCADE,
-  FOREIGN KEY (watch_id) REFERENCES watch(idwatch) ON DELETE CASCADE
+  PRIMARY KEY (user_id, watch_id)
 );
+
 
 UPDATE watch SET watch_sell_status = 'En vente' WHERE idwatch BETWEEN 1 AND 20;
 
-INSERT IGNORE INTO user_has_watch (user_id, watch_id)
-SELECT 1, idwatch FROM watch WHERE idwatch BETWEEN 1 AND 20;
+-- INSERT IGNORE INTO user_has_watch (user_id, watch_id)
+-- SELECT 1, idwatch FROM watch WHERE idwatch BETWEEN 1 AND 20;
 -- ALTER TABLE watch
 -- ADD COLUMN scope ENUM('SHOP', 'COLLECTION') NOT NULL DEFAULT 'SHOP'
 -- AFTER user_id;
