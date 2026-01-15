@@ -140,3 +140,17 @@
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s;
 }
+
+.signup-link-btn {
+  margin-top: 25px;
+  background-color: transparent;
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  padding: 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}

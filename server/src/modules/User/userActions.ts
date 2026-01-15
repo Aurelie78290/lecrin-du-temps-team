@@ -77,6 +77,7 @@ const login: RequestHandler = async (req, res, next) => {
     res.json({
       id: user.id,
       firstname: user.firstname,
+      lastname: user.lastname,
       role: user.role,
     });
   } catch (err) {

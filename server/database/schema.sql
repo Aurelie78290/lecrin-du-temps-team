@@ -576,9 +576,9 @@ VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisber
 ('Aurélie','Dumotier','1986-02-14','Responsable Communauté & Évenements','aurelie.dumotier@gmail.com','admin', "Spécialiste en communication de luxe, elle gère les membres VIP et organise les rencontres physiques entre passionnés (les 'GTG').", '', ''),
 ('Thomas','P','2000-01-01','Développeur & Webmaster','thomas.p@gmail.com','admin', "Passionné de 'Toolwatches', il assure la fluidité du site, la sécurité des transactions et l'optimisation de l'interface utilisateur.", '', ''),
 ('Mathieu', 'H', '2000-01-01', 'Analyste Marché & Cote', 'mathieu.h@gmail.com','admin', "Expert en économie, il suit l'évolution des prix et les ventes aux enchères pour conseiller les membres sur l'investissement horloger.", '', ''),
-('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenriats', 'romain.debas@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.", '', ''),
 ('romain', 'dodo', '', '', 'test@test.com', 'user', '', '', '$2b$10$YQWyYMtItnsmh5nINQLJau22ZKqfbfD2oYnxy5pBxjxERGl/.Vjia'),
-('Jean', 'Dubois', '1980-01-01', 'cutsomer', 'jean.dubois@gmail.com','customer', "Collectionneur de montre", '2025-09-01 08:30:00', '');
+('Jean', 'Dubois', '1980-01-01', 'cutsomer', 'jean.dubois@gmail.com','customer', "Collectionneur de montre", '2025-09-01 08:30:00', ''),
+('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenariats', 'debasromain@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.", '', '$2b$10$3.bsPn7LlURcw2rtM2DUrOZsOWzsIGL86JnNXy21rnyam2q/XrvHK');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -765,7 +765,19 @@ INSERT INTO watch (
 
 -- 20 Longines HydroConquest (brand_id=22, model_id=187)
 (1, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'En vente', 1350,
-1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1);
+1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1),
+
+-- 21 Longines HydroConquest (brand_id=22, model_id=187) Model test pour la validation des annonces
+(1, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'A valider', 3,
+1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1),
+
+-- 22 IWC Pilot Mark XX (brand_id=11, model_id=131) Model test pour la validation des annonces
+(1, 11, 131, 3283, '2023-01-01', 0, NULL, 'Homme', 'A valider', 6,
+1, 40, 11, 10, 'Noir', 1, 2, 2, 'Brun', 2, 20, 'Excellent état', 1, '32111', 1, 120, 4, 21, 1, 1, 1),
+
+-- 23 Cartier Tank Must (brand_id=10, model_id=116) Model test pour la validation des annonces
+(1, 10, 116, 9992, '2022-01-01', 0, NULL, 'Unisexe', 'A valider', 9,
+1, 34, 7, 3, 'Argent', 3, 3, 2, 'Noir', 2, 19, 'Très bon état', 3, 'Quartz Cartier', 1, NULL, NULL, NULL, 1, 1, 1);
 UNLOCK TABLES;
 CREATE TABLE user_has_watch (
   user_id INT NOT NULL,
