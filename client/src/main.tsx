@@ -99,7 +99,7 @@ const router = createBrowserRouter([
         path: "/UserProfil",
         element /* Ajout d'une protection, il faut être connecté */: (
           <ProtectedRoutes>
-            <CollectionWatchIndex />
+            <UserProfil />
           </ProtectedRoutes>
         ),
       },

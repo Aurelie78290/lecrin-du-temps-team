@@ -39,7 +39,7 @@ const Home: React.FC = () => {
           password: formData.password,
         });
         login(res.data); // pour stocker le user dans le context //
-        navigate(res.data.role === "admin" ? "/dashboard" : "/Collection");
+        navigate(res.data.role === "admin" ? "/dashboard" : "/UserProfil");
       } else {
         //SignUp //
         await api.post("/api/users", formData);
