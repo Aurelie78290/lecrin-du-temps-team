@@ -124,8 +124,7 @@ class WatchRepository {
   // ======================
   // R - Read one (DETAILS)
   // ======================
-  async read(id: number) {
-    // 1. Récupérer la montre avec ses infos
+  async read(id: number, userId?: number) {
     const [watchRows] = await databaseClient.query<Rows>(
       `
     SELECT
@@ -172,12 +171,22 @@ class WatchRepository {
     const certificates = photosArray
       .filter((p) => p.type === "certificate")
       .map((p) => p.url);
+
+    let isInMyCollection = false;
+    if (userId) {
+      const [rows] = await databaseClient.query<Rows>(
+        "SELECT 1 FROM user_has_watch WHERE user_id = ? AND watch_id = ? LIMIT 1",
+        [userId, id],
+      );
+      isInMyCollection = rows.length > 0;
+    }
     // 4. Retourner la montre avec ses photos
     return {
       ...watchRows[0],
       photos: watchPhotos,
       certificates,
-    } as WatchDetails;
+      is_in_my_collection: isInMyCollection,
+    };
   }
 
   // ======================
@@ -278,11 +287,14 @@ WHERE uhw.user_id = ?;
     return result.affectedRows > 0;
   }
 
-  async removeFromCollection(userId: number, watchId: number) {
-    await databaseClient.query(
+  async removeFromCollection(userId: number, watchId: number): Promise<number> {
+    const [result] = await databaseClient.query(
       "DELETE FROM user_has_watch WHERE user_id = ? AND watch_id = ?",
       [userId, watchId],
     );
+
+    const r = result as { affectedRows?: number };
+    return r.affectedRows ?? 0;
   }
 }
 

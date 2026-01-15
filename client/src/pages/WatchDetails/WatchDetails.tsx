@@ -1,13 +1,85 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useMatch, useNavigate, useParams } from "react-router";
 import "./WatchDetails.css";
 
-type Watch = Record<string, unknown> & {
+type WatchDetailsDTO = {
   idwatch: number;
-  photos?: string[];
+
+  brand: string;
+  model: string;
+
+  // champs de base
+  watch_price: number | null;
+  watch_condition: string | null;
+
+  // champs affichés dans la page
+  ref_no?: number | string | null;
+  production_year?: string | null;
+  is_limited_edition?: number | null;
+  edition_number?: string | number | null;
+
+  watch_gender?: string | null;
+  watch_sell_status?: string | null;
+
+  diameter_mm?: number | null;
+  thickness_mm?: number | null;
+  water_resistance_bar?: number | null;
+
+  dial_color?: string | null;
+
+  // labels + ids utilisés par labelOrId(...)
+  case_material_label?: string | null;
+  case_material_id?: number | string | null;
+
+  dial_finish_label?: string | null;
+  dial_finish_id?: number | string | null;
+
+  hour_marker_type_label?: string | null;
+  hour_marker_type_id?: number | string | null;
+
+  strap_material_label?: string | null;
+  strap_material_id?: number | string | null;
+
+  clasp_type_label?: string | null;
+  clasp_type_id?: number | string | null;
+
+  movement_type_label?: string | null;
+  movement_type_id?: number | string | null;
+
+  functions_label?: string | null;
+  functions_id?: number | string | null;
+
+  strap_color?: string | null;
+  lug_width_mm?: number | null;
+
+  caliber?: string | null;
+  power_reserve_hours?: number | null;
+  frequency_hz?: number | null;
+  jewel_count?: number | null;
+
+  // certificat (tu l’affiches via labelOrId)
+  certificate_label?: string | null;
+  certificate_id?: number | string | null;
+
+  // médias
+  photos: string[];
+  certificates: string[];
+};
+type WatchDetailsWithContext = WatchDetailsDTO & {
+  is_in_my_collection: boolean;
+};
+type WatchDetailsApi = Partial<WatchDetailsWithContext> & {
+  idwatch: number;
+  brand?: string;
+  model?: string;
 };
 
 const API_URL = "http://localhost:3310";
+
+const getAuthHeaders = (): Record<string, string> => {
+  const token = localStorage.getItem("token"); // ⚠️ mets la bonne key si besoin
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
 
 //convertir en string
 const formatValue = (v: unknown) => {
@@ -76,8 +148,7 @@ export default function WatchDetails() {
   const inCollection = !!useMatch("/collection/:id");
   // const location = useLocation();
   const watchId = Number(id);
-  const userId = 1; // temporaire
-  const [watch, setWatch] = useState<Watch | null>(null);
+  const [watch, setWatch] = useState<WatchDetailsWithContext | null>(null);
   //pr la photo affichée en grand
   const [activePhoto, setActivePhoto] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -96,12 +167,15 @@ export default function WatchDetails() {
 
     try {
       const url = inCollection
-        ? `${API_URL}/api/collection/watches/${watchId}?userId=${userId}`
+        ? `${API_URL}/api/collection/watches/${watchId}` // plus de userId en query
         : `${API_URL}/api/watches/${watchId}`;
-
-      const res = await fetch(url, { method: "DELETE" });
-      const body = await res.text().catch(() => "");
-
+      const res = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          ...getAuthHeaders(),
+        },
+      });
+      const body = res.status === 204 ? "" : await res.text().catch(() => "");
       console.log("DELETE URL:", url);
       console.log("DELETE status:", res.status, res.statusText);
       console.log("DELETE body:", body);
@@ -117,15 +191,21 @@ export default function WatchDetails() {
       alert("Erreur lors de la suppression");
     }
   };
-
   useEffect(() => {
     if (!id) return;
 
     setLoading(true);
     setError(null);
-    //appeler API en fonction de l'ID, si pas d'id : rien
 
-    fetch(`${API_URL}/api/watches/${id}`)
+    const detailsUrl = inCollection
+      ? `${API_URL}/api/collection/watches/${id}` // protégé
+      : `${API_URL}/api/watches/${id}`; // public
+
+    fetch(detailsUrl, {
+      headers: {
+        ...(inCollection ? getAuthHeaders() : {}),
+      },
+    })
       .then(async (res) => {
         if (!res.ok) {
           const body = await res.text().catch(() => "");
@@ -133,27 +213,33 @@ export default function WatchDetails() {
             `Erreur API ${res.status} ${res.statusText} ${body}`.trim(),
           );
         }
-        return res.json() as Promise<Watch>;
+        return res.json() as Promise<WatchDetailsApi>;
       })
       .then((data) => {
-        setWatch(data);
-        setActivePhoto(data.photos?.[0] ?? null);
-      })
+        const normalized: WatchDetailsWithContext = {
+          ...data,
+          idwatch: data.idwatch,
+          brand: data.brand ?? "",
+          model: data.model ?? "",
+          watch_price: data.watch_price ?? null,
+          watch_condition: data.watch_condition ?? null,
+          photos: Array.isArray(data.photos) ? data.photos : [],
+          certificates: Array.isArray(data.certificates)
+            ? data.certificates
+            : [],
+          is_in_my_collection: inCollection, // ✅
+        };
 
+        setWatch(normalized);
+        setActivePhoto(normalized.photos[0] ?? null);
+      })
       .catch((err: unknown) => {
         setError(err instanceof Error ? err.message : "Erreur inconnue");
       })
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [id, inCollection]);
 
-  const photos = useMemo(() => {
-    // useMemo évite de recalculer la liste tant que watch ne change pas
-    if (!watch) return [];
-    // Les photos sont maintenant dans un tableau watch.photos
-    const photosArray = watch.photos as string[] | undefined;
-    return photosArray ?? [];
-  }, [watch]);
-
+  const photos = watch?.photos ?? [];
   if (loading) return <div className="watchdetails-state">Chargement…</div>;
 
   if (error || !watch) {

@@ -1,13 +1,23 @@
-import type { RequestHandler } from "express";
+import type { Request, RequestHandler, Response } from "express";
 
 import photoRepository from "../photo/photoRepository";
-// Import access to data
 import watchRepository from "./watchRepository";
-//Type
+
 interface UploadedFiles {
   watch_image?: Express.Multer.File[];
   certificate_image?: Express.Multer.File[];
 }
+
+type AuthedRequest = Request & { user?: { id: number; role: string } };
+
+const getUserIdOr401 = (req: Request, res: Response): number | null => {
+  const userId = (req as AuthedRequest).user?.id;
+  if (!userId) {
+    res.sendStatus(401);
+    return null;
+  }
+  return userId;
+};
 
 // =======================
 // B - Browse (Read All)
@@ -23,21 +33,18 @@ const browse: RequestHandler = async (_req, res, next) => {
 
 const browseShop: RequestHandler = async (_req, res, next) => {
   try {
-    const watches = await watchRepository.readAll(); // readAll filtre SHOP
+    const watches = await watchRepository.readAll(); // si tu filtres SHOP ici, ok
     res.json(watches);
   } catch (err) {
     next(err);
   }
 };
 
+// ✅ collection du user connecté (plus de :userId dans l’URL)
 const browseCollection: RequestHandler = async (req, res, next) => {
   try {
-    const userId = Number(req.params.userId);
-
-    if (Number.isNaN(userId)) {
-      res.sendStatus(400);
-      return;
-    }
+    const userId = getUserIdOr401(req, res);
+    if (!userId) return;
 
     const watches = await watchRepository.readAllCollection(userId);
     res.json(watches);
@@ -62,9 +69,10 @@ const read: RequestHandler = async (req, res, next) => {
 
     if (watch == null) {
       res.sendStatus(404);
-    } else {
-      res.json(watch);
+      return;
     }
+
+    res.json(watch);
   } catch (err) {
     next(err);
   }
@@ -75,52 +83,48 @@ const read: RequestHandler = async (req, res, next) => {
 // =======================
 const add: RequestHandler = async (req, res, next) => {
   try {
-    // 1. Récupérer les fichiers uploadés
-    const files = req.files as UploadedFiles;
+    const userId = getUserIdOr401(req, res);
+    if (!userId) return;
 
-    // userId (collection) : on le lit une fois
-    const userId =
-      req.body.userId != null
-        ? Number(req.body.userId)
-        : req.body.user_id != null
-          ? Number(req.body.user_id)
-          : null;
-    // 2. Créer la montre d'abord
-    const newWatch = {
-      user_id: req.body.user_id ? Number(req.body.user_id) : null,
-      brand_id: Number(req.body.brand_id),
-      model_id: Number(req.body.model_id),
-      watch_price: req.body.watch_price ? Number(req.body.watch_price) : null,
-      watch_condition: req.body.watch_condition || null,
-    };
+    const files = req.files as UploadedFiles | undefined;
 
-    // Validation minimale
-    if (!newWatch.brand_id || !newWatch.model_id) {
+    const brandId = Number(req.body.brand_id);
+    const modelId = Number(req.body.model_id);
+
+    if (
+      Number.isNaN(brandId) ||
+      Number.isNaN(modelId) ||
+      !brandId ||
+      !modelId
+    ) {
       res.status(400).json({ message: "brand_id et model_id sont requis" });
       return;
     }
 
-    // 3. Insérer la montre en base et récupérer son ID
+    const newWatch = {
+      brand_id: brandId,
+      model_id: modelId,
+      watch_price: req.body.watch_price ? Number(req.body.watch_price) : null,
+      watch_condition: req.body.watch_condition || null,
+    };
+
+    // 1) créer la montre
     const watchId = await watchRepository.create(newWatch);
 
-    if (userId != null && !Number.isNaN(userId)) {
-      await watchRepository.addToCollection(userId, watchId);
-    }
-    // 4. Si une image de montre est uploadée, l'enregistrer
+    // 2) l’ajouter à la collection du user connecté
+    await watchRepository.addToCollection(userId, watchId);
+
+    // 3) photos
     if (files?.watch_image?.[0]) {
       const url = `/uploads/watches/${files.watch_image[0].filename}`;
       await photoRepository.create(url, "watch", watchId);
     }
 
-    // 5. Si un certificat est uploadé, l'enregistrer
     if (files?.certificate_image?.[0]) {
       const url = `/uploads/certificates/${files.certificate_image[0].filename}`;
       await photoRepository.create(url, "certificate", watchId);
     }
 
-    if (userId != null && Number.isFinite(userId)) {
-      await watchRepository.addToCollection(userId, watchId);
-    }
     res.status(201).json({ insertId: watchId });
   } catch (err) {
     next(err);
@@ -140,10 +144,8 @@ const update: RequestHandler = async (req, res, next) => {
 
     const files = req.files as UploadedFiles | undefined;
 
-    // Construire un objet "updates" (on n'écrase pas avec null si champ absent)
     const updates: Record<string, unknown> = {};
 
-    // champs numériques
     if (req.body.brand_id !== undefined && req.body.brand_id !== "") {
       const n = Number(req.body.brand_id);
       if (!Number.isNaN(n)) updates.brand_id = n;
@@ -155,15 +157,13 @@ const update: RequestHandler = async (req, res, next) => {
     }
 
     if (req.body.watch_price !== undefined) {
-      if (req.body.watch_price === "") {
-        updates.watch_price = null;
-      } else {
+      if (req.body.watch_price === "") updates.watch_price = null;
+      else {
         const n = Number(req.body.watch_price);
         updates.watch_price = Number.isNaN(n) ? null : n;
       }
     }
 
-    // champs texte
     if (req.body.watch_condition !== undefined)
       updates.watch_condition =
         req.body.watch_condition === "" ? null : req.body.watch_condition;
@@ -175,25 +175,21 @@ const update: RequestHandler = async (req, res, next) => {
     if (req.body.ref_no !== undefined)
       updates.ref_no = req.body.ref_no === "" ? null : req.body.ref_no;
 
-    // date (string "YYYY-MM-DD")
     if (req.body.production_year !== undefined)
       updates.production_year =
         req.body.production_year === "" ? null : req.body.production_year;
 
-    // tinyint
     if (req.body.is_limited_edition !== undefined)
       updates.is_limited_edition = Number(req.body.is_limited_edition) ? 1 : 0;
 
     if (req.body.edition_number !== undefined) {
-      if (req.body.edition_number === "") {
-        updates.edition_number = null;
-      } else {
+      if (req.body.edition_number === "") updates.edition_number = null;
+      else {
         const n = Number(req.body.edition_number);
         updates.edition_number = Number.isNaN(n) ? null : n;
       }
     }
 
-    // S'il n'y a aucun champ et aucune image → rien à faire
     const hasNewWatchImage = !!files?.watch_image?.[0];
     const hasNewCertImage = !!files?.certificate_image?.[0];
 
@@ -206,7 +202,6 @@ const update: RequestHandler = async (req, res, next) => {
       return;
     }
 
-    // 1) Update des champs watch
     if (Object.keys(updates).length > 0) {
       const updated = await watchRepository.updateById(watchId, updates);
       if (!updated) {
@@ -214,7 +209,6 @@ const update: RequestHandler = async (req, res, next) => {
         return;
       }
     } else {
-      // si pas de champs, on vérifie que la watch existe quand même
       const existing = await watchRepository.read(watchId);
       if (!existing) {
         res.sendStatus(404);
@@ -222,8 +216,6 @@ const update: RequestHandler = async (req, res, next) => {
       }
     }
 
-    // 2) Update photos (stratégie simple : on ajoute une nouvelle photo)
-    // Si tu veux "remplacer", dis-moi et je te mets delete + insert.
     const watchFile = files?.watch_image?.[0];
     if (watchFile) {
       const url = `/uploads/watches/${watchFile.filename}`;
@@ -236,7 +228,6 @@ const update: RequestHandler = async (req, res, next) => {
       await photoRepository.create(url, "certificate", watchId);
     }
 
-    // 3) Retourner la watch fraîche
     const fresh = await watchRepository.read(watchId);
     res.status(200).json(fresh);
   } catch (err) {
@@ -255,11 +246,9 @@ const destroy: RequestHandler = async (req, res, next) => {
       return;
     }
 
-    // 1) supprimer ce qui bloque les FK
     await watchRepository.deleteOrderArchiveByWatchId(watchId);
     await photoRepository.deleteByWatchId(watchId);
 
-    // 2) supprimer la watch
     const deleted = await watchRepository.deleteById(watchId);
 
     if (!deleted) {
@@ -278,11 +267,12 @@ const destroy: RequestHandler = async (req, res, next) => {
 // =======================
 const removeFromCollection: RequestHandler = async (req, res, next) => {
   try {
-    const watchId = Number(req.params.watchId);
-    const userId = Number(req.query.userId); // ?userId=1
+    const userId = getUserIdOr401(req, res);
+    if (!userId) return;
 
-    if (Number.isNaN(watchId) || Number.isNaN(userId)) {
-      res.status(400).json({ message: "userId et watchId requis" });
+    const watchId = Number(req.params.watchId);
+    if (Number.isNaN(watchId)) {
+      res.status(400).json({ message: "watchId requis" });
       return;
     }
 

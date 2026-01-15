@@ -13,7 +13,7 @@ function WatchCardCollection() {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: uses a trigger outside the useeffect, false error.
   useEffect(() => {
-    fetch(`${apiBaseUrl}/api/collection/watches/${userId}`)
+    fetch(`${apiBaseUrl}/api/collection/watches`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => setWatches(data));
   }, [trigger, apiBaseUrl, userId]);
