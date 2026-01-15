@@ -570,14 +570,15 @@ TRUNCATE TABLE `user`;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role, user_describe, created_at) 
-VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisberthome@gmail.com','admin', "Historienne de l'art, elle veille à la qualité des articles et au respect de l'héritage des manufactures. Elle déniche les pièces rares.", '2025-12-15 10:30:00'),
-('Joachim','Masson','1980-01-01','Expert Technique & Authentification','joachim.masson.17@gmail.com','admin', "Ancien horloger certifié, il est le garant de la véracité technique et aide à identifier les contrefaçons (le 'LC' pour Legit Check).", '2025-06-20 14:15:00'),
-('Aurélie','Dumotier','1986-02-14','Responsable Communauté & Évenements','aurelie.dumotier@gmail.com','admin', "Spécialiste en communication de luxe, elle gère les membres VIP et organise les rencontres physiques entre passionnés (les 'GTG').", '2025-09-22 14:15:00'),
-('Thomas','P','2000-01-01','Développeur & Webmaster','thomas.p@gmail.com','admin', "Passionné de 'Toolwatches', il assure la fluidité du site, la sécurité des transactions et l'optimisation de l'interface utilisateur.", '2025-10-20 16:45:00'),
-('Mathieu', 'H', '2000-01-01', 'Analyste Marché & Cote', 'mathieu.h@gmail.com','admin', "Expert en économie, il suit l'évolution des prix et les ventes aux enchères pour conseiller les membres sur l'investissement horloger.", '2025-11-08 11:10:00'),
-('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenriats', 'romain.debas@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.", '2026-01-02 08:30:00'),
-('Jean', 'Dubois', '1980-01-01', 'cutsomer', 'jean.dubois@gmail.com','customer', "Collectionneur de montre", '2025-09-01 08:30:00');
+INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role, user_describe, created_at, password) 
+VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisberthome@gmail.com','admin', "Historienne de l'art, elle veille à la qualité des articles et au respect de l'héritage des manufactures. Elle déniche les pièces rares.",'', ''),
+('Joachim','Masson','1980-01-01','Expert Technique & Authentification','joachim.masson.17@gmail.com','admin', "Ancien horloger certifié, il est le garant de la véracité technique et aide à identifier les contrefaçons (le 'LC' pour Legit Check).", '', ''),
+('Aurélie','Dumotier','1986-02-14','Responsable Communauté & Évenements','aurelie.dumotier@gmail.com','admin', "Spécialiste en communication de luxe, elle gère les membres VIP et organise les rencontres physiques entre passionnés (les 'GTG').", '', ''),
+('Thomas','P','2000-01-01','Développeur & Webmaster','thomas.p@gmail.com','admin', "Passionné de 'Toolwatches', il assure la fluidité du site, la sécurité des transactions et l'optimisation de l'interface utilisateur.", '', ''),
+('Mathieu', 'H', '2000-01-01', 'Analyste Marché & Cote', 'mathieu.h@gmail.com','admin', "Expert en économie, il suit l'évolution des prix et les ventes aux enchères pour conseiller les membres sur l'investissement horloger.", '', ''),
+('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenriats', 'romain.debas@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.", '', ''),
+('romain', 'dodo', '', '', 'test@test.com', 'user', '', '', '$2b$10$YQWyYMtItnsmh5nINQLJau22ZKqfbfD2oYnxy5pBxjxERGl/.Vjia'),
+('Jean', 'Dubois', '1980-01-01', 'cutsomer', 'jean.dubois@gmail.com','customer', "Collectionneur de montre", '2025-09-01 08:30:00', '');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 

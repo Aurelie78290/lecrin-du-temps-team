@@ -19,12 +19,14 @@ import Hub from "./pages/Hub/Hub";
 import LegalNotices from "./pages/LegalNotices/LegalNotices";
 import News from "./pages/News/News";
 import NewsDetails from "./pages/NewsDetails/NewsDetails";
+import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import Shop from "./pages/Shop/Shop";
 import ShopBasket from "./pages/ShopBasket/ShopBasket";
 import ShopPayment from "./pages/ShopPayment/ShopPayment";
 import ShopWatchIndex from "./pages/ShopWatchIndex/ShopWatchIndex";
 import UserProfil from "./pages/UserProfil/UserProfil";
 import WatchDetails from "./pages/WatchDetails/WatchDetails";
+import Collection from "./pages/Collection/Collection";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -95,7 +97,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/UserProfil",
-        element: <UserProfil />,
+        element /* Ajout d'une protection, il faut être connecté */: (
+          <ProtectedRoutes>
+            <CollectionWatchIndex />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "*",
@@ -111,7 +117,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/Dashboard",
-        element: <Dashboard />,
+        element /* Ajout d'une protection stricte, pour les admins only*/: (
+          <ProtectedRoutes roleRequired="admin">
+            <Dashboard />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "/LegalNotices",
