@@ -1,0 +1,80 @@
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: var(--background-color);
+  padding: 40px;
+  border-radius: 15px;
+  border: 1px solid #e0c58f;
+  width: 500px;
+  box-shadow: 0 0 30px #e0c58f;
+  animation: fadeIn 0.3 ease-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.inputs label {
+  color: var(--secondary-color);
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.inputs input {
+  padding: 15px;
+  background: transparent;
+  border: 1px solid #e0c58f;
+  color: #fff;
+  border-radius: 5px;
+  outline: none;
+}
+
+.popup-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.popup-btns button[type="submit"] {
+  background-color: transparent;
+  color: var(--secondary-color);
+  padding: 10px 20px;
+  border: 1px solid #e0c58f;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.popup-btns button[type="button"] {
+  background-color: var(--bonus-color);
+  color: var(--secondary-color);
+  padding: 10px 20px;
+  border: 1px solid #e0c58f;
+  border-radius: 5px;
+  cursor: pointer;
+}
