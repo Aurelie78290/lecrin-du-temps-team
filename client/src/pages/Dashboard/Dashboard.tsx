@@ -1,4 +1,5 @@
 import DashboardNewMembers from "../../components/DashboardNewMembers/DashboardNewMembers";
+import DashboardPendingAdd from "../../components/DashboardPendingAdd/DashboardPendingAdd";
 import DashboardVolTran from "../../components/DashboardVolTran/DashboardVolTran";
 import MonthlySales from "../../components/MonthlySales/MonthlySales";
 import PendingTransactions from "../../components/PendingTransactions/PendingTransactions";
@@ -14,6 +15,7 @@ function Dashboard() {
         <PendingTransactions />
         <DashboardNewMembers />
         <DashboardVolTran />
+        <DashboardPendingAdd />
       </section>
     </>
   );
