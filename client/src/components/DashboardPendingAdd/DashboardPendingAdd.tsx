@@ -18,7 +18,6 @@ function DashboardPendingAdd() {
         setPendingAdds(data);
       });
   }, []);
-  console.log("voici les annonces à valider", pendingAdds);
 
   return (
     <article className="DashboardPendingAdd-article">
@@ -34,7 +33,7 @@ function DashboardPendingAdd() {
           </div>
         ))
       )}
-      <Link to="/dashboard" className="DashboardPendingAdd-linkto">
+      <Link to="/ClassifiedAd" className="DashboardPendingAdd-linkto">
         Voir plus{" "}
         {pendingAdds.length > 3 && `(${pendingAdds.length - 3} de plus)`}
       </Link>

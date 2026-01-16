@@ -1,8 +1,8 @@
-import api from "../../services/api";
-import EditProfilPopUp from "../../components/EditProfilPopUp/EditProfilPopUp";
 import { useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import EditProfilPopUp from "../../components/EditProfilPopUp/EditProfilPopUp";
+import { useAuth } from "../../contexts/AuthContext";
+import api from "../../services/api";
 import "./UserProfil.css";
 
 const UserProfil = () => {
