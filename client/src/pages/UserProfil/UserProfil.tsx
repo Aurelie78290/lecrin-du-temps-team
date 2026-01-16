@@ -14,6 +14,8 @@ const UserProfil = () => {
     firstname: string;
     lastname: string;
     email: string;
+    birthdate: string;
+    tel: string;
   }) => {
     if (!user) return;
     try {
@@ -69,6 +71,8 @@ const UserProfil = () => {
           firstname: user.firstname || "",
           lastname: user.lastname || "",
           email: user.email || "",
+          birthdate: "",
+          tel: user.tel || "",
         }}
       />
       <div className="cards-infos-container">
@@ -82,6 +86,16 @@ const UserProfil = () => {
             <p>
               <span className="label">Nom:</span>
               {user.lastname}
+            </p>
+            <p>
+              <span className="label">Date de naissance:</span>
+              {user.birthdate
+                ? new Date(user.birthdate).toLocaleDateString("fr-FR")
+                : "Non renseignée"}
+            </p>
+            <p>
+              <span className="label">Téléphone:</span>
+              {user.tel}
             </p>
           </div>
         </div>

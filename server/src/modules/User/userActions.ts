@@ -6,7 +6,7 @@ import userRepository from "./userRepository";
 // Ajout pour une inscription //
 const add: RequestHandler = async (req, res, next) => {
   try {
-    const { firstname, lastname, email, password } = req.body;
+    const { firstname, lastname, email, password, birthdate, tel } = req.body;
 
     // Check si le mail existe déjà //
     const existingUser = await userRepository.findByEmail(email);
@@ -25,6 +25,8 @@ const add: RequestHandler = async (req, res, next) => {
       email,
       password: hashedPassword,
       role: "user",
+      birthdate,
+      tel,
     });
 
     res.status(201).json({
@@ -78,7 +80,10 @@ const login: RequestHandler = async (req, res, next) => {
       id: user.id,
       firstname: user.firstname,
       lastname: user.lastname,
+      email: user.email,
       role: user.role,
+      birthdate: user.birthdate,
+      tel: user.tel,
     });
   } catch (err) {
     next(err);
@@ -118,7 +123,7 @@ interface AuthRequest extends Request {
 
 const edit: RequestHandler = async (req, res, next) => {
   try {
-    const { firstname, lastname, email } = req.body;
+    const { firstname, lastname, email, birthdate, tel } = req.body;
     const authReq = req as AuthRequest;
     const userId = authReq.user?.id;
 
@@ -129,10 +134,12 @@ const edit: RequestHandler = async (req, res, next) => {
 
     await userRepository.update({
       id: userId,
-      firstname,
-      lastname,
-      email,
+      firstname: firstname || "",
+      lastname: lastname || "",
+      email: email || "",
       role: "",
+      birthdate: birthdate || null,
+      tel: tel || null,
     });
 
     res.sendStatus(204);

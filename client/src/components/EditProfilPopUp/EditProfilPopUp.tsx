@@ -9,8 +9,16 @@ interface EditProfilePopUpProps {
     firstname: string;
     lastname: string;
     email: string;
+    birthdate: string;
+    tel: string;
   }) => Promise<void>;
-  initialData: { firstname: string; lastname: string; email: string };
+  initialData: {
+    firstname: string;
+    lastname: string;
+    email: string;
+    birthdate: string;
+    tel: string;
+  };
 }
 
 const EditProfilePopUp = ({
@@ -32,7 +40,7 @@ const EditProfilePopUp = ({
     <div
       className="popup"
       onClick={onClose}
-      onKeyDown={(e) => e.key === "Echap" && onClose()}
+      onKeyDown={(e) => e.key === "Escape" && onClose()}
       tabIndex={-1}
     >
       <div
@@ -51,7 +59,6 @@ const EditProfilePopUp = ({
               onChange={(e) =>
                 setFormData({ ...formData, firstname: e.target.value })
               }
-              required
             />
           </div>
           <div className="inputs">
@@ -63,7 +70,6 @@ const EditProfilePopUp = ({
               onChange={(e) =>
                 setFormData({ ...formData, lastname: e.target.value })
               }
-              required
             />
           </div>
           <div className="inputs">
@@ -75,7 +81,28 @@ const EditProfilePopUp = ({
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
-              required
+            />
+          </div>
+          <div className="inputs">
+            <label htmlFor="birthdate">Date de naissance</label>
+            <input
+              id="birthdate"
+              type="date"
+              value={formData.birthdate}
+              onChange={(e) =>
+                setFormData({ ...formData, birthdate: e.target.value })
+              }
+            />
+          </div>
+          <div className="inputs">
+            <label htmlFor="tel">Téléphoe</label>
+            <input
+              id="tel"
+              type="text"
+              value={formData.tel}
+              onChange={(e) =>
+                setFormData({ ...formData, tel: e.target.value })
+              }
             />
           </div>
           <div className="popup-btns">
