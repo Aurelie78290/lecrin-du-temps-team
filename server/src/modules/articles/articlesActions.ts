@@ -104,9 +104,10 @@ const add: RequestHandler = async (req, res, next) => {
 
     // Create the article
     const insertId = await articlesRepository.create(newArticle);
+    const createdArticle = await articlesRepository.read(insertId);
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
-    res.status(201).json({ insertId });
+    res.status(201).json(createdArticle);
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);

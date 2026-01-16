@@ -11,8 +11,9 @@ const router = express.Router();
 import userActions from "./modules/User/userActions";
 router.post("/api/users", userActions.add); // Signup //
 router.post("/api/login", userActions.login); // Login //
-router.get("/api/auth/me", isAuth, userActions.checkAuth); // Check de la session //
 router.get("/api/logout", userActions.logout); // Logout //
+router.get("/api/auth/me", isAuth, userActions.checkAuth); // Check de la session //
+router.put("/api/users/me", isAuth, userActions.edit); // Modification d'informmation personnelle //
 
 // Define item-related routes
 import itemActions from "./modules/item/itemActions";
@@ -61,19 +62,30 @@ router.get("/api/watches", watchActions.browse);
 router.get("/api/watches/:id", watchActions.read);
 
 router.get("/api/shop/watches", watchActions.browseShop);
-router.get("/api/collection/watches/:userId", watchActions.browseCollection);
-
+router.get("/api/collection/watches", isAuth, watchActions.browseCollection);
 router.delete(
   "/api/collection/watches/:watchId",
+  isAuth,
   watchActions.removeFromCollection,
 );
+
 router.post(
   "/api/watches",
+  isAuth,
   upload.fields([
     { name: "watch_image", maxCount: 1 },
     { name: "certificate_image", maxCount: 1 },
   ]),
   watchActions.add,
+);
+
+router.put(
+  "/api/watches/:id",
+  upload.fields([
+    { name: "watch_image", maxCount: 1 },
+    { name: "certificate_image", maxCount: 1 },
+  ]),
+  watchActions.update,
 );
 
 /* ************************************************************************* */
@@ -134,5 +146,18 @@ router.get("/api/pendingAdd/:id", pendingAddActions.read);
 router.put("/api/pendingAdd/:id", pendingAddActions.edit);
 
 /* ************************************************************************* */
+import lookupsActions from "./modules/lookup/lookUpActions";
+
+router.get("/api/lookups/brands", lookupsActions.brands);
+router.get("/api/lookups/brands/:brandId/models", lookupsActions.modelsByBrand);
+
+router.get("/api/lookups/case-materials", lookupsActions.caseMaterials);
+router.get("/api/lookups/clasp-types", lookupsActions.claspTypes);
+router.get("/api/lookups/dial-finishes", lookupsActions.dialFinishes);
+router.get("/api/lookups/hour-marker-types", lookupsActions.hourMarkerTypes);
+router.get("/api/lookups/strap-materials", lookupsActions.strapMaterials);
+router.get("/api/lookups/movement-types", lookupsActions.movementTypes);
+router.get("/api/lookups/functions", lookupsActions.functionsList);
+router.get("/api/lookups/certificates", lookupsActions.certificates);
 
 export default router;

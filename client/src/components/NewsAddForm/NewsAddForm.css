@@ -1,0 +1,77 @@
+.news-add-modal {
+  position: fixed; /* au-dessus de tout */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* overlay semi-transparent */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* au-dessus de tout le reste */
+}
+
+.news-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin: 1rem 0;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: #fafafa;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  width: 90%;
+  max-width: 800px;
+  position: relative;
+}
+
+.news-add-form .close-btn {
+  position: absolute;
+  top: 0.2rem;
+  right: 1.2rem;
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.news-add-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #333;
+  gap: 0.3rem;
+}
+
+.news-add-form input,
+.news-add-form textarea {
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.news-add-form button {
+  align-self: flex-start;
+  padding: 0.6rem 1.4rem;
+  color: var(--primary-color);
+  background-color: var(--border-color);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.2s;
+}
+
+.news-add-form button:hover {
+  background-color: var(--primary-color);
+  color: var(--border-color);
+}
+
+.news-add-form .error {
+  color: red;
+  font-size: 0.9rem;
+}

@@ -25,7 +25,11 @@ import Shop from "./pages/Shop/Shop";
 import ShopBasket from "./pages/ShopBasket/ShopBasket";
 import ShopPayment from "./pages/ShopPayment/ShopPayment";
 import ShopWatchIndex from "./pages/ShopWatchIndex/ShopWatchIndex";
+import UserProfil from "./pages/UserProfil/UserProfil";
+// import UserProfil from "./pages/UserProfil/UserProfil";
 import WatchDetails from "./pages/WatchDetails/WatchDetails";
+import WatchEdit from "./pages/WatchEdit/WatchEdit";
+// import Collection from "./pages/Collection/Collection";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -98,7 +102,7 @@ const router = createBrowserRouter([
         path: "/UserProfil",
         element /* Ajout d'une protection, il faut être connecté */: (
           <ProtectedRoutes>
-            <CollectionWatchIndex />
+            <UserProfil />
           </ProtectedRoutes>
         ),
       },
@@ -121,6 +125,10 @@ const router = createBrowserRouter([
       {
         path: "/Collection/:id",
         element: <WatchDetails />,
+      },
+      {
+        path: "/watches/:id/edit",
+        element: <WatchEdit />,
       },
       {
         path: "/Dashboard",

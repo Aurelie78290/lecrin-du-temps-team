@@ -21,14 +21,14 @@ class ArticleRepository {
     const [result] = await databaseClient.query<Result>(
       `INSERT INTO articles 
       (article_title, subtitle, release_date, content, reference_source, photo, user_iduser)
-      VALUES (?, ?, ?, ?, ?, ?)`,
+      VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         article.article_title,
-        article.subtitle,
-        article.release_date || new Date().toISOString(),
+        article.subtitle ?? null,
+        article.release_date ?? null,
         article.content,
-        article.reference_source,
-        article.photo,
+        article.reference_source ?? null,
+        article.photo ?? null,
         article.user_iduser,
       ],
     );

@@ -1,5 +1,5 @@
-import type { RequestHandler } from "express";
 import bcrypt from "bcrypt";
+import type { Request, RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 import userRepository from "./userRepository";
 
@@ -77,6 +77,7 @@ const login: RequestHandler = async (req, res, next) => {
     res.json({
       id: user.id,
       firstname: user.firstname,
+      lastname: user.lastname,
       role: user.role,
     });
   } catch (err) {
@@ -108,9 +109,41 @@ const checkAuth: RequestHandler = async (req, res, next) => {
   }
 };
 
+interface AuthRequest extends Request {
+  user?: {
+    id: number;
+    role: string;
+  };
+}
+
+const edit: RequestHandler = async (req, res, next) => {
+  try {
+    const { firstname, lastname, email } = req.body;
+    const authReq = req as AuthRequest;
+    const userId = authReq.user?.id;
+
+    if (!userId) {
+      res.sendStatus(401);
+      return;
+    }
+
+    await userRepository.update({
+      id: userId,
+      firstname,
+      lastname,
+      email,
+      role: "",
+    });
+
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const logout: RequestHandler = (req, res) => {
   res.clearCookie("token"); // Supprime le cookie //
   res.sendStatus(204);
 };
 
-export default { login, checkAuth, add, logout };
+export default { login, checkAuth, add, edit, logout };
