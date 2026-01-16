@@ -3,7 +3,6 @@
   padding: 3rem 2rem;
   max-width: 1400px;
   min-height: 100vh;
-  max-height: 150vh;
 }
 
 .news-title {
@@ -45,6 +44,21 @@
   opacity: 1 !important;
   transform: scale(1) !important;
   z-index: 10;
+}
+
+.news-add-article {
+  margin-top: 1.5rem;
+  text-align: end;
+  padding-right: 1rem;
+}
+
+.add-article-btn {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  background-color: var(--border-color);
+  border: none;
+  cursor: pointer;
 }
 
 @media (min-width: 1024px) {
