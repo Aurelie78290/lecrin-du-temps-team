@@ -2,9 +2,9 @@ import type React from "react";
 import { useState } from "react";
 import "./Home.css";
 import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router";
 import logo from "../../../public/logo.svg";
 import watchImage from "../../assets/images/watchImage.png";
-import { useNavigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import api from "../../services/api";
 
@@ -39,7 +39,7 @@ const Home: React.FC = () => {
           password: formData.password,
         });
         login(res.data); // pour stocker le user dans le context //
-        navigate(res.data.role === "admin" ? "/dashboard" : "/Collection");
+        navigate(res.data.role === "admin" ? "/dashboard" : "/UserProfil");
       } else {
         //SignUp //
         await api.post("/api/users", formData);

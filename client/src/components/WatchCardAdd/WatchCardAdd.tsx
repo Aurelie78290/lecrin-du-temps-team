@@ -342,41 +342,43 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const userId = 1; // TODO: remplacer par l'user connecté plus tard
-    // Utilise FormData pour envoyer les fichiers
+
     const formData = new FormData();
-    formData.append("userId", String(userId)); // ✅ IMPORTANT
-    // Ajoute les champs texte
+
     if (brandId) formData.append("brand_id", brandId.toString());
     if (modelId) formData.append("model_id", modelId.toString());
     if (price) formData.append("watch_price", price);
     if (condition) formData.append("watch_condition", condition);
 
-    // Ajoute les images
     if (watchImage) formData.append("watch_image", watchImage);
     if (certificateImage)
       formData.append("certificate_image", certificateImage);
 
     try {
+      console.log("POST →", `${apiBaseUrl}/api/watches`);
+      for (const [k, v] of formData.entries()) {
+        console.log("FormData", k, v);
+      }
       const response = await fetch(`${apiBaseUrl}/api/watches`, {
         method: "POST",
-        // Pas de Content-Type header ! Le navigateur le gère automatiquement avec FormData
+        credentials: "include", // ✅ ICI
         body: formData,
       });
 
+      const bodyText = await response.text().catch(() => "");
+
       if (!response.ok) {
-        throw new Error("Erreur lors de la création");
+        throw new Error(bodyText || "Erreur lors de la création");
       }
 
-      const data = await response.json();
+      const data = JSON.parse(bodyText) as { insertId: number };
       console.log("Montre créée avec l'id:", data.insertId);
+
+      onWatchAdded();
+      closingPopup();
     } catch (error) {
       console.error(error);
     }
-
-    // Informe le parent qu'une montre a été ajoutée
-    onWatchAdded();
-    closingPopup();
   };
 
   // ============================================

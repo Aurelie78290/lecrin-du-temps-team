@@ -7,6 +7,7 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 
 // Import the main app component
 import App from "./App";
+import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import About from "./pages/About/About";
 import Cgu from "./pages/CGU/Cgu";
 import CollectionWatchIndex from "./pages/CollectionWatchIndex/CollectionWatchIndex";
@@ -19,14 +20,15 @@ import Hub from "./pages/Hub/Hub";
 import LegalNotices from "./pages/LegalNotices/LegalNotices";
 import News from "./pages/News/News";
 import NewsDetails from "./pages/NewsDetails/NewsDetails";
-import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import Shop from "./pages/Shop/Shop";
 import ShopBasket from "./pages/ShopBasket/ShopBasket";
 import ShopPayment from "./pages/ShopPayment/ShopPayment";
 import ShopWatchIndex from "./pages/ShopWatchIndex/ShopWatchIndex";
 import UserProfil from "./pages/UserProfil/UserProfil";
+// import UserProfil from "./pages/UserProfil/UserProfil";
 import WatchDetails from "./pages/WatchDetails/WatchDetails";
-import Collection from "./pages/Collection/Collection";
+import WatchEdit from "./pages/WatchEdit/WatchEdit";
+// import Collection from "./pages/Collection/Collection";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -99,7 +101,7 @@ const router = createBrowserRouter([
         path: "/UserProfil",
         element /* Ajout d'une protection, il faut être connecté */: (
           <ProtectedRoutes>
-            <CollectionWatchIndex />
+            <UserProfil />
           </ProtectedRoutes>
         ),
       },
@@ -114,6 +116,10 @@ const router = createBrowserRouter([
       {
         path: "/Collection/:id",
         element: <WatchDetails />,
+      },
+      {
+        path: "/watches/:id/edit",
+        element: <WatchEdit />,
       },
       {
         path: "/Dashboard",

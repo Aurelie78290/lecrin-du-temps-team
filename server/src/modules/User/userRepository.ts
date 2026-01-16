@@ -74,6 +74,15 @@ class UserRepository {
       password: row.password,
     };
   }
+
+  // Mettre a jour des données user //
+  async update(user: UserAccount): Promise<Result> {
+    const [result] = await databaseClient.query<Result>(
+      "UPDATE user SET firstname = ?, lastname = ?, e_mail = ? WHERE iduser = ?",
+      [user.firstname, user.lastname, user.email, user.id],
+    );
+    return result;
+  }
 }
 
 export default new UserRepository();
