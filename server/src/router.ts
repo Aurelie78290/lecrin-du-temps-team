@@ -94,6 +94,8 @@ router.get("/api/brands", brandsActions.browse);
 import modelsActions from "./modules/models/modelsActions";
 router.get("/api/models", modelsActions.browse);
 
+/* ************************************************************************* */
+
 // Define MonthlySales routes
 import MonthlySalesActions from "./modules/MonthlySales/MonthlySalesActions";
 
@@ -127,6 +129,7 @@ router.get("/api/adminVolTran", adminVolTran.browse);
 import pendingAddActions from "./modules/pendingAdd/pendingAddActions";
 
 router.get("/api/pendingAdd", pendingAddActions.browse);
+router.get("/api/nbPendingAdd", pendingAddActions.browseNb);
 router.get("/api/pendingAdd/:id", pendingAddActions.read);
 router.put("/api/pendingAdd/:id", pendingAddActions.edit);
 

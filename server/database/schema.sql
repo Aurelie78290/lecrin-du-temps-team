@@ -578,7 +578,8 @@ VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisber
 ('Mathieu', 'H', '2000-01-01', 'Analyste Marché & Cote', 'mathieu.h@gmail.com','admin', "Expert en économie, il suit l'évolution des prix et les ventes aux enchères pour conseiller les membres sur l'investissement horloger.", '', ''),
 ('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenriats', 'romain.debas@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.", '', ''),
 ('romain', 'dodo', '', '', 'test@test.com', 'user', '', '', '$2b$10$YQWyYMtItnsmh5nINQLJau22ZKqfbfD2oYnxy5pBxjxERGl/.Vjia'),
-('Jean', 'Dubois', '1980-01-01', 'cutsomer', 'jean.dubois@gmail.com','customer', "Collectionneur de montre", '2025-09-01 08:30:00', '');
+('Jean', 'Dubois', '1980-01-01', 'cutsomer', 'jean.dubois@gmail.com','customer', "Collectionneur de montre", '2025-09-01 08:30:00', ''),
+('Jo', 'M', '', '', 'jo@admin.fr','admin', "", '2025-09-01 08:30:00', '$2b$10$/frmOJpVIVEXPQWCdjYFmuvtazIuFs43.IvYJNC/RFZWJPXjFhBau');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -777,7 +778,15 @@ INSERT INTO watch (
 
 -- 23 Cartier Tank Must (brand_id=10, model_id=116) Model test pour la validation des annonces
 (1, 10, 116, 9992, '2022-01-01', 0, NULL, 'Unisexe', 'A valider', 9,
-1, 34, 7, 3, 'Argent', 3, 3, 2, 'Noir', 2, 19, 'Très bon état', 3, 'Quartz Cartier', 1, NULL, NULL, NULL, 1, 1, 1);
+1, 34, 7, 3, 'Argent', 3, 3, 2, 'Noir', 2, 19, 'Très bon état', 3, 'Quartz Cartier', 1, NULL, NULL, NULL, 1, 1, 1),
+
+-- 24 TAG Heuer Carrera Chronograph (brand_id=15, model_id=153) Model test pour la validation des annonces
+(1, 15, 153, 2010, '2021-01-01', 0, NULL, 'Homme', 'Refusée', 4650,
+1, 42, 14, 10, 'Bleu', 2, 1, 1, 'Acier', 1, 22, 'Très bon état', 1, 'Heuer 02', 2, 80, 4, 33, 1, 1, 1),
+
+-- 25 Cartier Santos (brand_id=10, model_id=109) Model test pour la validation des annonces
+(1, 10, 109, 4848, '2023-01-01', 0, NULL, 'Unisexe', '', 6250,
+1, 35, 9, 10, 'Argent', 1, 3, 1, 'Acier', 1, 18, 'Excellent état', 1, '1847 MC', 1, 42, 4, 23, 1, 1, 1);
 UNLOCK TABLES;
 CREATE TABLE user_has_watch (
   user_id INT NOT NULL,

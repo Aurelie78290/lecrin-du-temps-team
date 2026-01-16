@@ -1,0 +1,29 @@
+.ClassifiedAdStatus-article {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ClassifiedAdStatus-card {
+  border-radius: 15px;
+  border-style: solid;
+  border-color: var(--border-color);
+  border-width: 1px;
+  padding: 1rem 2rem;
+  text-align: center;
+  width: 20%;
+  margin: 4rem;
+}
+
+.ClassifiedAdStatus-card p {
+  font-size: larger;
+}
+
+@media screen and (max-width: 992px) {
+  .ClassifiedAdStatus-article {
+    flex-direction: column;
+    align-items: center;
+  }
+  .ClassifiedAdStatus-card {
+    width: 60%;
+  }
+}

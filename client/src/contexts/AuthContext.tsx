@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import api from "../services/api";
 
@@ -60,4 +60,4 @@ const useAuth = () => {
   return context;
 };
 
-export { AuthProvider, useAuth };
+export { AuthContext, AuthProvider, useAuth };
