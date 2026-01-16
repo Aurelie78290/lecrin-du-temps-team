@@ -73,6 +73,11 @@ type WatchDetailsApi = Partial<WatchDetailsWithContext> & {
   brand?: string;
   model?: string;
 };
+// Typage pour la props venant de ClassifiedAdDetails.tsx
+interface WatchDetailsProps {
+  idwatch?: number;
+  isReadOnly?: boolean;
+}
 
 const API_URL = "http://localhost:3310";
 
@@ -142,8 +147,17 @@ const labelOrId = (
   return "—";
 };
 
-export default function WatchDetails() {
+export default function WatchDetails({
+  idwatch,
+  isReadOnly = false,
+}: WatchDetailsProps) {
+  // 1. On récupère l'id de l'URL au cas où
   const { id } = useParams();
+
+  // 2. LA LOGIQUE DE DÉCISION :
+  // Si idwatch (prop) existe, on l'utilise(issu de ClassifiedAdDetails.tsx). Sinon, on utilise id (URL).
+  const effectiveId = idwatch || (id ? Number(id) : null);
+
   const inShop = !!useMatch("/shop/:id");
   const inCollection = !!useMatch("/collection/:id");
   // const location = useLocation();
@@ -190,13 +204,13 @@ export default function WatchDetails() {
     }
   };
   useEffect(() => {
-    if (!id) return;
+    if (!effectiveId) return;
 
     setLoading(true);
     setError(null);
 
     // ✅ Route existante pour les détails (shop ET collection)
-    const detailsUrl = `${API_URL}/api/watches/${id}`;
+    const detailsUrl = `${API_URL}/api/watches/${effectiveId}`;
 
     fetch(detailsUrl, {
       credentials: "include", // ✅ envoie le cookie token si besoin
@@ -232,7 +246,7 @@ export default function WatchDetails() {
         setError(err instanceof Error ? err.message : "Erreur inconnue");
       })
       .finally(() => setLoading(false));
-  }, [id, inCollection]);
+  }, [effectiveId, inCollection]);
 
   const photos = watch?.photos ?? [];
   if (loading) return <div className="watchdetails-state">Chargement…</div>;
@@ -252,12 +266,15 @@ export default function WatchDetails() {
       <div className="watchdetails-layout">
         {/* Galerie */}
         <div className="watchdetails-100vh">
-          <Link
-            className="watchdetails-back"
-            to={inCollection ? "/collection" : "/shop"}
-          >
-            ← Retour {inCollection ? "Collection" : "Boutique"}
-          </Link>
+          {/* On masque le retour seulement si isReadOnly est vrai (en mode validation d'annonce)*/}
+          {!isReadOnly && (
+            <Link
+              className="watchdetails-back"
+              to={inCollection ? "/Collection" : "/Shop"}
+            >
+              ← Retour {inCollection ? "Collection" : "Boutique"}
+            </Link>
+          )}
 
           <header className="watchdetails-header">
             <h1 className="watchdetails-title">
@@ -526,44 +543,52 @@ export default function WatchDetails() {
                 Acheter
               </button>
             )}
+            {/* On masque le retour seulement si isReadOnly est vrai (en mode validation d'annonce)*/}
+            {!isReadOnly && (
+              <section className="watchdetails-card watchdetails-actions">
+                {inCollection && (
+                  <div className="watchdetails-actions">
+                    <button
+                      type="button"
+                      className="watchdetails-sell"
+                      onClick={() =>
+                        console.log("Mettre en vente", watch.idwatch)
+                      }
+                    >
+                      Mettre en vente
+                    </button>
 
-            {inCollection && (
-              <div className="watchdetails-actions">
-                <button
-                  type="button"
-                  className="watchdetails-sell"
-                  onClick={() => console.log("Mettre en vente", watch.idwatch)}
-                >
-                  Mettre en vente
-                </button>
+                    <button
+                      type="button"
+                      className="watchdetails-edit"
+                      onClick={() =>
+                        navigate(`/watches/${watch.idwatch}/edit`, {
+                          state: {
+                            from: inCollection ? "collection" : "shop",
+                            id: watch.idwatch,
+                          },
+                        })
+                      }
+                    >
+                      Modifier
+                    </button>
 
-                <button
-                  type="button"
-                  className="watchdetails-edit"
-                  onClick={() =>
-                    navigate(`/watches/${watch.idwatch}/edit`, {
-                      state: {
-                        from: inCollection ? "collection" : "shop",
-                        id: watch.idwatch,
-                      },
-                    })
-                  }
-                >
-                  Modifier
-                </button>
+                    <button
+                      type="button"
+                      className="watchdetails-delete"
+                      onClick={handleDelete}
+                    >
+                      {inCollection ? "Retirer de la collection" : "Supprimer"}
+                    </button>
 
-                <button
-                  type="button"
-                  className="watchdetails-delete"
-                  onClick={handleDelete}
-                >
-                  {inCollection ? "Retirer de la collection" : "Supprimer"}
-                </button>
-              </div>
-            )}
-
-            {!inShop && !inCollection && (
-              <div className="watchdetails-empty">Action indisponible</div>
+                    {!inShop && !inCollection && (
+                      <div className="watchdetails-empty">
+                        Action indisponible
+                      </div>
+                    )}
+                  </div>
+                )}
+              </section>
             )}
           </section>
         </div>
