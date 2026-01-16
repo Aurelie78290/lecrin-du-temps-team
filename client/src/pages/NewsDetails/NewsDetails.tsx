@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import { useNavigate, useParams } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -72,62 +73,68 @@ function NewsDetails() {
   if (!article) return <p>Chargement...</p>;
 
   return (
-    <section className="NewsDetails-section">
-      <h1 className="NewsDetails-title">{article.article_title}</h1>
-      <div className="NewsDetails-references">
-        <p className="NewsDetails-references-content">
-          <strong>Source : </strong>
-          {article.reference_source}
-        </p>
-        <p className="NewsDetail-references-content">
-          <strong>Date : </strong>
-          {formatDate(article.release_date)}
-        </p>
-      </div>
-      <p className="NewsDetails-subtitle">{article.subtitle}</p>
-      <div className="NewsDetails-container">
-        <img
-          src={article.photo}
-          alt={article.article_title}
-          className="NewsDetails-photo"
-        />
-        <p className="NewsDetails-content">{article.content}</p>
-      </div>
-
-      {/* Bouton de suppression (visible uniquement pour les admins) */}
-      {user?.role === "admin" && (
-        <div className="NewsDetails-actions">
-          {!showConfirm ? (
-            <button
-              type="button"
-              className="NewsDetails-delete-btn"
-              onClick={() => setShowConfirm(true)}
-            >
-              🗑️ Supprimer cet article
-            </button>
-          ) : (
-            <div className="NewsDetails-confirm-delete">
-              <p>Êtes-vous sûr de vouloir supprimer cet article ?</p>
-              <button
-                type="button"
-                className="NewsDetails-confirm-btn"
-                onClick={handleDelete}
-                disabled={loading}
-              >
-                {loading ? "Suppression..." : "Oui, supprimer"}
-              </button>
-              <button
-                type="button"
-                className="NewsDetails-cancel-btn"
-                onClick={() => setShowConfirm(false)}
-              >
-                Annuler
-              </button>
-            </div>
-          )}
+    <div className="NewsDetails-page">
+      {/* Bouton de retour à la page News */}
+      <Link to="/news" className="NewsDetails-back-btn">
+        ← Retour aux articles
+      </Link>
+      <section className="NewsDetails-section">
+        <h1 className="NewsDetails-title">{article.article_title}</h1>
+        <div className="NewsDetails-references">
+          <p className="NewsDetails-references-content">
+            <strong>Source : </strong>
+            {article.reference_source}
+          </p>
+          <p className="NewsDetail-references-content">
+            <strong>Date : </strong>
+            {formatDate(article.release_date)}
+          </p>
         </div>
-      )}
-    </section>
+        <p className="NewsDetails-subtitle">{article.subtitle}</p>
+        <div className="NewsDetails-container">
+          <img
+            src={article.photo}
+            alt={article.article_title}
+            className="NewsDetails-photo"
+          />
+          <p className="NewsDetails-content">{article.content}</p>
+        </div>
+
+        {/* Bouton de suppression (visible uniquement pour les admins) */}
+        {user?.role === "admin" && (
+          <div className="NewsDetails-actions">
+            {!showConfirm ? (
+              <button
+                type="button"
+                className="NewsDetails-delete-btn"
+                onClick={() => setShowConfirm(true)}
+              >
+                🗑️ Supprimer cet article
+              </button>
+            ) : (
+              <div className="NewsDetails-confirm-delete">
+                <p>Êtes-vous sûr de vouloir supprimer cet article ?</p>
+                <button
+                  type="button"
+                  className="NewsDetails-confirm-btn"
+                  onClick={handleDelete}
+                  disabled={loading}
+                >
+                  {loading ? "Suppression..." : "Oui, supprimer"}
+                </button>
+                <button
+                  type="button"
+                  className="NewsDetails-cancel-btn"
+                  onClick={() => setShowConfirm(false)}
+                >
+                  Annuler
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </section>
+    </div>
   );
 }
 

@@ -10,6 +10,19 @@
   margin: 0 auto;
 }
 
+.NewsDetails-back-btn {
+  display: inline-block;
+  margin: 1.5rem;
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-size: 1.5rem;
+  border: none;
+}
+
+.NewsDetails-back-btn:hover {
+  text-decoration: underline;
+}
+
 .NewsDetails-title {
   font-weight: 500;
   text-transform: uppercase;
