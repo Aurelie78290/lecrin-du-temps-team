@@ -76,10 +76,10 @@ type WatchDetailsApi = Partial<WatchDetailsWithContext> & {
 
 const API_URL = "http://localhost:3310";
 
-const getAuthHeaders = (): Record<string, string> => {
-  const token = localStorage.getItem("token"); // ⚠️ mets la bonne key si besoin
-  return token ? { Authorization: `Bearer ${token}` } : {};
-};
+// const getAuthHeaders = (): Record<string, string> => {
+//   const token = localStorage.getItem("token"); // ⚠️ mets la bonne key si besoin
+//   return token ? { Authorization: `Bearer ${token}` } : {};
+// };
 
 //convertir en string
 const formatValue = (v: unknown) => {
@@ -171,9 +171,7 @@ export default function WatchDetails() {
         : `${API_URL}/api/watches/${watchId}`;
       const res = await fetch(url, {
         method: "DELETE",
-        headers: {
-          ...getAuthHeaders(),
-        },
+        credentials: "include",
       });
       const body = res.status === 204 ? "" : await res.text().catch(() => "");
       console.log("DELETE URL:", url);
@@ -197,14 +195,11 @@ export default function WatchDetails() {
     setLoading(true);
     setError(null);
 
-    const detailsUrl = inCollection
-      ? `${API_URL}/api/collection/watches/${id}` // protégé
-      : `${API_URL}/api/watches/${id}`; // public
+    // ✅ Route existante pour les détails (shop ET collection)
+    const detailsUrl = `${API_URL}/api/watches/${id}`;
 
     fetch(detailsUrl, {
-      headers: {
-        ...(inCollection ? getAuthHeaders() : {}),
-      },
+      credentials: "include", // ✅ envoie le cookie token si besoin
     })
       .then(async (res) => {
         if (!res.ok) {
@@ -227,7 +222,7 @@ export default function WatchDetails() {
           certificates: Array.isArray(data.certificates)
             ? data.certificates
             : [],
-          is_in_my_collection: inCollection, // ✅
+          is_in_my_collection: inCollection, // ✅ basé sur la route côté front
         };
 
         setWatch(normalized);
@@ -259,7 +254,7 @@ export default function WatchDetails() {
         <div className="watchdetails-100vh">
           <Link
             className="watchdetails-back"
-            to={inCollection ? "/Collection" : "/Shop"}
+            to={inCollection ? "/collection" : "/shop"}
           >
             ← Retour {inCollection ? "Collection" : "Boutique"}
           </Link>
