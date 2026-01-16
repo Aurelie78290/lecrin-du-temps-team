@@ -95,7 +95,7 @@ const EditProfilePopUp = ({
             />
           </div>
           <div className="inputs">
-            <label htmlFor="tel">Téléphoe</label>
+            <label htmlFor="tel">Téléphone</label>
             <input
               id="tel"
               type="text"
