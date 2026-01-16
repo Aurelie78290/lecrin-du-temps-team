@@ -106,6 +106,8 @@ router.get("/api/brands", brandsActions.browse);
 import modelsActions from "./modules/models/modelsActions";
 router.get("/api/models", modelsActions.browse);
 
+/* ************************************************************************* */
+
 // Define MonthlySales routes
 import MonthlySalesActions from "./modules/MonthlySales/MonthlySalesActions";
 
@@ -139,9 +141,23 @@ router.get("/api/adminVolTran", adminVolTran.browse);
 import pendingAddActions from "./modules/pendingAdd/pendingAddActions";
 
 router.get("/api/pendingAdd", pendingAddActions.browse);
+router.get("/api/nbPendingAdd", pendingAddActions.browseNb);
 router.get("/api/pendingAdd/:id", pendingAddActions.read);
 router.put("/api/pendingAdd/:id", pendingAddActions.edit);
 
 /* ************************************************************************* */
+import lookupsActions from "./modules/lookup/lookUpActions";
+
+router.get("/api/lookups/brands", lookupsActions.brands);
+router.get("/api/lookups/brands/:brandId/models", lookupsActions.modelsByBrand);
+
+router.get("/api/lookups/case-materials", lookupsActions.caseMaterials);
+router.get("/api/lookups/clasp-types", lookupsActions.claspTypes);
+router.get("/api/lookups/dial-finishes", lookupsActions.dialFinishes);
+router.get("/api/lookups/hour-marker-types", lookupsActions.hourMarkerTypes);
+router.get("/api/lookups/strap-materials", lookupsActions.strapMaterials);
+router.get("/api/lookups/movement-types", lookupsActions.movementTypes);
+router.get("/api/lookups/functions", lookupsActions.functionsList);
+router.get("/api/lookups/certificates", lookupsActions.certificates);
 
 export default router;

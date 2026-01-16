@@ -10,6 +10,7 @@ import App from "./App";
 import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import About from "./pages/About/About";
 import Cgu from "./pages/CGU/Cgu";
+import ClassifiedAd from "./pages/ClassifiedAd/ClassifiedAd";
 import CollectionWatchIndex from "./pages/CollectionWatchIndex/CollectionWatchIndex";
 import Contact from "./pages/Contact/Contact";
 import Dashboard from "./pages/Dashboard/Dashboard";
@@ -102,6 +103,14 @@ const router = createBrowserRouter([
         element /* Ajout d'une protection, il faut être connecté */: (
           <ProtectedRoutes>
             <UserProfil />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/ClassifiedAd",
+        element /* Ajout d'une protection, il faut être connecté */: (
+          <ProtectedRoutes>
+            <ClassifiedAd />
           </ProtectedRoutes>
         ),
       },

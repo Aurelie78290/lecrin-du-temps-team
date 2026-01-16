@@ -70,25 +70,39 @@ class pendingAdd {
   async readAll() {
     const [rows] = await databaseClient.query<Rows>(
       `
-SELECT
-  w.idwatch,
-  b.name AS brand,
-  m.name AS model,
-  w.watch_price,
-  w.watch_condition,
-  (
-    SELECT url
-    FROM photo
-    WHERE watch_id = w.idwatch
-      AND type = 'watch'
-    LIMIT 1
-  ) AS photo_url
-FROM watch w
-JOIN brand b ON b.id = w.brand_id
-JOIN model m ON m.id = w.model_id
-WHERE w.watch_sell_status = 'A valider';
-
+      SELECT
+        w.idwatch,
+        b.name AS brand,
+        m.name AS model,
+        w.watch_price,
+        w.watch_condition,
+        (
+          SELECT url
+          FROM photo
+          WHERE watch_id = w.idwatch
+            AND type = 'watch'
+          LIMIT 1
+        ) AS photo_url
+      FROM watch w
+      JOIN brand b ON b.id = w.brand_id
+      JOIN model m ON m.id = w.model_id
+      WHERE w.watch_sell_status = 'A valider';
     `,
+    );
+
+    return rows as WatchListItem[];
+  }
+  // =================================
+  // R - Read Number of type of Ad (compte les nombre d'annonces à valider, Validées et refusées)
+  // =================================
+  async readNbAd() {
+    const [rows] = await databaseClient.query<Rows>(
+      `SELECT 
+      watch_sell_status, 
+      COUNT(*) AS total
+      FROM watch
+      WHERE watch_sell_status IN ('A valider', 'Refusée', 'En vente')
+      GROUP BY watch_sell_status;`,
     );
 
     return rows as WatchListItem[];

@@ -12,6 +12,16 @@ const browse: RequestHandler = async (req, res, next) => {
   }
 };
 
+const browseNb: RequestHandler = async (req, res, next) => {
+  try {
+    const nbPendingAddFromDB = await pendingAddRepository.readNbAd();
+
+    res.json(nbPendingAddFromDB);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const read: RequestHandler = async (req, res, next) => {
   try {
     const pendingAddId = Number.parseInt(req.params.id);
@@ -50,4 +60,4 @@ const edit: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, read, edit };
+export default { browse, browseNb, read, edit };

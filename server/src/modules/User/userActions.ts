@@ -1,5 +1,5 @@
-import type { Request, RequestHandler } from "express";
 import bcrypt from "bcrypt";
+import type { Request, RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 import userRepository from "./userRepository";
 
