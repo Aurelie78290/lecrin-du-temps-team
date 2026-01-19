@@ -1,0 +1,29 @@
+.userreview__main {
+  display: flex;
+  flex-direction: row;
+  border: solid 1px var(--secondary-color);
+  border-radius: 10px;
+  padding: 0.2rem 1rem;
+  justify-content: space-between;
+}
+
+.userreview__datebtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.userreview__datebtn button {
+  background: none;
+  box-shadow: none;
+  border: solid 1px var(--secondary-color);
+  color: var(--secondary-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.userreview__datebtn button:hover {
+  background: var(--secondary-color);
+  color: white;
+}
