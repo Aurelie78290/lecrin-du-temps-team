@@ -29,6 +29,7 @@ import UserProfil from "./pages/UserProfil/UserProfil";
 // import UserProfil from "./pages/UserProfil/UserProfil";
 import WatchDetails from "./pages/WatchDetails/WatchDetails";
 import WatchEdit from "./pages/WatchEdit/WatchEdit";
+import UserDashboard from "./pages/UserDashboard/UserDashboard";
 // import Collection from "./pages/Collection/Collection";
 
 // Import additional components for new routes
@@ -145,6 +146,10 @@ const router = createBrowserRouter([
       {
         path: "/Cgu",
         element: <Cgu />,
+      },
+      {
+        path: "/Accueil",
+        element: <UserDashboard />,
       },
     ],
   },

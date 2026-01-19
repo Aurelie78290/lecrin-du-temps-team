@@ -131,6 +131,19 @@ const add: RequestHandler = async (req, res, next) => {
   }
 };
 
+const getCollectionStats: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = getUserIdOr401(req, res);
+    if (!userId) return;
+
+    const data = await watchRepository.getCollectionValueOverTime(userId);
+    
+    res.json(data);
+  } catch (err) {
+    next(err);
+  }
+};
+
 // =======================
 // U - Update (Edit)
 // =======================
@@ -292,4 +305,5 @@ export default {
   browseShop,
   browseCollection,
   removeFromCollection,
+  getCollectionStats
 };

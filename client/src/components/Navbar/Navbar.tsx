@@ -51,7 +51,7 @@ function Navbar({
         {/* Menu principal */}
         <ul className="menu">
           <li className={isActive("/") ? "active" : ""}>
-            <Link to="/" onClick={() => setExpanded(false)}>
+            <Link to="/Accueil" onClick={() => setExpanded(false)}>
               <div className="icon-wrapper">
                 <img src={home} alt="" />
               </div>

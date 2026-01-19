@@ -792,6 +792,7 @@ UNLOCK TABLES;
 CREATE TABLE user_has_watch (
   user_id INT NOT NULL,
   watch_id INT NOT NULL,
+  added_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (user_id, watch_id)
 );
 
