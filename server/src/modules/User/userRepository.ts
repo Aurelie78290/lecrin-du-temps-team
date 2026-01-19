@@ -10,6 +10,8 @@ interface UserRow {
   e_mail: string;
   user_role: string;
   password?: string;
+  birthdate: string;
+  tel: string;
 }
 
 export interface UserAccount {
@@ -19,6 +21,8 @@ export interface UserAccount {
   email: string;
   role: string;
   password?: string;
+  birthdate: string;
+  tel: string;
 }
 
 class UserRepository {
@@ -41,7 +45,7 @@ class UserRepository {
   // Chercher par email (pour le login) //
   async findByEmail(email: string): Promise<UserAccount | null> {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT iduser, firstname, lastname, e_mail, user_role, password FROM user WHERE e_mail = ?",
+      "SELECT iduser, firstname, lastname, e_mail, user_role, password, birthdate, tel FROM user WHERE e_mail = ?",
       [email],
     );
     const users = rows as UserRow[];
@@ -53,7 +57,7 @@ class UserRepository {
   // Chercher par ID (pour check la session)
   async findById(id: number): Promise<UserAccount | null> {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT iduser, firstname, lastname, e_mail, user_role FROM user WHERE iduser = ?",
+      "SELECT iduser, firstname, lastname, e_mail, user_role, birthdate, tel FROM user WHERE iduser = ?",
       [id],
     );
     const users = rows as UserRow[];
@@ -72,14 +76,23 @@ class UserRepository {
       email: row.e_mail,
       role: row.user_role,
       password: row.password,
+      birthdate: row.birthdate,
+      tel: row.tel,
     };
   }
 
   // Mettre a jour des données user //
   async update(user: UserAccount): Promise<Result> {
     const [result] = await databaseClient.query<Result>(
-      "UPDATE user SET firstname = ?, lastname = ?, e_mail = ? WHERE iduser = ?",
-      [user.firstname, user.lastname, user.email, user.id],
+      "UPDATE user SET firstname = ?, lastname = ?, e_mail = ?, birthdate = ?, tel = ? WHERE iduser = ?",
+      [
+        user.firstname,
+        user.lastname,
+        user.email,
+        user.birthdate,
+        user.tel,
+        user.id,
+      ],
     );
     return result;
   }
