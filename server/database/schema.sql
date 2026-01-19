@@ -1822,7 +1822,43 @@ INSERT INTO photo (url, type, watch_id) VALUES
 ('/uploads/watches/20/photo2.webp', 'watch', 20),
 ('/uploads/watches/20/photo3.webp', 'watch', 20),
 ('/uploads/watches/20/photo4.webp', 'watch', 20),
-('/uploads/watches/20/photo5.webp', 'watch', 20);
+('/uploads/watches/20/photo5.webp', 'watch', 20),
+
+-- Montre 21 (20) : Longines HydroConquest(Test validation annonce)
+('/uploads/watches/20/photo1.webp', 'watch', 21),
+('/uploads/watches/20/photo2.webp', 'watch', 21),
+('/uploads/watches/20/photo3.webp', 'watch', 21),
+('/uploads/watches/20/photo4.webp', 'watch', 21),
+('/uploads/watches/20/photo5.webp', 'watch', 21),
+
+-- Montre 22 (14)  : IWC Mark XX (Test validation annonce)
+('/uploads/watches/14/photo1.webp', 'watch', 22),
+('/uploads/watches/14/photo2.webp', 'watch', 22),
+('/uploads/watches/14/photo3.webp', 'watch', 22),
+('/uploads/watches/14/photo4.webp', 'watch', 22),
+('/uploads/watches/14/photo5.webp', 'watch', 22),
+
+-- Montre 23 (6) : Cartier Tank(Test validation annonce)
+('/uploads/watches/6/photo1.webp', 'watch', 23),
+('/uploads/watches/6/photo2.webp', 'watch', 23),
+('/uploads/watches/6/photo3.webp', 'watch', 23),
+('/uploads/watches/6/photo4.webp', 'watch', 23),
+('/uploads/watches/6/photo5.webp', 'watch', 23),
+
+-- Montre 24 (11) : TAG Heuer Carrera(Test validation annonce)
+('/uploads/watches/11/photo1.webp', 'watch', 24),
+('/uploads/watches/11/photo2.webp', 'watch', 24),
+('/uploads/watches/11/photo3.webp', 'watch', 24),
+('/uploads/watches/11/photo4.webp', 'watch', 24),
+('/uploads/watches/11/photo5.webp', 'watch', 24),
+
+-- Montre 25 (5) : Cartier Santos (Test validation annonce)
+('/uploads/watches/5/photo1.webp', 'watch', 25),
+('/uploads/watches/5/photo2.webp', 'watch', 25),
+('/uploads/watches/5/photo3.webp', 'watch', 25),
+('/uploads/watches/5/photo4.webp', 'watch', 25),
+('/uploads/watches/5/photo5.webp', 'watch', 25);
+
 /*!40000 ALTER TABLE `photo` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `watch_has_cart`;
