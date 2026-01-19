@@ -1,17 +1,23 @@
 import api from "../../services/api";
 import "./EditUsersRoles.css";
+import UserInfosPopup from "../UserInfosPopup/UserInfosPopup";
 import { useEffect, useCallback, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 
 interface User {
   id: number;
+  firstname: string;
+  lastname: string;
   email: string;
   role: string;
+  birthdate: string;
+  tel: string;
 }
 
 const AdminPage = () => {
   const { user: currentUser, loading: authLoading } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const fetchUsers = useCallback(async () => {
     try {
       const res = await api.get("/api/users");
@@ -60,18 +66,32 @@ const AdminPage = () => {
             <th>Id</th>
             <th>Email</th>
             <th>Rôle</th>
-            <th>Suppression</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {users.map((u) => (
-            <tr key={u.id}>
+            <tr
+              key={u.id}
+              onClick={() => setSelectedUser(u)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") setSelectedUser(u);
+              }}
+            >
               <td>{u.id}</td>
               <td>{u.email}</td>
               <td>
                 <select
                   value={u.role}
-                  onChange={(e) => handleRoleChange(u.id, e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
+                  onKeyDown={(e) => {
+                    e.key === "Enter";
+                  }}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    handleRoleChange(u.id, e.target.value);
+                  }}
+                  disabled={currentUser?.id === u.id}
                 >
                   <option value="user">User</option>
                   <option value="admin">Admin</option>
@@ -81,7 +101,10 @@ const AdminPage = () => {
                 <button
                   className="delete-btn"
                   type="button"
-                  onClick={() => handleDeleteUser(u.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteUser(u.id);
+                  }}
                   disabled={currentUser?.id === u.id}
                 >
                   {currentUser?.id === u.id ? "Moi" : "Supprimer"}
@@ -91,6 +114,13 @@ const AdminPage = () => {
           ))}
         </tbody>
       </table>
+
+      {selectedUser && (
+        <UserInfosPopup
+          user={selectedUser}
+          onClose={() => setSelectedUser(null)}
+        />
+      )}
     </div>
   );
 };

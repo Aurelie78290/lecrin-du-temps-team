@@ -30,6 +30,7 @@
 
 .users-table tr:hover {
   background-color: var(--bonus-color);
+  cursor: pointer;
 }
 
 select {
