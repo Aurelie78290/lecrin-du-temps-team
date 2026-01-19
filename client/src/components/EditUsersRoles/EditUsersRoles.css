@@ -1,0 +1,49 @@
+.edit-users-control {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  color: var(--background-color);
+  border-color: 1px solid var(--border-color);
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  border-color: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.users-table th,
+.users-table td {
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.users-table th {
+  background-color: var(--border-color);
+  text-transform: uppercase;
+}
+
+.users-table tr:hover {
+  background-color: var(--bonus-color);
+}
+
+select {
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+}
+
+.delete-btn {
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bonus-color);
+  color: var(--secondary-color);
+  cursor: pointer;
+}

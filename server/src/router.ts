@@ -160,4 +160,13 @@ router.get("/api/lookups/movement-types", lookupsActions.movementTypes);
 router.get("/api/lookups/functions", lookupsActions.functionsList);
 router.get("/api/lookups/certificates", lookupsActions.certificates);
 
+/* ************************************************************************* */
+// Define the table to editUserRole route
+
+import editUsersActions from "./modules/editUsers/editUsersActions";
+
+router.get("/api/users", editUsersActions.browse);
+router.put("/api/users/:id/role", editUsersActions.update);
+router.delete("/api/users", editUsersActions.destroy);
+
 export default router;

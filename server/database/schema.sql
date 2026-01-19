@@ -580,7 +580,9 @@ VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisber
 ('Jean', 'Dubois', '1980-01-01', 'cutsomer', 'jean.dubois@gmail.com','customer', "Collectionneur de montre", '2025-09-01 08:30:00', ''),
 ('Jo', 'M', '', '', 'jo@admin.fr','admin', "", '2025-09-01 08:30:00', '$2b$10$/frmOJpVIVEXPQWCdjYFmuvtazIuFs43.IvYJNC/RFZWJPXjFhBau'),
 ('Aurélie', 'DUMOTIER', '', '', 'aurelie@test.com', 'admin', '', '', '$2b$10$abe.6Swei6O1Rw44IzG.a.HzJZ.oY37bhF5/OfreONKXnnAOWaT.W'),
-('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenariats', 'debasromain@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.", '', '$2b$10$3.bsPn7LlURcw2rtM2DUrOZsOWzsIGL86JnNXy21rnyam2q/XrvHK');
+('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenariats', 'debasromain@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.", '', '$2b$10$3.bsPn7LlURcw2rtM2DUrOZsOWzsIGL86JnNXy21rnyam2q/XrvHK'),
+('User', 'Todelete', '', '', 'testdelete@test.com', 'user', '', '', '$2b$10$7AR5Ntccmsv1HVJ4x4LB/OYBfZJOEThsVcWdyC2ltPFLHGbS/v3Zm'),
+('User', 'Toadmin', '', '', 'test4@test.com', 'user', '', '', '$2b$10$2SZrItauGHOPUnGBlZq8MOSotSiyGTfzIKU.d5fRYdO8JT3u8BYXK');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
