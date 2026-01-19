@@ -143,7 +143,7 @@ import pendingAddActions from "./modules/pendingAdd/pendingAddActions";
 router.get("/api/pendingAdd", pendingAddActions.browse);
 router.get("/api/nbPendingAdd", pendingAddActions.browseNb);
 router.get("/api/pendingAdd/:id", pendingAddActions.read);
-router.put("/api/pendingAdd/:id", pendingAddActions.edit);
+router.put("/api/pendingAddSell/:id", pendingAddActions.edit);
 
 /* ************************************************************************* */
 import lookupsActions from "./modules/lookup/lookUpActions";

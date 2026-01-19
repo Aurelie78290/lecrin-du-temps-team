@@ -113,8 +113,8 @@ class pendingAdd {
   async update(watch: Partial<WatchDetails>) {
     // Execute the SQL UPDATE query to update an existing sell_status in the "watch" table
     const [result] = await databaseClient.query<Result>(
-      "update watch set watch_sell_status = ?",
-      [watch.watch_sell_status],
+      "UPDATE watch SET watch_sell_status = ? WHERE idwatch = ?",
+      [watch.watch_sell_status, watch.idwatch],
     );
 
     // Return how many rows were affected

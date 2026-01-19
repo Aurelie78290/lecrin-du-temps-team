@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import WatchDetails from "../../pages/WatchDetails/WatchDetails";
 
 import "./ClassifiedAdDetails.css";
+import ToggleValidateAdd from "../ToggleValidateAdd/ToggleValidateAdd";
 
 type PendingAddsI = {
   idwatch: number;
@@ -14,18 +15,27 @@ function ClassifiedAdDetails() {
   const [pendingAdds, setPendingAdds] = useState<PendingAddsI[]>([]);
   const [selectedWatchId, setSelectedWatchId] = useState<number | null>(null);
 
-  useEffect(() => {
+  const refreshList = useCallback(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/pendingAdd`)
       .then((response) => response.json())
       .then((data: PendingAddsI[]) => {
         setPendingAdds(data);
 
-        // 1. Si la liste n'est pas vide, on sélectionne la première montre par défaut
-        if (data.length > 0) {
+        if (
+          !data.find((w) => w.idwatch === selectedWatchId) &&
+          data.length > 0
+        ) {
           setSelectedWatchId(data[0].idwatch);
+        } else if (data.length === 0) {
+          setSelectedWatchId(null);
         }
+        // 1. Si la liste n'est pas vide, on sélectionne la première montre par défaut
       });
-  }, []);
+  }, [selectedWatchId]);
+
+  useEffect(() => {
+    refreshList();
+  }, [refreshList]);
 
   return (
     <div className="ClassifiedAdDetails-Conteneur">
@@ -50,6 +60,7 @@ function ClassifiedAdDetails() {
         )}
       </aside>
       <main>
+        <ToggleValidateAdd idwatch={selectedWatchId} onSuccess={refreshList} />
         {selectedWatchId ? (
           <WatchDetails idwatch={selectedWatchId} isReadOnly={true} />
         ) : (
