@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 import WatchDetails from "../../pages/WatchDetails/WatchDetails";
 
+import "./ClassifiedAdDetails.css";
+
 type PendingAddsI = {
   idwatch: number;
   brand: string;
@@ -26,9 +28,8 @@ function ClassifiedAdDetails() {
   }, []);
 
   return (
-    <div>
-      <h2> ClassifiedAdDetails</h2>
-      <aside>
+    <div className="ClassifiedAdDetails-Conteneur">
+      <aside className="ClassifiedAdDetails-aside">
         <p className="DashboardPendingAdd-title"> Annonces à valider</p>
         {pendingAdds.length === 0 ? (
           <p>Pas d'annonces à valider</p>
