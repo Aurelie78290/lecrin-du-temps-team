@@ -4,7 +4,7 @@ import type { ResultSetHeader } from "mysql2";
 class EditUsersRole {
   async readAll() {
     const [rows] = await databaseClient.query(
-      "SELECT iduser AS id, e_mail AS email, user_role AS role FROM user",
+      "SELECT iduser AS id, firstname, lastname, e_mail AS email, user_role AS role, birthdate, tel FROM user",
     );
     return rows;
   }
