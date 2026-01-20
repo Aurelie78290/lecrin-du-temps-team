@@ -28,9 +28,12 @@
   text-transform: uppercase;
 }
 
-.users-table tr:hover {
-  background-color: var(--bonus-color);
-  cursor: pointer;
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  min-width: 340px;
 }
 
 select {
@@ -40,11 +43,27 @@ select {
   cursor: pointer;
 }
 
+.infos-btn,
 .delete-btn {
-  padding: 6px;
+  width: 160px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  padding: 0 10px;
   border-radius: 5px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.infos-btn {
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+}
+
+.delete-btn {
   border: 1px solid var(--border-color);
   background-color: var(--bonus-color);
   color: var(--secondary-color);
-  cursor: pointer;
 }

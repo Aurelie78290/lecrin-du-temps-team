@@ -14,7 +14,7 @@ interface User {
   tel: string;
 }
 
-const AdminPage = () => {
+const UserManagement = () => {
   const { user: currentUser, loading: authLoading } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -59,7 +59,7 @@ const AdminPage = () => {
 
   return (
     <div className="edit-users-control">
-      <h1>Gestion des rôles utilisateur</h1>
+      <h1>Gestion des utilisateurs</h1>
       <table className="users-table">
         <thead>
           <tr>
@@ -71,13 +71,7 @@ const AdminPage = () => {
         </thead>
         <tbody>
           {users.map((u) => (
-            <tr
-              key={u.id}
-              onClick={() => setSelectedUser(u)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") setSelectedUser(u);
-              }}
-            >
+            <tr key={u.id}>
               <td>{u.id}</td>
               <td>{u.email}</td>
               <td>
@@ -97,7 +91,14 @@ const AdminPage = () => {
                   <option value="admin">Admin</option>
                 </select>
               </td>
-              <td>
+              <td className="actions">
+                <button
+                  type="button"
+                  className="infos-btn"
+                  onClick={() => setSelectedUser(u)}
+                >
+                  Voir les informations
+                </button>
                 <button
                   className="delete-btn"
                   type="button"
@@ -125,4 +126,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default UserManagement;
