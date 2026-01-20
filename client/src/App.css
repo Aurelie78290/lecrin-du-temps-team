@@ -75,6 +75,14 @@ p {
 .app-layout.no-sidebar .main-content {
   margin-left: 0;
 }
+
+.basket-icon-container {
+  position: fixed;
+  top: 1.5rem;
+  right: 4rem;
+  z-index: 100; /* pour être au-dessus du contenu */
+}
+
 /* =========================
    MOBILE
    ========================= */
