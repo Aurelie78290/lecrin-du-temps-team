@@ -1,5 +1,15 @@
 import "./UserInfosPopup.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import api from "../../services/api";
+
+interface Watch {
+  idwatch: number;
+  brand: string;
+  model: string;
+  watch_price: number | null;
+  watch_condition: string | null;
+  photo_url: string | null;
+}
 
 interface User {
   id: number;
@@ -18,11 +28,27 @@ interface UserInfosPopupProps {
 
 const UserInfosPopup = ({ user, onClose }: UserInfosPopupProps) => {
   const [view, setView] = useState<"infos" | "collection">("infos");
+  const [watches, setWatches] = useState<Watch[]>([]);
+  const [loading, setLoading] = useState(false);
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Escape" || e.key === "Enter") {
       onClose();
     }
   };
+
+  useEffect(() => {
+    if (view === "collection") {
+      setLoading(true);
+      api
+        .get(`/api/admin/users/${user.id}/watches`)
+        .then((res) => setWatches(res.data))
+        .catch((err) =>
+          console.error("Erreur lors du chargement de la collection:", err),
+        )
+        .finally(() => setLoading(false));
+    }
+  }, [view, user.id]);
+
   return (
     <div
       className="popup-overlay"
@@ -107,9 +133,42 @@ const UserInfosPopup = ({ user, onClose }: UserInfosPopupProps) => {
             >
               Retour
             </button>
-            <div className="collection-content">
-              <p>Collection de {user.firstname}</p>
-            </div>
+            {loading ? (
+              <p>Chargement de la collection...</p>
+            ) : (
+              <div className="collection-container">
+                <h3 className="collection-owner">
+                  Collection de {user.firstname}
+                </h3>
+                <div className="collection-list">
+                  {watches.length > 0 ? (
+                    watches.map((w) => (
+                      <div key={w.idwatch} className="watch-items">
+                        <div className="watch-img">
+                          <img
+                            src={
+                              w.photo_url
+                                ? `${import.meta.env.VITE_API_URL}${w.photo_url}`
+                                : "/placeholder-watch.png"
+                            }
+                            alt={w.model}
+                          />
+                        </div>
+                        <div className="watch-details">
+                          <span className="watch-brand">{w.brand}</span>
+                          <span className="watch-model">{w.model}</span>
+                          <span className="watch-price">
+                            {w.watch_price ? `${w.watch_price}€` : "Prix "}
+                          </span>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p>Cet utilisateur n'a pas encore de montre.</p>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
