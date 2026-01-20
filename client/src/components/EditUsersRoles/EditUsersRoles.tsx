@@ -108,7 +108,7 @@ const UserManagement = () => {
                   }}
                   disabled={currentUser?.id === u.id}
                 >
-                  {currentUser?.id === u.id ? "Moi" : "Supprimer"}
+                  {currentUser?.id === u.id ? "X" : "Supprimer"}
                 </button>
               </td>
             </tr>

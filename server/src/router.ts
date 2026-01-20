@@ -89,6 +89,8 @@ router.put(
 );
 router.get("/api/collection/stats", isAuth, watchActions.getCollectionStats);
 
+router.get("/api/admin/users/:id/watches", watchActions.browseForAdmin);
+
 /* ************************************************************************* */
 
 // Define articles-related routes
