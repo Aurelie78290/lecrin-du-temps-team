@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
 import "./Navbar.css";
 
 import home from "../../assets/images/home.svg";
@@ -28,6 +29,7 @@ function Navbar({
   const isActive = (path: string) => {
     return location.pathname === path;
   };
+  const { user } = useAuth();
   return (
     <div>
       <button
@@ -51,7 +53,10 @@ function Navbar({
         {/* Menu principal */}
         <ul className="menu">
           <li className={isActive("/") ? "active" : ""}>
-            <Link to="/" onClick={() => setExpanded(false)}>
+            <Link
+              to={user?.role === "admin" ? "/dashboard" : "/Accueil"}
+              onClick={() => setExpanded(false)}
+            >
               <div className="icon-wrapper">
                 <img src={home} alt="" />
               </div>

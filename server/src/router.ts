@@ -87,6 +87,7 @@ router.put(
   ]),
   watchActions.update,
 );
+router.get("/api/collection/stats", isAuth, watchActions.getCollectionStats);
 
 /* ************************************************************************* */
 
