@@ -72,7 +72,7 @@ const login: RequestHandler = async (req, res, next) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 3600000, // pour 1h //
+      maxAge: 3600000 * 10, // pour 1h //
     });
 
     // Renvoi des infos au front //

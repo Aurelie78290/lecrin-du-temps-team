@@ -1,9 +1,9 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
 interface ProtectedRoutesProps {
-  children: React.ReactNode; // Représente la page protegée //
-  roleRequired?: string; // Pour précisé si un rôle est nécéssaire //
+  children?: React.ReactNode; // ← Optionnel maintenant
+  roleRequired?: string;
 }
 
 const ProtectedRoutes = ({ children, roleRequired }: ProtectedRoutesProps) => {
@@ -12,13 +12,16 @@ const ProtectedRoutes = ({ children, roleRequired }: ProtectedRoutesProps) => {
   if (loading) return <div>Chargement</div>;
 
   if (!user) {
-    return <Navigate to="/" />;
+    return <Navigate to="/" replace />;
   }
 
   if (roleRequired && user.role !== roleRequired) {
-    return <Navigate to="/" />; // si user pas admin alors redirigé. //
+    return <Navigate to="/" replace />;
   }
-  return children;
+
+  // Si children fourni → ancien pattern
+  // Sinon → layout route avec Outlet
+  return children ? <>{children}</> : <Outlet />;
 };
 
 export default ProtectedRoutes;
