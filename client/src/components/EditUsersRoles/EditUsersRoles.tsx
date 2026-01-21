@@ -80,7 +80,7 @@ const UserManagement = () => {
                   value={u.role}
                   onClick={(e) => e.stopPropagation()}
                   onKeyDown={(e) => {
-                    e.key === "Enter";
+                    if (e.key === "Enter") e.currentTarget.blur();
                   }}
                   onChange={(e) => {
                     e.stopPropagation();
