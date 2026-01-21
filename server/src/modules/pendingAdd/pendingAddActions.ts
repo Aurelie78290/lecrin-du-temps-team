@@ -41,8 +41,8 @@ const edit: RequestHandler = async (req, res, next) => {
   try {
     // Update a specific review based on the provided ID
     const pendingAdd = {
-      idwatch: Number(req.body.idwatch),
-      watch_sell_status: String(req.body.status),
+      idwatch: Number(req.params.id),
+      watch_sell_status: String(req.body.watch_sell_status),
     };
 
     const affectedRows = await pendingAddRepository.update(pendingAdd);
