@@ -14,11 +14,11 @@ function ClassifiedAdStatus({ updateTrigger }: { updateTrigger: number }) {
   const statusOrder = ["En vente", "A valider", "Refusée"];
 
   useEffect(() => {
-    console.log("Actualisation des stats, déclencheur n° :", updateTrigger);
     fetch(`${import.meta.env.VITE_API_URL}/api/nbpendingAdd`)
       .then((response) => response.json())
       .then((data: adStatusI[]) => {
         setAdStatus(data);
+        console.log("nombre de passe pour le refresh :", updateTrigger);
       });
   }, [updateTrigger]);
 

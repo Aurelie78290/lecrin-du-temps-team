@@ -76,6 +76,9 @@ class pendingAdd {
         m.name AS model,
         w.watch_price,
         w.watch_condition,
+        u.e_mail,
+        u.firstname,
+        u.lastname,
         (
           SELECT url
           FROM photo
@@ -86,15 +89,16 @@ class pendingAdd {
       FROM watch w
       JOIN brand b ON b.id = w.brand_id
       JOIN model m ON m.id = w.model_id
+      JOIN user u ON u.iduser = w.user_id
       WHERE w.watch_sell_status = 'A valider';
     `,
     );
 
     return rows as WatchListItem[];
   }
-  // =================================
+  // ============================================================================================
   // R - Read Number of type of Ad (compte les nombre d'annonces à valider, Validées et refusées)
-  // =================================
+  // ============================================================================================
   async readNbAd() {
     const [rows] = await databaseClient.query<Rows>(
       `SELECT 
@@ -107,6 +111,7 @@ class pendingAdd {
 
     return rows as WatchListItem[];
   }
+
   // ====================================
   // U - Up date (Maj du status de vente)
   // ====================================

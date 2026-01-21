@@ -1147,25 +1147,33 @@ INSERT INTO watch (
 (1, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'En vente', 1350,
 1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1),
 
--- 21 Longines HydroConquest (brand_id=22, model_id=187) Model test pour la validation des annonces
-(1, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'A valider', 3,
+-- 21 Longines HydroConquest (brand_id=22, model_id=187) Model test pour la validation des annonces -> Joachim
+(2, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'A valider', 3,
 1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1),
 
--- 22 IWC Pilot Mark XX (brand_id=11, model_id=131) Model test pour la validation des annonces
+-- 22 IWC Pilot Mark XX (brand_id=11, model_id=131) Model test pour la validation des annonces -> Anaïs
 (1, 11, 131, 3283, '2023-01-01', 0, NULL, 'Homme', 'A valider', 6,
 1, 40, 11, 10, 'Noir', 1, 2, 2, 'Brun', 2, 20, 'Excellent état', 1, '32111', 1, 120, 4, 21, 1, 1, 1),
 
--- 23 Cartier Tank Must (brand_id=10, model_id=116) Model test pour la validation des annonces
-(1, 10, 116, 9992, '2022-01-01', 0, NULL, 'Unisexe', 'A valider', 9,
+-- 23 Cartier Tank Must (brand_id=10, model_id=116) Model test pour la validation des annonces -> Aurélie
+(3, 10, 116, 9992, '2022-01-01', 0, NULL, 'Unisexe', 'A valider', 9,
 1, 34, 7, 3, 'Argent', 3, 3, 2, 'Noir', 2, 19, 'Très bon état', 3, 'Quartz Cartier', 1, NULL, NULL, NULL, 1, 1, 1),
 
--- 24 TAG Heuer Carrera Chronograph (brand_id=15, model_id=153) Model test pour la validation des annonces
-(1, 15, 153, 2010, '2021-01-01', 0, NULL, 'Homme', 'Refusée', 4650,
+-- 24 TAG Heuer Carrera Chronograph (brand_id=15, model_id=153) Model test pour la validation des annonces -> Joachim
+(2, 15, 153, 2010, '2021-01-01', 0, NULL, 'Homme', 'Refusée', 4650,
 1, 42, 14, 10, 'Bleu', 2, 1, 1, 'Acier', 1, 22, 'Très bon état', 1, 'Heuer 02', 2, 80, 4, 33, 1, 1, 1),
 
--- 25 Cartier Santos (brand_id=10, model_id=109) Model test pour la validation des annonces
-(1, 10, 109, 4848, '2023-01-01', 0, NULL, 'Unisexe', '', 6250,
-1, 35, 9, 10, 'Argent', 1, 3, 1, 'Acier', 1, 18, 'Excellent état', 1, '1847 MC', 1, 42, 4, 23, 1, 1, 1);
+-- 25 Cartier Santos (brand_id=10, model_id=109) Model test pour la validation des annonces -> Joachim
+(2, 10, 109, 4848, '2023-01-01', 0, NULL, 'Unisexe', '', 6250,
+1, 35, 9, 10, 'Argent', 1, 3, 1, 'Acier', 1, 18, 'Excellent état', 1, '1847 MC', 1, 42, 4, 23, 1, 1, 1),
+
+-- 26 Tudor Black Bay (brand_id=23, model_id=194) Model test pour la validation des annonces -> Romain
+(10, 23, 194, 7941, '2023-01-01', 0, NULL, 'Homme', 'A valider', 3850,
+1, 41, 14, 20, 'Bordeaux', 2, 1, 1, 'Acier', 1, 21, 'Excellent état', 1, 'MT5602', 1, 70, 4, 25, 1, 1, 1),
+
+-- 27 Omega Seamaster Diver 300M (brand_id=9, model_id=99) Model test pour la validation des annonces -> Joachim
+(2, 9, 99, 21042, '2022-01-01', 0, NULL, 'Homme', 'A valider', 4650,
+1, 42, 14, 30, 'Noir', 2, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, '8800', 1, 55, 3, 35, 1, 1, 1);
 UNLOCK TABLES;
 
 
@@ -1346,7 +1354,21 @@ INSERT INTO photo (url, type, watch_id) VALUES
 ('/uploads/watches/5/photo2.webp', 'watch', 25),
 ('/uploads/watches/5/photo3.webp', 'watch', 25),
 ('/uploads/watches/5/photo4.webp', 'watch', 25),
-('/uploads/watches/5/photo5.webp', 'watch', 25);
+('/uploads/watches/5/photo5.webp', 'watch', 25),
+
+-- Montre 26 (10) : Tudor Black Bay 41 (Test validation annonce)
+('/uploads/watches/10/photo1.webp', 'watch', 26),
+('/uploads/watches/10/photo2.webp', 'watch', 26),
+('/uploads/watches/10/photo3.webp', 'watch', 26),
+('/uploads/watches/10/photo4.webp', 'watch', 26),
+('/uploads/watches/10/photo5.webp', 'watch', 26),
+
+-- Montre 27 (4) : Omega Seamaster (Test validation annonce)
+('/uploads/watches/4/photo1.webp', 'watch', 27),
+('/uploads/watches/4/photo2.webp', 'watch', 27),
+('/uploads/watches/4/photo3.webp', 'watch', 27),
+('/uploads/watches/4/photo4.webp', 'watch', 27),
+('/uploads/watches/4/photo5.webp', 'watch', 27);
 
 /*!40000 ALTER TABLE `photo` ENABLE KEYS */;
 
