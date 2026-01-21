@@ -76,6 +76,7 @@ const UserManagement = () => {
               <td>{u.email}</td>
               <td>
                 <select
+                  className="select-btn"
                   value={u.role}
                   onClick={(e) => e.stopPropagation()}
                   onKeyDown={(e) => {
