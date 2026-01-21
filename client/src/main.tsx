@@ -29,6 +29,7 @@ import UserProfil from "./pages/UserProfil/UserProfil";
 // import UserProfil from "./pages/UserProfil/UserProfil";
 import WatchDetails from "./pages/WatchDetails/WatchDetails";
 import WatchEdit from "./pages/WatchEdit/WatchEdit";
+import UserDashboard from "./pages/UserDashboard/UserDashboard";
 // import Collection from "./pages/Collection/Collection";
 
 // Import additional components for new routes
@@ -51,100 +52,103 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/Hub",
-        element: <Hub />,
+        element: <ProtectedRoutes />,
+        children: [
+          {
+            path: "/Hub",
+            element: <Hub />,
+          },
+          {
+            path: "/Collection",
+            element: <CollectionWatchIndex />,
+          },
+          {
+            path: "/CollectionWathIndex/:id",
+            element: <CollectionWatchIndex />,
+          },
+          {
+            path: "/Shop",
+            element: <Shop />,
+          },
+          {
+            path: "/ShopWatchIndex/:id",
+            element: <ShopWatchIndex />,
+          },
+          {
+            path: "/ShopBasket",
+            element: <ShopBasket />,
+          },
+          {
+            path: "/ShopPayment",
+            element: <ShopPayment />,
+          },
+          {
+            path: "/News",
+            element: <News />,
+          },
+          {
+            path: "/NewsDetails/:id",
+            element: <NewsDetails />,
+          },
+          {
+            path: "/Contact",
+            element: <Contact />,
+          },
+          {
+            path: "/About",
+            element: <About />,
+          },
+          {
+            path: "/Faq",
+            element: <Faq />,
+          },
+          {
+            path: "/UserProfil",
+            element: <UserProfil />,
+          },
+          {
+            path: "*",
+            element: <Error404 />,
+          },
+          {
+            path: "/Shop/:id",
+            element: <WatchDetails />,
+          },
+          {
+            path: "/Collection/:id",
+            element: <WatchDetails />,
+          },
+          {
+            path: "/watches/:id/edit",
+            element: <WatchEdit />,
+          },
+
+          {
+            path: "/LegalNotices",
+            element: <LegalNotices />,
+          },
+          {
+            path: "/Cgu",
+            element: <Cgu />,
+          },
+          {
+            path: "/Accueil",
+            element: <UserDashboard />,
+          },
+        ],
       },
       {
-        path: "/Collection",
-        element: <CollectionWatchIndex />,
-      },
-      {
-        path: "/CollectionWathIndex/:id",
-        element: <CollectionWatchIndex />,
-      },
-      {
-        path: "/Shop",
-        element: <Shop />,
-      },
-      {
-        path: "/ShopWatchIndex/:id",
-        element: <ShopWatchIndex />,
-      },
-      {
-        path: "/ShopBasket",
-        element: <ShopBasket />,
-      },
-      {
-        path: "/ShopPayment",
-        element: <ShopPayment />,
-      },
-      {
-        path: "/News",
-        element: <News />,
-      },
-      {
-        path: "/NewsDetails/:id",
-        element: <NewsDetails />,
-      },
-      {
-        path: "/Contact",
-        element: <Contact />,
-      },
-      {
-        path: "/About",
-        element: <About />,
-      },
-      {
-        path: "/Faq",
-        element: <Faq />,
-      },
-      {
-        path: "/UserProfil",
-        element /* Ajout d'une protection, il faut être connecté */: (
-          <ProtectedRoutes>
-            <UserProfil />
-          </ProtectedRoutes>
-        ),
-      },
-      {
-        path: "/ClassifiedAd",
-        element /* Ajout d'une protection, il faut être connecté */: (
-          <ProtectedRoutes>
-            <ClassifiedAd />
-          </ProtectedRoutes>
-        ),
-      },
-      {
-        path: "*",
-        element: <Error404 />,
-      },
-      {
-        path: "/Shop/:id",
-        element: <WatchDetails />,
-      },
-      {
-        path: "/Collection/:id",
-        element: <WatchDetails />,
-      },
-      {
-        path: "/watches/:id/edit",
-        element: <WatchEdit />,
-      },
-      {
-        path: "/Dashboard",
-        element /* Ajout d'une protection stricte, pour les admins only*/: (
-          <ProtectedRoutes roleRequired="admin">
-            <Dashboard />
-          </ProtectedRoutes>
-        ),
-      },
-      {
-        path: "/LegalNotices",
-        element: <LegalNotices />,
-      },
-      {
-        path: "/Cgu",
-        element: <Cgu />,
+        element: <ProtectedRoutes roleRequired="admin" />,
+        children: [
+          {
+            path: "/Dashboard",
+            element: <Dashboard />,
+          },
+          {
+            path: "/ClassifiedAd",
+            element: <ClassifiedAd />,
+          },
+        ],
       },
     ],
   },

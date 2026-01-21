@@ -26,7 +26,7 @@ const LoginSignUp = () => {
           password: formData.password,
         });
         login(res.data); // pour stocker le user dans le context //
-        navigate(res.data.role === "admin" ? "/dashboard" : "/user-profil");
+        navigate(res.data.role === "admin" ? "/dashboard" : "/Accueil");
       } else {
         //SignUp //
         await api.post("/api/users", formData);

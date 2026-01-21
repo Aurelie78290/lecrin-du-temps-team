@@ -1,0 +1,13 @@
+.lastwatch__main {
+  display: flex;
+  flex-direction: column;
+  border: solid 1px var(--secondary-color);
+  border-radius: 10px;
+  padding: 0.2rem 1rem;
+}
+
+.lastwatch__content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

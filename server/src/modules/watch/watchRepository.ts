@@ -114,13 +114,31 @@ class WatchRepository {
   async addToCollection(userId: number, watchId: number) {
     await databaseClient.query(
       `
-    INSERT INTO user_has_watch (user_id, watch_id)
-    VALUES (?, ?)
+    INSERT INTO user_has_watch (user_id, watch_id, added_at)
+    VALUES (?, ?, NOW())
     ON DUPLICATE KEY UPDATE user_id = user_id
     `,
       [userId, watchId],
     );
   }
+
+  // Récupère les données pour le graphique (valeur cumulée)
+async getCollectionValueOverTime(userId: number) {
+  const [rows] = await databaseClient.query(
+    `
+    SELECT 
+      DATE(uhw.added_at) as date,
+      SUM(w.watch_price) OVER (ORDER BY uhw.added_at) as cumulative_value
+    FROM user_has_watch uhw
+    JOIN watch w ON w.idwatch = uhw.watch_id
+    WHERE uhw.user_id = ?
+      AND w.watch_price IS NOT NULL
+    ORDER BY uhw.added_at
+    `,
+    [userId],
+  );
+  return rows;
+}
   // ======================
   // R - Read one (DETAILS)
   // ======================

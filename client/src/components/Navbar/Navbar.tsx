@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
 import "./Navbar.css";
 
 import home from "../../assets/images/home.svg";
@@ -14,6 +15,7 @@ import person from "../../assets/images/icon/person.svg";
 import tiktok from "../../assets/images/icon/tiktok.svg";
 import watch from "../../assets/images/icon/watch.svg";
 import logo from "../../assets/images/logo.svg";
+import annonce from "../../assets/images/icon/Annonces.svg";
 import ThemeChange from "../ThemeChange/ThemeChange";
 
 function Navbar({
@@ -28,6 +30,7 @@ function Navbar({
   const isActive = (path: string) => {
     return location.pathname === path;
   };
+  const { user } = useAuth();
   return (
     <div>
       <button
@@ -51,7 +54,10 @@ function Navbar({
         {/* Menu principal */}
         <ul className="menu">
           <li className={isActive("/") ? "active" : ""}>
-            <Link to="/" onClick={() => setExpanded(false)}>
+            <Link
+              to={user?.role === "admin" ? "/dashboard" : "/Accueil"}
+              onClick={() => setExpanded(false)}
+            >
               <div className="icon-wrapper">
                 <img src={home} alt="" />
               </div>
@@ -59,12 +65,21 @@ function Navbar({
             </Link>
           </li>
           <li className={isActive("/Collection") ? "active" : ""}>
-            <Link to="/Collection" onClick={() => setExpanded(false)}>
-              <div className="icon-wrapper">
-                <img src={watch} alt="" />
-              </div>
-              <span>Collection</span>
-            </Link>
+            {user?.role === "admin" ? (
+              <Link to="/ClassifiedAd" onClick={() => setExpanded(false)}>
+                <div className="icon-wrapper">
+                  <img src={annonce} alt="" />
+                </div>
+                <span>Annonces</span>
+              </Link>
+            ) : (
+              <Link to="/Collection" onClick={() => setExpanded(false)}>
+                <div className="icon-wrapper">
+                  <img src={watch} alt="" />
+                </div>
+                <span>Collection</span>
+              </Link>
+            )}
           </li>
           <li className={isActive("/Shop") ? "active" : ""}>
             <Link to="/Shop" onClick={() => setExpanded(false)}>

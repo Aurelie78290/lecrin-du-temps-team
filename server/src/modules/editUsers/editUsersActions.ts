@@ -1,0 +1,56 @@
+import editUsersRepository from "./editUsersRepository";
+import type { RequestHandler, Request } from "express";
+
+interface AuthRequest extends Request {
+  auth?: { id: number; role: string };
+}
+
+const browse: RequestHandler = async (req, res, next) => {
+  try {
+    const users = await editUsersRepository.readAll();
+    res.json(users);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const update: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { role } = req.body;
+
+    await editUsersRepository.updateRole(Number(id), role);
+    res.sendStatus(204);
+  } catch (err) {
+    res.status(500).send("Erreur lors de la mise a jour");
+    next(err);
+  }
+};
+
+const destroy: RequestHandler = async (req, res, next) => {
+  try {
+    const { idToDelete } = req.body;
+    const authReq = req as AuthRequest;
+    const userIdFromTken = authReq.auth?.id;
+
+    if (!idToDelete) {
+      res.status(400).send("ID de l'utilisateur manquant");
+      return;
+    }
+
+    if (Number(idToDelete) === userIdFromTken) {
+      res.status(403).send("Vous ne pouvez pas supprimer votre propre compte.");
+      return;
+    }
+    const result = await editUsersRepository.delete(Number(idToDelete));
+
+    if (result.affectedRows === 0) {
+      res.status(404).send("Utilisateur non trouvé");
+    }
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { browse, update, destroy };

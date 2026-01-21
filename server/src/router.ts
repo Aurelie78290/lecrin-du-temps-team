@@ -87,6 +87,9 @@ router.put(
   ]),
   watchActions.update,
 );
+router.get("/api/collection/stats", isAuth, watchActions.getCollectionStats);
+
+router.get("/api/admin/users/:id/watches", watchActions.browseForAdmin);
 
 /* ************************************************************************* */
 
@@ -159,5 +162,14 @@ router.get("/api/lookups/strap-materials", lookupsActions.strapMaterials);
 router.get("/api/lookups/movement-types", lookupsActions.movementTypes);
 router.get("/api/lookups/functions", lookupsActions.functionsList);
 router.get("/api/lookups/certificates", lookupsActions.certificates);
+
+/* ************************************************************************* */
+// Define the table to editUserRole route
+
+import editUsersActions from "./modules/editUsers/editUsersActions";
+
+router.get("/api/users", editUsersActions.browse);
+router.put("/api/users/:id/role", editUsersActions.update);
+router.delete("/api/users", editUsersActions.destroy);
 
 export default router;

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useMatch, useNavigate, useParams } from "react-router";
+import { useBasket } from "../../contexts/ShopContext";
 import "./WatchDetails.css";
 
 type WatchDetailsDTO = {
@@ -154,6 +155,8 @@ export default function WatchDetails({
   // 1. On récupère l'id de l'URL au cas où
   const { id } = useParams();
 
+  const { addToBasket } = useBasket();
+
   // 2. LA LOGIQUE DE DÉCISION :
   // Si idwatch (prop) existe, on l'utilise(issu de ClassifiedAdDetails.tsx). Sinon, on utilise id (URL).
   const effectiveId = idwatch || (id ? Number(id) : null);
@@ -260,6 +263,33 @@ export default function WatchDetails({
       </div>
     );
   }
+
+  // fonction pour ajouter la montre au panier
+  const handleBuy = () => {
+    if (!watch) return; // sécurité si watch pas encore chargé
+
+    // Vérifie que le prix existe
+    if (watch.watch_price == null) {
+      alert("Prix indisponible pour cette montre.");
+      return;
+    }
+
+    // Debug : voir dans la console ce qu'on ajoute
+    console.log("CLICK ACHETER", watch);
+
+    // Ajoute la montre au panier via le context
+    addToBasket({
+      idwatch: watch.idwatch,
+      brand: watch.brand,
+      model: watch.model,
+      price: watch.watch_price,
+      quantity: 1,
+    });
+
+    alert("Montre ajoutée au panier !");
+
+    navigate("/ShopBasket");
+  };
 
   return (
     <div className="watchdetails-page">
@@ -538,7 +568,9 @@ export default function WatchDetails({
                 type="button"
                 className="watchdetails-buy"
                 disabled={asNumberOrNull(watch.watch_price) == null}
-                onClick={() => console.log("Acheter", watch.idwatch)}
+                onClick={handleBuy}
+                // () =>
+                // console.log("Acheter", watch.idwatch)
               >
                 Acheter
               </button>

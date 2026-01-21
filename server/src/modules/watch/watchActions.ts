@@ -53,6 +53,21 @@ const browseCollection: RequestHandler = async (req, res, next) => {
   }
 };
 
+// Action pour récuperer les montres des users pour le tableau admin //
+const browseForAdmin: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.params.id);
+    if (Number.isNaN(userId)) {
+      res.sendStatus(400);
+      return;
+    }
+    const watches = await watchRepository.readAllCollection(userId);
+    res.json(watches);
+  } catch (err) {
+    next(err);
+  }
+};
+
 // =======================
 // R - Read (Read One)
 // =======================
@@ -126,6 +141,19 @@ const add: RequestHandler = async (req, res, next) => {
     }
 
     res.status(201).json({ insertId: watchId });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getCollectionStats: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = getUserIdOr401(req, res);
+    if (!userId) return;
+
+    const data = await watchRepository.getCollectionValueOverTime(userId);
+
+    res.json(data);
   } catch (err) {
     next(err);
   }
@@ -292,4 +320,6 @@ export default {
   browseShop,
   browseCollection,
   removeFromCollection,
+  getCollectionStats,
+  browseForAdmin,
 };
