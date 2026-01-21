@@ -6,8 +6,8 @@ import "./WatchCardAdd.css";
 // ============================================
 
 interface WatchCardAddProps {
-  onWatchAdded: () => void; // Callback appelé après ajout d'une montre
-  onPopupToggle: (openPopup: boolean) => void; // Callback pour informer le parent de l'état du popup
+  onWatchAdded: () => void;
+  onPopupToggle: (openPopup: boolean) => void;
 }
 
 type Brand = {
@@ -22,7 +22,7 @@ type Model = {
 };
 
 // ============================================
-// Tableaux
+// CONSTANTES
 // ============================================
 
 const WATCH_CONDITIONS = [
@@ -35,63 +35,59 @@ const WATCH_CONDITIONS = [
 ] as const;
 
 // ============================================
-// COMPOSANT PRINCIPAL
+// COMPOSANT
 // ============================================
 
 function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
   // --------------------------------------------
-  // États du formulaire
+  // États formulaire
   // --------------------------------------------
   const [brand, setBrand] = useState("");
   const [brandId, setBrandId] = useState<number | null>(null);
+
   const [model, setModel] = useState("");
   const [modelId, setModelId] = useState<number | null>(null);
+
   const [price, setPrice] = useState("");
   const [condition, setCondition] = useState("");
 
   // --------------------------------------------
-  // État du popup (ouvert/fermé)
+  // Popup
   // --------------------------------------------
   const [openPopup, setOpenPopup] = useState(false);
 
   // --------------------------------------------
-  // État pour les images
+  // Images
   // --------------------------------------------
   const [watchImage, setWatchImage] = useState<File | null>(null);
   const [watchImagePreview, setWatchImagePreview] = useState<string | null>(
     null,
   );
+
   const [certificateImage, setCertificateImage] = useState<File | null>(null);
   const [certificateImagePreview, setCertificateImagePreview] = useState<
     string | null
   >(null);
 
   // --------------------------------------------
-  // États pour l'autocomplétion
+  // Autocomplétion marques
   // --------------------------------------------
-  const [brands, setBrands] = useState<Brand[]>([]); // Liste complète des marques depuis l'API
+  const [brands, setBrands] = useState<Brand[]>([]);
   const [models, setModels] = useState<Model[]>([]);
-  const [showSuggestionsBrand, setShowSuggestionsBrand] = useState(false); // Affiche/cache la liste déroulante
-  const [showSuggestionsModel, setShowSuggestionsModel] = useState(false); // Affiche/cache la liste déroulante
-  const [highlightedIndex, setHighlightedIndex] = useState(0); // Index de l'élément surligné (navigation clavier)
+  const [showSuggestionsBrand, setShowSuggestionsBrand] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(0);
 
-  // Ref pour détecter les clics en dehors de l'autocomplétion
   const autocompleteBrandRef = useRef<HTMLDivElement>(null);
-  const autocompleteModelRef = useRef<HTMLDivElement>(null);
 
   // --------------------------------------------
-  // Configuration API
+  // API
   // --------------------------------------------
   const apiBaseUrl = import.meta.env.VITE_API_URL;
 
   // ============================================
-  // EFFETS (useEffect)
+  // EFFECTS
   // ============================================
 
-  /**
-   * Charge la liste des marques depuis l'API au montage du composant.
-   * Cette liste est utilisée pour l'autocomplétion.
-   */
   useEffect(() => {
     fetch(`${apiBaseUrl}/api/brands`)
       .then((res) => res.json())
@@ -104,44 +100,20 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
       .catch(console.error);
   }, []);
 
-  /**
-   * Bloque le scroll du body quand le popup est ouvert.
-   * - Ajoute overflow: hidden au body à l'ouverture
-   * - Le retire à la fermeture ou au démontage du composant
-   */
   useEffect(() => {
-    if (openPopup) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    // Cleanup : remet le scroll si le composant est démonté
+    document.body.style.overflow = openPopup ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [openPopup]);
 
-  /**
-   * Ferme la liste de suggestions quand on clique en dehors.
-   * - Ajoute un event listener sur "mousedown" au montage
-   * - Le retire au démontage (cleanup)
-   */
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      const target = event.target as Node;
-
-      const clickedOutsideBrand =
+      if (
         autocompleteBrandRef.current &&
-        !autocompleteBrandRef.current.contains(target);
-
-      const clickedOutsideModel =
-        autocompleteModelRef.current &&
-        !autocompleteModelRef.current.contains(target);
-
-      if (clickedOutsideBrand && clickedOutsideModel) {
+        !autocompleteBrandRef.current.contains(event.target as Node)
+      ) {
         setShowSuggestionsBrand(false);
-        setShowSuggestionsModel(false);
       }
     }
 
@@ -150,14 +122,9 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
   }, []);
 
   // ============================================
-  // LOGIQUE DE FILTRAGE
+  // FILTRAGE
   // ============================================
 
-  /**
-   * Filtre les marques selon ce que l'utilisateur tape.
-   * - startsWith : ne montre que les marques qui COMMENCENT par la saisie
-   * - Comparaison insensible à la casse (toLowerCase)
-   */
   const filteredBrands =
     brand.length >= 1
       ? brands.filter((b) =>
@@ -165,25 +132,14 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
         )
       : [];
 
-  const filteredModels =
-    model.length >= 1 && brandId
-      ? models.filter(
-          (m) =>
-            m.brand_id === brandId && // Filtre par marque sélectionnée
-            m.name.toLowerCase().startsWith(model.toLowerCase()),
-        )
-      : [];
+  const filteredModels = brandId
+    ? models.filter((m) => m.brand_id === brandId)
+    : [];
 
   // ============================================
-  // HANDLERS (gestionnaires d'événements)
+  // HANDLERS
   // ============================================
 
-  /**
-   * Sélectionne une marque dans la liste déroulante.
-   * - Remplit l'input avec le nom de la marque
-   * - Stocke l'ID pour l'envoi au backend
-   * - Ferme la liste de suggestions
-   */
   const handleSelectBrand = (selectedBrand: Brand) => {
     setBrand(selectedBrand.name);
     setBrandId(selectedBrand.id);
@@ -193,24 +149,7 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
     setModelId(null);
   };
 
-  const handleSelectModel = (selectedModel: Model) => {
-    setModel(selectedModel.name);
-    setModelId(selectedModel.id);
-    setShowSuggestionsModel(false);
-  };
-  console.info(modelId);
-
-  /**
-   * Gère la navigation au clavier dans la liste de suggestions.
-   * - ArrowDown : élément suivant
-   * - ArrowUp : élément précédent
-   * - Enter : sélectionne l'élément surligné
-   * - Escape : ferme la liste
-   */
-  /**
-   * Gère la navigation au clavier pour les MARQUES
-   */
-  const handleBrandKeyDown = (e: React.KeyboardEvent) => {
+  const handleBrandKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!showSuggestionsBrand || filteredBrands.length === 0) return;
 
     switch (e.key) {
@@ -236,143 +175,78 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
     }
   };
 
-  /**
-   * Gère la navigation au clavier pour les MODÈLES
-   */
-  const handleModelKeyDown = (e: React.KeyboardEvent) => {
-    if (!showSuggestionsModel || filteredModels.length === 0) return;
-
-    switch (e.key) {
-      case "ArrowDown":
-        e.preventDefault();
-        setHighlightedIndex((prev) =>
-          prev < filteredModels.length - 1 ? prev + 1 : 0,
-        );
-        break;
-      case "ArrowUp":
-        e.preventDefault();
-        setHighlightedIndex((prev) =>
-          prev > 0 ? prev - 1 : filteredModels.length - 1,
-        );
-        break;
-      case "Enter":
-        e.preventDefault();
-        handleSelectModel(filteredModels[highlightedIndex]);
-        break;
-      case "Escape":
-        setShowSuggestionsModel(false);
-        break;
-    }
-  };
-
-  /**
-   * Gère la sélection d'une image et crée une prévisualisation
-   */
   const handleImageChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     setImage: React.Dispatch<React.SetStateAction<File | null>>,
     setPreview: React.Dispatch<React.SetStateAction<string | null>>,
   ) => {
     const file = e.target.files?.[0];
+    if (!file) return;
 
-    if (file) {
-      setImage(file);
-      //Crée une URL temporaire pour la prévisualisation
-      const previewUrl = URL.createObjectURL(file);
-      setPreview(previewUrl);
-    }
+    setImage(file);
+    setPreview(URL.createObjectURL(file));
   };
 
-  /**
-   * Supprime une image sélectionnée
-   */
   const removeImage = (
     setImage: React.Dispatch<React.SetStateAction<File | null>>,
     setPreview: React.Dispatch<React.SetStateAction<string | null>>,
     preview: string | null,
   ) => {
     setImage(null);
-    if (preview) {
-      URL.revokeObjectURL(preview); //Libère la mémoire
-    }
+    if (preview) URL.revokeObjectURL(preview);
     setPreview(null);
   };
 
-  /**
-   * Ouvre le popup et informe le parent.
-   */
   const openingPopup = () => {
     setOpenPopup(true);
     onPopupToggle(true);
   };
 
-  /**
-   * Ferme le popup, reset tous les champs, et informe le parent.
-   */
   const closingPopup = () => {
-    // Ferme le popup
     setOpenPopup(false);
     onPopupToggle(false);
 
-    // Reset tous les champs du formulaire
     setBrand("");
     setBrandId(null);
     setModel("");
+    setModelId(null);
     setPrice("");
     setCondition("");
 
-    //reset les images et libère la mémoire
     if (watchImagePreview) URL.revokeObjectURL(watchImagePreview);
     if (certificateImagePreview) URL.revokeObjectURL(certificateImagePreview);
+
     setWatchImage(null);
     setWatchImagePreview(null);
     setCertificateImage(null);
     setCertificateImagePreview(null);
 
-    // Ferme les suggestions
     setShowSuggestionsBrand(false);
-    setShowSuggestionsModel(false);
   };
 
-  /**
-   * Soumission du formulaire.
-   * - Envoie les données au backend via POST avec FormData
-   * - Reset le formulaire en cas de succès
-   * - Ferme le popup
-   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const formData = new FormData();
-
     if (brandId) formData.append("brand_id", brandId.toString());
     if (modelId) formData.append("model_id", modelId.toString());
-    if (price) formData.append("watch_price", price);
-    if (condition) formData.append("watch_condition", condition);
+    formData.append("watch_price", price);
+    formData.append("watch_condition", condition);
 
     if (watchImage) formData.append("watch_image", watchImage);
     if (certificateImage)
       formData.append("certificate_image", certificateImage);
 
     try {
-      console.log("POST →", `${apiBaseUrl}/api/watches`);
-      for (const [k, v] of formData.entries()) {
-        console.log("FormData", k, v);
-      }
       const response = await fetch(`${apiBaseUrl}/api/watches`, {
         method: "POST",
-        credentials: "include", // ✅ ICI
+        credentials: "include",
         body: formData,
       });
 
-      const bodyText = await response.text().catch(() => "");
-
       if (!response.ok) {
-        throw new Error(bodyText || "Erreur lors de la création");
+        throw new Error(await response.text());
       }
-
-      const data = JSON.parse(bodyText) as { insertId: number };
-      console.log("Montre créée avec l'id:", data.insertId);
 
       onWatchAdded();
       closingPopup();
@@ -382,15 +256,11 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
   };
 
   // ============================================
-  // RENDU JSX
+  // JSX
   // ============================================
 
   return (
     <div className="watch-card-add">
-      {/* ----------------------------------------
-          BOUTON D'OUVERTURE DU POPUP
-          Visible uniquement quand le popup est fermé
-      ---------------------------------------- */}
       <div className="watch-card-add__trigger">
         {!openPopup && (
           <button type="button" onClick={openingPopup}>
@@ -399,13 +269,8 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
         )}
       </div>
 
-      {/* ----------------------------------------
-          POPUP / MODAL
-          Visible uniquement quand openPopup = true
-      ---------------------------------------- */}
       {openPopup && (
         <div className="watch-card-add__modal">
-          {/* Bouton de fermeture (X) */}
           <button
             type="button"
             className="watch-card-add__close-btn"
@@ -417,11 +282,8 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
           <div className="watch-card-add__content">
             <h2>Ajouter votre montre</h2>
 
-            {/* ----------------------------------------
-                FORMULAIRE
-            ---------------------------------------- */}
             <form onSubmit={handleSubmit} id="watch-adder">
-              {/* --- Champ Marque avec autocomplétion --- */}
+              {/* MARQUE */}
               <div className="autocomplete" ref={autocompleteBrandRef}>
                 <input
                   type="text"
@@ -429,9 +291,9 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
                   value={brand}
                   onChange={(e) => {
                     setBrand(e.target.value);
-                    setBrandId(null); // Reset l'ID si l'utilisateur modifie le texte
+                    setBrandId(null);
                     setShowSuggestionsBrand(true);
-                    setHighlightedIndex(0); // Remet la sélection au premier élément
+                    setHighlightedIndex(0);
                   }}
                   onFocus={() =>
                     brand.length >= 1 && setShowSuggestionsBrand(true)
@@ -440,11 +302,10 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
                   required
                 />
 
-                {/* Liste des suggestions (visible si showSuggestions = true ET il y a des résultats) */}
                 {showSuggestionsBrand && filteredBrands.length > 0 && (
                   <ul className="autocomplete__list">
                     {filteredBrands.map((b, index) => (
-                      <li key={b.id} className="autocomplete__item">
+                      <li key={b.id}>
                         <button
                           type="button"
                           onClick={() => handleSelectBrand(b)}
@@ -460,69 +321,33 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
                     ))}
                   </ul>
                 )}
-
-                {/* Message "Aucune marque trouvée" */}
-                {showSuggestionsBrand &&
-                  brand.length >= 1 &&
-                  filteredBrands.length === 0 && (
-                    <div className="autocomplete__no-results">
-                      Aucune marque trouvée
-                    </div>
-                  )}
               </div>
 
-              {/* --- Autres champs --- */}
-              <div className="autocomplete" ref={autocompleteModelRef}>
-                <input
-                  type="text"
-                  placeholder="Modèle"
-                  value={model}
+              {/* MODELE */}
+              <div className="autocomplete">
+                <select
+                  value={modelId ?? ""}
                   onChange={(e) => {
-                    setModel(e.target.value);
-                    setModelId(null); // Reset l'ID si l'utilisateur modifie le texte
-                    setShowSuggestionsModel(true);
-                    setHighlightedIndex(0);
-                  }} // Remet la sélection au premier élément
+                    const id = Number(e.target.value);
+                    const selected = models.find((m) => m.id === id);
+                    setModelId(id);
+                    setModel(selected?.name ?? "");
+                  }}
                   disabled={!brandId}
-                  onFocus={() =>
-                    model.length >= 1 && setShowSuggestionsModel(true)
-                  }
-                  onKeyDown={handleModelKeyDown}
                   required
-                />
+                >
+                  <option value="">
+                    {brandId
+                      ? "Sélectionnez un modèle"
+                      : "Choisissez d'abord une marque"}
+                  </option>
 
-                {/* Liste des suggestions (visible si showSuggestions = true ET il y a des résultats) */}
-                {showSuggestionsModel && filteredModels.length > 0 && (
-                  <ul className="autocomplete__list">
-                    {filteredModels.map((m, index) => (
-                      <li
-                        key={`model-${m.id}-${index}`}
-                        className="autocomplete__item"
-                      >
-                        <button
-                          type="button"
-                          onClick={() => handleSelectModel(m)}
-                          className={`autocomplete__option ${
-                            index === highlightedIndex
-                              ? "autocomplete__option--highlighted"
-                              : ""
-                          }`}
-                        >
-                          {m.name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {/* Message "Aucune marque trouvée" */}
-                {showSuggestionsModel &&
-                  model.length >= 1 &&
-                  filteredModels.length === 0 && (
-                    <div className="autocomplete__no-results">
-                      Aucun modèle trouvée
-                    </div>
-                  )}
+                  {filteredModels.map((m) => (
+                    <option key={m.id} value={m.id}>
+                      {m.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <input
@@ -540,51 +365,45 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
               >
                 <option value="">Sélectionnez un état</option>
                 {WATCH_CONDITIONS.map((cond) => (
-                  <option value={cond} key={cond}>
-                    {" "}
+                  <option key={cond} value={cond}>
                     {cond}
                   </option>
                 ))}
               </select>
+
+              {/* IMAGES */}
               <div className="watch-card-add__images">
-                {/* Photo de la montre */}
+                {/* Montre */}
                 <div className="image-upload">
                   <label htmlFor="watch-image" className="image-upload__label">
                     {watchImagePreview ? (
                       <div className="image-upload__preview">
-                        <img
-                          src={watchImagePreview}
-                          alt="Prévisualisation montre"
-                        />
+                        <img src={watchImagePreview} alt="Montre" />
                         <button
                           type="button"
-                          className="image-upload__remove"
-                          onClick={(e) => {
-                            e.preventDefault();
+                          onClick={() =>
                             removeImage(
                               setWatchImage,
                               setWatchImagePreview,
                               watchImagePreview,
-                            );
-                          }}
+                            )
+                          }
                         >
                           ✕
                         </button>
                       </div>
                     ) : (
-                      <div className="image-upload__placeholder">
-                        <span>Photo</span>
-                      </div>
+                      <div className="image-upload__placeholder">Photo</div>
                     )}
                   </label>
                   <input
                     type="file"
                     id="watch-image"
                     accept="image/*"
+                    hidden
                     onChange={(e) =>
                       handleImageChange(e, setWatchImage, setWatchImagePreview)
                     }
-                    hidden
                   />
                 </div>
 
@@ -596,28 +415,23 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
                   >
                     {certificateImagePreview ? (
                       <div className="image-upload__preview">
-                        <img
-                          src={certificateImagePreview}
-                          alt="Prévisualisation certificat"
-                        />
+                        <img src={certificateImagePreview} alt="Certificat" />
                         <button
                           type="button"
-                          className="image-upload__remove"
-                          onClick={(e) => {
-                            e.preventDefault();
+                          onClick={() =>
                             removeImage(
                               setCertificateImage,
                               setCertificateImagePreview,
                               certificateImagePreview,
-                            );
-                          }}
+                            )
+                          }
                         >
                           ✕
                         </button>
                       </div>
                     ) : (
                       <div className="image-upload__placeholder">
-                        <span>Certificat</span>
+                        Certificat
                       </div>
                     )}
                   </label>
@@ -625,6 +439,7 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
                     type="file"
                     id="certificate-image"
                     accept="image/*"
+                    hidden
                     onChange={(e) =>
                       handleImageChange(
                         e,
@@ -632,13 +447,11 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
                         setCertificateImagePreview,
                       )
                     }
-                    hidden
                   />
                 </div>
               </div>
             </form>
 
-            {/* Bouton de soumission (lié au form via l'attribut "form") */}
             <button
               type="submit"
               form="watch-adder"
