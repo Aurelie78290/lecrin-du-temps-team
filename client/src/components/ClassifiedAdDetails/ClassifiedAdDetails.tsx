@@ -5,13 +5,17 @@ import WatchDetails from "../../pages/WatchDetails/WatchDetails";
 import "./ClassifiedAdDetails.css";
 import ToggleValidateAdd from "../ToggleValidateAdd/ToggleValidateAdd";
 
+interface onActionSuccesI {
+  onActionSuccess: () => void;
+}
+
 type PendingAddsI = {
   idwatch: number;
   brand: string;
   model: string;
 };
 
-function ClassifiedAdDetails() {
+function ClassifiedAdDetails({ onActionSuccess }: onActionSuccesI) {
   const [pendingAdds, setPendingAdds] = useState<PendingAddsI[]>([]);
   const [selectedWatchId, setSelectedWatchId] = useState<number | null>(null);
 
@@ -60,7 +64,13 @@ function ClassifiedAdDetails() {
         )}
       </aside>
       <main>
-        <ToggleValidateAdd idwatch={selectedWatchId} onSuccess={refreshList} />
+        <ToggleValidateAdd
+          idwatch={selectedWatchId}
+          onSuccess={() => {
+            refreshList(); // Rafraîchit la liste locale
+            onActionSuccess(); // Rafraîchit les stats dans le parent
+          }}
+        />
         {selectedWatchId ? (
           <WatchDetails idwatch={selectedWatchId} isReadOnly={true} />
         ) : (

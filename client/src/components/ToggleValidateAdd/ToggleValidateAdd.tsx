@@ -10,7 +10,8 @@ interface WatchDetailsProps {
 function ToggleValidateAdd({ idwatch, onSuccess }: WatchDetailsProps) {
   const [isOpenValidate, setIsOpenValidate] = useState(false);
   const [isOpenRefuse, setIsOpenRefuse] = useState(false);
-  const [showToast, setShowToast] = useState(false);
+  const [showToastValidate, setShowToastValidate] = useState(false);
+  const [showToastRefuse, setShowToastRefuse] = useState(false);
 
   const handleConfirm = () => {
     const url = `${import.meta.env.VITE_API_URL}/api/pendingAddSell/${idwatch}`;
@@ -36,8 +37,8 @@ function ToggleValidateAdd({ idwatch, onSuccess }: WatchDetailsProps) {
       })
       .then((data) => {
         //On confirme via un toast la réussite de l'opération via un message temporaire
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
+        setShowToastValidate(true);
+        setTimeout(() => setShowToastValidate(false), 3000);
         // Une fois confirmé, on ferme la modale
         setIsOpenValidate(false);
         console.log("Voici le retour de la data :", data);
@@ -77,8 +78,8 @@ function ToggleValidateAdd({ idwatch, onSuccess }: WatchDetailsProps) {
       })
       .then((data) => {
         //On confirme via un toast la réussite de l'opération via un message temporaire
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
+        setShowToastRefuse(true);
+        setTimeout(() => setShowToastRefuse(false), 3000);
         // Une fois confirmé, on ferme la modale
         setIsOpenRefuse(false);
         console.log("Voici le retour de la data :", data);
@@ -97,8 +98,10 @@ function ToggleValidateAdd({ idwatch, onSuccess }: WatchDetailsProps) {
   return (
     <div>
       {/* Votre Toast en haut de l'écran par exemple */}
-      {showToast && (
-        <div className="toast-success">Le refus a bien été transmis !</div>
+      {showToastValidate && (
+        <div className="toast-success">
+          L'annonce a été validée avec succès ! 🎉
+        </div>
       )}
       <button type="button" onClick={() => setIsOpenValidate(true)}>
         Valider
@@ -117,6 +120,9 @@ function ToggleValidateAdd({ idwatch, onSuccess }: WatchDetailsProps) {
             </div>
           </div>
         </div>
+      )}
+      {showToastRefuse && (
+        <div className="toast-success">Le refus a bien été transmis !</div>
       )}
       <button type="button" onClick={() => setIsOpenRefuse(true)}>
         Refuser
