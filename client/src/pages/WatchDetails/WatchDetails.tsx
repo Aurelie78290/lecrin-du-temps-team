@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useMatch, useNavigate, useParams } from "react-router";
+import ShopBasket from "../../components/ShopBasket/ShopBasket";
 import { useBasket } from "../../contexts/ShopContext";
 import "./WatchDetails.css";
 
@@ -156,6 +157,7 @@ export default function WatchDetails({
   const { id } = useParams();
 
   const { addToBasket } = useBasket();
+  const [basketOpen, setBasketOpen] = useState(false);
 
   // 2. LA LOGIQUE DE DÉCISION :
   // Si idwatch (prop) existe, on l'utilise(issu de ClassifiedAdDetails.tsx). Sinon, on utilise id (URL).
@@ -282,13 +284,11 @@ export default function WatchDetails({
       idwatch: watch.idwatch,
       brand: watch.brand,
       model: watch.model,
-      price: watch.watch_price,
+      price: watch.watch_price ?? 0,
       quantity: 1,
     });
 
-    alert("Montre ajoutée au panier !");
-
-    navigate("/ShopBasket");
+    setBasketOpen(true);
   };
 
   return (
@@ -564,16 +564,22 @@ export default function WatchDetails({
           </div>
           <section className="watchdetails-card watchdetails-actions">
             {inShop && (
-              <button
-                type="button"
-                className="watchdetails-buy"
-                disabled={asNumberOrNull(watch.watch_price) == null}
-                onClick={handleBuy}
-                // () =>
-                // console.log("Acheter", watch.idwatch)
-              >
-                Acheter
-              </button>
+              <>
+                <button
+                  type="button"
+                  className="watchdetails-buy"
+                  disabled={asNumberOrNull(watch.watch_price) == null}
+                  onClick={handleBuy}
+                  // () =>
+                  // console.log("Acheter", watch.idwatch)
+                >
+                  Acheter
+                </button>
+                <ShopBasket
+                  isOpen={basketOpen}
+                  onClose={() => setBasketOpen(false)}
+                />
+              </>
             )}
             {/* On masque le retour seulement si isReadOnly est vrai (en mode validation d'annonce)*/}
             {!isReadOnly && (
