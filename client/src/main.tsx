@@ -22,14 +22,14 @@ import LegalNotices from "./pages/LegalNotices/LegalNotices";
 import News from "./pages/News/News";
 import NewsDetails from "./pages/NewsDetails/NewsDetails";
 import Shop from "./pages/Shop/Shop";
-import ShopBasket from "./pages/ShopBasket/ShopBasket";
 import ShopPayment from "./pages/ShopPayment/ShopPayment";
 import ShopWatchIndex from "./pages/ShopWatchIndex/ShopWatchIndex";
+import UserDashboard from "./pages/UserDashboard/UserDashboard";
 import UserProfil from "./pages/UserProfil/UserProfil";
 // import UserProfil from "./pages/UserProfil/UserProfil";
 import WatchDetails from "./pages/WatchDetails/WatchDetails";
 import WatchEdit from "./pages/WatchEdit/WatchEdit";
-import UserDashboard from "./pages/UserDashboard/UserDashboard";
+
 // import Collection from "./pages/Collection/Collection";
 
 // Import additional components for new routes
@@ -73,10 +73,6 @@ const router = createBrowserRouter([
           {
             path: "/ShopWatchIndex/:id",
             element: <ShopWatchIndex />,
-          },
-          {
-            path: "/ShopBasket",
-            element: <ShopBasket />,
           },
           {
             path: "/ShopPayment",

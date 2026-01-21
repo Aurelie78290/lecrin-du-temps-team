@@ -79,7 +79,7 @@ p {
 .basket-icon-container {
   position: fixed;
   top: 1.5rem;
-  right: 4rem;
+  right: 5rem;
   z-index: 100; /* pour être au-dessus du contenu */
 }
 
