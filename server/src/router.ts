@@ -172,4 +172,14 @@ router.get("/api/users", editUsersActions.browse);
 router.put("/api/users/:id/role", editUsersActions.update);
 router.delete("/api/users", editUsersActions.destroy);
 
+/* ************************************************************************* */
+// Define Basket routes
+
+import basketActions from "./modules/basket/basketActions";
+
+router.get("/api/cart", isAuth, basketActions.browse);
+router.post("/api/cart/items", isAuth, basketActions.add);
+router.delete("/api/cart/items/:watchId", isAuth, basketActions.remove);
+router.delete("/api/cart", isAuth, basketActions.clear);
+
 export default router;

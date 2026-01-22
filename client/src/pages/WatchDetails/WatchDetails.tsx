@@ -267,25 +267,12 @@ export default function WatchDetails({
   }
 
   // fonction pour ajouter la montre au panier
-  const handleBuy = () => {
-    if (!watch) return; // sécurité si watch pas encore chargé
-
-    // Vérifie que le prix existe
-    if (watch.watch_price == null) {
-      alert("Prix indisponible pour cette montre.");
-      return;
-    }
-
-    // Debug : voir dans la console ce qu'on ajoute
-    console.log("CLICK ACHETER", watch);
-
-    // Ajoute la montre au panier via le context
-    addToBasket({
+  const handleBuy = async () => {
+    await addToBasket({
       idwatch: watch.idwatch,
       brand: watch.brand,
       model: watch.model,
       price: watch.watch_price ?? 0,
-      quantity: 1,
     });
 
     setBasketOpen(true);
