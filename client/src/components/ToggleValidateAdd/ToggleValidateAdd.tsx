@@ -21,7 +21,6 @@ function ToggleValidateAdd({
   const [showToastValidate, setShowToastValidate] = useState(false);
   const [showToastRefuse, setShowToastRefuse] = useState(false);
   const [refusalReason, setRefusalReason] = useState<string>("");
-  const [refusalSubject, setRefusalSubject] = useState<string>("");
 
   // Pour récupérer les données de l'utilisateur en fonction de la montre(de l'annonce)
   const currentUserAd = pendingAdds.find((ad) => ad.idwatch === idwatch);
@@ -145,7 +144,6 @@ function ToggleValidateAdd({
         console.log("Voici le retour de la data :", data);
 
         setRefusalReason("");
-        setRefusalSubject("");
         // Appel de la fonction de rafraîchissement passée par le parent
         if (onSuccess) {
           onSuccess();
@@ -158,25 +156,37 @@ function ToggleValidateAdd({
   };
 
   return (
-    <div>
+    <div className="ToggleValidateAdd">
       {/* Votre Toast en haut de l'écran par exemple */}
       {showToastValidate && (
         <div className="toast-success">
           L'annonce a été validée avec succès ! 🎉
         </div>
       )}
-      <button type="button" onClick={() => setIsOpenValidate(true)}>
+      <button
+        type="button"
+        className="ToggleValidateAdd-valider1"
+        onClick={() => setIsOpenValidate(true)}
+      >
         Valider
       </button>
       {isOpenValidate && (
         <div className="modal-overlay">
           <div className="modal-content">
             <p>Etes-vous sûr de vouloir valider et publier l'annonce?</p>
-            <div className="modal-buttons">
-              <button type="button" onClick={() => setIsOpenValidate(false)}>
+            <div className="modal-buttons ToggleValidateAdd-ToggleConfirmeValidate">
+              <button
+                type="button"
+                className="ToggleValidateAdd-annuler1"
+                onClick={() => setIsOpenValidate(false)}
+              >
                 Annuler
               </button>
-              <button type="button" onClick={() => handleConfirm()}>
+              <button
+                type="button"
+                className="ToggleValidateAdd-valider2"
+                onClick={() => handleConfirm()}
+              >
                 Valider
               </button>
             </div>
@@ -186,38 +196,40 @@ function ToggleValidateAdd({
       {showToastRefuse && (
         <div className="toast-success">Le refus a bien été transmis !</div>
       )}
-      <button type="button" onClick={() => setIsOpenRefuse(true)}>
+      <button
+        type="button"
+        className="ToggleValidateAdd-Refuser"
+        onClick={() => setIsOpenRefuse(true)}
+      >
         Refuser
       </button>
       {isOpenRefuse && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <p>Expliquez les raisons du refus</p>
+            <p className="ToggleValidateAdd-TitrePRefus">
+              Expliquez les raisons du refus
+            </p>
             <form>
-              <label>
-                Objet
-                <input
-                  name="objet"
-                  value={refusalSubject}
-                  onChange={(e) => setRefusalSubject(e.target.value)}
-                />
-              </label>
-              <hr />
-              <label>
-                Message:
-                <textarea
-                  name="message"
-                  value={refusalReason}
-                  onChange={(e) => setRefusalReason(e.target.value)}
-                />
-              </label>
+              <textarea
+                className="ToggleValidateAdd-Textarea"
+                aria-label="Raison du refus"
+                name="message"
+                placeholder="Ecrivez ici la raison du refus"
+                value={refusalReason}
+                onChange={(e) => setRefusalReason(e.target.value)}
+              />
             </form>
-            <div className="modal-buttons">
-              <button type="button" onClick={() => setIsOpenRefuse(false)}>
+            <div className="modal-buttons ToggleValidateAdd-ToggleForm">
+              <button
+                type="button"
+                className="ToggleValidateAdd-annuler2"
+                onClick={() => setIsOpenRefuse(false)}
+              >
                 Annuler
               </button>
               <button
                 type="button"
+                className="ToggleValidateAdd-envoyer"
                 onClick={handleRefuse}
                 disabled={!refusalReason}
               >

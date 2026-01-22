@@ -24,6 +24,77 @@
   margin-top: 20px;
 }
 
+.ToggleValidateAdd-valider1,
+.ToggleValidateAdd-valider2,
+.ToggleValidateAdd-envoyer {
+  background-color: #27ae60;
+  color: #f5f0e9;
+  cursor: pointer;
+}
+
+.ToggleValidateAdd-Refuser,
+.ToggleValidateAdd-annuler1,
+.ToggleValidateAdd-annuler2 {
+  background-color: brown;
+  color: #f5f0e9;
+  cursor: pointer;
+}
+
+.ToggleValidateAdd {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 1rem;
+}
+
+.ToggleValidateAdd-valider1,
+.ToggleValidateAdd-Refuser {
+  padding: 0.6rem;
+  border-radius: 10px;
+  margin: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  width: 120px;
+  text-align: center;
+}
+
+.ToggleValidateAdd-Textarea {
+  width: 97.5%;
+  min-height: 100px; /* Hauteur minimale pour laisser de la place au texte */
+  border-radius: 10px;
+  font-family: inherit; /* Utilise la même police que le reste du site */
+  font-size: 1rem;
+  resize: vertical;
+  outline: none;
+  align-self: center;
+}
+.ToggleValidateAdd-Textarea::placeholder {
+  text-align: center;
+}
+
+.ToggleValidateAdd-ToggleForm {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.ToggleValidateAdd-ToggleConfirmeValidate {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 4rem;
+}
+
+.ToggleValidateAdd-envoyer,
+.ToggleValidateAdd-valider2,
+.ToggleValidateAdd-annuler1,
+.ToggleValidateAdd-annuler2 {
+  width: 100px;
+}
+
+.ToggleValidateAdd-TitrePRefus {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  text-align: center;
+}
 /* Toast (message de validation temporaire) */
 .toast-success {
   position: fixed;

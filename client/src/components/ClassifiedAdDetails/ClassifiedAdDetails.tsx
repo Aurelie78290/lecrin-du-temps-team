@@ -66,16 +66,18 @@ function ClassifiedAdDetails({ onActionSuccess }: onActionSuccesI) {
         )}
       </aside>
       <main>
-        <ToggleValidateAdd
-          idwatch={selectedWatchId}
-          pendingAdds={pendingAdds}
-          onSuccess={() => {
-            refreshList(); // Rafraîchit la liste locale
-            onActionSuccess(); // Rafraîchit les stats dans le parent
-          }}
-        />
         {selectedWatchId ? (
-          <WatchDetails idwatch={selectedWatchId} isReadOnly={true} />
+          <>
+            <WatchDetails idwatch={selectedWatchId} isReadOnly={true} />
+            <ToggleValidateAdd
+              idwatch={selectedWatchId}
+              pendingAdds={pendingAdds}
+              onSuccess={() => {
+                refreshList(); // Rafraîchit la liste locale
+                onActionSuccess(); // Rafraîchit les stats dans le parent
+              }}
+            />
+          </>
         ) : (
           <p>Il n'y a pas d'annonce à valider</p>
         )}
