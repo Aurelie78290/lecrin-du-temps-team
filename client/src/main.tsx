@@ -35,7 +35,7 @@ import UserDashboard from "./pages/UserDashboard/UserDashboard";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
-
+console.log("poulet");
 // import About from "./pages/About";
 // import Contact from "./pages/Contact";
 
