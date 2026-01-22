@@ -15,14 +15,20 @@ function App() {
   const location = useLocation();
   const pagesWithoutSidebar = ["/"];
   const showSidebar = !pagesWithoutSidebar.includes(location.pathname);
+
+  const pagesWithoutBasket = ["/"];
+  const showBasket = !pagesWithoutBasket.includes(location.pathname);
+
   return (
     // On englobe tout dans AuthProvider pour tout protéger //
     <AuthProvider>
       <ThemeProvider>
         <BasketProvider>
-          <div className="basket-icon-container">
-            <BasketIcon />
-          </div>
+          {showBasket && (
+            <div className="basket-icon-container">
+              <BasketIcon />
+            </div>
+          )}
           <div
             className={`app-layout ${sidebarExpanded ? "sidebar-expanded" : ""} ${!showSidebar ? "no-sidebar" : ""}`}
           >
