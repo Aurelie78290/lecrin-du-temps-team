@@ -1,7 +1,9 @@
 import bcrypt from "bcrypt";
+import crypto from "node:crypto";
 import type { Request, RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 import userRepository from "./userRepository";
+import { sendResetPasswordEmail } from "../../services/mailer";
 
 // Ajout pour une inscription //
 const add: RequestHandler = async (req, res, next) => {
@@ -153,4 +155,85 @@ const logout: RequestHandler = (req, res) => {
   res.sendStatus(204);
 };
 
-export default { login, checkAuth, add, edit, logout };
+// Pour reset le MDP //
+
+//Demande de réinitilisation //
+
+const forgotPassword: RequestHandler = async (req, res, next) => {
+  const { e_mail } = req.body;
+
+  try {
+    // On génère un token aleatoire //
+    const token = crypto.randomBytes(32).toString("hex");
+    // Expiration dans 1h //
+    const expiry = new Date(Date.now() + 3600000);
+    const result = await userRepository.setResetToken(e_mail, token, expiry);
+
+    // Si le user existe on envoie le mail //
+    if (result.affectedRows > 0) {
+      const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${token}`;
+
+      const emailHtml = `
+      <div style="background-color: #010c2a; padding; 40px; font-family: 'Inter', Arial, sans-serif; color: #ffffff; text-align: center;">
+      <div style="max-width: 500px; margin: 0 auto; border: 1px solid #e0c58f; padding: 40px; border-radius: 5px;">
+      <h1 style="color: #e0c58f; letter-spacing: 4px; font-weight: 300; text-transform: uppercase; margin-bottom: 30px;">
+      L'Écrin du Temps
+      </h1> 
+      <h2 style="font-size: 20px; font-weight: 400; margin-bottom: 20px;">Récuperation du mot de passe</h2>
+      <p style="color: #cccccc; line-height: 1.6; margin-bottom: 30px;">
+      Vous avez demandé la réinitialisation de votre mot de passe pour L'Écrin du Temps. Veuillez cliquer sur le bouton ci-dessous.</p>
+      <a href="${resetLink}" styl="display: inline-block; background-color: transparent; color: #e0c58f; border: 1px solid #d4af37; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; letter-spacing: 1px;">
+       RÉINITIALISER MON MOT DE PASSE
+       </a>
+       <p style="margin-top: 20px; font-size: 11px; color: #444444; letter-spacing: 1px;">
+       &copy; 2026 L'ÉCRIN DU TEMPS - Les montres d'exceptions réunies pour vous
+       </p>
+       </div>
+       `;
+
+      await sendResetPasswordEmail(
+        e_mail,
+        "Réinitialisation de mot de passe - L'Écrin du Temps",
+        emailHtml,
+      );
+    }
+    res.status(200).json({ message: "Un lien a été envoyé." });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Validation du nouveau mot de passe //
+const resetPassword: RequestHandler = async (req, res, next) => {
+  const { token, password } = req.body;
+
+  try {
+    // Cherche le user via le token //
+    const user = await userRepository.findByResetToken(token);
+
+    if (!user) {
+      res.status(400).json({ message: "le lien est invalide ou a expiré." });
+      return;
+    }
+
+    // Hachage du nouveau MDP //
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Mise a jour dans la BDD //
+    await userRepository.updatePassword(user.id, hashedPassword);
+    res.status(200).json({ message: "Votre mot de passe a été réinitialisé." });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default {
+  login,
+  checkAuth,
+  add,
+  edit,
+  logout,
+  forgotPassword,
+  resetPassword,
+};

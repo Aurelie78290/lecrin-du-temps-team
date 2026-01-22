@@ -30,6 +30,8 @@ import UserProfil from "./pages/UserProfil/UserProfil";
 import WatchDetails from "./pages/WatchDetails/WatchDetails";
 import WatchEdit from "./pages/WatchEdit/WatchEdit";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
 // import Collection from "./pages/Collection/Collection";
 
 // Import additional components for new routes
@@ -50,6 +52,14 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "/reset-password",
+        element: <ResetPassword />,
       },
       {
         element: <ProtectedRoutes />,
