@@ -1,17 +1,73 @@
+import emailjs from "emailjs-com";
 import { useState } from "react";
 
 import "./ToggleValidateAdd.css";
 
+import type { PendingAddsI } from "../ClassifiedAdDetails/ClassifiedAdDetails";
+
 interface WatchDetailsProps {
   idwatch?: number | null | undefined;
+  pendingAdds: PendingAddsI[];
   onSuccess: () => void;
 }
 
-function ToggleValidateAdd({ idwatch, onSuccess }: WatchDetailsProps) {
+function ToggleValidateAdd({
+  idwatch,
+  pendingAdds,
+  onSuccess,
+}: WatchDetailsProps) {
   const [isOpenValidate, setIsOpenValidate] = useState(false);
   const [isOpenRefuse, setIsOpenRefuse] = useState(false);
   const [showToastValidate, setShowToastValidate] = useState(false);
   const [showToastRefuse, setShowToastRefuse] = useState(false);
+  const [refusalReason, setRefusalReason] = useState<string>("");
+  const [refusalSubject, setRefusalSubject] = useState<string>("");
+
+  // Pour récupérer les données de l'utilisateur en fonction de la montre(de l'annonce)
+  const currentUserAd = pendingAdds.find((ad) => ad.idwatch === idwatch);
+
+  const sendNotificationEmail = (
+    status: "validée" | "refusée",
+    reason?: string,
+  ) => {
+    if (!currentUserAd) return;
+
+    const templateParams = {
+      email: currentUserAd.e_mail,
+      name: currentUserAd.firstname,
+      brand: currentUserAd.brand,
+      model: currentUserAd.model,
+      status: status,
+      message:
+        reason || "Votre annonce est désormais en ligne sur notre plateforme.",
+    };
+    emailjs
+      .send(
+        "service_i50evab",
+        "template_ryqshxq",
+        templateParams,
+        "vnUWR6OlUDktC38KT",
+      )
+      .then((result) => {
+        console.log("Email envoyé avec succès !", result.text);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l'envoi de l'email :", error);
+      });
+  };
+
+  //===================
+  // Template du mail :
+  //===================
+  // Bonjour {{name}},
+
+  // Votre annonce pour la mise en vente de la montre {{brand}} - {{model}} a été {{status}}
+  // {{message}}
+
+  // Bien cordialement
+  // L'équipe de L'écrin du temps
+
+  //Le {{message}} est a renseigné directement dnas l'interface admin
 
   const handleConfirm = () => {
     const url = `${import.meta.env.VITE_API_URL}/api/pendingAddSell/${idwatch}`;
@@ -36,6 +92,8 @@ function ToggleValidateAdd({ idwatch, onSuccess }: WatchDetailsProps) {
         return response.json();
       })
       .then((data) => {
+        //On confirme par mail la validation au vendeur
+        sendNotificationEmail("validée");
         //On confirme via un toast la réussite de l'opération via un message temporaire
         setShowToastValidate(true);
         setTimeout(() => setShowToastValidate(false), 3000);
@@ -77,6 +135,8 @@ function ToggleValidateAdd({ idwatch, onSuccess }: WatchDetailsProps) {
         return response.json();
       })
       .then((data) => {
+        //On confirme le refus au vendeur par l'envoi d'un mail
+        sendNotificationEmail("refusée", refusalReason);
         //On confirme via un toast la réussite de l'opération via un message temporaire
         setShowToastRefuse(true);
         setTimeout(() => setShowToastRefuse(false), 3000);
@@ -84,6 +144,8 @@ function ToggleValidateAdd({ idwatch, onSuccess }: WatchDetailsProps) {
         setIsOpenRefuse(false);
         console.log("Voici le retour de la data :", data);
 
+        setRefusalReason("");
+        setRefusalSubject("");
         // Appel de la fonction de rafraîchissement passée par le parent
         if (onSuccess) {
           onSuccess();
@@ -134,19 +196,31 @@ function ToggleValidateAdd({ idwatch, onSuccess }: WatchDetailsProps) {
             <form>
               <label>
                 Objet
-                <input name="objet" />
+                <input
+                  name="objet"
+                  value={refusalSubject}
+                  onChange={(e) => setRefusalSubject(e.target.value)}
+                />
               </label>
               <hr />
               <label>
                 Message:
-                <input name="message" />
+                <textarea
+                  name="message"
+                  value={refusalReason}
+                  onChange={(e) => setRefusalReason(e.target.value)}
+                />
               </label>
             </form>
             <div className="modal-buttons">
               <button type="button" onClick={() => setIsOpenRefuse(false)}>
                 Annuler
               </button>
-              <button type="button" onClick={() => handleRefuse()}>
+              <button
+                type="button"
+                onClick={handleRefuse}
+                disabled={!refusalReason}
+              >
                 Envoyer
               </button>
             </div>

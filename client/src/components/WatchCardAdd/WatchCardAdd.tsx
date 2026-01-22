@@ -47,6 +47,7 @@ function WatchCardAdd({ onWatchAdded, onPopupToggle }: WatchCardAddProps) {
 
   const [model, setModel] = useState("");
   const [modelId, setModelId] = useState<number | null>(null);
+  console.log(model);
 
   const [price, setPrice] = useState("");
   const [condition, setCondition] = useState("");

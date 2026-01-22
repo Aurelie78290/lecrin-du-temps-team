@@ -9,10 +9,12 @@ interface onActionSuccesI {
   onActionSuccess: () => void;
 }
 
-type PendingAddsI = {
+export type PendingAddsI = {
   idwatch: number;
   brand: string;
   model: string;
+  e_mail: string;
+  firstname: string;
 };
 
 function ClassifiedAdDetails({ onActionSuccess }: onActionSuccesI) {
@@ -66,6 +68,7 @@ function ClassifiedAdDetails({ onActionSuccess }: onActionSuccesI) {
       <main>
         <ToggleValidateAdd
           idwatch={selectedWatchId}
+          pendingAdds={pendingAdds}
           onSuccess={() => {
             refreshList(); // Rafraîchit la liste locale
             onActionSuccess(); // Rafraîchit les stats dans le parent
