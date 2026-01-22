@@ -10,6 +10,7 @@ type CartItem = {
   model: string;
   watch_price: number;
   quantity: number;
+  salerId: number;
 };
 
 // type Cart = {

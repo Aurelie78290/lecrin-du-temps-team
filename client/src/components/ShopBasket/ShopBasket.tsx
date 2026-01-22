@@ -1,5 +1,7 @@
 import { ShoppingBag, Trash2, X } from "lucide-react";
+import { useNavigate } from "react-router";
 import { useBasket } from "../../contexts/ShopContext";
+
 import "./ShopBasket.css";
 
 interface ShopBasketProps {
@@ -16,6 +18,8 @@ function ShopBasket({ isOpen, onClose }: ShopBasketProps) {
   );
 
   if (!isOpen) return null;
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -96,7 +100,14 @@ function ShopBasket({ isOpen, onClose }: ShopBasketProps) {
               </span>
             </div>
 
-            <button type="button" className="basket-checkout-button">
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                navigate("/ShopPayment");
+              }}
+              className="basket-checkout-button"
+            >
               Procéder au paiement
             </button>
 
