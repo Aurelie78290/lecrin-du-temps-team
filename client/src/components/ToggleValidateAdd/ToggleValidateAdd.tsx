@@ -2,9 +2,8 @@ import emailjs from "emailjs-com";
 import { useState } from "react";
 
 import "./ToggleValidateAdd.css";
-import type { PendinAddsI } from "../ClassifiedAdDetails/ClassifiedAdDetails";
 
-// import type { PendingAddsI } from "../ClassifiedAdDetails/ClassifiedAdDetails";
+import type { PendingAddsI } from "../ClassifiedAdDetails/ClassifiedAdDetails";
 
 interface WatchDetailsProps {
   idwatch?: number | null | undefined;
