@@ -14,6 +14,8 @@ router.post("/api/login", userActions.login); // Login //
 router.get("/api/logout", userActions.logout); // Logout //
 router.get("/api/auth/me", isAuth, userActions.checkAuth); // Check de la session //
 router.put("/api/users/me", isAuth, userActions.edit); // Modification d'informmation personnelle //
+router.post("/api/forgot-password", userActions.forgotPassword); // MDP oublié //
+router.post("/api/reset-password", userActions.resetPassword); // Réinitialisation du MDP //
 
 // Define item-related routes
 import itemActions from "./modules/item/itemActions";
