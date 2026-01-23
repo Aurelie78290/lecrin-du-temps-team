@@ -16,11 +16,13 @@ import Contact from "./pages/Contact/Contact";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Error404 from "./pages/Error404/Error404";
 import Faq from "./pages/Faq/Faq";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Home from "./pages/Home/Home";
 import Hub from "./pages/Hub/Hub";
 import LegalNotices from "./pages/LegalNotices/LegalNotices";
 import News from "./pages/News/News";
 import NewsDetails from "./pages/NewsDetails/NewsDetails";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Shop from "./pages/Shop/Shop";
 import ShopPayment from "./pages/ShopPayment/ShopPayment";
 import ShopWatchIndex from "./pages/ShopWatchIndex/ShopWatchIndex";
@@ -50,6 +52,14 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "/reset-password",
+        element: <ResetPassword />,
       },
       {
         element: <ProtectedRoutes />,
