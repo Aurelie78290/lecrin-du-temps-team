@@ -184,4 +184,11 @@ router.post("/api/cart/items", isAuth, basketActions.add);
 router.delete("/api/cart/items/:watchId", isAuth, basketActions.remove);
 router.delete("/api/cart", isAuth, basketActions.clear);
 
+/* ************************************************************************* */
+// Define order routes
+
+import { createOrder } from "./modules/orderArchive/orderArchiveActions";
+
+router.post("/api/orders", isAuth, createOrder);
+
 export default router;
