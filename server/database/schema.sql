@@ -584,6 +584,8 @@ VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisber
 ('User', 'Todelete', '', '', 'testdelete@test.com', 'user', '', '', '$2b$10$7AR5Ntccmsv1HVJ4x4LB/OYBfZJOEThsVcWdyC2ltPFLHGbS/v3Zm'),
 ('User', 'Toadmin', '', '', 'test4@test.com', 'user', '', '', '$2b$10$2SZrItauGHOPUnGBlZq8MOSotSiyGTfzIKU.d5fRYdO8JT3u8BYXK');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+INSERT INTO `user` (firstname, lastname, street_number, street, zip_code, city, birthdate, gender, user_type, tel, e_mail, newsletter, user_role, user_describe, password)
+VALUES ('jean', 'peplu','5','la grande plaine','17000','La Rochelle','2025-01-01','M.','Acheteur fortuné compulsif', '0606060606','jeanpeplu@user.fr','1','user','J''achete tout et surtout n''importe quoi avec la fortume dont j''ai hérité','$2b$10$9..xS04izXTA735IE9LER.tfMmCFwWstANMj4SVfsbsO98GEoFxlG);
 UNLOCK TABLES;
 
 --
@@ -771,24 +773,52 @@ INSERT INTO watch (
 (1, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'En vente', 1350,
 1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1),
 
--- 21 Longines HydroConquest (brand_id=22, model_id=187) Model test pour la validation des annonces
-(1, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'A valider', 3,
+-- 21 Longines HydroConquest (brand_id=22, model_id=187) Model test pour la validation des annonces -> Joachim
+(2, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'A valider', 3,
 1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1),
 
--- 22 IWC Pilot Mark XX (brand_id=11, model_id=131) Model test pour la validation des annonces
+-- 22 IWC Pilot Mark XX (brand_id=11, model_id=131) Model test pour la validation des annonces -> Anaïs
 (1, 11, 131, 3283, '2023-01-01', 0, NULL, 'Homme', 'A valider', 6,
 1, 40, 11, 10, 'Noir', 1, 2, 2, 'Brun', 2, 20, 'Excellent état', 1, '32111', 1, 120, 4, 21, 1, 1, 1),
 
--- 23 Cartier Tank Must (brand_id=10, model_id=116) Model test pour la validation des annonces
-(1, 10, 116, 9992, '2022-01-01', 0, NULL, 'Unisexe', 'A valider', 9,
+-- 23 Cartier Tank Must (brand_id=10, model_id=116) Model test pour la validation des annonces -> Aurélie
+(3, 10, 116, 9992, '2022-01-01', 0, NULL, 'Unisexe', 'A valider', 9,
 1, 34, 7, 3, 'Argent', 3, 3, 2, 'Noir', 2, 19, 'Très bon état', 3, 'Quartz Cartier', 1, NULL, NULL, NULL, 1, 1, 1),
 
--- 24 TAG Heuer Carrera Chronograph (brand_id=15, model_id=153) Model test pour la validation des annonces
-(1, 15, 153, 2010, '2021-01-01', 0, NULL, 'Homme', 'Refusée', 4650,
+-- 24 TAG Heuer Carrera Chronograph (brand_id=15, model_id=153) Model test pour la validation des annonces -> Joachim
+(2, 15, 153, 2010, '2021-01-01', 0, NULL, 'Homme', 'Refusée', 4650,
 1, 42, 14, 10, 'Bleu', 2, 1, 1, 'Acier', 1, 22, 'Très bon état', 1, 'Heuer 02', 2, 80, 4, 33, 1, 1, 1),
 
--- 25 Cartier Santos (brand_id=10, model_id=109) Model test pour la validation des annonces
-(1, 10, 109, 4848, '2023-01-01', 0, NULL, 'Unisexe', '', 6250,
+-- 25 Cartier Santos (brand_id=10, model_id=109) Model test pour la validation des annonces -> Joachim
+(2, 10, 109, 4848, '2023-01-01', 0, NULL, 'Unisexe', '', 6250,
+1, 35, 9, 10, 'Argent', 1, 3, 1, 'Acier', 1, 18, 'Excellent état', 1, '1847 MC', 1, 42, 4, 23, 1, 1, 1),
+
+-- 26 Tudor Black Bay (brand_id=23, model_id=194) Model test pour la validation des annonces -> Romain
+(10, 23, 194, 7941, '2023-01-01', 0, NULL, 'Homme', 'A valider', 3850,
+1, 41, 14, 20, 'Bordeaux', 2, 1, 1, 'Acier', 1, 21, 'Excellent état', 1, 'MT5602', 1, 70, 4, 25, 1, 1, 1),
+
+-- 27 Omega Seamaster Diver 300M (brand_id=9, model_id=99) Model test pour la validation des annonces -> Joachim
+(2, 9, 99, 21042, '2022-01-01', 0, NULL, 'Homme', 'A valider', 4650,
+1, 42, 14, 30, 'Noir', 2, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, '8800', 1, 55, 3, 35, 1, 1, 1),
+
+-- 28 Rolex Submariner (brand_id=1, model_id=1) Model test pour un UTILISATEUR (jean peplu)
+(13, 1, 1, 124060, '2022-01-01', 0, NULL, 'Homme', '', 12450,
+1, 41, 12, 30, 'Noir', 1, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, '3230', 1, 70, 4, 31, 1, 1, 1),
+
+-- 29 Rolex GMT-Master II (brand_id=1, model_id=7) Model test pour un UTILISATEUR (jean peplu)
+(13, 1, 7, 126710, '2021-01-01', 0, NULL, 'Homme', 'En vente', 15990,
+1, 40, 12, 10, 'Noir', 1, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, '3285', 3, 70, 4, 31, 1, 1, 1),
+
+-- 30 Omega Speedmaster Moonwatch (brand_id=9, model_id=93) Model test pour un UTILISATEUR (jean peplu)
+(13, 9, 93, 31042, '2020-01-01', 0, NULL, 'Homme', 'A valider', 6750,
+1, 42, 13, 5, 'Noir', 1, 2, 1, 'Acier', 1, 20, 'Très bon état', 2, '3861', 2, 50, 3, 26, 1, 1, 1),
+
+-- 31 Omega Seamaster Diver 300M (brand_id=9, model_id=99)  Model test pour un UTILISATEUR (jean peplu)
+(13, 9, 99, 21042, '2022-01-01', 0, NULL, 'Homme', 'Refusée', 4650,
+1, 42, 14, 30, 'Noir', 2, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, '8800', 1, 55, 3, 35, 1, 1, 1),
+
+-- 32 Cartier Santos (brand_id=10, model_id=109)  Model test pour un UTILISATEUR (jean peplu)
+(13, 10, 109, 4848, '2023-01-01', 0, NULL, 'Unisexe', 'Collection', 6250,
 1, 35, 9, 10, 'Argent', 1, 3, 1, 'Acier', 1, 18, 'Excellent état', 1, '1847 MC', 1, 42, 4, 23, 1, 1, 1);
 UNLOCK TABLES;
 CREATE TABLE user_has_watch (
@@ -1858,7 +1888,56 @@ INSERT INTO photo (url, type, watch_id) VALUES
 ('/uploads/watches/5/photo2.webp', 'watch', 25),
 ('/uploads/watches/5/photo3.webp', 'watch', 25),
 ('/uploads/watches/5/photo4.webp', 'watch', 25),
-('/uploads/watches/5/photo5.webp', 'watch', 25);
+('/uploads/watches/5/photo5.webp', 'watch', 25),
+
+-- Montre 26 (10) : Tudor Black Bay 41 (Test validation annonce)
+('/uploads/watches/10/photo1.webp', 'watch', 26),
+('/uploads/watches/10/photo2.webp', 'watch', 26),
+('/uploads/watches/10/photo3.webp', 'watch', 26),
+('/uploads/watches/10/photo4.webp', 'watch', 26),
+('/uploads/watches/10/photo5.webp', 'watch', 26),
+
+-- Montre 27 (4) : Omega Seamaster (Test validation annonce)
+('/uploads/watches/4/photo1.webp', 'watch', 27),
+('/uploads/watches/4/photo2.webp', 'watch', 27),
+('/uploads/watches/4/photo3.webp', 'watch', 27),
+('/uploads/watches/4/photo4.webp', 'watch', 27),
+('/uploads/watches/4/photo5.webp', 'watch', 27),
+
+-- Montre 28 (1) : Rolex Submariner (Assigné à l'UTILISATEUR test Jean Peplu)
+('/uploads/watches/1/photo1.webp', 'watch', 28),
+('/uploads/watches/1/photo2.webp', 'watch', 28),
+('/uploads/watches/1/photo3.webp', 'watch', 28),
+('/uploads/watches/1/photo4.webp', 'watch', 28),
+('/uploads/watches/1/photo5.webp', 'watch', 28),
+
+-- Montre 29 (2): Rolex GMT Batman (Assigné à l'UTILISATEUR test Jean Peplu)
+('/uploads/watches/2/photo1.webp', 'watch', 29),
+('/uploads/watches/2/photo2.webp', 'watch', 29),
+('/uploads/watches/2/photo3.webp', 'watch', 29),
+('/uploads/watches/2/photo4.webp', 'watch', 29),
+('/uploads/watches/2/photo5.webp', 'watch', 29),
+
+-- Montre 30 (3) : Omega Speedmaster (Assigné à l'UTILISATEUR test Jean Peplu)
+('/uploads/watches/3/photo1.webp', 'watch', 30),
+('/uploads/watches/3/photo2.webp', 'watch', 30),
+('/uploads/watches/3/photo3.webp', 'watch', 30),
+('/uploads/watches/3/photo4.webp', 'watch', 30),
+('/uploads/watches/3/photo5.webp', 'watch', 30),
+
+-- Montre 31 (4) : Omega Seamaster (Assigné à l'UTILISATEUR test Jean Peplu)
+('/uploads/watches/4/photo1.webp', 'watch', 31),
+('/uploads/watches/4/photo2.webp', 'watch', 31),
+('/uploads/watches/4/photo3.webp', 'watch', 31),
+('/uploads/watches/4/photo4.webp', 'watch', 31),
+('/uploads/watches/4/photo5.webp', 'watch', 31),
+
+-- Montre 32 (5) : Cartier Santos (Assigné à l'UTILISATEUR test Jean Peplu)
+('/uploads/watches/5/photo1.webp', 'watch', 32),
+('/uploads/watches/5/photo2.webp', 'watch', 32),
+('/uploads/watches/5/photo3.webp', 'watch', 32),
+('/uploads/watches/5/photo4.webp', 'watch', 32),
+('/uploads/watches/5/photo5.webp', 'watch', 32);
 
 /*!40000 ALTER TABLE `photo` ENABLE KEYS */;
 UNLOCK TABLES;

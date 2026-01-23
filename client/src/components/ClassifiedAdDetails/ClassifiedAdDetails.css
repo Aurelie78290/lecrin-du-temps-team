@@ -13,3 +13,7 @@
   border-right: 1px solid var(--border-color);
   padding-right: 1rem;
 }
+
+.DashboardPendingAdd-add {
+  cursor: pointer;
+}

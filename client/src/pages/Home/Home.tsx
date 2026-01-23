@@ -7,6 +7,7 @@ import logo from "../../../public/logo.svg";
 import watchImage from "../../assets/images/watchImage.png";
 import { useAuth } from "../../contexts/AuthContext";
 import api from "../../services/api";
+import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
   // const [email, setEmail] = useState("");
@@ -131,15 +132,24 @@ const Home: React.FC = () => {
                 </button>
               </div>
             </form>
-            <button
-              type="button"
-              onClick={() => setIsLogin(!isLogin)}
-              className="signup-link-btn"
-            >
-              {isLogin
-                ? "Je ne suis pas encore inscrit"
-                : "J'ai déjà un compte"}
-            </button>
+            <div className="options">
+              <button
+                type="button"
+                onClick={() => setIsLogin(!isLogin)}
+                className="signup-link-btn"
+              >
+                {isLogin ? "Créez votre compte" : "J'ai déjà un compte"}
+              </button>
+              {isLogin && (
+                <Link
+                  to="/forgot-password"
+                  title="Mot de passe oublié?"
+                  className="forgot-password-link"
+                >
+                  Mot de passe oublié?
+                </Link>
+              )}
+            </div>
           </div>
         </section>
       </main>

@@ -96,6 +96,45 @@ class UserRepository {
     );
     return result;
   }
+
+  //*** Reset du MDP ***//
+
+  //Stockage du token et son expiration //
+
+  async setResetToken(
+    email: string,
+    token: string,
+    expiry: Date,
+  ): Promise<Result> {
+    const [result] = await databaseClient.query<Result>(
+      "UPDATE user SET reset_token = ?, reset_token_expiry = ? WHERE e_mail = ?",
+      [token, expiry, email],
+    );
+    return result;
+  }
+
+  // Recherche d'un user par son token et check si token non expiré //
+
+  async findByResetToken(token: string): Promise<UserAccount | null> {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT iduser AS id, firstname, lastname, e_mail AS email, user_role AS role, password, birthdate, tel FROM user WHERE reset_token = ? AND reset_token_expiry > NOW()",
+      [token],
+    );
+    if (rows.length === 0) {
+      return null;
+    }
+    return rows[0] as UserAccount;
+  }
+
+  // Mise à jour du MDP et effacer le token //
+
+  async updatePassword(userId: number, passwordHash: string): Promise<Result> {
+    const [result] = await databaseClient.query<Result>(
+      "UPDATE user SET password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE iduser = ?",
+      [passwordHash, userId],
+    );
+    return result;
+  }
 }
 
 export default new UserRepository();
