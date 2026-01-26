@@ -2,17 +2,21 @@ import { useState } from "react";
 import api from "../../services/api";
 import "./ForgotPassword.css";
 
+// Composant pour le mot de passe oublié //
 const ForgotPassword = () => {
+  // Etats pour gérer l'email, le message de succès et les erreurs //
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
+  // Gestion de la soumission du formulaire //
   const handleSubmit = async (e: React.FormEvent) => {
+    // On empêche le rechargement de la page //
     e.preventDefault();
     setMessage("");
     setError("");
-
     try {
+      // On appelle l'API pour envoyer l'email de réinitialisation //
       await api.post("/api/forgot-password", { e_mail: email });
       setMessage(
         "Si cet email existe, un lien sera envoyé pour réinitialiser le mot de passe.",

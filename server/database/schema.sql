@@ -585,7 +585,7 @@ VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisber
 ('User', 'Toadmin', '', '', 'test4@test.com', 'user', '', '', '$2b$10$2SZrItauGHOPUnGBlZq8MOSotSiyGTfzIKU.d5fRYdO8JT3u8BYXK');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 INSERT INTO `user` (firstname, lastname, street_number, street, zip_code, city, birthdate, gender, user_type, tel, e_mail, newsletter, user_role, user_describe, password)
-VALUES ('jean', 'peplu','5','la grande plaine','17000','La Rochelle','2025-01-01','M.','Acheteur fortuné compulsif', '0606060606','jeanpeplu@user.fr','1','user','J''achete tout et surtout n''importe quoi avec la fortume dont j''ai hérité','$2b$10$9..xS04izXTA735IE9LER.tfMmCFwWstANMj4SVfsbsO98GEoFxlG);
+VALUES ('jean', 'peplu','5','la grande plaine','17000','La Rochelle','2025-01-01','M.','Acheteur fortuné compulsif', '0606060606','jeanpeplu@user.fr','1','user','J''achete tout et surtout n''importe quoi avec la fortume dont j''ai hérité','$2b$10$9..xS04izXTA735IE9LER.tfMmCFwWstANMj4SVfsbsO98GEoFxlG');
 UNLOCK TABLES;
 
 --

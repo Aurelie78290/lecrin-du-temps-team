@@ -20,6 +20,7 @@ export interface TeamMember {
 }
 
 class TeamMembersRepository {
+  // Pour lire tous les membres de l'équipe //
   async readAll(): Promise<TeamMember[]> {
     const [rows] = await databaseClient.query<Rows>(
       `SELECT
@@ -36,6 +37,7 @@ class TeamMembersRepository {
     return (rows as TeamMemberRow[]).map((row) => this.formatTeamMember(row));
   }
 
+  // Pour lire un membre de l'équipe via son ID //
   async read(id: number): Promise<TeamMember | null> {
     const [rows] = await databaseClient.query<Rows>(
       `SELECT
@@ -57,6 +59,7 @@ class TeamMembersRepository {
     return this.formatTeamMember(members[0]);
   }
 
+  // Pour formater le nommage SQL en JS //
   private formatTeamMember(row: TeamMemberRow): TeamMember {
     return {
       id: row.iduser,
@@ -68,6 +71,7 @@ class TeamMembersRepository {
     };
   }
 
+  // Pour créer un nouveau membre de l'équipe //
   async create(member: Omit<TeamMember, "id">): Promise<Result> {
     const [result] = await databaseClient.query<Result>(
       `INSERT INTO user (firstname, user_photo, user_describe, user_role, user_type)
@@ -83,9 +87,11 @@ class TeamMembersRepository {
     return result;
   }
 
+  // Pour mettre à jour un membre de l'équipe //
   async update(id: number, data: Partial<TeamMember>): Promise<Result> {
-    const fields: string[] = [];
-    const values: (string | number | null)[] = [];
+    // Partial permet de rendre tous les champs optionnels //
+    const fields: string[] = []; // Champs à mettre à jour //
+    const values: (string | number | null)[] = []; // Valeurs correspondantes //
 
     const mapping: Record<string, string> = {
       bio: "user_describe",
@@ -94,15 +100,18 @@ class TeamMembersRepository {
       role: "user_role",
     };
 
+    // On ne renvoit que les champs à mettre à jour //
     for (const [key, value] of Object.entries(data)) {
       if (value !== undefined && mapping[key]) {
         fields.push(`${mapping[key]} = ?`);
         values.push(value);
       }
     }
+    // Si aucun champ n'est à mettre à jour, on ne fait rien //
     if (fields.length === 0) return { affectedRows: 0 } as Result;
 
     values.push(id);
+    // Construction et exécution de la requête //
     const [result] = await databaseClient.query<Result>(
       `UPDATE user SET ${fields.join(", ")} WHERE iduser = ?`,
       values,
@@ -110,6 +119,7 @@ class TeamMembersRepository {
     return result;
   }
 
+  // Pour supprimer un membre de l'équipe //
   async delete(id: number): Promise<Result> {
     const [result] = await databaseClient.query<Result>(
       "DELETE FROM user WHERE iduser = ?",
