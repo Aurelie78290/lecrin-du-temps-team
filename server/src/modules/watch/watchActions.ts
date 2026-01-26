@@ -124,6 +124,7 @@ const add: RequestHandler = async (req, res, next) => {
     const newWatch = {
       brand_id: brandId,
       model_id: modelId,
+      user_id: userId,
       watch_price: req.body.watch_price ? Number(req.body.watch_price) : null,
       watch_condition: req.body.watch_condition || null,
     };

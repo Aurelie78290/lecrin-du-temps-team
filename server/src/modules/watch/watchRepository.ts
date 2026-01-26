@@ -4,6 +4,7 @@ import type { Result, Rows } from "../../../database/client";
 export type WatchCreateInput = {
   brand_id: number;
   model_id: number;
+  user_id: number;
   watch_price: number | null;
   watch_condition: string | null;
 };
@@ -94,12 +95,13 @@ class WatchRepository {
   async create(watch: WatchCreateInput) {
     const [result] = await databaseClient.query<Result>(
       `
-    INSERT INTO watch (brand_id, model_id, watch_price, watch_condition)
-    VALUES (?, ?, ?, ?)
+    INSERT INTO watch (brand_id, model_id, user_id, watch_price, watch_condition)
+    VALUES (?, ?, ?, ?, ?)
     `,
       [
         watch.brand_id,
         watch.model_id,
+        watch.user_id,
         watch.watch_price,
         watch.watch_condition,
       ],
@@ -123,9 +125,9 @@ class WatchRepository {
   }
 
   // Récupère les données pour le graphique (valeur cumulée)
-async getCollectionValueOverTime(userId: number) {
-  const [rows] = await databaseClient.query(
-    `
+  async getCollectionValueOverTime(userId: number) {
+    const [rows] = await databaseClient.query(
+      `
     SELECT 
       DATE(uhw.added_at) as date,
       SUM(w.watch_price) OVER (ORDER BY uhw.added_at) as cumulative_value
@@ -135,10 +137,10 @@ async getCollectionValueOverTime(userId: number) {
       AND w.watch_price IS NOT NULL
     ORDER BY uhw.added_at
     `,
-    [userId],
-  );
-  return rows;
-}
+      [userId],
+    );
+    return rows;
+  }
   // ======================
   // R - Read one (DETAILS)
   // ======================
