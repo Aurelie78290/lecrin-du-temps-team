@@ -428,6 +428,10 @@ VALUES (2, 3, 4000, 20251225, 2, 2),
 /*!40000 ALTER TABLE `order_archive` ENABLE KEYS */;
 UNLOCK TABLES;
 
+ALTER TABLE order_archive 
+ADD COLUMN stripe_session_id VARCHAR(255) NULL,
+ADD INDEX idx_stripe_session (stripe_session_id);
+
 --
 -- Table structure for table `photo`
 --

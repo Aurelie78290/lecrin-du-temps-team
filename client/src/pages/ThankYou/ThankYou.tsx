@@ -1,9 +1,106 @@
 import { CheckCircle, Home, Package } from "lucide-react";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router";
+import { useBasket } from "../../contexts/ShopContext";
+
 import "./ThankYou.css";
 
+type PaymentInfo = {
+  customerEmail: string;
+  amountTotal?: number;
+  delivery?: unknown;
+  paid: boolean;
+};
+
 function ThankYou() {
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { clearBasket } = useBasket();
+
+  const [status, setStatus] = useState<"loading" | "success" | "error">(
+    "loading",
+  );
+  const [paymentInfo, setPaymentInfo] = useState<PaymentInfo | null>(null);
+
+  useEffect(() => {
+    const verifyPayment = async () => {
+      const sessionId = searchParams.get("session_id");
+
+      if (!sessionId) {
+        setStatus("error");
+        return;
+      }
+
+      //vérification du paiement aurpès du backend
+      try {
+        const res = await fetch(
+          `http://localhost:3310/api/stripe/verify-payment/${sessionId}`,
+          {
+            credentials: "include",
+          },
+        );
+        const data = await res.json();
+
+        if (!data.paid) {
+          setStatus("error");
+          return;
+        }
+        setPaymentInfo(data);
+
+        // 2. Créer la commande dans order_archive
+        try {
+          const orderRes = await fetch(
+            "http://localhost:3310/api/orders/create-from-stripe",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: JSON.stringify({
+                sessionId,
+                delivery: data.delivery || {}, // Récupéré depuis la session Stripe
+              }),
+            },
+          );
+
+          if (!orderRes.ok) {
+            console.error("Erreur création commande");
+          }
+        } catch (err) {
+          console.error("Erreur:", err);
+        }
+
+        // vider le panier
+        await clearBasket();
+
+        setStatus("success");
+      } catch (err) {
+        console.error("Erreur vérification paiement:", err);
+        setStatus("error");
+      }
+    };
+    verifyPayment();
+  }, [searchParams, clearBasket]);
+
+  if (status === "loading") {
+    return (
+      <div>
+        <p>Vérification du paiement...</p>
+      </div>
+    );
+  }
+
+  if (status === "error") {
+    return (
+      <div>
+        <p>
+          Une erreur est survenue lors de la vérification de votre paiement.
+        </p>
+        <button type="button" onClick={() => navigate("/ShopPayment")}>
+          Réessayer
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="thankyou-page">
@@ -29,13 +126,20 @@ function ThankYou() {
                   Vous recevrez un email de confirmation sous quelques instants
                 </li>
                 <li>Votre montre sera préparée avec le plus grand soin</li>
-                <li>
-                  La livraison assurée sera effectuée dans les meilleurs délais
-                </li>
-                <li>
-                  Vous recevrez un numéro de suivi pour suivre votre colis
-                </li>
+                <li>La livraison sera effectuée dans les meilleurs délais</li>
               </ul>
+              {paymentInfo && (
+                <div className="thankYou-confirmation">
+                  <p>
+                    <strong>Email de confirmation :</strong>{" "}
+                    {paymentInfo.customerEmail}
+                  </p>
+                  <p>
+                    <strong>Montant payé :</strong>{" "}
+                    {paymentInfo.amountTotal?.toLocaleString("fr-FR")} €
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 

@@ -7,11 +7,37 @@ interface AuthenticatedRequest extends Express.Request {
 }
 
 // Créer une commande depuis le panier
-export const createOrder: RequestHandler = async (req, res, next) => {
+export const createOrderFromStripe: RequestHandler = async (req, res, next) => {
   try {
     const userId = (req as AuthenticatedRequest).user?.id;
     if (!userId) {
       res.status(401).json({ message: "Non authentifié" });
+      return;
+    }
+
+    const { sessionId } = req.body;
+
+    if (!sessionId) {
+      res.status(400).json({ message: "Session ID requis" });
+      return;
+    }
+
+    // Vérifier que la session n'a pas déjà créé une commande
+    // (pour éviter les doublons si l'utilisateur rafraîchit la page)
+    const existingOrder =
+      await orderArchiveRepository.findBySessionId(sessionId);
+    if (existingOrder) {
+      res.json({
+        message: "Commande déjà créée",
+        orderId: existingOrder.idorder,
+      });
+      return;
+    }
+
+    // Récupérer les infos de la session Stripe depuis les métadonnées
+    const { delivery } = req.body;
+    if (!delivery) {
+      res.status(400).json({ message: "Adresse requise" });
       return;
     }
 
@@ -21,17 +47,11 @@ export const createOrder: RequestHandler = async (req, res, next) => {
       return;
     }
 
-    const { delivery } = req.body;
-    if (!delivery) {
-      res.status(400).json({ message: "Adresse requise" });
-      return;
-    }
-
     const orderIds: number[] = [];
 
     for (const item of cartItems) {
       for (let i = 0; i < item.quantity; i++) {
-        const orderId = await orderArchiveRepository.addItem({
+        const result = await orderArchiveRepository.addItem({
           user_order_id: userId,
           user_saler_id: item.salerId ?? userId,
           price: item.watch_price,
@@ -40,9 +60,11 @@ export const createOrder: RequestHandler = async (req, res, next) => {
           street: delivery.street,
           zip_code: delivery.zip,
           city: delivery.city,
-          watch_id: item.idwatch, // ⭐ OBLIGATOIRE
+          watch_id: item.idwatch,
           user_iduser: userId,
+          stripe_session_id: sessionId,
         });
+        orderIds.push(result.insertId);
       }
     }
 

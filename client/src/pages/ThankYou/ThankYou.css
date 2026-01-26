@@ -114,6 +114,15 @@
   margin-bottom: 0;
 }
 
+.thankYou-confirmation {
+  margin-top: 0.95rem;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  font-size: 0.8rem;
+  color: var(--primary-color);
+}
+
 .thankyou-actions {
   display: flex;
   gap: 1rem;
