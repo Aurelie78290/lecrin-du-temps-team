@@ -27,32 +27,29 @@ export const createOrder: RequestHandler = async (req, res, next) => {
       return;
     }
 
-    // Créer une entrée temporaire pour générer idorder
-    const orderIdResult =
-      await orderArchiveRepository.createOrderHeader(userId);
-    const idorder = orderIdResult.insertId;
+    const orderIds: number[] = [];
 
-    //  Copier tous les articles du panier dans order_archive
     for (const item of cartItems) {
-      await orderArchiveRepository.addItem({
-        idorder,
-        user_saler_id: item.salerId ?? userId,
-        user_order_id: userId,
-        price: item.watch_price,
-        purchase_date: new Date(),
-        street_number: delivery.number ?? null,
-        street: delivery.street,
-        zip_code: delivery.zip,
-        city: delivery.city,
-        watch_id: item.idwatch,
-        user_iduser: userId,
-      });
+      for (let i = 0; i < item.quantity; i++) {
+        const orderId = await orderArchiveRepository.addItem({
+          user_order_id: userId,
+          user_saler_id: item.salerId ?? userId,
+          price: item.watch_price,
+          purchase_date: new Date(),
+          street_number: delivery.number ?? null,
+          street: delivery.street,
+          zip_code: delivery.zip,
+          city: delivery.city,
+          watch_id: item.idwatch, // ⭐ OBLIGATOIRE
+          user_iduser: userId,
+        });
+      }
     }
 
     //  Vider le panier
     await basketRepository.clearCart(userId);
 
-    res.status(201).json({ message: "Commande créée avec succès", idorder });
+    res.status(201).json({ message: "Commande créée avec succès", orderIds });
   } catch (err) {
     next(err);
   }

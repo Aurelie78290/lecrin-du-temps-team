@@ -7,7 +7,9 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 
 // Import the main app component
 import App from "./App";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
 import About from "./pages/About/About";
 import Cgu from "./pages/CGU/Cgu";
 import ClassifiedAd from "./pages/ClassifiedAd/ClassifiedAd";
@@ -16,16 +18,15 @@ import Contact from "./pages/Contact/Contact";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Error404 from "./pages/Error404/Error404";
 import Faq from "./pages/Faq/Faq";
-import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Home from "./pages/Home/Home";
 import Hub from "./pages/Hub/Hub";
 import LegalNotices from "./pages/LegalNotices/LegalNotices";
 import News from "./pages/News/News";
 import NewsDetails from "./pages/NewsDetails/NewsDetails";
-import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Shop from "./pages/Shop/Shop";
 import ShopPayment from "./pages/ShopPayment/ShopPayment";
 import ShopWatchIndex from "./pages/ShopWatchIndex/ShopWatchIndex";
+import ThankYou from "./pages/ThankYou/ThankYou";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
 import UserProfil from "./pages/UserProfil/UserProfil";
 // import UserProfil from "./pages/UserProfil/UserProfil";
@@ -140,6 +141,10 @@ const router = createBrowserRouter([
           {
             path: "/Accueil",
             element: <UserDashboard />,
+          },
+          {
+            path: "/ThankYou",
+            element: <ThankYou />,
           },
         ],
       },

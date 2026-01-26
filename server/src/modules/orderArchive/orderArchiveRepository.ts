@@ -1,5 +1,7 @@
 import databaseClient from "../../../database/client";
 
+import type { ResultSetHeader } from "mysql2/promise";
+
 export type OrderArchiveItem = {
   idorder?: number;
   user_saler_id: number;
@@ -14,13 +16,13 @@ export type OrderArchiveItem = {
   user_iduser: number;
 };
 
-const createOrderHeader = async (userId: number) => {
-  const [result] = await databaseClient.execute(
-    `INSERT INTO order_archive (user_saler_id, user_order_id, price, purchase_date, watch_id, user_iduser)
-     VALUES (?, ?, 0, NOW(), 0, ?)`,
+const createOrderHeader = async (userId: number): Promise<number> => {
+  const [result] = await databaseClient.execute<ResultSetHeader>(
+    `INSERT INTO order_archive (user_saler_id, user_order_id, price, purchase_date, user_iduser)
+     VALUES (?, ?, 0, NOW(), ?)`,
     [userId, userId, userId],
   );
-  return result as { insertId: number };
+  return result.insertId;
 };
 
 const addItem = async (item: OrderArchiveItem) => {
@@ -43,17 +45,17 @@ const addItem = async (item: OrderArchiveItem) => {
       (idorder, user_saler_id, user_order_id, price, purchase_date, street_number, street, zip_code, city, watch_id, user_iduser)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
-      idorder,
-      user_saler_id,
-      user_order_id,
-      price,
+      idorder ?? null,
+      user_saler_id ?? null,
+      user_order_id ?? null,
+      price ?? null,
       purchase_date ?? new Date(),
       street_number ?? null,
       street ?? null,
       zip_code ?? null,
       city ?? null,
-      watch_id,
-      user_iduser,
+      watch_id ?? null,
+      user_iduser ?? null,
     ],
   );
 };

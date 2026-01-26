@@ -87,19 +87,18 @@ function ShopPayment() {
       setLoading(true);
       setError(null);
 
+      const delivery = {
+        street: shippingAddress.street,
+        number: shippingAddress.streetNumber,
+        zip: shippingAddress.zipCode,
+        city: shippingAddress.city,
+      };
+
       const res = await fetch("http://localhost:3310/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({
-          shippingAddress,
-          billingAddress: billingAddress.sameAsShipping
-            ? shippingAddress
-            : billingAddress,
-          paymentMethod,
-          basket,
-          total,
-        }),
+        body: JSON.stringify({ delivery }),
       });
 
       if (!res.ok) {
@@ -109,7 +108,7 @@ function ShopPayment() {
 
       // Vider le panier côté front-end
       await clearBasket();
-      navigate("/thank-you");
+      navigate("/ThankYou");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erreur inconnue");
     } finally {
