@@ -8,6 +8,8 @@ interface UploadedFiles {
   certificate_image?: Express.Multer.File[];
 }
 
+type WatchWithStatus = { watch_sell_status?: string | null };
+
 type AuthedRequest = Request & { user?: { id: number; role: string } };
 
 const getUserIdOr401 = (req: Request, res: Response): number | null => {
@@ -18,6 +20,9 @@ const getUserIdOr401 = (req: Request, res: Response): number | null => {
   }
   return userId;
 };
+
+const isToValidate = (s?: string | null) =>
+  (s ?? "").toLowerCase().replace("à", "a").trim() === "A valider";
 
 // =======================
 // B - Browse (Read All)
@@ -172,7 +177,18 @@ const update: RequestHandler = async (req, res, next) => {
       res.sendStatus(400);
       return;
     }
+    const current = await watchRepository.read(watchId);
+    if (!current) {
+      res.sendStatus(404);
+      return;
+    }
 
+    if (isToValidate((current as WatchWithStatus).watch_sell_status)) {
+      res.status(403).json({
+        message: "Modification interdite : montre en cours de validation",
+      });
+      return;
+    }
     const files = req.files as UploadedFiles | undefined;
 
     // Helpers: multer => tout arrive en string
@@ -313,7 +329,18 @@ const destroy: RequestHandler = async (req, res, next) => {
       res.sendStatus(400);
       return;
     }
+    const current = await watchRepository.read(watchId);
+    if (!current) {
+      res.sendStatus(404);
+      return;
+    }
 
+    if (isToValidate((current as WatchWithStatus).watch_sell_status)) {
+      res.status(403).json({
+        message: "Suppression interdite : montre en cours de validation",
+      });
+      return;
+    }
     await watchRepository.deleteOrderArchiveByWatchId(watchId);
     await photoRepository.deleteByWatchId(watchId);
 
@@ -343,9 +370,50 @@ const removeFromCollection: RequestHandler = async (req, res, next) => {
       res.status(400).json({ message: "watchId requis" });
       return;
     }
+    const current = await watchRepository.read(watchId);
+    if (!current) {
+      res.sendStatus(404);
+      return;
+    }
 
+    if (isToValidate((current as WatchWithStatus).watch_sell_status)) {
+      res.status(403).json({
+        message: "Action interdite : montre en cours de validation",
+      });
+      return;
+    }
     await watchRepository.removeFromCollection(userId, watchId);
     res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// =======================
+// mettre en vente - demande d'approbation
+// =======================
+const requestSellApproval: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = getUserIdOr401(req, res);
+    if (!userId) return;
+
+    const watchId = Number(req.params.id);
+    if (Number.isNaN(watchId)) {
+      res.sendStatus(400);
+      return;
+    }
+
+    const updated = await watchRepository.updateById(watchId, {
+      watch_sell_status: "A valider",
+    });
+
+    if (!updated) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const fresh = await watchRepository.read(watchId);
+    res.status(200).json(fresh);
   } catch (err) {
     next(err);
   }
@@ -362,4 +430,5 @@ export default {
   removeFromCollection,
   getCollectionStats,
   browseForAdmin,
+  requestSellApproval,
 };
