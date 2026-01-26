@@ -166,7 +166,8 @@ export default function WatchDetails({
   const inShop = !!useMatch("/shop/:id");
   const inCollection = !!useMatch("/collection/:id");
   // const location = useLocation();
-  const watchId = Number(id);
+  const watchId = effectiveId;
+  if (!Number.isFinite(watchId)) return;
   const [watch, setWatch] = useState<WatchDetailsWithContext | null>(null);
   //pr la photo affichée en grand
   const [activePhoto, setActivePhoto] = useState<string | null>(null);
@@ -208,6 +209,38 @@ export default function WatchDetails({
       alert("Erreur lors de la suppression");
     }
   };
+  const handleRequestSell = async () => {
+    if (!watchId || !Number.isFinite(watchId)) return;
+
+    try {
+      // PATCH : demander la mise en vente
+      const res = await fetch(
+        `${API_URL}/api/watches/${watchId}/request-sell`,
+        {
+          method: "PATCH",
+          credentials: "include",
+        },
+      );
+
+      if (!res.ok) {
+        const body = await res.text().catch(() => "");
+        alert(`Erreur (${res.status}) : ${body || res.statusText}`);
+        return;
+      }
+
+      // Refetch la montre (pour avoir les données complètes)
+      const refreshed = await fetch(`${API_URL}/api/watches/${watchId}`, {
+        credentials: "include",
+      }).then((r) => r.json());
+
+      //  Merge avec l’ancienne watch
+      setWatch((prev) => (prev ? { ...prev, ...refreshed } : refreshed));
+    } catch (e) {
+      console.error(e);
+      alert("Erreur lors de la mise en vente");
+    }
+  };
+
   useEffect(() => {
     if (!effectiveId) return;
 
@@ -277,6 +310,7 @@ export default function WatchDetails({
 
     setBasketOpen(true);
   };
+  const isPending = watch.watch_sell_status === "A valider";
 
   return (
     <div className="watchdetails-page">
@@ -589,12 +623,16 @@ export default function WatchDetails({
               <section className="watchdetails-card watchdetails-actions">
                 {inCollection && (
                   <div className="watchdetails-actions">
+                    {isPending && (
+                      <div className="watchdetails-info">
+                        ⏳ En cours de validation, modification impossible
+                      </div>
+                    )}
                     <button
                       type="button"
                       className="watchdetails-sell"
-                      onClick={() =>
-                        console.log("Mettre en vente", watch.idwatch)
-                      }
+                      disabled={isPending}
+                      onClick={handleRequestSell}
                     >
                       Mettre en vente
                     </button>
@@ -602,6 +640,7 @@ export default function WatchDetails({
                     <button
                       type="button"
                       className="watchdetails-edit"
+                      disabled={isPending}
                       onClick={() =>
                         navigate(`/watches/${watch.idwatch}/edit`, {
                           state: {
@@ -617,6 +656,7 @@ export default function WatchDetails({
                     <button
                       type="button"
                       className="watchdetails-delete"
+                      disabled={isPending}
                       onClick={handleDelete}
                     >
                       {inCollection ? "Retirer de la collection" : "Supprimer"}
