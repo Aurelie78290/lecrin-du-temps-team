@@ -394,10 +394,6 @@ export default function WatchDetails({
                   <dt>GENRE</dt>
                   <dd>{formatValue(watch.watch_gender)}</dd>
                 </div>
-                <div>
-                  <dt>STATUT DE VENTE</dt>
-                  <dd>{formatValue(watch.watch_sell_status)}</dd>
-                </div>
 
                 <div>
                   <dt>ETAT</dt>
@@ -423,6 +419,26 @@ export default function WatchDetails({
             <div className="watchdetails-card-w40">
               <section className="watchdetails-card">
                 <h2 className="watchdetails-section-title">Certificat</h2>
+
+                {watch.certificates?.length ? (
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                    {watch.certificates.map((c) => (
+                      <img
+                        key={c}
+                        src={`${API_URL}${c}`}
+                        alt="Certificat"
+                        style={{
+                          width: 120,
+                          height: 120,
+                          objectFit: "cover",
+                          borderRadius: 10,
+                        }}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="watchdetails-empty">Aucun certificat</div>
+                )}
               </section>
             </div>
             <div className="watchdetails-card-w50">
