@@ -6,7 +6,7 @@ import {
   useNavigate,
   useParams,
 } from "react-router";
-import "../WatchDetails/WatchDetails.css"; // ✅ on réutilise EXACTEMENT le CSS de WatchDetails
+import "../WatchDetails/WatchDetails.css";
 
 // ============================
 // TYPES (alignés WatchDetails)
@@ -151,8 +151,7 @@ export default function WatchEdit() {
   const { id } = useParams();
   const watchId = Number(id);
 
-  const inCollection = !!useMatch("/collection/:id"); // même logique que WatchDetails
-  // const inShop = !!useMatch("/shop/:id"); // pas utilisé ici mais ok
+  const inCollection = !!useMatch("/collection/:id");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -231,7 +230,6 @@ export default function WatchEdit() {
   // LOAD LOOKUPS
   // ============================
   useEffect(() => {
-    // ⚠️ si tu n'as pas ces routes, regarde la section "BACKEND ROUTES" plus bas
     Promise.all([
       fetch(`${API_URL}/api/lookups/brands`).then((r) => r.json()),
       fetch(`${API_URL}/api/lookups/case-materials`).then((r) => r.json()),
@@ -552,6 +550,11 @@ export default function WatchEdit() {
       if (certificateImage)
         formData.append("certificate_image", certificateImage);
 
+      //       console.log("=== WATCHEDIT FORM DATA ===");
+      // for (const [k, v] of formData.entries()) {
+      //   console.log(k, v);
+      // }
+      console.log("=== END ===");
       const res = await fetch(`${API_URL}/api/watches/${watchId}`, {
         method: "PUT",
         credentials: "include",
@@ -563,7 +566,6 @@ export default function WatchEdit() {
         throw new Error(bodyText || `Erreur update (${res.status})`);
       }
 
-      // ✅ retour vers la bonne page
       navigate(
         from === "collection" || inCollection
           ? `/collection/${watchId}`
@@ -806,17 +808,6 @@ export default function WatchEdit() {
                   </div>
 
                   <div>
-                    <dt>STATUT DE VENTE</dt>
-                    <dd>
-                      <input
-                        value={watchSellStatus}
-                        onChange={(e) => setWatchSellStatus(e.target.value)}
-                        placeholder="En vente / A valider / Vendu ..."
-                      />
-                    </dd>
-                  </div>
-
-                  <div>
                     <dt>ETAT</dt>
                     <dd>
                       <input
@@ -872,15 +863,12 @@ export default function WatchEdit() {
               </section>
             </div>
 
-            {/* Deuxième “page” (comme WatchDetails) */}
             <div className="watchdetails-100vhMax">
               <div className="watchdetails-layout-flex">
-                {/* Certificat (section vide dans Details) */}
                 <div className="watchdetails-card-w40">
                   <section className="watchdetails-card">
                     <h2 className="watchdetails-section-title">Certificat</h2>
 
-                    {/* Affichage images certificat existantes */}
                     {watch.certificates?.length ? (
                       <div
                         style={{ display: "flex", flexWrap: "wrap", gap: 10 }}
