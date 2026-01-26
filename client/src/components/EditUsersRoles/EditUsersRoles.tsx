@@ -14,10 +14,11 @@ interface User {
   tel: string;
 }
 
+// Composant pour gérer les utilisateurs //
 const UserManagement = () => {
-  const { user: currentUser, loading: authLoading } = useAuth();
-  const [users, setUsers] = useState<User[]>([]);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const { user: currentUser, loading: authLoading } = useAuth(); // Contexte d'authentification //
+  const [users, setUsers] = useState<User[]>([]); // Liste des utilisateurs //
+  const [selectedUser, setSelectedUser] = useState<User | null>(null); // Utilisateur sélectionné pour voir les infos //
   const fetchUsers = useCallback(async () => {
     try {
       const res = await api.get("/api/users");
@@ -27,26 +28,31 @@ const UserManagement = () => {
     }
   }, []);
 
+  // On charge les utilisateurs au montage du composant //
   useEffect(() => {
     if (!authLoading) {
       fetchUsers();
     }
   }, [fetchUsers, authLoading]);
 
+  // Pour changer le rôle d'un utilisateur //
   const handleRoleChange = async (id: number, newRole: string) => {
     try {
+      // On appelle l'API pour la mise a jour //
       await api.put(`/api/users/${id}/role`, { role: newRole });
-      fetchUsers();
+      fetchUsers(); // On recharge la liste des utilisateurs //
     } catch (err) {
-      alert("Errerur lors du changement de rôle");
+      alert("Erreur lors du changement de rôle");
     }
   };
 
+  // Pour supprimer un utilisateur //
   const handleDeleteUser = async (id: number) => {
     if (
       window.confirm("Etes-vous surs de vouloir supprimer cet utilisateur ?")
     ) {
       try {
+        // On appelle l'API pour la suppression //
         await api.delete("/api/users", { data: { idToDelete: id } });
         fetchUsers();
       } catch (err) {

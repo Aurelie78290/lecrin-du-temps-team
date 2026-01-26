@@ -45,14 +45,14 @@ const login: RequestHandler = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    // Récuperer le user //
+    // On récupère le user //
     const user = await userRepository.findByEmail(email);
     if (user == null || !user.password) {
       res.status(401).json({ message: "Identifiants incorrects" });
       return;
     }
 
-    // Comparaison du MDP avec BCRYPT //
+    // On compare le MDP avec BCRYPT //
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       res.status(401).json({ message: "Identifiants incorrects" });
@@ -71,10 +71,10 @@ const login: RequestHandler = async (req, res, next) => {
 
     // Envoi du cookie sécurisé, donc pas visible coté client //
     res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 3600000 * 10, // pour 1h //
+      httpOnly: true, // Empêche l'accès au cookie via JS côté client //
+      secure: process.env.NODE_ENV === "production", // Seulement en HTTPS //
+      sameSite: "strict", // Pour éviter les attaques CSRF //
+      maxAge: 3600000 * 10, // pour 10h //
     });
 
     // Renvoi des infos au front //
@@ -126,8 +126,8 @@ interface AuthRequest extends Request {
 const edit: RequestHandler = async (req, res, next) => {
   try {
     const { firstname, lastname, email, birthdate, tel } = req.body;
-    const authReq = req as AuthRequest;
-    const userId = authReq.user?.id;
+    const authReq = req as AuthRequest; // On définit le type de requête via le authMiddleware //
+    const userId = authReq.user?.id; // Récupère l'ID de l'utilisateur via son token //
 
     if (!userId) {
       res.sendStatus(401);

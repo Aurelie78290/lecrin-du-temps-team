@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
+// Interface pour le payload du token //
 interface UserPayload {
   id: number;
   role: string;
@@ -8,28 +9,31 @@ interface UserPayload {
 
 // Pour récupere le cookie appelé "token" //
 const isAuth = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.cookies?.token;
+  // Middleware d'authentification //
+  const token = req.cookies?.token; // Récupération du token dans les cookies //
 
   if (!token) {
-    res.sendStatus(401); // pas de token pas d'accès //
+    // Si pas de token //
+    res.sendStatus(401); // Pas de token pas d'accès //
     return;
   }
 
   try {
-    const secret = process.env.APP_SECRET;
+    const secret = process.env.APP_SECRET; // On récupère la clé secrète //
     if (!secret) {
-      throw new Error("APP_SECRET is not defined");
+      // Si pas de clé //
+      throw new Error("APP_SECRET is not defined"); // On lance une erreur //
     }
 
     // Décodage du token //
     const decoded = jwt.verify(token, secret) as UserPayload;
 
-    // on met les infos du user dans le req pour les prochaines actions //
+    // On met les infos du user dans le req pour les prochaines actions //
     (req as Request & { user: UserPayload }).user = decoded;
 
-    next();
+    next(); // Tout est bon on passe à la suite //
   } catch (err) {
-    res.clearCookie("token");
+    res.clearCookie("token"); // Si le token est invalide on le supprime //
     res.sendStatus(401);
   }
 };

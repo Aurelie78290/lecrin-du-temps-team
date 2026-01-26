@@ -42,26 +42,27 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     checkUser();
   }, []);
 
-  const login = (userData: User) => setUser(userData);
+  const login = (userData: User) => setUser(userData); // On met à jour le user lors du login //
   const logout = async () => {
     try {
       await api.get("/api/logout"); // Appel du server pour delete le cookie //
-      setUser(null);
+      setUser(null); // On met le user à null //
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
+    // On fournit le contexte d'authentification aux composants enfants //
     <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
 };
-
+// Hook personnalisé pour utiliser le contexte d'authentification //
 const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be within AuthProvider");
+  const context = useContext(AuthContext); //  On récupère le contexte //
+  if (!context) throw new Error("useAuth must be within AuthProvider"); // On s'assure que le hook est utilisé dans le bon contexte //
   return context;
 };
 
