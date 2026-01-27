@@ -21,7 +21,7 @@ type WatchDetailsDTO = {
   edition_number?: string | number | null;
 
   watch_gender?: string | null;
-  watch_sell_status?: string | null;
+  watch_sell_status?: "personal" | "pending" | "active" | null;
 
   diameter_mm?: number | null;
   thickness_mm?: number | null;

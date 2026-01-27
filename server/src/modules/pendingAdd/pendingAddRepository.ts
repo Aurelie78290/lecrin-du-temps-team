@@ -90,7 +90,7 @@ class pendingAdd {
       JOIN brand b ON b.id = w.brand_id
       JOIN model m ON m.id = w.model_id
       JOIN user u ON u.iduser = w.user_id
-      WHERE w.watch_sell_status = 'A valider';
+      WHERE w.watch_sell_status = 'pending';
     `,
     );
 
@@ -105,7 +105,7 @@ class pendingAdd {
       watch_sell_status, 
       COUNT(*) AS total
       FROM watch
-      WHERE watch_sell_status IN ('A valider', 'Refusée', 'En vente')
+      WHERE watch_sell_status IN ('pending', 'active', 'personal')
       GROUP BY watch_sell_status;`,
     );
 

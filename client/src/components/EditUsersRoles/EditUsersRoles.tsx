@@ -12,6 +12,7 @@ interface User {
   role: string;
   birthdate: string;
   tel: string;
+  last_login?: string | null;
 }
 
 const UserManagement = () => {
@@ -20,7 +21,7 @@ const UserManagement = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const fetchUsers = useCallback(async () => {
     try {
-      const res = await api.get("/api/users");
+      const res = await api.get("/api/admin/users-stats");
       setUsers(res.data);
     } catch (err) {
       console.error("Erreur de chargement", err);
@@ -38,7 +39,7 @@ const UserManagement = () => {
       await api.put(`/api/users/${id}/role`, { role: newRole });
       fetchUsers();
     } catch (err) {
-      alert("Errerur lors du changement de rôle");
+      alert("Erreur lors du changement de rôle");
     }
   };
 

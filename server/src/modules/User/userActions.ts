@@ -4,6 +4,7 @@ import type { Request, RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 import userRepository from "./userRepository";
 import { sendResetPasswordEmail } from "../../services/mailer";
+import { get } from "node:http";
 
 // Ajout pour une inscription //
 const add: RequestHandler = async (req, res, next) => {
@@ -58,6 +59,7 @@ const login: RequestHandler = async (req, res, next) => {
       res.status(401).json({ message: "Identifiants incorrects" });
       return;
     }
+    await userRepository.updateLastLogin(user.id); // Met a jour la date de dernière connexion //
 
     // Pour créer le TOKEN //
     const secret = process.env.APP_SECRET;
@@ -73,8 +75,8 @@ const login: RequestHandler = async (req, res, next) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 3600000 * 10, // pour 1h //
+      sameSite: "strict", // Pour éviter les attaques CSRF //
+      maxAge: 3600000 * 10, // Pour 10h //
     });
 
     // Renvoi des infos au front //
@@ -228,6 +230,16 @@ const resetPassword: RequestHandler = async (req, res, next) => {
   }
 };
 
+// Pour récupere le status des montres des users //
+const getUserWatchStatus: RequestHandler = async (req, res, next) => {
+  try {
+    const stats = await userRepository.getUserWatchStatus();
+    res.json(stats);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   login,
   checkAuth,
@@ -236,4 +248,5 @@ export default {
   logout,
   forgotPassword,
   resetPassword,
+  getUserWatchStatus,
 };

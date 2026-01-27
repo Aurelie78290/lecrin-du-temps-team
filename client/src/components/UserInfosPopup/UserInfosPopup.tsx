@@ -9,6 +9,7 @@ interface Watch {
   watch_price: number | null;
   watch_condition: string | null;
   photo_url: string | null;
+  watch_sell_status: "personal" | "pending" | "active";
 }
 
 interface User {
@@ -19,6 +20,7 @@ interface User {
   tel: string;
   role: string;
   birthdate: string;
+  last_login?: string | null;
 }
 
 interface UserInfosPopupProps {
@@ -78,6 +80,20 @@ const UserInfosPopup = ({ user, onClose }: UserInfosPopupProps) => {
         {view === "infos" ? (
           <>
             <div className="popup-body">
+              <p className="infos">
+                <span className="label">Dernière connexion:</span>
+                <span className="value">
+                  {user.last_login
+                    ? new Date(user.last_login).toLocaleString("fr-FR", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })
+                    : "Jamais connecté"}
+                </span>
+              </p>
               <p className="infos">
                 <span className="label">Prénom:</span>
                 <span className="value">
@@ -153,6 +169,15 @@ const UserInfosPopup = ({ user, onClose }: UserInfosPopupProps) => {
                             }
                             alt={w.model}
                           />
+                          <span
+                            className={`watch-status ${w.watch_sell_status}`}
+                          >
+                            {w.watch_sell_status === "active"
+                              ? "En vente"
+                              : w.watch_sell_status === "pending"
+                                ? "En attente de validation"
+                                : "Personnel"}
+                          </span>
                         </div>
                         <div className="watch-details">
                           <span className="watch-brand">{w.brand}</span>

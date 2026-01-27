@@ -121,6 +121,7 @@ const add: RequestHandler = async (req, res, next) => {
       model_id: modelId,
       watch_price: req.body.watch_price ? Number(req.body.watch_price) : null,
       watch_condition: req.body.watch_condition || null,
+      watch_sell_status: "personal",
     };
 
     // 1) créer la montre
