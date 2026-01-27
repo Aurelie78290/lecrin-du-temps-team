@@ -190,10 +190,27 @@ router.delete("/api/cart/items/:watchId", isAuth, basketActions.remove);
 router.delete("/api/cart", isAuth, basketActions.clear);
 
 /* ************************************************************************* */
+// Define stripe payment routes
+
+import stripeActions from "./modules/stripe/stripeActions";
+
+router.post(
+  "/api/stripe/create-checkout-session",
+  isAuth,
+  stripeActions.createCheckoutSession,
+);
+router.get(
+  "/api/stripe/verify-payment/:sessionId",
+  isAuth,
+  stripeActions.verifyPayment,
+);
+router.post("/api/stripe/webhook", stripeActions.handleWebhook);
+
+/* ************************************************************************* */
 // Define order routes
 
-import { createOrder } from "./modules/orderArchive/orderArchiveActions";
+import { createOrderFromStripe } from "./modules/orderArchive/orderArchiveActions";
 
-router.post("/api/orders", isAuth, createOrder);
+router.post("/api/orders/create-from-stripe", isAuth, createOrderFromStripe);
 
 export default router;

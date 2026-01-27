@@ -1,0 +1,229 @@
+.thankyou-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.thankyou-container {
+  width: 100%;
+  max-width: 700px;
+}
+
+.thankyou-card {
+  background: var(--accent-color);
+  border-radius: 1rem;
+  padding: 3rem 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Icône de succès */
+.thankyou-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  background: var(--primary-color);
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  animation: scaleIn 0.6s ease-out 0.2s both;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.thankyou-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--text-color);
+}
+
+.thankyou-title {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin: 0 0 1rem 0;
+  font-weight: 800;
+}
+
+.thankyou-message {
+  font-size: 1rem;
+  color: var(--primary-color);
+  margin: 0 0 2rem 0;
+  line-height: 1.6;
+}
+
+.thankyou-info-box {
+  background: var(--border-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+  text-align: left;
+}
+
+.thankyou-info-icon {
+  width: 2rem;
+  height: 2rem;
+  color: var(--primary-color);
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.thankyou-info-text h3 {
+  font-size: 1.12rem;
+  color: var(--primary-color);
+  margin: 0 0 0.75rem 0;
+  font-weight: 600;
+}
+
+.thankyou-info-text ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--primary-color);
+}
+
+.thankyou-info-text li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.thankyou-info-text li:last-child {
+  margin-bottom: 0;
+}
+
+.thankYou-confirmation {
+  margin-top: 0.95rem;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  font-size: 0.8rem;
+  color: var(--primary-color);
+}
+
+.thankyou-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.thankyou-button {
+  flex: 1;
+  min-width: 200px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.thankyou-button-primary {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.thankyou-button-primary:hover {
+  background-color: var(--border-color);
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(180, 83, 9, 0.3);
+}
+
+.thankyou-button-secondary {
+  background-color: var(--border-color);
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.thankyou-button-secondary:hover {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(180, 83, 9, 0.2);
+}
+
+.thankyou-button-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.thankyou-footer {
+  font-size: 0.875rem;
+  color: var(--primary-color);
+  margin: 0;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.thankyou-footer a {
+  color: var(--bonus-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.thankyou-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .thankyou-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .thankyou-title {
+    font-size: 1.5rem;
+  }
+
+  .thankyou-message {
+    font-size: 1rem;
+  }
+
+  .thankyou-actions {
+    flex-direction: column;
+  }
+
+  .thankyou-button {
+    min-width: 100%;
+  }
+
+  .thankyou-info-box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .thankyou-info-text {
+    text-align: left;
+  }
+}
