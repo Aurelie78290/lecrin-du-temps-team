@@ -449,7 +449,7 @@ const cancelSellApproval: RequestHandler = async (req, res, next) => {
     }
 
     const updated = await watchRepository.updateById(watchId, {
-      watch_sell_status: null,
+      watch_sell_status: "personal",
     });
 
     if (!updated) {
@@ -489,7 +489,7 @@ const removeFromSale: RequestHandler = async (req, res, next) => {
     }
 
     const updated = await watchRepository.updateById(watchId, {
-      watch_sell_status: null,
+      watch_sell_status: "personal",
     });
 
     if (!updated) {
