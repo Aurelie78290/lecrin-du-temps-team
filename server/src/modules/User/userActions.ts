@@ -46,14 +46,14 @@ const login: RequestHandler = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    // Récuperer le user //
+    // On récupère le user //
     const user = await userRepository.findByEmail(email);
     if (user == null || !user.password) {
       res.status(401).json({ message: "Identifiants incorrects" });
       return;
     }
 
-    // Comparaison du MDP avec BCRYPT //
+    // On compare le MDP avec BCRYPT //
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       res.status(401).json({ message: "Identifiants incorrects" });
@@ -128,8 +128,8 @@ interface AuthRequest extends Request {
 const edit: RequestHandler = async (req, res, next) => {
   try {
     const { firstname, lastname, email, birthdate, tel } = req.body;
-    const authReq = req as AuthRequest;
-    const userId = authReq.user?.id;
+    const authReq = req as AuthRequest; // On définit le type de requête via le authMiddleware //
+    const userId = authReq.user?.id; // Récupère l'ID de l'utilisateur via son token //
 
     if (!userId) {
       res.sendStatus(401);

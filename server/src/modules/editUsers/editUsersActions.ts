@@ -1,6 +1,7 @@
 import editUsersRepository from "./editUsersRepository";
 import type { RequestHandler, Request } from "express";
 
+// Pour définir le type de requête avec l'authMiddleware //
 interface AuthRequest extends Request {
   auth?: { id: number; role: string };
 }
@@ -31,14 +32,14 @@ const destroy: RequestHandler = async (req, res, next) => {
   try {
     const { idToDelete } = req.body;
     const authReq = req as AuthRequest;
-    const userIdFromTken = authReq.auth?.id;
+    const userIdFromToken = authReq.auth?.id; // Permet de récupérer l'ID de l'utilisateur via son token //
 
     if (!idToDelete) {
       res.status(400).send("ID de l'utilisateur manquant");
       return;
     }
-
-    if (Number(idToDelete) === userIdFromTken) {
+    // Pour empêcher un utilisateur de supprimer son propre compte //
+    if (Number(idToDelete) === userIdFromToken) {
       res.status(403).send("Vous ne pouvez pas supprimer votre propre compte.");
       return;
     }

@@ -4,6 +4,7 @@ import type { Result, Rows } from "../../../database/client";
 export type WatchCreateInput = {
   brand_id: number;
   model_id: number;
+  user_id: number;
   watch_price: number | null;
   watch_condition: string | null;
 };
@@ -100,6 +101,7 @@ class WatchRepository {
       [
         watch.brand_id,
         watch.model_id,
+        watch.user_id,
         watch.watch_price,
         watch.watch_condition,
       ],

@@ -63,6 +63,11 @@ import watchActions from "./modules/watch/watchActions";
 
 router.get("/api/watches", watchActions.browse);
 router.get("/api/watches/:id", watchActions.read);
+router.patch(
+  "/api/watches/:id/request-sell",
+  isAuth,
+  watchActions.requestSellApproval,
+);
 
 router.get("/api/shop/watches", watchActions.browseShop);
 router.get("/api/collection/watches", isAuth, watchActions.browseCollection);
@@ -176,6 +181,14 @@ router.put("/api/users/:id/role", editUsersActions.update);
 router.delete("/api/users", editUsersActions.destroy);
 
 /* ************************************************************************* */
+// Define Favorite routes
+
+import favoriteActions from "./modules/favorite/favoriteActions";
+
+router.get("/api/favorites", isAuth, favoriteActions.browse);
+router.post("/api/favorites/:watchId", isAuth, favoriteActions.toggle);
+
+/* ************************************************************************* */
 // Define Basket routes
 
 import basketActions from "./modules/basket/basketActions";
@@ -186,10 +199,27 @@ router.delete("/api/cart/items/:watchId", isAuth, basketActions.remove);
 router.delete("/api/cart", isAuth, basketActions.clear);
 
 /* ************************************************************************* */
+// Define stripe payment routes
+
+import stripeActions from "./modules/stripe/stripeActions";
+
+router.post(
+  "/api/stripe/create-checkout-session",
+  isAuth,
+  stripeActions.createCheckoutSession,
+);
+router.get(
+  "/api/stripe/verify-payment/:sessionId",
+  isAuth,
+  stripeActions.verifyPayment,
+);
+router.post("/api/stripe/webhook", stripeActions.handleWebhook);
+
+/* ************************************************************************* */
 // Define order routes
 
-import { createOrder } from "./modules/orderArchive/orderArchiveActions";
+import { createOrderFromStripe } from "./modules/orderArchive/orderArchiveActions";
 
-router.post("/api/orders", isAuth, createOrder);
+router.post("/api/orders/create-from-stripe", isAuth, createOrderFromStripe);
 
 export default router;
