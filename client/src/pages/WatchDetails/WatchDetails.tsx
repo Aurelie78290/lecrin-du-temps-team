@@ -310,7 +310,7 @@ export default function WatchDetails({
 
     setBasketOpen(true);
   };
-  const isPending = watch.watch_sell_status === "A valider";
+  const isPending = watch.watch_sell_status === "pending";
 
   return (
     <div className="watchdetails-page">
@@ -621,7 +621,7 @@ export default function WatchDetails({
             {/* On masque le retour seulement si isReadOnly est vrai (en mode validation d'annonce)*/}
             {!isReadOnly && (
               <section className="watchdetails-card watchdetails-actions">
-                {inCollection && (
+                {inCollection && inCollection && (
                   <div className="watchdetails-actions">
                     {isPending && (
                       <div className="watchdetails-info">

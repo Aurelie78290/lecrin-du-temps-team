@@ -7,6 +7,7 @@ export type WatchCreateInput = {
   user_id: number;
   watch_price: number | null;
   watch_condition: string | null;
+  watch_sell_status: string;
 };
 
 export type WatchListItem = {
@@ -16,6 +17,7 @@ export type WatchListItem = {
   watch_price: number | null;
   watch_condition: string | null;
   photo_url: string | null;
+  watch_sell_status?: string;
 };
 
 export type WatchDetails = {
@@ -95,8 +97,8 @@ class WatchRepository {
   async create(watch: WatchCreateInput) {
     const [result] = await databaseClient.query<Result>(
       `
-    INSERT INTO watch (brand_id, model_id, watch_price, watch_condition, watch_sell_status)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO watch (brand_id, model_id, user_id, watch_price, watch_condition, watch_sell_status)
+    VALUES (?, ?, ?, ?, ?, ?)
     `,
       [
         watch.brand_id,
@@ -104,6 +106,7 @@ class WatchRepository {
         watch.user_id,
         watch.watch_price,
         watch.watch_condition,
+        watch.watch_sell_status ?? "pending",
       ],
     );
 
@@ -251,6 +254,7 @@ SELECT
   m.name AS model,
   w.watch_price,
   w.watch_condition,
+  w.watch_sell_status,
   (
     SELECT url
     FROM photo

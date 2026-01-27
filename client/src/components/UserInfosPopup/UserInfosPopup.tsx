@@ -51,6 +51,11 @@ const UserInfosPopup = ({ user, onClose }: UserInfosPopupProps) => {
     }
   }, [view, user.id]);
 
+  console.log(
+    "PROPRIÉTÉS RÉELLES :",
+    watches[0] ? Object.keys(watches[0]) : "pas de montre",
+  );
+
   return (
     <div
       className="popup-overlay"
@@ -172,11 +177,11 @@ const UserInfosPopup = ({ user, onClose }: UserInfosPopupProps) => {
                           <span
                             className={`watch-status ${w.watch_sell_status}`}
                           >
-                            {w.watch_sell_status === "active"
-                              ? "En vente"
-                              : w.watch_sell_status === "pending"
-                                ? "En attente de validation"
-                                : "Personnel"}
+                            {{
+                              active: "En vente",
+                              pending: "En attente",
+                              personal: "Collection",
+                            }[w.watch_sell_status] || "Statut inconnu"}
                           </span>
                         </div>
                         <div className="watch-details">

@@ -406,7 +406,7 @@ const requestSellApproval: RequestHandler = async (req, res, next) => {
     }
 
     const updated = await watchRepository.updateById(watchId, {
-      watch_sell_status: "A valider",
+      watch_sell_status: "pending",
     });
 
     if (!updated) {
