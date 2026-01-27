@@ -46,6 +46,33 @@
   font-size: 12px;
 }
 
+.watch-card-fav {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  background: color-mix(in srgb, var(--primary-color) 70%, transparent);
+  backdrop-filter: blur(6px);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--secondary-color);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.watch-card-fav:hover {
+  transform: scale(1.15);
+}
+
+.watch-card-fav.is-fav {
+  color: #e74c3c;
+}
+
 .watch-card-body {
   padding: 14px;
   display: flex;

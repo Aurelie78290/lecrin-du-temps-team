@@ -64,6 +64,7 @@ function Navbar({
               <span>Accueil</span>
             </Link>
           </li>
+
           <li className={isActive("/Collection") ? "active" : ""}>
             {user?.role === "admin" ? (
               <Link to="/ClassifiedAd" onClick={() => setExpanded(false)}>
@@ -81,7 +82,19 @@ function Navbar({
               </Link>
             )}
           </li>
-          <li className={isActive("/Shop") ? "active" : ""}>
+
+          {user?.role === "admin" && (
+            <li className={isActive("/Shop") ? "active" : ""}>
+              <Link to="/" onClick={() => setExpanded(false)}>
+                <div className="icon-wrapper">
+                  <img src={handbag} alt="" />
+                </div>
+                <span>Transactions</span>
+              </Link>
+            </li>
+          )}
+
+          <li>
             <Link to="/Shop" onClick={() => setExpanded(false)}>
               <div className="icon-wrapper">
                 <img src={handbag} alt="" />
@@ -89,37 +102,58 @@ function Navbar({
               <span>Boutique</span>
             </Link>
           </li>
+
           <li className={isActive("/News") ? "active" : ""}>
             <Link to="/News" onClick={() => setExpanded(false)}>
               <div className="icon-wrapper">
                 <img src={book} alt="" />
               </div>
-              <span>Articles</span>
+              <span>Actualités</span>
             </Link>
           </li>
+
           <li className={isActive("/UserProfil") ? "active" : ""}>
-            <Link to="/UserProfil" onClick={() => setExpanded(false)}>
-              <div className="icon-wrapper">
-                <img src={person} alt="" />
-              </div>
-              <span>Profil</span>
-            </Link>
+            {user?.role === "admin" ? (
+              <Link to="/UserProfil" onClick={() => setExpanded(false)}>
+                <div className="icon-wrapper">
+                  <img src={person} alt="" />
+                </div>
+                <span>Utilisateurs</span>
+              </Link>
+            ) : (
+              <Link to="/UserProfil" onClick={() => setExpanded(false)}>
+                <div className="icon-wrapper">
+                  <img src={person} alt="" />
+                </div>
+                <span>Profil</span>
+              </Link>
+            )}
           </li>
+
           <li className={isActive("/Contact") ? "active" : ""}>
-            <Link to="/Contact" onClick={() => setExpanded(false)}>
-              <div className="icon-wrapper">
-                <img src={envelope} alt="" />
-              </div>
-              <span>Contact</span>
-            </Link>
+            {user?.role === "admin" ? (
+              <div />
+            ) : (
+              <Link to="/Contact" onClick={() => setExpanded(false)}>
+                <div className="icon-wrapper">
+                  <img src={envelope} alt="" />
+                </div>
+                <span>Contact</span>
+              </Link>
+            )}
           </li>
-          <li className={isActive("/About") ? "active" : ""}>
-            <Link to="/About" onClick={() => setExpanded(false)}>
-              <div className="icon-wrapper">
-                <img src={info} alt="" />
-              </div>
-              <span>A propos</span>
-            </Link>
+
+          <li className={isActive("/Collection") ? "active" : ""}>
+            {user?.role === "admin" ? (
+              <div />
+            ) : (
+              <Link to="/About" onClick={() => setExpanded(false)}>
+                <div className="icon-wrapper">
+                  <img src={info} alt="" />
+                </div>
+                <span>A propos</span>
+              </Link>
+            )}
           </li>
         </ul>
 

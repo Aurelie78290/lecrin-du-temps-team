@@ -1,4 +1,7 @@
+import { Heart } from "lucide-react";
 import { Link } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
+import { useFavorites } from "../../contexts/FavoriteContext";
 import "./WatchCard.css";
 
 export type Watch = {
@@ -23,6 +26,9 @@ export default function WatchCard({
   apiBaseUrl,
   context,
 }: WatchCardProps) {
+  const { user } = useAuth();
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const favorited = isFavorite(watch.idwatch);
   const cover = watch.photo_url;
 
   const price =
@@ -40,6 +46,23 @@ export default function WatchCard({
       <article className="watch-card">
         <div className="watch-card-media">
           <span className="watch-card-badge">En vente</span>
+
+          {user && (
+            <button
+              type="button"
+              className={`watch-card-fav ${favorited ? "is-fav" : ""}`}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleFavorite(watch.idwatch);
+              }}
+            >
+              <Heart
+                size={20}
+                fill={favorited ? "currentColor" : "none"}
+              />
+            </button>
+          )}
 
           {cover && (
             <img

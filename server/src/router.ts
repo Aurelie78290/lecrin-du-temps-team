@@ -180,6 +180,14 @@ router.put("/api/users/:id/role", editUsersActions.update);
 router.delete("/api/users", editUsersActions.destroy);
 
 /* ************************************************************************* */
+// Define Favorite routes
+
+import favoriteActions from "./modules/favorite/favoriteActions";
+
+router.get("/api/favorites", isAuth, favoriteActions.browse);
+router.post("/api/favorites/:watchId", isAuth, favoriteActions.toggle);
+
+/* ************************************************************************* */
 // Define Basket routes
 
 import basketActions from "./modules/basket/basketActions";
