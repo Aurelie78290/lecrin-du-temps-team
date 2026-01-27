@@ -8,10 +8,11 @@ import {
   Title,
   Tooltip,
   Legend,
-  Filler, // ⚠️ CRUCIAL : sans ça, pas de remplissage !
+  Filler,
 } from "chart.js";
+import type { TooltipItem, ChartOptions } from "chart.js"; // ⚠️ CRUCIAL : sans ça, pas de remplissage !
 import { Line } from "react-chartjs-2";
-import 'chartjs-adapter-date-fns';
+import "chartjs-adapter-date-fns";
 import "./UserGraph.css";
 import { fr } from "date-fns/locale";
 
@@ -28,72 +29,75 @@ ChartJS.register(
 );
 
 function UserGraph() {
-  const {chartData, loading} = useCollectionStats()
+  const { chartData, loading } = useCollectionStats();
   if (loading) return <p>Chargement...</p>;
   if (chartData.length === 0) return <p>Aucune donnée</p>;
   // Configuration du graphique
-  const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: true,
-      text: 'Évolution de ma collection',
-    },
-    tooltip: {
-      callbacks: {
-        label: (context: any) => `${context.parsed.y.toLocaleString('fr-FR')} €`,
-      },
-    },
-  },
-  scales: {
-    x: {
-      type: 'time' as const,  // ✅ Fix ici
-      time: {
-        unit: 'month' as const,  // ✅ Fix ici
-        displayFormats: {
-          month: 'MMM yyyy',
-        },
-      },
-      adapters: {
-        date: {
-          locale: fr,
-        },
+  const options: ChartOptions<"line"> = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
       },
       title: {
         display: true,
-        text: 'Date',
+        text: "Évolution de ma collection",
+      },
+      tooltip: {
+        callbacks: {
+          label: (context: TooltipItem<"line">) => {
+            const value = context.parsed.y;
+            return value !== null ? `${value.toLocaleString("fr-FR")} €` : "";
+          },
+        },
       },
     },
-    y: {
-      beginAtZero: false,
-      title: {
-        display: true,
+    scales: {
+      x: {
+        type: "time", // ✅ Fix ici
+        time: {
+          unit: "month", // ✅ Fix ici
+          displayFormats: {
+            month: "MMM yyyy",
+          },
+        },
+        adapters: {
+          date: {
+            locale: fr,
+          },
+        },
+        title: {
+          display: true,
+          text: "Date",
+        },
       },
-      ticks: {
-        callback: (value: number | string) => 
-          `${Number(value).toLocaleString('fr-FR')} €`,
+      y: {
+        beginAtZero: false,
+        title: {
+          display: true,
+        },
+        ticks: {
+          callback: (value: number | string) =>
+            `${Number(value).toLocaleString("fr-FR")} €`,
+        },
       },
     },
-  },
-};
+  };
 
   // Données du graphique
- const data = {
-  datasets: [
-    {
-      label: 'Valeur collection',
-      data: chartData,
-      borderColor: '#e0c58f',
-      borderWidth: 2,
-      tension: 0.2,
-      pointRadius: 4,
-      pointHoverRadius: 8,
-    },
-  ],
-};
+  const data = {
+    datasets: [
+      {
+        label: "Valeur collection",
+        data: chartData,
+        borderColor: "#e0c58f",
+        borderWidth: 2,
+        tension: 0.2,
+        pointRadius: 4,
+        pointHoverRadius: 8,
+      },
+    ],
+  };
 
   return (
     <div className="usergraph__main">

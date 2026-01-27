@@ -88,7 +88,36 @@
 .watch-img {
   width: 70px;
   height: 70px;
-  overflow: hidden;
+  position: relative;
+  border-radius: 4px;
+}
+
+.watch-status {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  font-size: 10px;
+  text-align: center;
+  padding: 2px 0;
+  text-transform: uppercase;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.watch-status.active {
+  color: green;
+  border-top: 1px solid green;
+}
+
+.watch-status.pending {
+  color: orange;
+  border-top: 1px solid orange;
+}
+
+.watch-status.personal {
+  color: blue;
+  border-top: 1px solid blue;
 }
 
 .watch-img img {

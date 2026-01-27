@@ -127,6 +127,7 @@ const add: RequestHandler = async (req, res, next) => {
       user_id: userId,
       watch_price: req.body.watch_price ? Number(req.body.watch_price) : null,
       watch_condition: req.body.watch_condition || null,
+      watch_sell_status: "personal",
     };
 
     // 1) créer la montre
@@ -405,7 +406,7 @@ const requestSellApproval: RequestHandler = async (req, res, next) => {
     }
 
     const updated = await watchRepository.updateById(watchId, {
-      watch_sell_status: "A valider",
+      watch_sell_status: "pending",
     });
 
     if (!updated) {
