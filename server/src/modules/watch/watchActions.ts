@@ -22,7 +22,7 @@ const getUserIdOr401 = (req: Request, res: Response): number | null => {
 };
 
 const isToValidate = (s?: string | null) =>
-  (s ?? "").toLowerCase().replace("à", "a").trim() === "a valider";
+  (s ?? "").toLowerCase().replace("à", "a").trim() === "pending";
 
 // =======================
 // B - Browse (Read All)
@@ -483,7 +483,7 @@ const removeFromSale: RequestHandler = async (req, res, next) => {
       return;
     }
 
-    if ((current as WatchWithStatus).watch_sell_status !== "En vente") {
+    if ((current as WatchWithStatus).watch_sell_status !== "active") {
       res.status(400).json({ message: "La montre n'est pas en vente" });
       return;
     }

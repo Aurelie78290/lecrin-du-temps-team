@@ -367,7 +367,7 @@ export default function WatchDetails({
     (s ?? "").toLowerCase().replace("à", "a").trim();
 
   const isPending = normalize(watch.watch_sell_status) === "pending";
-  const isForSale = normalize(watch.watch_sell_status) === "en vente";
+  const isForSale = normalize(watch.watch_sell_status) === "active";
 
   return (
     <div className="watchdetails-page">

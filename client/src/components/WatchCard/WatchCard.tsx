@@ -32,7 +32,7 @@ export default function WatchCard({
   const favorited = isFavorite(watch.idwatch);
   const cover = watch.photo_url;
 
-  const isForSale = (watch.watch_sell_status ?? "").trim() === "En vente";
+  const isForSale = (watch.watch_sell_status ?? "").trim() === "active";
   const price =
     watch.watch_price == null
       ? "—"
