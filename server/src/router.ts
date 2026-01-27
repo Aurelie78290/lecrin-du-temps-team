@@ -62,6 +62,11 @@ import watchActions from "./modules/watch/watchActions";
 
 router.get("/api/watches", watchActions.browse);
 router.get("/api/watches/:id", watchActions.read);
+router.patch(
+  "/api/watches/:id/request-sell",
+  isAuth,
+  watchActions.requestSellApproval,
+);
 
 router.get("/api/shop/watches", watchActions.browseShop);
 router.get("/api/collection/watches", isAuth, watchActions.browseCollection);

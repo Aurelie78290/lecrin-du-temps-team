@@ -8,6 +8,8 @@ interface UploadedFiles {
   certificate_image?: Express.Multer.File[];
 }
 
+type WatchWithStatus = { watch_sell_status?: string | null };
+
 type AuthedRequest = Request & { user?: { id: number; role: string } };
 
 const getUserIdOr401 = (req: Request, res: Response): number | null => {
@@ -18,6 +20,9 @@ const getUserIdOr401 = (req: Request, res: Response): number | null => {
   }
   return userId;
 };
+
+const isToValidate = (s?: string | null) =>
+  (s ?? "").toLowerCase().replace("à", "a").trim() === "A valider";
 
 // =======================
 // B - Browse (Read All)
@@ -119,6 +124,7 @@ const add: RequestHandler = async (req, res, next) => {
     const newWatch = {
       brand_id: brandId,
       model_id: modelId,
+      user_id: userId,
       watch_price: req.body.watch_price ? Number(req.body.watch_price) : null,
       watch_condition: req.body.watch_condition || null,
     };
@@ -162,6 +168,9 @@ const getCollectionStats: RequestHandler = async (req, res, next) => {
 // =======================
 // U - Update (Edit)
 // =======================
+// =======================
+// U - Update (Edit)
+// =======================
 const update: RequestHandler = async (req, res, next) => {
   try {
     const watchId = Number(req.params.id);
@@ -169,55 +178,99 @@ const update: RequestHandler = async (req, res, next) => {
       res.sendStatus(400);
       return;
     }
+    const current = await watchRepository.read(watchId);
+    if (!current) {
+      res.sendStatus(404);
+      return;
+    }
 
+    if (isToValidate((current as WatchWithStatus).watch_sell_status)) {
+      res.status(403).json({
+        message: "Modification interdite : montre en cours de validation",
+      });
+      return;
+    }
     const files = req.files as UploadedFiles | undefined;
+
+    // Helpers: multer => tout arrive en string
+    const setStringOrNull = (key: string, value: unknown) => {
+      if (value === undefined) return;
+      updates[key] = value === "" ? null : value;
+    };
+
+    const setNumberOrNull = (key: string, value: unknown) => {
+      if (value === undefined) return;
+      if (value === "") {
+        updates[key] = null;
+        return;
+      }
+      const n = Number(value);
+      updates[key] = Number.isNaN(n) ? null : n;
+    };
+
+    const setIdOrNull = (key: string, value: unknown) => {
+      // même logique que number, mais utile sémantiquement
+      setNumberOrNull(key, value);
+    };
 
     const updates: Record<string, unknown> = {};
 
+    // ---------- REQUIRED IDS (peuvent être changés) ----------
+    // On accepte brand/model si envoyés (ton front les envoie toujours)
     if (req.body.brand_id !== undefined && req.body.brand_id !== "") {
       const n = Number(req.body.brand_id);
-      if (!Number.isNaN(n)) updates.brand_id = n;
+      if (!Number.isNaN(n) && n > 0) updates.brand_id = n;
     }
-
     if (req.body.model_id !== undefined && req.body.model_id !== "") {
       const n = Number(req.body.model_id);
-      if (!Number.isNaN(n)) updates.model_id = n;
+      if (!Number.isNaN(n) && n > 0) updates.model_id = n;
     }
 
-    if (req.body.watch_price !== undefined) {
-      if (req.body.watch_price === "") updates.watch_price = null;
-      else {
-        const n = Number(req.body.watch_price);
-        updates.watch_price = Number.isNaN(n) ? null : n;
-      }
-    }
+    // ---------- BASE ----------
+    setNumberOrNull("watch_price", req.body.watch_price);
+    setStringOrNull("watch_condition", req.body.watch_condition);
+    setStringOrNull("watch_sell_status", req.body.watch_sell_status);
+    setStringOrNull("watch_gender", req.body.watch_gender);
 
-    if (req.body.watch_condition !== undefined)
-      updates.watch_condition =
-        req.body.watch_condition === "" ? null : req.body.watch_condition;
+    // ---------- GENERAL ----------
+    setStringOrNull("ref_no", req.body.ref_no);
+    setStringOrNull("production_year", req.body.production_year);
 
-    if (req.body.watch_sell_status !== undefined)
-      updates.watch_sell_status =
-        req.body.watch_sell_status === "" ? null : req.body.watch_sell_status;
-
-    if (req.body.ref_no !== undefined)
-      updates.ref_no = req.body.ref_no === "" ? null : req.body.ref_no;
-
-    if (req.body.production_year !== undefined)
-      updates.production_year =
-        req.body.production_year === "" ? null : req.body.production_year;
-
-    if (req.body.is_limited_edition !== undefined)
+    if (req.body.is_limited_edition !== undefined) {
+      // ton front envoie "1"/"0"
       updates.is_limited_edition = Number(req.body.is_limited_edition) ? 1 : 0;
-
-    if (req.body.edition_number !== undefined) {
-      if (req.body.edition_number === "") updates.edition_number = null;
-      else {
-        const n = Number(req.body.edition_number);
-        updates.edition_number = Number.isNaN(n) ? null : n;
-      }
     }
 
+    setNumberOrNull("edition_number", req.body.edition_number);
+
+    // ---------- CARACTERISTIQUES ----------
+    setIdOrNull("case_material_id", req.body.case_material_id);
+    setNumberOrNull("diameter_mm", req.body.diameter_mm);
+    setNumberOrNull("thickness_mm", req.body.thickness_mm);
+    setNumberOrNull("water_resistance_bar", req.body.water_resistance_bar);
+
+    setStringOrNull("dial_color", req.body.dial_color);
+    setIdOrNull("dial_finish_id", req.body.dial_finish_id);
+    setIdOrNull("hour_marker_type_id", req.body.hour_marker_type_id);
+
+    // ---------- BRACELET ----------
+    setIdOrNull("strap_material_id", req.body.strap_material_id);
+    setStringOrNull("strap_color", req.body.strap_color);
+    setIdOrNull("clasp_type_id", req.body.clasp_type_id);
+    setNumberOrNull("lug_width_mm", req.body.lug_width_mm);
+
+    // ---------- MOUVEMENT ----------
+    setIdOrNull("movement_type_id", req.body.movement_type_id);
+    setStringOrNull("caliber", req.body.caliber);
+    setIdOrNull("functions_id", req.body.functions_id);
+    setNumberOrNull("power_reserve_hours", req.body.power_reserve_hours);
+    setNumberOrNull("frequency_hz", req.body.frequency_hz);
+    setNumberOrNull("jewel_count", req.body.jewel_count);
+
+    // ---------- CERTIFICAT (lookup) ----------
+    setIdOrNull("certificate_id", req.body.certificate_id);
+
+    // ---------- FILES ----------
     const hasNewWatchImage = !!files?.watch_image?.[0];
     const hasNewCertImage = !!files?.certificate_image?.[0];
 
@@ -230,6 +283,7 @@ const update: RequestHandler = async (req, res, next) => {
       return;
     }
 
+    // 1) update DB (si champs)
     if (Object.keys(updates).length > 0) {
       const updated = await watchRepository.updateById(watchId, updates);
       if (!updated) {
@@ -237,6 +291,7 @@ const update: RequestHandler = async (req, res, next) => {
         return;
       }
     } else {
+      // juste pour vérifier existence si on upload seulement
       const existing = await watchRepository.read(watchId);
       if (!existing) {
         res.sendStatus(404);
@@ -244,6 +299,7 @@ const update: RequestHandler = async (req, res, next) => {
       }
     }
 
+    // 2) upload photos (si présentes)
     const watchFile = files?.watch_image?.[0];
     if (watchFile) {
       const url = `/uploads/watches/${watchFile.filename}`;
@@ -256,6 +312,7 @@ const update: RequestHandler = async (req, res, next) => {
       await photoRepository.create(url, "certificate", watchId);
     }
 
+    // 3) renvoyer l'objet frais
     const fresh = await watchRepository.read(watchId);
     res.status(200).json(fresh);
   } catch (err) {
@@ -273,7 +330,18 @@ const destroy: RequestHandler = async (req, res, next) => {
       res.sendStatus(400);
       return;
     }
+    const current = await watchRepository.read(watchId);
+    if (!current) {
+      res.sendStatus(404);
+      return;
+    }
 
+    if (isToValidate((current as WatchWithStatus).watch_sell_status)) {
+      res.status(403).json({
+        message: "Suppression interdite : montre en cours de validation",
+      });
+      return;
+    }
     await watchRepository.deleteOrderArchiveByWatchId(watchId);
     await photoRepository.deleteByWatchId(watchId);
 
@@ -303,9 +371,50 @@ const removeFromCollection: RequestHandler = async (req, res, next) => {
       res.status(400).json({ message: "watchId requis" });
       return;
     }
+    const current = await watchRepository.read(watchId);
+    if (!current) {
+      res.sendStatus(404);
+      return;
+    }
 
+    if (isToValidate((current as WatchWithStatus).watch_sell_status)) {
+      res.status(403).json({
+        message: "Action interdite : montre en cours de validation",
+      });
+      return;
+    }
     await watchRepository.removeFromCollection(userId, watchId);
     res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// =======================
+// mettre en vente - demande d'approbation
+// =======================
+const requestSellApproval: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = getUserIdOr401(req, res);
+    if (!userId) return;
+
+    const watchId = Number(req.params.id);
+    if (Number.isNaN(watchId)) {
+      res.sendStatus(400);
+      return;
+    }
+
+    const updated = await watchRepository.updateById(watchId, {
+      watch_sell_status: "A valider",
+    });
+
+    if (!updated) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const fresh = await watchRepository.read(watchId);
+    res.status(200).json(fresh);
   } catch (err) {
     next(err);
   }
@@ -322,4 +431,5 @@ export default {
   removeFromCollection,
   getCollectionStats,
   browseForAdmin,
+  requestSellApproval,
 };

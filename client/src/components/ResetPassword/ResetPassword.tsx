@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import "./ResetPassword.css";
 
+// Composant pour réinitialiser le mot de passe //
 const ResetPassword = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -18,11 +19,13 @@ const ResetPassword = () => {
     setMessage("");
     setError("");
 
+    // On check que les MDP sont identiques //
     if (password !== confirmPassword) {
       setError("Les mots de passe ne sont pas identiques");
       return;
     }
     try {
+      // On appelle l'API pour réinitialiser le mot de passe //
       await api.post("/api/reset-password", {
         token,
         password,
@@ -31,6 +34,7 @@ const ResetPassword = () => {
         "Votre mot de passe a été modifié avec succès ! Vous allez être rediriger...",
       );
 
+      // On redirige après 3 secondes //
       setTimeout(() => {
         navigate("/");
       }, 3000);
