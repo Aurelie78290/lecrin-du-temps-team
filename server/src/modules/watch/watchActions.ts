@@ -22,7 +22,7 @@ const getUserIdOr401 = (req: Request, res: Response): number | null => {
 };
 
 const isToValidate = (s?: string | null) =>
-  (s ?? "").toLowerCase().replace("à", "a").trim() === "A valider";
+  (s ?? "").toLowerCase().replace("à", "a").trim() === "a valider";
 
 // =======================
 // B - Browse (Read All)
@@ -420,6 +420,89 @@ const requestSellApproval: RequestHandler = async (req, res, next) => {
   }
 };
 
+// =======================
+// annuler une demande de mise en vente (retire "A valider")
+// =======================
+const cancelSellApproval: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = getUserIdOr401(req, res);
+    if (!userId) return;
+
+    const watchId = Number(req.params.id);
+    if (Number.isNaN(watchId)) {
+      res.sendStatus(400);
+      return;
+    }
+
+    const current = await watchRepository.read(watchId);
+    if (!current) {
+      res.sendStatus(404);
+      return;
+    }
+
+    if (!isToValidate((current as WatchWithStatus).watch_sell_status)) {
+      res
+        .status(400)
+        .json({ message: "La montre n'est pas en attente de validation" });
+      return;
+    }
+
+    const updated = await watchRepository.updateById(watchId, {
+      watch_sell_status: null,
+    });
+
+    if (!updated) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const fresh = await watchRepository.read(watchId);
+    res.status(200).json(fresh);
+  } catch (err) {
+    next(err);
+  }
+};
+// =======================
+// annuler une mise en vente
+// =======================
+const removeFromSale: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = getUserIdOr401(req, res);
+    if (!userId) return;
+
+    const watchId = Number(req.params.id);
+    if (Number.isNaN(watchId)) {
+      res.sendStatus(400);
+      return;
+    }
+
+    const current = await watchRepository.read(watchId);
+    if (!current) {
+      res.sendStatus(404);
+      return;
+    }
+
+    if ((current as WatchWithStatus).watch_sell_status !== "En vente") {
+      res.status(400).json({ message: "La montre n'est pas en vente" });
+      return;
+    }
+
+    const updated = await watchRepository.updateById(watchId, {
+      watch_sell_status: null,
+    });
+
+    if (!updated) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const fresh = await watchRepository.read(watchId);
+    res.status(200).json(fresh);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   browse,
   read,
@@ -432,4 +515,6 @@ export default {
   getCollectionStats,
   browseForAdmin,
   requestSellApproval,
+  cancelSellApproval,
+  removeFromSale,
 };

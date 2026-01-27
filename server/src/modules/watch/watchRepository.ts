@@ -16,6 +16,7 @@ export type WatchListItem = {
   watch_price: number | null;
   watch_condition: string | null;
   photo_url: string | null;
+  watch_sell_status?: string | null;
 };
 
 export type WatchDetails = {
@@ -221,6 +222,7 @@ SELECT
   m.name AS model,
   w.watch_price,
   w.watch_condition,
+  w.watch_sell_status, 
   (
     SELECT url
     FROM photo
@@ -251,6 +253,7 @@ SELECT
   m.name AS model,
   w.watch_price,
   w.watch_condition,
+  w.watch_sell_status, 
   (
     SELECT url
     FROM photo

@@ -11,6 +11,7 @@ export type Watch = {
   watch_price: number | null;
   watch_condition?: string | null;
   photo_url: string | null;
+  watch_sell_status?: string | null;
 };
 
 type WatchCardProps = {
@@ -31,6 +32,7 @@ export default function WatchCard({
   const favorited = isFavorite(watch.idwatch);
   const cover = watch.photo_url;
 
+  const isForSale = (watch.watch_sell_status ?? "").trim() === "En vente";
   const price =
     watch.watch_price == null
       ? "—"
@@ -45,7 +47,7 @@ export default function WatchCard({
     <Link to={linkTo} className="watch-card-link">
       <article className="watch-card">
         <div className="watch-card-media">
-          <span className="watch-card-badge">En vente</span>
+          {isForSale && <span className="watch-card-badge">En vente</span>}
 
           {user && (
             <button
@@ -57,10 +59,7 @@ export default function WatchCard({
                 toggleFavorite(watch.idwatch);
               }}
             >
-              <Heart
-                size={20}
-                fill={favorited ? "currentColor" : "none"}
-              />
+              <Heart size={20} fill={favorited ? "currentColor" : "none"} />
             </button>
           )}
 

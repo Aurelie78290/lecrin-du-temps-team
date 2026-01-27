@@ -29,7 +29,6 @@ type WatchDetailsDTO = {
 
   dial_color?: string | null;
 
-  // labels + ids utilisés par labelOrId(...)
   case_material_label?: string | null;
   case_material_id?: number | string | null;
 
@@ -59,7 +58,6 @@ type WatchDetailsDTO = {
   frequency_hz?: number | null;
   jewel_count?: number | null;
 
-  // certificat (tu l’affiches via labelOrId)
   certificate_label?: string | null;
   certificate_id?: number | string | null;
 
@@ -82,11 +80,6 @@ interface WatchDetailsProps {
 }
 
 const API_URL = "http://localhost:3310";
-
-// const getAuthHeaders = (): Record<string, string> => {
-//   const token = localStorage.getItem("token"); // ⚠️ mets la bonne key si besoin
-//   return token ? { Authorization: `Bearer ${token}` } : {};
-// };
 
 //convertir en string
 const formatValue = (v: unknown) => {
@@ -129,7 +122,6 @@ const asStringOrNull = (v: unknown): string | null => {
   if (typeof v === "string") return v;
   return null;
 };
-//revoir avec gepeto pr comprendre x)
 const labelOrId = (
   label: unknown,
   id: unknown,
@@ -187,7 +179,7 @@ export default function WatchDetails({
 
     try {
       const url = inCollection
-        ? `${API_URL}/api/collection/watches/${watchId}` // plus de userId en query
+        ? `${API_URL}/api/collection/watches/${watchId}`
         : `${API_URL}/api/watches/${watchId}`;
       const res = await fetch(url, {
         method: "DELETE",
@@ -211,7 +203,8 @@ export default function WatchDetails({
   };
   const handleRequestSell = async () => {
     if (!watchId || !Number.isFinite(watchId)) return;
-
+    if (!window.confirm("Voulez-vous vraiment demander la mise en vente ?"))
+      return;
     try {
       // PATCH : demander la mise en vente
       const res = await fetch(
@@ -240,6 +233,67 @@ export default function WatchDetails({
       alert("Erreur lors de la mise en vente");
     }
   };
+  const handleCancelSellRequest = async () => {
+    if (!watchId || !Number.isFinite(watchId)) return;
+
+    if (!window.confirm("Annuler la demande de mise en vente ?")) return;
+
+    try {
+      const res = await fetch(
+        `${API_URL}/api/watches/${watchId}/cancel-sell-request`,
+        {
+          method: "PATCH",
+          credentials: "include",
+        },
+      );
+
+      if (!res.ok) {
+        const body = await res.text().catch(() => "");
+        alert(`Erreur (${res.status}) : ${body || res.statusText}`);
+        return;
+      }
+
+      // Refetch la montre pour récupérer le watch_sell_status mis à jour
+      const refreshed = await fetch(`${API_URL}/api/watches/${watchId}`, {
+        credentials: "include",
+      }).then((r) => r.json());
+
+      setWatch((prev) => (prev ? { ...prev, ...refreshed } : refreshed));
+    } catch (e) {
+      console.error(e);
+      alert("Erreur lors de l'annulation");
+    }
+  };
+  const handleRemoveFromSale = async () => {
+    if (!watchId || !Number.isFinite(watchId)) return;
+
+    if (!window.confirm("Retirer cette montre de la vente ?")) return;
+
+    try {
+      const res = await fetch(
+        `${API_URL}/api/watches/${watchId}/remove-from-sale`,
+        {
+          method: "PATCH",
+          credentials: "include",
+        },
+      );
+
+      if (!res.ok) {
+        const body = await res.text().catch(() => "");
+        alert(`Erreur (${res.status}) : ${body || res.statusText}`);
+        return;
+      }
+
+      const refreshed = await fetch(`${API_URL}/api/watches/${watchId}`, {
+        credentials: "include",
+      }).then((r) => r.json());
+
+      setWatch((prev) => (prev ? { ...prev, ...refreshed } : refreshed));
+    } catch (e) {
+      console.error(e);
+      alert("Erreur lors du retrait de la vente");
+    }
+  };
 
   useEffect(() => {
     if (!effectiveId) return;
@@ -247,11 +301,10 @@ export default function WatchDetails({
     setLoading(true);
     setError(null);
 
-    // ✅ Route existante pour les détails (shop ET collection)
     const detailsUrl = `${API_URL}/api/watches/${effectiveId}`;
 
     fetch(detailsUrl, {
-      credentials: "include", // ✅ envoie le cookie token si besoin
+      credentials: "include",
     })
       .then(async (res) => {
         if (!res.ok) {
@@ -274,7 +327,7 @@ export default function WatchDetails({
           certificates: Array.isArray(data.certificates)
             ? data.certificates
             : [],
-          is_in_my_collection: inCollection, // ✅ basé sur la route côté front
+          is_in_my_collection: inCollection,
         };
 
         setWatch(normalized);
@@ -310,14 +363,16 @@ export default function WatchDetails({
 
     setBasketOpen(true);
   };
-  const isPending = watch.watch_sell_status === "A valider";
+  const normalize = (s?: string | null) =>
+    (s ?? "").toLowerCase().replace("à", "a").trim();
+
+  const isPending = normalize(watch.watch_sell_status) === "a valider";
+  const isForSale = normalize(watch.watch_sell_status) === "en vente";
 
   return (
     <div className="watchdetails-page">
       <div className="watchdetails-layout">
-        {/* Galerie */}
         <div className="watchdetails-100vh">
-          {/* On masque le retour seulement si isReadOnly est vrai (en mode validation d'annonce)*/}
           {!isReadOnly && (
             <Link
               className="watchdetails-back"
@@ -607,8 +662,6 @@ export default function WatchDetails({
                   className="watchdetails-buy"
                   disabled={asNumberOrNull(watch.watch_price) == null}
                   onClick={handleBuy}
-                  // () =>
-                  // console.log("Acheter", watch.idwatch)
                 >
                   Acheter
                 </button>
@@ -618,54 +671,71 @@ export default function WatchDetails({
                 />
               </>
             )}
-            {/* On masque le retour seulement si isReadOnly est vrai (en mode validation d'annonce)*/}
             {!isReadOnly && (
               <section className="watchdetails-card watchdetails-actions">
                 {inCollection && (
                   <div className="watchdetails-actions">
                     {isPending && (
-                      <div className="watchdetails-info">
-                        ⏳ En cours de validation, modification impossible
-                      </div>
+                      <>
+                        <div className="watchdetails-info">
+                          ⏳ En cours de validation, modifications impossibles
+                        </div>
+                        <button
+                          type="button"
+                          className="watchdetails-cancel"
+                          onClick={handleCancelSellRequest}
+                        >
+                          Annuler la mise en vente
+                        </button>
+                      </>
                     )}
-                    <button
-                      type="button"
-                      className="watchdetails-sell"
-                      disabled={isPending}
-                      onClick={handleRequestSell}
-                    >
-                      Mettre en vente
-                    </button>
 
-                    <button
-                      type="button"
-                      className="watchdetails-edit"
-                      disabled={isPending}
-                      onClick={() =>
-                        navigate(`/watches/${watch.idwatch}/edit`, {
-                          state: {
-                            from: inCollection ? "collection" : "shop",
-                            id: watch.idwatch,
-                          },
-                        })
-                      }
-                    >
-                      Modifier
-                    </button>
+                    {isForSale && !isPending && (
+                      <>
+                        <div className="watchdetails-info">
+                          ✅ Cette montre est en vente
+                        </div>
 
-                    <button
-                      type="button"
-                      className="watchdetails-delete"
-                      disabled={isPending}
-                      onClick={handleDelete}
-                    >
-                      {inCollection ? "Retirer de la collection" : "Supprimer"}
-                    </button>
+                        <button
+                          type="button"
+                          className="watchdetails-cancel"
+                          onClick={handleRemoveFromSale}
+                        >
+                          Retirer de la vente
+                        </button>
+                      </>
+                    )}
 
-                    {!inShop && !inCollection && (
-                      <div className="watchdetails-empty">
-                        Action indisponible
-                      </div>
+                    {!isPending && !isForSale && (
+                      <>
+                        <button
+                          type="button"
+                          className="watchdetails-sell"
+                          onClick={handleRequestSell}
+                        >
+                          Mettre en vente
+                        </button>
+
+                        <button
+                          type="button"
+                          className="watchdetails-edit"
+                          onClick={() =>
+                            navigate(`/watches/${watch.idwatch}/edit`, {
+                              state: { from: "collection", id: watch.idwatch },
+                            })
+                          }
+                        >
+                          Modifier
+                        </button>
+
+                        <button
+                          type="button"
+                          className="watchdetails-delete"
+                          onClick={handleDelete}
+                        >
+                          Retirer de la collection
+                        </button>
+                      </>
                     )}
                   </div>
                 )}

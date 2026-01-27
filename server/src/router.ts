@@ -67,6 +67,16 @@ router.patch(
   isAuth,
   watchActions.requestSellApproval,
 );
+router.patch(
+  "/api/watches/:id/cancel-sell-request",
+  isAuth,
+  watchActions.cancelSellApproval,
+);
+router.patch(
+  "/api/watches/:id/remove-from-sale",
+  isAuth,
+  watchActions.removeFromSale,
+);
 
 router.get("/api/shop/watches", watchActions.browseShop);
 router.get("/api/collection/watches", isAuth, watchActions.browseCollection);

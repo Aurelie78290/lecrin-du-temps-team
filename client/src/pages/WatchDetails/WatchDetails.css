@@ -151,7 +151,8 @@
 .watchdetails-buy,
 .watchdetails-sell,
 .watchdetails-edit,
-.watchdetails-delete {
+.watchdetails-delete,
+.watchdetails-cancel {
   width: 200px;
   padding: 12px 14px;
   border-radius: 14px;
