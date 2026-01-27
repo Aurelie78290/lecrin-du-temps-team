@@ -7,6 +7,7 @@ export type WatchCreateInput = {
   user_id: number;
   watch_price: number | null;
   watch_condition: string | null;
+  watch_sell_status: string;
 };
 
 export type WatchListItem = {
@@ -81,7 +82,7 @@ export type WatchUpdateInput = Partial<{
   watch_price: number | null;
   watch_condition: string | null;
 
-  watch_sell_status: string | null;
+  watch_sell_status: "personal" | "pending" | "active" | null;
   production_year: string | null;
   ref_no: string | null;
 
@@ -96,8 +97,8 @@ class WatchRepository {
   async create(watch: WatchCreateInput) {
     const [result] = await databaseClient.query<Result>(
       `
-    INSERT INTO watch (brand_id, model_id, user_id, watch_price, watch_condition)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO watch (brand_id, model_id, user_id, watch_price, watch_condition, watch_sell_status)
+    VALUES (?, ?, ?, ?, ?, ?)
     `,
       [
         watch.brand_id,
@@ -105,6 +106,7 @@ class WatchRepository {
         watch.user_id,
         watch.watch_price,
         watch.watch_condition,
+        watch.watch_sell_status ?? "pending",
       ],
     );
 
@@ -233,7 +235,7 @@ SELECT
 FROM watch w
 JOIN brand b ON b.id = w.brand_id
 JOIN model m ON m.id = w.model_id
-WHERE w.watch_sell_status = 'En vente';
+WHERE w.watch_sell_status = 'active';
 
     `,
     );

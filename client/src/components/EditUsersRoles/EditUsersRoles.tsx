@@ -1,8 +1,8 @@
 import api from "../../services/api";
 import "./EditUsersRoles.css";
-import UserInfosPopup from "../UserInfosPopup/UserInfosPopup";
-import { useEffect, useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import UserInfosPopup from "../UserInfosPopup/UserInfosPopup";
 
 interface User {
   id: number;
@@ -12,6 +12,7 @@ interface User {
   role: string;
   birthdate: string;
   tel: string;
+  last_login?: string | null;
 }
 
 // Composant pour gérer les utilisateurs //
@@ -21,7 +22,7 @@ const UserManagement = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null); // Utilisateur sélectionné pour voir les infos //
   const fetchUsers = useCallback(async () => {
     try {
-      const res = await api.get("/api/users");
+      const res = await api.get("/api/admin/users-stats");
       setUsers(res.data);
     } catch (err) {
       console.error("Erreur de chargement", err);

@@ -428,10 +428,6 @@ VALUES (2, 3, 4000, 20251225, 2, 2),
 /*!40000 ALTER TABLE `order_archive` ENABLE KEYS */;
 UNLOCK TABLES;
 
-ALTER TABLE order_archive 
-ADD COLUMN stripe_session_id VARCHAR(255) NULL,
-ADD INDEX idx_stripe_session (stripe_session_id);
-
 --
 -- Table structure for table `photo`
 --
@@ -562,6 +558,7 @@ CREATE TABLE `user` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` TIMESTAMP NULL DEFAULT NULL,
+  `last_login` DATETIME DEFAULT NULL,
   PRIMARY KEY (`iduser`),
   UNIQUE KEY `e_mail_UNIQUE` (`e_mail`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
@@ -609,7 +606,7 @@ CREATE TABLE `watch` (
   `is_limited_edition` tinyint DEFAULT NULL,
   `edition_number` varchar(45) DEFAULT NULL,
   `watch_gender` varchar(45) DEFAULT NULL,
-  `watch_sell_status` varchar(45) DEFAULT NULL,
+  `watch_sell_status` ENUM('active', 'pending', 'personal') DEFAULT 'personal',
   `watch_price` int DEFAULT NULL,
   `case_material_id` int DEFAULT NULL,
   `diameter_mm` int DEFAULT NULL,
@@ -698,131 +695,131 @@ INSERT INTO watch (
 ) VALUES
 
 -- 1 Rolex Submariner (brand_id=1, model_id=1)
-(1, 1, 1, 124060, '2022-01-01', 0, NULL, 'Homme', 'En vente', 12450,
+(1, 1, 1, 124060, '2022-01-01', 0, NULL, 'Homme', 'active', 12450,
 1, 41, 12, 30, 'Noir', 1, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, '3230', 1, 70, 4, 31, 1, 1, 1),
 
 -- 2 Rolex GMT-Master II (brand_id=1, model_id=7)
-(1, 1, 7, 126710, '2021-01-01', 0, NULL, 'Homme', 'En vente', 15990,
+(1, 1, 7, 126710, '2021-01-01', 0, NULL, 'Homme', 'active', 15990,
 1, 40, 12, 10, 'Noir', 1, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, '3285', 3, 70, 4, 31, 1, 1, 1),
 
 -- 3 Omega Speedmaster Moonwatch (brand_id=9, model_id=93)
-(1, 9, 93, 31042, '2020-01-01', 0, NULL, 'Homme', 'En vente', 6750,
+(1, 9, 93, 31042, '2020-01-01', 0, NULL, 'Homme', 'active', 6750,
 1, 42, 13, 5, 'Noir', 1, 2, 1, 'Acier', 1, 20, 'Très bon état', 2, '3861', 2, 50, 3, 26, 1, 1, 1),
 
 -- 4 Omega Seamaster Diver 300M (brand_id=9, model_id=99)
-(1, 9, 99, 21042, '2022-01-01', 0, NULL, 'Homme', 'En vente', 4650,
+(1, 9, 99, 21042, '2022-01-01', 0, NULL, 'Homme', 'active', 4650,
 1, 42, 14, 30, 'Noir', 2, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, '8800', 1, 55, 3, 35, 1, 1, 1),
 
 -- 5 Cartier Santos (brand_id=10, model_id=109)
-(1, 10, 109, 4848, '2023-01-01', 0, NULL, 'Unisexe', 'En vente', 6250,
+(1, 10, 109, 4848, '2023-01-01', 0, NULL, 'Unisexe', 'active', 6250,
 1, 35, 9, 10, 'Argent', 1, 3, 1, 'Acier', 1, 18, 'Excellent état', 1, '1847 MC', 1, 42, 4, 23, 1, 1, 1),
 
 -- 6 Cartier Tank Must (brand_id=10, model_id=116)
-(1, 10, 116, 9992, '2022-01-01', 0, NULL, 'Unisexe', 'En vente', 3350,
+(1, 10, 116, 9992, '2022-01-01', 0, NULL, 'Unisexe', 'active', 3350,
 1, 34, 7, 3, 'Argent', 3, 3, 2, 'Noir', 2, 19, 'Très bon état', 3, 'Quartz Cartier', 1, NULL, NULL, NULL, 1, 1, 1),
 
 -- 7 Seiko Prospex Diver (brand_id=46, model_id=330)
-(1, 46, 330, 1431, '2021-01-01', 0, NULL, 'Homme', 'En vente', 850,
+(1, 46, 330, 1431, '2021-01-01', 0, NULL, 'Homme', 'active', 850,
 1, 41, 13, 20, 'Gris', 1, 1, 1, 'Acier', 1, 20, 'Bon état', 1, '6R35', 1, 70, 3, 24, 1, 1, 1),
 
 -- 8 Seiko 5 Sports (brand_id=46, model_id=338)
-(1, 46, 338, 3003, '2023-01-01', 0, NULL, 'Homme', 'En vente', 420,
+(1, 46, 338, 3003, '2023-01-01', 0, NULL, 'Homme', 'active', 420,
 1, 43, 14, 10, 'Noir', 2, 2, 1, 'Acier', 1, 22, 'Très bon état', 1, '4R34', 3, 41, 3, 24, 1, 1, 1),
 
 -- 9 Tudor Black Bay 58 (brand_id=23, model_id=195)
-(1, 23, 195, 9030, '2020-01-01', 0, NULL, 'Homme', 'En vente', 3150,
+(1, 23, 195, 9030, '2020-01-01', 0, NULL, 'Homme', 'active', 3150,
 1, 39, 12, 20, 'Noir', 1, 1, 1, 'Acier', 1, 20, 'Très bon état', 1, 'MT5402', 1, 70, 4, 27, 1, 1, 1),
 
 -- 10 Tudor Black Bay (brand_id=23, model_id=194)
-(1, 23, 194, 7941, '2023-01-01', 0, NULL, 'Homme', 'En vente', 3850,
+(1, 23, 194, 7941, '2023-01-01', 0, NULL, 'Homme', 'active', 3850,
 1, 41, 14, 20, 'Bordeaux', 2, 1, 1, 'Acier', 1, 21, 'Excellent état', 1, 'MT5602', 1, 70, 4, 25, 1, 1, 1),
 
 -- 11 TAG Heuer Carrera Chronograph (brand_id=15, model_id=153)
-(1, 15, 153, 2010, '2021-01-01', 0, NULL, 'Homme', 'En vente', 4650,
+(1, 15, 153, 2010, '2021-01-01', 0, NULL, 'Homme', 'active', 4650,
 1, 42, 14, 10, 'Bleu', 2, 1, 1, 'Acier', 1, 22, 'Très bon état', 1, 'Heuer 02', 2, 80, 4, 33, 1, 1, 1),
 
 -- 12 TAG Heuer Formula 1 (brand_id=15, model_id=160)
-(1, 15, 160, 1110, '2019-01-01', 0, NULL, 'Homme', 'En vente', 1100,
+(1, 15, 160, 1110, '2019-01-01', 0, NULL, 'Homme', 'active', 1100,
 1, 41, 12, 20, 'Noir', 1, 2, 1, 'Acier', 1, 20, 'Bon état', 3, 'Quartz', 1, NULL, NULL, NULL, 1, 1, 1),
 
 -- 13 IWC Portugieser Chronograph (brand_id=11, model_id=127)
-(1, 11, 127, 3716, '2022-01-01', 0, NULL, 'Homme', 'En vente', 6150,
+(1, 11, 127, 3716, '2022-01-01', 0, NULL, 'Homme', 'active', 6150,
 1, 41, 13, 3, 'Vert', 2, 1, 2, 'Vert', 2, 20, 'Excellent état', 1, '69355', 2, 46, 4, 33, 1, 1, 1),
 
 -- 14 IWC Pilot Mark XX (brand_id=11, model_id=131)
-(1, 11, 131, 3283, '2023-01-01', 0, NULL, 'Homme', 'En vente', 4950,
+(1, 11, 131, 3283, '2023-01-01', 0, NULL, 'Homme', 'active', 4950,
 1, 40, 11, 10, 'Noir', 1, 2, 2, 'Brun', 2, 20, 'Excellent état', 1, '32111', 1, 120, 4, 21, 1, 1, 1),
 
 -- 15 Breitling Navitimer B01 (brand_id=16, model_id=167)
-(1, 16, 167, 1341, '2020-01-01', 0, NULL, 'Homme', 'En vente', 6850,
+(1, 16, 167, 1341, '2020-01-01', 0, NULL, 'Homme', 'active', 6850,
 1, 43, 14, 3, 'Noir', 4, 4, 1, 'Acier', 1, 22, 'Très bon état', 1, 'B01', 2, 70, 4, 47, 1, 1, 1),
 
 -- 16 Breitling Superocean (brand_id=16, model_id=171)
-(1, 16, 171, 1910, '2021-01-01', 0, NULL, 'Homme', 'En vente', 3250,
+(1, 16, 171, 1910, '2021-01-01', 0, NULL, 'Homme', 'active', 3250,
 1, 44, 13, 100, 'Bleu', 2, 2, 1, 'Acier', 1, 22, 'Très bon état', 1, 'Breitling 17', 1, 38, 4, 26, 1, 1, 1),
 
 -- 17 Grand Seiko Snowflake (brand_id=47, model_id=346)
-(1, 47, 346, 211, '2018-01-01', 0, NULL, 'Homme', 'En vente', 5350,
+(1, 47, 346, 211, '2018-01-01', 0, NULL, 'Homme', 'active', 5350,
 2, 41, 13, 10, 'Blanc', 4, 1, 3, 'Titane', 1, 20, 'Très bon état', 1, '9R65', 1, 72, 0, 30, 1, 1, 1),
 
 -- 18 Grand Seiko Elegance (brand_id=47, model_id=342)
-(1, 47, 342, 221, '2019-01-01', 0, NULL, 'Homme', 'En vente', 3950,
+(1, 47, 342, 221, '2019-01-01', 0, NULL, 'Homme', 'active', 3950,
 1, 40, 14, 3, 'Crème', 3, 4, 2, 'Brun', 2, 19, 'Très bon état', 1, '9S66', 3, 72, 4, 35, 1, 1, 1),
 
 -- 19 Longines Master Collection (brand_id=22, model_id=186)
-(1, 22, 186, 2628, '2020-01-01', 0, NULL, 'Homme', 'En vente', 1850,
+(1, 22, 186, 2628, '2020-01-01', 0, NULL, 'Homme', 'active', 1850,
 1, 40, 11, 3, 'Argent', 3, 3, 1, 'Acier', 1, 21, 'Bon état', 1, 'L899', 4, 64, 3, 21, 1, 1, 1),
 
 -- 20 Longines HydroConquest (brand_id=22, model_id=187)
-(1, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'En vente', 1350,
+(1, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'active', 1350,
 1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1),
 
 -- 21 Longines HydroConquest (brand_id=22, model_id=187) Model test pour la validation des annonces -> Joachim
-(2, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'A valider', 3,
+(2, 22, 187, 3781, '2022-01-01', 0, NULL, 'Homme', 'pending', 3,
 1, 41, 12, 30, 'Vert', 2, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, 'L888', 1, 72, 3, 21, 1, 1, 1),
 
 -- 22 IWC Pilot Mark XX (brand_id=11, model_id=131) Model test pour la validation des annonces -> Anaïs
-(1, 11, 131, 3283, '2023-01-01', 0, NULL, 'Homme', 'A valider', 6,
+(1, 11, 131, 3283, '2023-01-01', 0, NULL, 'Homme', 'pending', 6,
 1, 40, 11, 10, 'Noir', 1, 2, 2, 'Brun', 2, 20, 'Excellent état', 1, '32111', 1, 120, 4, 21, 1, 1, 1),
 
 -- 23 Cartier Tank Must (brand_id=10, model_id=116) Model test pour la validation des annonces -> Aurélie
-(3, 10, 116, 9992, '2022-01-01', 0, NULL, 'Unisexe', 'A valider', 9,
+(3, 10, 116, 9992, '2022-01-01', 0, NULL, 'Unisexe', 'pending', 9,
 1, 34, 7, 3, 'Argent', 3, 3, 2, 'Noir', 2, 19, 'Très bon état', 3, 'Quartz Cartier', 1, NULL, NULL, NULL, 1, 1, 1),
 
 -- 24 TAG Heuer Carrera Chronograph (brand_id=15, model_id=153) Model test pour la validation des annonces -> Joachim
-(2, 15, 153, 2010, '2021-01-01', 0, NULL, 'Homme', 'Refusée', 4650,
+(2, 15, 153, 2010, '2021-01-01', 0, NULL, 'Homme', 'personal', 4650,
 1, 42, 14, 10, 'Bleu', 2, 1, 1, 'Acier', 1, 22, 'Très bon état', 1, 'Heuer 02', 2, 80, 4, 33, 1, 1, 1),
 
 -- 25 Cartier Santos (brand_id=10, model_id=109) Model test pour la validation des annonces -> Joachim
-(2, 10, 109, 4848, '2023-01-01', 0, NULL, 'Unisexe', '', 6250,
+(2, 10, 109, 4848, '2023-01-01', 0, NULL, 'Unisexe', 'personal', 6250,
 1, 35, 9, 10, 'Argent', 1, 3, 1, 'Acier', 1, 18, 'Excellent état', 1, '1847 MC', 1, 42, 4, 23, 1, 1, 1),
 
 -- 26 Tudor Black Bay (brand_id=23, model_id=194) Model test pour la validation des annonces -> Romain
-(10, 23, 194, 7941, '2023-01-01', 0, NULL, 'Homme', 'A valider', 3850,
+(10, 23, 194, 7941, '2023-01-01', 0, NULL, 'Homme', 'pending', 3850,
 1, 41, 14, 20, 'Bordeaux', 2, 1, 1, 'Acier', 1, 21, 'Excellent état', 1, 'MT5602', 1, 70, 4, 25, 1, 1, 1),
 
 -- 27 Omega Seamaster Diver 300M (brand_id=9, model_id=99) Model test pour la validation des annonces -> Joachim
-(2, 9, 99, 21042, '2022-01-01', 0, NULL, 'Homme', 'A valider', 4650,
+(2, 9, 99, 21042, '2022-01-01', 0, NULL, 'Homme', 'pending', 4650,
 1, 42, 14, 30, 'Noir', 2, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, '8800', 1, 55, 3, 35, 1, 1, 1),
 
 -- 28 Rolex Submariner (brand_id=1, model_id=1) Model test pour un UTILISATEUR (jean peplu)
-(13, 1, 1, 124060, '2022-01-01', 0, NULL, 'Homme', '', 12450,
+(13, 1, 1, 124060, '2022-01-01', 0, NULL, 'Homme', 'personal', 12450,
 1, 41, 12, 30, 'Noir', 1, 1, 1, 'Acier', 1, 21, 'Très bon état', 1, '3230', 1, 70, 4, 31, 1, 1, 1),
 
 -- 29 Rolex GMT-Master II (brand_id=1, model_id=7) Model test pour un UTILISATEUR (jean peplu)
-(13, 1, 7, 126710, '2021-01-01', 0, NULL, 'Homme', 'En vente', 15990,
+(13, 1, 7, 126710, '2021-01-01', 0, NULL, 'Homme', 'active', 15990,
 1, 40, 12, 10, 'Noir', 1, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, '3285', 3, 70, 4, 31, 1, 1, 1),
 
 -- 30 Omega Speedmaster Moonwatch (brand_id=9, model_id=93) Model test pour un UTILISATEUR (jean peplu)
-(13, 9, 93, 31042, '2020-01-01', 0, NULL, 'Homme', 'A valider', 6750,
+(13, 9, 93, 31042, '2020-01-01', 0, NULL, 'Homme', 'pending', 6750,
 1, 42, 13, 5, 'Noir', 1, 2, 1, 'Acier', 1, 20, 'Très bon état', 2, '3861', 2, 50, 3, 26, 1, 1, 1),
 
 -- 31 Omega Seamaster Diver 300M (brand_id=9, model_id=99)  Model test pour un UTILISATEUR (jean peplu)
-(13, 9, 99, 21042, '2022-01-01', 0, NULL, 'Homme', 'Refusée', 4650,
+(13, 9, 99, 21042, '2022-01-01', 0, NULL, 'Homme', 'personal', 4650,
 1, 42, 14, 30, 'Noir', 2, 1, 1, 'Acier', 1, 20, 'Excellent état', 1, '8800', 1, 55, 3, 35, 1, 1, 1),
 
 -- 32 Cartier Santos (brand_id=10, model_id=109)  Model test pour un UTILISATEUR (jean peplu)
-(13, 10, 109, 4848, '2023-01-01', 0, NULL, 'Unisexe', 'Collection', 6250,
+(13, 10, 109, 4848, '2023-01-01', 0, NULL, 'Unisexe', 'personal', 6250,
 1, 35, 9, 10, 'Argent', 1, 3, 1, 'Acier', 1, 18, 'Excellent état', 1, '1847 MC', 1, 42, 4, 23, 1, 1, 1);
 UNLOCK TABLES;
 CREATE TABLE user_has_watch (
@@ -833,7 +830,7 @@ CREATE TABLE user_has_watch (
 );
 
 
-UPDATE watch SET watch_sell_status = 'En vente' WHERE idwatch BETWEEN 1 AND 20;
+UPDATE watch SET watch_sell_status = 'active' WHERE idwatch BETWEEN 1 AND 20;
 
 -- INSERT IGNORE INTO user_has_watch (user_id, watch_id)
 -- SELECT 1, idwatch FROM watch WHERE idwatch BETWEEN 1 AND 20;

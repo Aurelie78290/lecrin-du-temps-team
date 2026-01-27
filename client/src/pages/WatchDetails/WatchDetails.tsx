@@ -21,7 +21,7 @@ type WatchDetailsDTO = {
   edition_number?: string | number | null;
 
   watch_gender?: string | null;
-  watch_sell_status?: string | null;
+  watch_sell_status?: "personal" | "pending" | "active" | null;
 
   diameter_mm?: number | null;
   thickness_mm?: number | null;
@@ -366,7 +366,7 @@ export default function WatchDetails({
   const normalize = (s?: string | null) =>
     (s ?? "").toLowerCase().replace("à", "a").trim();
 
-  const isPending = normalize(watch.watch_sell_status) === "a valider";
+  const isPending = normalize(watch.watch_sell_status) === "pending";
   const isForSale = normalize(watch.watch_sell_status) === "en vente";
 
   return (
@@ -673,7 +673,7 @@ export default function WatchDetails({
             )}
             {!isReadOnly && (
               <section className="watchdetails-card watchdetails-actions">
-                {inCollection && (
+                {inCollection && inCollection && (
                   <div className="watchdetails-actions">
                     {isPending && (
                       <>
