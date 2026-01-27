@@ -1,4 +1,5 @@
 import express from "express";
+import { upload } from "../middleware/upload";
 import isAuth from "./middlewares/authMiddleware";
 
 const router = express.Router();
@@ -125,7 +126,6 @@ router.get("/api/monthlySales", MonthlySalesActions.browse);
 
 /* ************************************************************************* */
 
-import { upload } from "../middleware/upload";
 // Define PendingTransactions route
 import PendingTransactionsActions from "./modules/PendingTransactions/PendingTransactionsActions";
 
@@ -137,6 +137,13 @@ router.get("/api/PendingTransactions", PendingTransactionsActions.browse);
 import AdminNewMembersActions from "./modules/adminNewMembers/adminNewMembersActions";
 
 router.get("/api/AdminNewMembers", AdminNewMembersActions.browse);
+
+/* ************************************************************************* */
+
+// Define adminRecentOrders route
+import AdminRecentOrders from "./modules/adminRecentOrders/adminRecentOrdersActions";
+
+router.get("/api/AdminRecentOrders", AdminRecentOrders.browse);
 
 /* ************************************************************************* */
 
