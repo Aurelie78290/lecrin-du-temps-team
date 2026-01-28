@@ -75,6 +75,9 @@ type WatchDetailsDTO = {
   // ids utiles pour pré-remplir les selects marque/modèle
   brand_id?: number | null;
   model_id?: number | null;
+
+  watch_photos?: PhotoDTO[];
+  certificate_photos?: PhotoDTO[];
 };
 
 type WatchDetailsApi = Partial<WatchDetailsDTO> & {
@@ -82,6 +85,13 @@ type WatchDetailsApi = Partial<WatchDetailsDTO> & {
 };
 
 type Option = { id: number; name: string };
+
+type PhotoDTO = {
+  id: number;
+  url: string;
+  type: "watch" | "certificate";
+  watch_id: number;
+};
 
 // ============================
 // CONFIG
@@ -159,7 +169,7 @@ export default function WatchEdit() {
     ?.from;
 
   const [watch, setWatch] = useState<WatchDetailsDTO | null>(null);
-  const [activePhoto, setActivePhoto] = useState<string | null>(null);
+  const [activePhoto, setActivePhoto] = useState<PhotoDTO | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -224,8 +234,9 @@ export default function WatchEdit() {
   const [watchImage, setWatchImage] = useState<File | null>(null);
   const [certificateImage, setCertificateImage] = useState<File | null>(null);
 
-  const photos = useMemo(() => watch?.photos ?? [], [watch]);
-
+  const watchPhotos = useMemo(() => watch?.watch_photos ?? [], [watch]);
+  const certPhotos = useMemo(() => watch?.certificate_photos ?? [], [watch]);
+  const [activeCert, setActiveCert] = useState<PhotoDTO | null>(null);
   // ============================
   // LOAD LOOKUPS
   // ============================
@@ -356,10 +367,18 @@ export default function WatchEdit() {
 
           brand_id: data.brand_id ?? null,
           model_id: data.model_id ?? null,
+
+          watch_photos: Array.isArray(data.watch_photos)
+            ? data.watch_photos
+            : [],
+          certificate_photos: Array.isArray(data.certificate_photos)
+            ? data.certificate_photos
+            : [],
         };
 
         setWatch(normalized);
-        setActivePhoto(normalized.photos[0] ?? null);
+        setActivePhoto(normalized.watch_photos?.[0] ?? null);
+        setActiveCert(normalized.certificate_photos?.[0] ?? null);
 
         // ---------- PREFILL FORM ----------
         // marque / modèle (id)
@@ -619,27 +638,70 @@ export default function WatchEdit() {
               <section className="watchdetails-card watchdetails-card-w40">
                 <div className="watchdetails-main">
                   {activePhoto ? (
-                    <img
-                      src={`${API_URL}${activePhoto}`}
-                      alt={`Montre ${formatValue(watch.brand)} ${formatValue(watch.model)}`}
-                    />
+                    <img src={`${API_URL}${activePhoto.url}`} alt="" />
                   ) : (
                     <div className="watchdetails-empty">Aucune photo</div>
                   )}
                 </div>
 
-                {photos.length > 1 && (
+                {watchPhotos.length > 0 && (
                   <div className="watchdetails-thumbs">
-                    {photos.map((p) => (
+                    {watchPhotos.map((p) => (
                       <button
-                        key={p}
+                        key={p.id}
                         type="button"
-                        className={`watchdetails-thumb ${p === activePhoto ? "is-active" : ""}`}
+                        className={`watchdetails-thumb ${p.id === activePhoto?.id ? "is-active" : ""}`}
                         onClick={() => setActivePhoto(p)}
                       >
-                        <img src={`${API_URL}${p}`} alt="" />
+                        <img src={`${API_URL}${p.url}`} alt="" />
                       </button>
                     ))}
+                    <button
+                      type="button"
+                      className="watchdetails-delete"
+                      disabled={!activePhoto}
+                      onClick={async () => {
+                        if (!activePhoto) return;
+
+                        if (!window.confirm("Supprimer cette photo ?")) return;
+
+                        const res = await fetch(
+                          `${API_URL}/api/photos/${activePhoto.id}`,
+                          {
+                            method: "DELETE",
+                            credentials: "include",
+                          },
+                        );
+
+                        if (!res.ok) {
+                          const msg = await res.text().catch(() => "");
+                          alert(msg || "Erreur suppression photo");
+                          return;
+                        }
+
+                        // ✅ refresh : on refetch la montre ou on met à jour le state local
+                        const refreshed = await fetch(
+                          `${API_URL}/api/watches/${watchId}`,
+                          {
+                            credentials: "include",
+                          },
+                        ).then((r) => r.json());
+
+                        setWatch((prev) =>
+                          prev ? { ...prev, ...refreshed } : refreshed,
+                        );
+
+                        // reset activePhoto après refresh
+                        const newWatchPhotos = Array.isArray(
+                          refreshed.watch_photos,
+                        )
+                          ? refreshed.watch_photos
+                          : [];
+                        setActivePhoto(newWatchPhotos[0] ?? null);
+                      }}
+                    >
+                      Supprimer la photo sélectionnée
+                    </button>
                   </div>
                 )}
 
@@ -654,19 +716,6 @@ export default function WatchEdit() {
                       accept="image/*"
                       onChange={(e) =>
                         setWatchImage(e.target.files?.[0] ?? null)
-                      }
-                    />
-                  </div>
-
-                  <div>
-                    <div style={{ fontWeight: 600, marginBottom: 6 }}>
-                      Nouveau certificat (image)
-                    </div>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) =>
-                        setCertificateImage(e.target.files?.[0] ?? null)
                       }
                     />
                   </div>
@@ -867,28 +916,87 @@ export default function WatchEdit() {
               <div className="watchdetails-layout-flex">
                 <div className="watchdetails-card-w40">
                   <section className="watchdetails-card">
-                    <h2 className="watchdetails-section-title">Certificat</h2>
+                    <h2 className="watchdetails-section-title">Certificats</h2>
 
-                    {watch.certificates?.length ? (
-                      <div
-                        style={{ display: "flex", flexWrap: "wrap", gap: 10 }}
-                      >
-                        {watch.certificates.map((c) => (
-                          <img
-                            key={c}
-                            src={`${API_URL}${c}`}
-                            alt=""
-                            style={{
-                              width: 120,
-                              height: 120,
-                              objectFit: "cover",
-                              borderRadius: 10,
-                            }}
-                          />
-                        ))}
+                    <div className="watchdetails-main">
+                      {activeCert ? (
+                        <img src={`${API_URL}${activeCert.url}`} alt="" />
+                      ) : (
+                        <div className="watchdetails-empty">
+                          Aucun certificat
+                        </div>
+                      )}
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 600, marginBottom: 6 }}>
+                        Nouveau certificat (image)
                       </div>
-                    ) : (
-                      <div className="watchdetails-empty">Aucun certificat</div>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) =>
+                          setCertificateImage(e.target.files?.[0] ?? null)
+                        }
+                      />
+                    </div>
+                    {certPhotos.length > 0 && (
+                      <div className="watchdetails-thumbs">
+                        {certPhotos.map((p) => (
+                          <button
+                            key={p.id}
+                            type="button"
+                            className={`watchdetails-thumb ${p.id === activeCert?.id ? "is-active" : ""}`}
+                            onClick={() => setActiveCert(p)}
+                          >
+                            <img src={`${API_URL}${p.url}`} alt="" />
+                          </button>
+                        ))}
+
+                        <button
+                          type="button"
+                          className="watchdetails-delete"
+                          disabled={!activeCert}
+                          onClick={async () => {
+                            if (!activeCert) return;
+                            if (!window.confirm("Supprimer ce certificat ?"))
+                              return;
+
+                            const res = await fetch(
+                              `${API_URL}/api/photos/${activeCert.id}`,
+                              {
+                                method: "DELETE",
+                                credentials: "include",
+                              },
+                            );
+
+                            if (!res.ok) {
+                              const msg = await res.text().catch(() => "");
+                              alert(msg || "Erreur suppression certificat");
+                              return;
+                            }
+
+                            const refreshed = await fetch(
+                              `${API_URL}/api/watches/${watchId}`,
+                              {
+                                credentials: "include",
+                              },
+                            ).then((r) => r.json());
+
+                            setWatch((prev) =>
+                              prev ? { ...prev, ...refreshed } : refreshed,
+                            );
+
+                            const newCerts = Array.isArray(
+                              refreshed.certificate_photos,
+                            )
+                              ? refreshed.certificate_photos
+                              : [];
+                            setActiveCert(newCerts[0] ?? null);
+                          }}
+                        >
+                          Supprimer le certificat sélectionné
+                        </button>
+                      </div>
                     )}
                   </section>
                 </div>

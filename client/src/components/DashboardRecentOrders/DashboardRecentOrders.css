@@ -1,0 +1,27 @@
+.dashboardRecentOrdersCard {
+  margin: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  padding-left: 1rem;
+}
+
+/* 1. Créer de l'espace à gauche et à droite pour les flèches */
+.splide {
+  padding: 0 50px; /* Ajuste la valeur (50px) selon la taille de tes flèches */
+}
+
+/* 2. Positionner les flèches à l'extérieur (dans le padding créé) */
+.splide__arrow--prev {
+  left: 0;
+}
+
+.splide__arrow--next {
+  right: 0;
+}
+
+/* 3. Descendre la pagination (les points) en dessous des cartes */
+.splide__pagination__page {
+  bottom: -2rem; /* Valeur négative pour sortir du conteneur */
+  position: relative; /* On repasse en relatif pour qu'elle pousse le contenu suivant */
+  margin-top: 1rem;
+}
