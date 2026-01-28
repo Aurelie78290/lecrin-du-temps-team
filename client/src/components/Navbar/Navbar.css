@@ -103,7 +103,7 @@
   border-radius: 0.75rem;
 
   text-decoration: none;
-  color: white;
+  color: var(--text-color);
   font-family: var(--font-secondary);
 
   transition: background 0.2s ease;
@@ -117,7 +117,7 @@
 
 /* Hover sur un item */
 .menu a:hover {
-  background: rgba(201, 162, 39, 0.1);
+  background: var(--border-color); /*rgba(201, 162, 39, 0.1); */
 }
 
 /* Item actif (par défaut, fermé) */
@@ -132,7 +132,7 @@
 
 /* Item actif quand sidebar ouverte */
 .sidebar.expanded .menu li.active a {
-  background: var(--secondary-color);
+  background: var(--border-color);
 }
 
 /* Reset des effets sur l'icône en mode ouvert */
@@ -152,8 +152,8 @@
 
 /* Icône active entourée */
 .menu li.active .icon-wrapper {
-  background: var(--secondary-color);
-  box-shadow: 0 0 0 8px var(--secondary-color);
+  background: var(--border-color);
+  box-shadow: 0 0 0 8px var(--border-color);
 }
 
 /* Icône */
@@ -230,7 +230,7 @@
 
 .legal-links a {
   text-decoration: none;
-  color: white;
+  color: var(--text-color);
   font-family: var(--font-secondary);
 }
 
