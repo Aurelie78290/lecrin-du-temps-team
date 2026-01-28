@@ -87,6 +87,7 @@ router.delete(
   isAuth,
   watchActions.removeFromCollection,
 );
+router.delete("/api/photos/:photoId", isAuth, watchActions.deletePhoto);
 
 router.post(
   "/api/watches",

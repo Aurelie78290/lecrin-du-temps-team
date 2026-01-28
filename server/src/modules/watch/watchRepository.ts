@@ -90,6 +90,11 @@ export type WatchUpdateInput = Partial<{
   edition_number: number | null;
 }>;
 
+type WatchOwnerStatus = {
+  user_id: number;
+  watch_sell_status: string | null;
+};
+
 class WatchRepository {
   // ======================
   // C - Create
@@ -148,6 +153,7 @@ class WatchRepository {
   // R - Read one (DETAILS)
   // ======================
   async read(id: number, userId?: number) {
+    // 1) Watch + labels
     const [watchRows] = await databaseClient.query<Rows>(
       `
     SELECT
@@ -172,42 +178,67 @@ class WatchRepository {
     LEFT JOIN functions fn ON fn.idfunctions = w.functions_id
     LEFT JOIN movement_type mt ON mt.idmovement_type = w.movement_type_id
     WHERE w.idwatch = ?
+    LIMIT 1
     `,
       [id],
     );
 
     if (watchRows.length === 0) return null;
 
-    // 2. Récupérer les photos de cette montre
+    // 2) Photos (avec id pour pouvoir delete)
+    type PhotoRow = {
+      id: number;
+      url: string;
+      type: "watch" | "certificate";
+      watch_id: number;
+    };
+
     const [photoRows] = await databaseClient.query<Rows>(
-      "SELECT url, type FROM photo WHERE watch_id = ? ORDER BY id",
+      `
+    SELECT id, url, type, watch_id
+    FROM photo
+    WHERE watch_id = ?
+    ORDER BY id
+    `,
       [id],
     );
 
-    // 3. Séparer les photos et les certificats
-    const photosArray = photoRows as { url: string; type: string }[];
+    const allPhotos = photoRows as PhotoRow[];
 
-    const watchPhotos = photosArray
-      .filter((p) => p.type === "watch")
-      .map((p) => p.url);
+    const watch_photos = allPhotos.filter((p) => p.type === "watch");
+    const certificate_photos = allPhotos.filter(
+      (p) => p.type === "certificate",
+    );
 
-    const certificates = photosArray
-      .filter((p) => p.type === "certificate")
-      .map((p) => p.url);
+    // compat front (string[])
+    const photos = watch_photos.map((p) => p.url);
+    const certificates = certificate_photos.map((p) => p.url);
 
+    // 3) Flag collection
     let isInMyCollection = false;
     if (userId) {
       const [rows] = await databaseClient.query<Rows>(
-        "SELECT 1 FROM user_has_watch WHERE user_id = ? AND watch_id = ? LIMIT 1",
+        `
+      SELECT 1
+      FROM user_has_watch
+      WHERE user_id = ? AND watch_id = ?
+      LIMIT 1
+      `,
         [userId, id],
       );
       isInMyCollection = rows.length > 0;
     }
-    // 4. Retourner la montre avec ses photos
+
+    // 4) Return complet
     return {
-      ...watchRows[0],
-      photos: watchPhotos,
-      certificates,
+      ...(watchRows[0] as Record<string, unknown>),
+
+      photos, // string[]
+      certificates, // string[]
+
+      watch_photos, // {id,url,type,watch_id}[]
+      certificate_photos, // {id,url,type,watch_id}[]
+
       is_in_my_collection: isInMyCollection,
     };
   }
@@ -274,6 +305,15 @@ WHERE uhw.user_id = ?;
     );
 
     return rows as WatchListItem[];
+  }
+
+  async readOwnerAndStatus(watchId: number): Promise<WatchOwnerStatus | null> {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT user_id, watch_sell_status FROM watch WHERE idwatch = ? LIMIT 1",
+      [watchId],
+    );
+    const list = rows as WatchOwnerStatus[];
+    return list[0] ?? null;
   }
 
   // ======================
