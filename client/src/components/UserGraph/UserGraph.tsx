@@ -1,17 +1,17 @@
-import { useCollectionStats } from "../../hook/useCollectionStats";
 import {
   Chart as ChartJS,
-  TimeScale,
+  Filler,
+  Legend,
+  LineElement,
   LinearScale,
   PointElement,
-  LineElement,
+  TimeScale,
   Title,
   Tooltip,
-  Legend,
-  Filler,
 } from "chart.js";
-import type { TooltipItem, ChartOptions } from "chart.js"; // ⚠️ CRUCIAL : sans ça, pas de remplissage !
+import type { ChartOptions, TooltipItem } from "chart.js"; // ⚠️ CRUCIAL : sans ça, pas de remplissage !
 import { Line } from "react-chartjs-2";
+import { useCollectionStats } from "../../hook/useCollectionStats";
 import "chartjs-adapter-date-fns";
 import "./UserGraph.css";
 import { fr } from "date-fns/locale";

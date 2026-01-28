@@ -1,10 +1,10 @@
-import bcrypt from "bcrypt";
 import crypto from "node:crypto";
+import { get } from "node:http";
+import bcrypt from "bcrypt";
 import type { Request, RequestHandler } from "express";
 import jwt from "jsonwebtoken";
-import userRepository from "./userRepository";
 import { sendResetPasswordEmail } from "../../services/mailer";
-import { get } from "node:http";
+import userRepository from "./userRepository";
 
 // Ajout pour une inscription //
 const add: RequestHandler = async (req, res, next) => {
