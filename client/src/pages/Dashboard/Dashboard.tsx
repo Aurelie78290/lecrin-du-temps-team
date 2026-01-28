@@ -3,7 +3,7 @@ import DashboardNewMembers from "../../components/DashboardNewMembers/DashboardN
 import DashboardPendingAdd from "../../components/DashboardPendingAdd/DashboardPendingAdd";
 import DashboardRecentOrders from "../../components/DashboardRecentOrders/DashboardRecentOrders";
 import DashboardVolTran from "../../components/DashboardVolTran/DashboardVolTran";
-import EditUsersRoles from "../../components/EditUsersRoles/EditUsersRoles";
+
 import MonthlySales from "../../components/MonthlySales/MonthlySales";
 import PendingTransactions from "../../components/PendingTransactions/PendingTransactions";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -25,7 +25,7 @@ function Dashboard() {
         <DashboardVolTran />
         <DashboardPendingAdd />
       </section>
-      <EditUsersRoles />
+
       <DashboardRecentOrders />
     </>
   );
