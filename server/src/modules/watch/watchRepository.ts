@@ -16,7 +16,7 @@ export type WatchListItem = {
   model: string;
   watch_price: number | null;
   watch_condition: string | null;
-  photo_url: string | null;
+  photo_url?: string | null;
   watch_sell_status?: string | null;
 };
 
@@ -67,6 +67,8 @@ export type WatchDetails = {
   photos: string[];
   certificates: string[];
 
+  is_in_mycollection?: boolean;
+
   case_material_id?: number | null;
   dial_finish_id?: number | null;
   hour_marker_type_id?: number | null;
@@ -82,7 +84,7 @@ export type WatchUpdateInput = Partial<{
   watch_price: number | null;
   watch_condition: string | null;
 
-  watch_sell_status: "personal" | "pending" | "active" | null;
+  watch_sell_status: "personal" | "pending" | "active" | "sold" | null;
   production_year: string | null;
   ref_no: string | null;
 
@@ -152,6 +154,7 @@ class WatchRepository {
   // ======================
   // R - Read one (DETAILS)
   // ======================
+
   async read(id: number, userId?: number) {
     // 1) Watch + labels
     const [watchRows] = await databaseClient.query<Rows>(
@@ -335,6 +338,45 @@ WHERE uhw.user_id = ?;
 
     return result.affectedRows > 0;
   }
+
+  // ======================
+  // U - Mark as sold
+  // ======================
+
+  async readSellStatus(watchId: number): Promise<string | null> {
+    const [rows] = await databaseClient.query<
+      Rows & { watch_sell_status: string | null }[]
+    >("SELECT watch_sell_status FROM watch WHERE idwatch = ? LIMIT 1", [
+      watchId,
+    ]);
+
+    if (rows.length === 0) return null;
+    return rows[0].watch_sell_status;
+  }
+
+  async markAsSoldIfActive(watchId: number, status: string): Promise<boolean> {
+    const [result] = await databaseClient.query<Result>(
+      `UPDATE watch 
+     SET watch_sell_status = 'sold'
+     WHERE idwatch = ? AND watch_sell_status = 'active'`,
+      [status, watchId],
+    );
+
+    return result.affectedRows > 0;
+  }
+
+  async isAvailable(watchId: number): Promise<boolean> {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT watch_sell_status FROM watch WHERE idwatch = ?",
+      [watchId],
+    );
+
+    if (rows.length === 0) return false;
+
+    const watch = rows[0] as { watch_sell_status: string | null };
+    return watch.watch_sell_status === "active";
+  }
+
   // ======================
   // D - Delete (watch)
   // ======================
