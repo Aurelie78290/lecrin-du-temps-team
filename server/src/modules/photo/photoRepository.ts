@@ -39,7 +39,17 @@ class PhotoRepository {
     );
     return rows as Photo[];
   }
+  /**
+   * Vérifie si une montre a au moins une photo de type "watch"
+   */
+  async hasWatchPhoto(watchId: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT 1 FROM photo WHERE watch_id = ? AND type = 'watch' LIMIT 1",
+      [watchId],
+    );
 
+    return (rows as unknown[]).length > 0;
+  }
   async deleteByWatchId(watchId: number) {
     await databaseClient.query("DELETE FROM photo WHERE watch_id = ?", [
       watchId,

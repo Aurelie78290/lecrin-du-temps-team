@@ -11,6 +11,7 @@ import handbag from "../../assets/images/icon/handbag.svg";
 import info from "../../assets/images/icon/info-square.svg";
 import instagram from "../../assets/images/icon/instagram.png";
 import linkedin from "../../assets/images/icon/linkedin.svg";
+import people from "../../assets/images/icon/people.svg";
 import person from "../../assets/images/icon/person.svg";
 import tiktok from "../../assets/images/icon/tiktok.svg";
 import watch from "../../assets/images/icon/watch.svg";
@@ -111,23 +112,24 @@ function Navbar({
               <span>Actualités</span>
             </Link>
           </li>
-
-          <li className={isActive("/UserProfil") ? "active" : ""}>
-            {user?.role === "admin" ? (
-              <Link to="/UserProfil" onClick={() => setExpanded(false)}>
+          {user?.role === "admin" && (
+            <li className={isActive("/UserManagement") ? "active" : ""}>
+              <Link to="/UserManagement" onClick={() => setExpanded(false)}>
                 <div className="icon-wrapper">
-                  <img src={person} alt="" />
+                  <img src={people} alt="" />
                 </div>
                 <span>Utilisateurs</span>
               </Link>
-            ) : (
-              <Link to="/UserProfil" onClick={() => setExpanded(false)}>
-                <div className="icon-wrapper">
-                  <img src={person} alt="" />
-                </div>
-                <span>Profil</span>
-              </Link>
-            )}
+            </li>
+          )}
+
+          <li className={isActive("/UserProfil") ? "active" : ""}>
+            <Link to="/UserProfil" onClick={() => setExpanded(false)}>
+              <div className="icon-wrapper">
+                <img src={person} alt="" />
+              </div>
+              <span>Profil</span>
+            </Link>
           </li>
 
           <li className={isActive("/Contact") ? "active" : ""}>

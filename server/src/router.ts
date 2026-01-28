@@ -14,9 +14,10 @@ router.post("/api/users", userActions.add); // Signup //
 router.post("/api/login", userActions.login); // Login //
 router.get("/api/logout", userActions.logout); // Logout //
 router.get("/api/auth/me", isAuth, userActions.checkAuth); // Check de la session //
-router.put("/api/users/me", isAuth, userActions.edit); // Modification d'informmation personnelle //
+router.put("/api/users/me", isAuth, userActions.edit); // Modification d'information personnelle //
 router.post("/api/forgot-password", userActions.forgotPassword); // MDP oublié //
 router.post("/api/reset-password", userActions.resetPassword); // Réinitialisation du MDP //
+router.get("/api/admin/users-stats", isAuth, userActions.getUserWatchStatus); // Statut des montres des users //
 
 // Define item-related routes
 import itemActions from "./modules/item/itemActions";
@@ -67,6 +68,16 @@ router.patch(
   "/api/watches/:id/request-sell",
   isAuth,
   watchActions.requestSellApproval,
+);
+router.patch(
+  "/api/watches/:id/cancel-sell-request",
+  isAuth,
+  watchActions.cancelSellApproval,
+);
+router.patch(
+  "/api/watches/:id/remove-from-sale",
+  isAuth,
+  watchActions.removeFromSale,
 );
 
 router.get("/api/shop/watches", watchActions.browseShop);
