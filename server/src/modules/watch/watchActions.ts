@@ -1,8 +1,9 @@
+import fs from "node:fs/promises";
+import path from "node:path";
 import type { Request, RequestHandler, Response } from "express";
-
 import photoRepository from "../photo/photoRepository";
 import watchRepository from "./watchRepository";
-
+const uploadsRoot = path.join(process.cwd(), "public/assets/uploads");
 interface UploadedFiles {
   watch_image?: Express.Multer.File[];
   certificate_image?: Express.Multer.File[];
@@ -11,6 +12,11 @@ interface UploadedFiles {
 type WatchWithStatus = { watch_sell_status?: string | null };
 
 type AuthedRequest = Request & { user?: { id: number; role: string } };
+
+type WatchOwnerStatus = {
+  user_id: number;
+  watch_sell_status: string | null;
+};
 
 const getUserIdOr401 = (req: Request, res: Response): number | null => {
   const userId = (req as AuthedRequest).user?.id;
@@ -510,6 +516,74 @@ const removeFromSale: RequestHandler = async (req, res, next) => {
     next(err);
   }
 };
+// =======================
+// supprimer une photo
+// =======================
+const deletePhoto: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = getUserIdOr401(req, res);
+    if (!userId) return;
+
+    const photoId = Number(req.params.photoId);
+    if (Number.isNaN(photoId)) {
+      res.sendStatus(400);
+      return;
+    }
+
+    // 1) récupérer la photo (1 seule, par id)
+    const photo = await photoRepository.findById(photoId);
+    if (!photo) {
+      res.sendStatus(404);
+      return;
+    }
+
+    // 2) récupérer owner + status de la montre
+    const watchDb = await watchRepository.readOwnerAndStatus(photo.watch_id);
+    if (!watchDb) {
+      res.sendStatus(404);
+      return;
+    }
+
+    // 3) check propriétaire
+    if (watchDb.user_id !== userId) {
+      res.sendStatus(403);
+      return;
+    }
+
+    // 4) bloquer si pending/active
+    const status = (watchDb.watch_sell_status ?? "").toLowerCase().trim();
+    if (status === "pending" || status === "active") {
+      res.status(403).json({
+        message:
+          "Impossible de supprimer une photo pendant la validation ou quand la montre est en vente.",
+      });
+      return;
+    }
+
+    // 5) supprimer fichier sur disque
+    // photo.url ex: "/uploads/watches/xxx.jpg" ou "/uploads/certificates/yyy.png"
+    // On retire le prefix "/uploads/" pour retomber dans public/assets/uploads/
+    const relative = photo.url.replace(/^\/?uploads\//, ""); // => "watches/xxx.jpg"
+    const filePath = path.join(uploadsRoot, relative);
+
+    try {
+      await fs.unlink(filePath);
+    } catch {
+      // fichier introuvable / déjà supprimé => on ignore
+    }
+
+    // 6) supprimer la ligne en DB
+    const ok = await photoRepository.deleteById(photoId);
+    if (!ok) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
 
 export default {
   browse,
@@ -525,4 +599,5 @@ export default {
   requestSellApproval,
   cancelSellApproval,
   removeFromSale,
+  deletePhoto,
 };

@@ -80,7 +80,6 @@ const UserInfosPopup = ({ user, onClose }: UserInfosPopupProps) => {
         </button>
         <header className="infos-header">
           <h2>{view === "infos" ? "Détails Utilisateur" : "Collection"}</h2>
-          <p>ID #{user.id}</p>
         </header>
         {view === "infos" ? (
           <>
@@ -100,36 +99,35 @@ const UserInfosPopup = ({ user, onClose }: UserInfosPopupProps) => {
                 </span>
               </p>
               <p className="infos">
-                <span className="label">Prénom:</span>
+                <span className="label">ID</span>
+                <span className="value">#{user.id}</span>
+              </p>
+              <p className="infos">
+                {" "}
+                <span className="label">Rôle</span>
+                <span className="value">{user.role}</span>
+              </p>
+              <p className="infos">
+                {" "}
+                <span className="label">Email</span>
+                <span className="value">{user.email}</span>
+              </p>
+              <p className="infos">
+                <span className="label">Prénom</span>
                 <span className="value">
                   {user.firstname || "Non renseigné"}
                 </span>
               </p>
               <p className="infos">
                 {" "}
-                <span className="label">Nom:</span>
+                <span className="label">Nom</span>
                 <span className="value">
                   {user.lastname || "Non renseigné"}
                 </span>
               </p>
               <p className="infos">
                 {" "}
-                <span className="label">Email:</span>
-                <span className="value">{user.email}</span>
-              </p>
-              <p className="infos">
-                {" "}
-                <span className="label">Téléphone:</span>
-                <span className="value">{user.tel || "Non renseigné"}</span>
-              </p>
-              <p className="infos">
-                {" "}
-                <span className="label">Rôle:</span>
-                <span className="value">{user.role}</span>
-              </p>
-              <p className="infos">
-                {" "}
-                <span className="label">Date de Naissance:</span>
+                <span className="label">Date de Naissance</span>
                 <span className="value">
                   {user.birthdate
                     ? new Date(user.birthdate).toLocaleDateString("fr-FR")
@@ -165,32 +163,32 @@ const UserInfosPopup = ({ user, onClose }: UserInfosPopupProps) => {
                   {watches.length > 0 ? (
                     watches.map((w) => (
                       <div key={w.idwatch} className="watch-items">
-                        <div className="watch-img">
-                          <img
-                            src={
-                              w.photo_url
-                                ? `${import.meta.env.VITE_API_URL}${w.photo_url}`
-                                : "/placeholder-watch.png"
-                            }
-                            alt={w.model}
-                          />
-                          <span
-                            className={`watch-status ${w.watch_sell_status}`}
-                          >
-                            {{
-                              active: "En vente",
-                              pending: "En attente",
-                              personal: "Collection",
-                            }[w.watch_sell_status] || "Statut inconnu"}
-                          </span>
+                        <div className="watch-main-info">
+                          <div className="watch-img">
+                            <img
+                              src={
+                                w.photo_url
+                                  ? `${import.meta.env.VITE_API_URL}${w.photo_url}`
+                                  : "/placeholder-watch.png"
+                              }
+                              alt={w.model}
+                            />
+                          </div>
+                          <div className="watch-details">
+                            <span className="watch-brand">{w.brand}</span>
+                            <span className="watch-model">{w.model}</span>
+                            <span className="watch-price">
+                              {w.watch_price ? `${w.watch_price}€` : "Prix "}
+                            </span>
+                          </div>
                         </div>
-                        <div className="watch-details">
-                          <span className="watch-brand">{w.brand}</span>
-                          <span className="watch-model">{w.model}</span>
-                          <span className="watch-price">
-                            {w.watch_price ? `${w.watch_price}€` : "Prix "}
-                          </span>
-                        </div>
+                        <span className={`watch-status ${w.watch_sell_status}`}>
+                          {{
+                            active: "En vente",
+                            pending: "En attente",
+                            personal: "Collection",
+                          }[w.watch_sell_status] || "Statut inconnu"}
+                        </span>
                       </div>
                     ))
                   ) : (

@@ -4,6 +4,7 @@ import "./Navbar.css";
 
 import home from "../../assets/images/home.svg";
 // Importe tes images
+import annonce from "../../assets/images/icon/Annonces.svg";
 import book from "../../assets/images/icon/book.svg";
 import envelope from "../../assets/images/icon/envelope.svg";
 import facebook from "../../assets/images/icon/facebook.svg";
@@ -16,7 +17,6 @@ import person from "../../assets/images/icon/person.svg";
 import tiktok from "../../assets/images/icon/tiktok.svg";
 import watch from "../../assets/images/icon/watch.svg";
 import logo from "../../assets/images/logo.svg";
-import annonce from "../../assets/images/icon/Annonces.svg";
 import ThemeChange from "../ThemeChange/ThemeChange";
 
 function Navbar({
