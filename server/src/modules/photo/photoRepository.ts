@@ -34,10 +34,19 @@ class PhotoRepository {
    */
   async findByWatchId(watchId: number) {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT id, url, type FROM photo WHERE watch_id = ?",
+      "SELECT id, url, type, watch_id FROM photo WHERE watch_id = ?",
       [watchId],
     );
     return rows as Photo[];
+  }
+
+  async findById(photoId: number): Promise<Photo | null> {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT id, url, type, watch_id FROM photo WHERE id = ? LIMIT 1",
+      [photoId],
+    );
+    const list = rows as Photo[];
+    return list[0] ?? null;
   }
   /**
    * Vérifie si une montre a au moins une photo de type "watch"
@@ -54,6 +63,14 @@ class PhotoRepository {
     await databaseClient.query("DELETE FROM photo WHERE watch_id = ?", [
       watchId,
     ]);
+  }
+
+  async deleteById(photoId: number) {
+    const [result] = await databaseClient.query<Result>(
+      "DELETE FROM photo WHERE id = ?",
+      [photoId],
+    );
+    return result.affectedRows > 0;
   }
 }
 
