@@ -28,8 +28,8 @@ import ShopPayment from "./pages/ShopPayment/ShopPayment";
 import ShopWatchIndex from "./pages/ShopWatchIndex/ShopWatchIndex";
 import ThankYou from "./pages/ThankYou/ThankYou";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
+import UserManagement from "./pages/UserManagement/UserManagement";
 import UserProfil from "./pages/UserProfil/UserProfil";
-// import UserProfil from "./pages/UserProfil/UserProfil";
 import WatchDetails from "./pages/WatchDetails/WatchDetails";
 import WatchEdit from "./pages/WatchEdit/WatchEdit";
 
@@ -158,6 +158,10 @@ const router = createBrowserRouter([
           {
             path: "/ClassifiedAd",
             element: <ClassifiedAd />,
+          },
+          {
+            path: "/UserManagement",
+            element: <UserManagement />,
           },
         ],
       },
