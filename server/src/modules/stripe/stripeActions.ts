@@ -12,8 +12,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
 
 // Fonction helper pour vérifier la disponibilité
 const isWatchAvailable = async (watchId: number): Promise<boolean> => {
-  const watch = await watchRepository.read(watchId);
-  return watch?.watch_sell_status === "active";
+  const status = await watchRepository.readSellStatus(watchId);
+  return status === "active";
 };
 
 //création d'une session de paiement
