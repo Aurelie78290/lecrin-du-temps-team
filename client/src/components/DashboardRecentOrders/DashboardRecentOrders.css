@@ -1,27 +1,54 @@
-.dashboardRecentOrdersCard {
-  margin: 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 15px;
+/* html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+} */
+
+.DashboardRecentOrders-article {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden; /* Sécurité anti-scroll */
+  box-sizing: border-box;
+}
+
+.embla__viewport {
+  overflow: hidden; /* C'est ici que le scroll est bloqué */
+  width: 100%;
+}
+
+.embla__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+}
+
+.embla__slide {
+  flex: 0 0 25%; /* 4 cartes par défaut */
+  min-width: 0;
   padding-left: 1rem;
 }
-
-/* 1. Créer de l'espace à gauche et à droite pour les flèches */
-.splide {
-  padding: 0 50px; /* Ajuste la valeur (50px) selon la taille de tes flèches */
+.dashboardRecentOrdersCard {
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  box-sizing: border-box;
+  height: 100%; /* Pour que toutes les cartes aient la même hauteur */
+  background-color: rgba(255, 255, 255, 0.05); /* Optionnel : léger fond pour voir la carte */
+  margin-right: 1rem;
 }
 
-/* 2. Positionner les flèches à l'extérieur (dans le padding créé) */
-.splide__arrow--prev {
-  left: 0;
+/* Ton responsive simple et efficace */
+@media (max-width: 1200px) {
+  .embla__slide {
+    flex: 0 0 33.33%;
+  } /* 3 cartes */
 }
-
-.splide__arrow--next {
-  right: 0;
+@media (max-width: 992px) {
+  .embla__slide {
+    flex: 0 0 50%;
+  } /* 2 cartes */
 }
-
-/* 3. Descendre la pagination (les points) en dessous des cartes */
-.splide__pagination__page {
-  bottom: -2rem; /* Valeur négative pour sortir du conteneur */
-  position: relative; /* On repasse en relatif pour qu'elle pousse le contenu suivant */
-  margin-top: 1rem;
+@media (max-width: 768px) {
+  .embla__slide {
+    flex: 0 0 100%;
+  } /* 1 carte */
 }

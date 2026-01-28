@@ -16,7 +16,7 @@ function Dashboard() {
   const firstname = auth?.user?.firstname;
 
   return (
-    <>
+    <main className="Dashboard-main">
       <h1> Bienvenue {firstname || "Admin"}</h1>
       <section className="Dashboard_section_high">
         <MonthlySales />
@@ -25,9 +25,10 @@ function Dashboard() {
         <DashboardVolTran />
         <DashboardPendingAdd />
       </section>
-
-      <DashboardRecentOrders />
-    </>
+      <section className="Dashboard_section_low">
+        <DashboardRecentOrders />
+      </section>
+    </main>
   );
 }
 

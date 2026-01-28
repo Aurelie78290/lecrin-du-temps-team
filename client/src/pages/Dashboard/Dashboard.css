@@ -1,10 +1,14 @@
+.Dashboard-main {
+  width: 100%;
+}
+
 .Dashboard_section_high {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 3rem;
 }
 
-@media screen and (max-width: 1199px) {
+@media screen and (max-width: 1200px) {
   .Dashboard_section_high {
     display: grid;
     grid-template-columns: 1fr 1fr;
