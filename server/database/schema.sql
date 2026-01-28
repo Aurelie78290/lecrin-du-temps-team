@@ -428,6 +428,9 @@ VALUES (2, 3, 4000, 20251225, 2, 2),
 /*!40000 ALTER TABLE `order_archive` ENABLE KEYS */;
 UNLOCK TABLES;
 
+ALTER TABLE order_archive 
+ADD COLUMN stripe_session_id VARCHAR(255) NULL,
+ADD INDEX idx_stripe_session (stripe_session_id);
 --
 -- Table structure for table `photo`
 --
@@ -606,7 +609,7 @@ CREATE TABLE `watch` (
   `is_limited_edition` tinyint DEFAULT NULL,
   `edition_number` varchar(45) DEFAULT NULL,
   `watch_gender` varchar(45) DEFAULT NULL,
-  `watch_sell_status` ENUM('active', 'pending', 'personal') DEFAULT 'personal',
+  `watch_sell_status` ENUM('active', 'pending', 'personal', 'sold') DEFAULT 'personal',
   `watch_price` int DEFAULT NULL,
   `case_material_id` int DEFAULT NULL,
   `diameter_mm` int DEFAULT NULL,

@@ -1,6 +1,7 @@
 import type { RequestHandler } from "express";
 import Stripe from "stripe";
 import basketRepository from "../basket/basketRepository";
+import watchRepository from "../watch/watchRepository";
 
 interface AuthenticatedRequest extends Express.Request {
   user?: { id: number };
@@ -8,6 +9,12 @@ interface AuthenticatedRequest extends Express.Request {
 
 //initialisation de Stripe avec la clé secrète
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
+
+// Fonction helper pour vérifier la disponibilité
+const isWatchAvailable = async (watchId: number): Promise<boolean> => {
+  const watch = await watchRepository.read(watchId);
+  return watch?.watch_sell_status === "active";
+};
 
 //création d'une session de paiement
 export const createCheckoutSession: RequestHandler = async (req, res, next) => {
@@ -28,6 +35,22 @@ export const createCheckoutSession: RequestHandler = async (req, res, next) => {
     const { delivery } = req.body;
     if (!delivery || !delivery.street || !delivery.zip || !delivery.city) {
       res.status(400).json({ message: "Adresse de livraison requise" });
+      return;
+    }
+
+    //Vérification de la disponibilité AVANT de créer la session Stripe
+    const unavailableItems: string[] = [];
+    for (const item of cartItems) {
+      const isAvailable = await isWatchAvailable(item.idwatch);
+      if (!isAvailable) {
+        unavailableItems.push(`${item.brand} ${item.model}`);
+      }
+    }
+
+    if (unavailableItems.length > 0) {
+      res.status(400).json({
+        message: `Articles non disponibles : ${unavailableItems.join(", ")}. Veuillez mettre à jour votre panier.`,
+      });
       return;
     }
 

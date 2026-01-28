@@ -1,16 +1,11 @@
 import type { RequestHandler } from "express";
 import basketRepository from "../../modules/basket/basketRepository";
 import orderArchiveRepository from "../../modules/orderArchive/orderArchiveRepository";
-// import watchRepository from "../watch/watchRepository";
+import watchRepository from "../watch/watchRepository";
 
 interface AuthenticatedRequest extends Express.Request {
   user?: { id: number };
 }
-
-// const isWatchAvailable = async (watchId: number): Promise<boolean> => {
-//   const watch = await watchRepository.read(watchId);
-//   return watch?.watch_sell_status === "active";
-// };
 
 // Créer une commande depuis le panier
 export const createOrderFromStripe: RequestHandler = async (req, res, next) => {
@@ -21,10 +16,10 @@ export const createOrderFromStripe: RequestHandler = async (req, res, next) => {
       return;
     }
 
-    const { sessionId } = req.body;
+    const { sessionId, delivery } = req.body;
 
-    if (!sessionId) {
-      res.status(400).json({ message: "Session ID requis" });
+    if (!sessionId || !delivery) {
+      res.status(400).json({ message: "données manquantes" });
       return;
     }
 
@@ -40,20 +35,30 @@ export const createOrderFromStripe: RequestHandler = async (req, res, next) => {
       return;
     }
 
-    // Récupérer les infos de la session Stripe depuis les métadonnées
-    const { delivery } = req.body;
-    if (!delivery) {
-      res.status(400).json({ message: "Adresse requise" });
-      return;
-    }
-
     const cartItems = await basketRepository.getCartItems(userId);
     if (!cartItems || cartItems.length === 0) {
       res.status(400).json({ message: "Panier vide" });
       return;
     }
 
+    // on vérifie la disponibilité des montres
+    const unavailableItems: string[] = [];
+    for (const item of cartItems) {
+      const isAvailable = await watchRepository.isAvailable(item.idwatch);
+      if (!isAvailable) {
+        unavailableItems.push(`${item.brand} ${item.model}`);
+      }
+    }
+
+    if (unavailableItems.length > 0) {
+      res.status(400).json({
+        message: `Articles non disponibles : ${unavailableItems.join(", ")}`,
+      });
+      return;
+    }
+
     const orderIds: number[] = [];
+    const soldWatches: number[] = [];
 
     for (const item of cartItems) {
       for (let i = 0; i < item.quantity; i++) {
@@ -72,6 +77,16 @@ export const createOrderFromStripe: RequestHandler = async (req, res, next) => {
         });
         orderIds.push(result.insertId);
       }
+
+      // Ajouter à la liste des montres à marquer comme vendues
+      if (!soldWatches.includes(item.idwatch)) {
+        soldWatches.push(item.idwatch);
+      }
+    }
+
+    for (const WatchId of soldWatches) {
+      console.log("Updating watch to sold:", WatchId);
+      await watchRepository.updateById(WatchId, { watch_sell_status: "sold" });
     }
 
     //  Vider le panier
