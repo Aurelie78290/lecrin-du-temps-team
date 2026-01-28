@@ -1,7 +1,9 @@
 import { useContext } from "react";
 import DashboardNewMembers from "../../components/DashboardNewMembers/DashboardNewMembers";
 import DashboardPendingAdd from "../../components/DashboardPendingAdd/DashboardPendingAdd";
+import DashboardRecentOrders from "../../components/DashboardRecentOrders/DashboardRecentOrders";
 import DashboardVolTran from "../../components/DashboardVolTran/DashboardVolTran";
+
 import MonthlySales from "../../components/MonthlySales/MonthlySales";
 import PendingTransactions from "../../components/PendingTransactions/PendingTransactions";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -23,6 +25,8 @@ function Dashboard() {
         <DashboardVolTran />
         <DashboardPendingAdd />
       </section>
+
+      <DashboardRecentOrders />
     </>
   );
 }
