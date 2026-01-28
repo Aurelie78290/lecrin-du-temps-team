@@ -404,7 +404,14 @@ const requestSellApproval: RequestHandler = async (req, res, next) => {
       res.sendStatus(400);
       return;
     }
-
+    const hasPhoto = await photoRepository.hasWatchPhoto(watchId);
+    if (!hasPhoto) {
+      res.status(400).json({
+        message:
+          "Ajoutez au moins une photo de la montre avant de la mettre en vente.",
+      });
+      return;
+    }
     const updated = await watchRepository.updateById(watchId, {
       watch_sell_status: "pending",
     });

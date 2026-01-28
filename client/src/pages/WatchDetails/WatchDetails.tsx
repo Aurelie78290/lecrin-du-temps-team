@@ -203,10 +203,19 @@ export default function WatchDetails({
   };
   const handleRequestSell = async () => {
     if (!watchId || !Number.isFinite(watchId)) return;
+
+    const hasWatchPhoto = (watch?.photos?.length ?? 0) > 0;
+    if (!hasWatchPhoto) {
+      alert(
+        "📸 Ajoutez au moins une photo de la montre avant de la mettre en vente.",
+      );
+      return;
+    }
+
     if (!window.confirm("Voulez-vous vraiment demander la mise en vente ?"))
       return;
+
     try {
-      // PATCH : demander la mise en vente
       const res = await fetch(
         `${API_URL}/api/watches/${watchId}/request-sell`,
         {
@@ -221,18 +230,17 @@ export default function WatchDetails({
         return;
       }
 
-      // Refetch la montre (pour avoir les données complètes)
       const refreshed = await fetch(`${API_URL}/api/watches/${watchId}`, {
         credentials: "include",
       }).then((r) => r.json());
 
-      //  Merge avec l’ancienne watch
       setWatch((prev) => (prev ? { ...prev, ...refreshed } : refreshed));
     } catch (e) {
       console.error(e);
       alert("Erreur lors de la mise en vente");
     }
   };
+
   const handleCancelSellRequest = async () => {
     if (!watchId || !Number.isFinite(watchId)) return;
 
