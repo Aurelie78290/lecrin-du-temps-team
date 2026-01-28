@@ -3,9 +3,12 @@
   padding: 0.5rem;
   background: var(--border-color);
   border: none;
-  border-radius: 20%;
+  border-radius: 0.75rem;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .basket-icon-button:hover {

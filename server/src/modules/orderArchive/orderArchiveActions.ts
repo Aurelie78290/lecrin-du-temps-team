@@ -1,10 +1,16 @@
 import type { RequestHandler } from "express";
 import basketRepository from "../../modules/basket/basketRepository";
 import orderArchiveRepository from "../../modules/orderArchive/orderArchiveRepository";
+// import watchRepository from "../watch/watchRepository";
 
 interface AuthenticatedRequest extends Express.Request {
   user?: { id: number };
 }
+
+// const isWatchAvailable = async (watchId: number): Promise<boolean> => {
+//   const watch = await watchRepository.read(watchId);
+//   return watch?.watch_sell_status === "active";
+// };
 
 // Créer une commande depuis le panier
 export const createOrderFromStripe: RequestHandler = async (req, res, next) => {

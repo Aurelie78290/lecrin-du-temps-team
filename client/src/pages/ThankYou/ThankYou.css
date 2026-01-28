@@ -198,6 +198,10 @@
 
 /* Responsive */
 @media (max-width: 640px) {
+  .thankyou-container {
+    margin-top: 2rem;
+  }
+
   .thankyou-card {
     padding: 2rem 1.5rem;
   }
