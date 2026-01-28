@@ -1,8 +1,8 @@
 import api from "../../services/api";
 import "./EditUsersRoles.css";
-import UserInfosPopup from "../UserInfosPopup/UserInfosPopup";
-import { useEffect, useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import UserInfosPopup from "../UserInfosPopup/UserInfosPopup";
 
 interface User {
   id: number;

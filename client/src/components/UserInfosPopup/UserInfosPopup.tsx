@@ -1,5 +1,5 @@
 import "./UserInfosPopup.css";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import api from "../../services/api";
 
 interface Watch {

@@ -1,6 +1,6 @@
-import { AuthContext } from "../../contexts/AuthContext";
 import { useContext } from "react";
 import EditUsersRoles from "../../components/EditUsersRoles/EditUsersRoles";
+import { AuthContext } from "../../contexts/AuthContext";
 import "./UserMaganement.css";
 
 function UserManagement() {
