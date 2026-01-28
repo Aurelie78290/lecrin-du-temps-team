@@ -77,7 +77,7 @@ function ToggleValidateAdd({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        watch_sell_status: "En vente",
+        watch_sell_status: "active",
       }),
     })
       .then((response) => {
@@ -120,7 +120,7 @@ function ToggleValidateAdd({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        watch_sell_status: "Refusée",
+        watch_sell_status: "personal",
       }),
     })
       .then((response) => {

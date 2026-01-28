@@ -10,8 +10,12 @@ interface UserRow {
   e_mail: string;
   user_role: string;
   password?: string;
-  birthdate: string;
-  tel: string;
+  birthdate?: string;
+  tel?: string;
+  last_login?: string;
+  count_personal?: number;
+  count_pending?: number;
+  count_active?: number;
 }
 
 export interface UserAccount {
@@ -21,8 +25,12 @@ export interface UserAccount {
   email: string;
   role: string;
   password?: string;
-  birthdate: string;
-  tel: string;
+  birthdate?: string | null;
+  tel?: string | null;
+  last_login?: string | null;
+  count_personal?: number;
+  count_pending?: number;
+  count_active?: number;
 }
 
 class UserRepository {
@@ -132,6 +140,36 @@ class UserRepository {
     const [result] = await databaseClient.query<Result>(
       "UPDATE user SET password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE iduser = ?",
       [passwordHash, userId],
+    );
+    return result;
+  }
+
+  // Pour recupérer le status d'une montre dans la collection d'un user (personal(collection), pending(en attente de validation), active (en vente)) //
+  async getUserWatchStatus(): Promise<UserAccount[]> {
+    const [rows] = await databaseClient.query<Rows>(
+      `SELECT
+      u.iduser, u.firstname, u.lastname, u.e_mail, u.user_role, u.last_login, u.birthdate, u.tel,
+      COUNT(CASE WHEN w.watch_sell_status = 'personal' THEN 1 END) AS count_personal,
+      COUNT (CASE WHEN w.watch_sell_status = 'pending' THEN 1 END) AS count_pending,
+      COUNT (CASE WHEN w.watch_sell_status = 'active' THEN 1 END) AS count_active
+      FROM user u
+      LEFT JOIN watch w ON u.iduser = w.user_id
+      GROUP BY u.iduser`,
+    );
+    return (rows as UserRow[]).map((row) => ({
+      ...this.formatUser(row),
+      last_login: row.last_login,
+      count_personal: row.count_personal || 0,
+      count_pending: row.count_pending || 0,
+      count_active: row.count_active || 0,
+    }));
+  }
+
+  // Pour recuperer et mettre a jour la derniere connexion d'un user //
+  async updateLastLogin(userId: number): Promise<Result> {
+    const [result] = await databaseClient.query<Result>(
+      "UPDATE user SET last_login = NOW() WHERE iduser = ?",
+      [userId],
     );
     return result;
   }

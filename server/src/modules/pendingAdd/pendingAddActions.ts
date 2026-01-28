@@ -39,10 +39,19 @@ const read: RequestHandler = async (req, res, next) => {
 
 const edit: RequestHandler = async (req, res, next) => {
   try {
+    let status = String(req.body.watch_sell_status);
+
+    const statusMap: Record<string, string> = {
+      "En vente": "active",
+      "A valider": "pending",
+      Refusée: "personal",
+    };
+
+    status = statusMap[status] || status;
     // Update a specific review based on the provided ID
     const pendingAdd = {
       idwatch: Number(req.params.id),
-      watch_sell_status: String(req.body.watch_sell_status),
+      watch_sell_status: status,
     };
 
     const affectedRows = await pendingAddRepository.update(pendingAdd);
