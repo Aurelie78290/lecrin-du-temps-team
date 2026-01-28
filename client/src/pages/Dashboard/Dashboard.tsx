@@ -24,9 +24,9 @@ function Dashboard() {
         <DashboardNewMembers />
         <DashboardVolTran />
         <DashboardPendingAdd />
-        <DashboardRecentOrders />
-        <EditUsersRoles />
       </section>
+      <EditUsersRoles />
+      <DashboardRecentOrders />
     </>
   );
 }
