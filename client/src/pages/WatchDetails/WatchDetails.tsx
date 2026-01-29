@@ -498,17 +498,6 @@ export default function WatchDetails({
                   <dt>ETAT</dt>
                   <dd>{formatValue(watch.watch_condition)}</dd>
                 </div>
-
-                <div>
-                  <dt>CERTIFICAT</dt>
-                  <dd>
-                    {labelOrId(
-                      watch.certificate_label,
-                      watch.certificate_id,
-                      " (id)",
-                    )}
-                  </dd>
-                </div>
               </dl>
             </section>
           </div>
@@ -747,7 +736,7 @@ export default function WatchDetails({
                           className="watchdetails-delete"
                           onClick={handleDelete}
                         >
-                          Retirer de la collection
+                          Supprimer de la collection
                         </button>
                       </>
                     )}

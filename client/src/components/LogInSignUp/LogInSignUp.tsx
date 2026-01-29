@@ -22,8 +22,8 @@ const LoginSignUp = () => {
       if (isLogin) {
         // LogIn //
         const res = await api.post("/api/login", {
-          email: formData.email,
-          password: formData.password,
+          email: email,
+          password: password,
         });
         login(res.data); // pour stocker le user dans le context //
         navigate(res.data.role === "admin" ? "/dashboard" : "/Accueil");
@@ -40,10 +40,35 @@ const LoginSignUp = () => {
 
   return (
     <div className="auth-container">
-      <h2>{isLogin ? "Se connecter" : "Créer un compte"}</h2>
-      <form onSubmit={handleSubmit}>
-        {!isLogin && (
-          <>
+      {isLogin ? (
+        <>
+          <h2>Se connecter</h2>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
+              name="login_email"
+              placeholder="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="username"
+            />
+            <input
+              type="password"
+              name="login_password"
+              placeholder="mot de passe"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+            />
+            <button type="submit">Se connecter</button>
+          </form>
+        </>
+      ) : (
+        <>
+          <h2>Créer un compte</h2>
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
               placeholder="Prénom"
@@ -62,24 +87,32 @@ const LoginSignUp = () => {
                 setFormData({ ...formData, lastname: e.target.value })
               }
             />
-          </>
-        )}
-        <input
-          type="text"
-          placeholder="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="mot de passe"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Se connecter</button>
-      </form>
+            <input
+              type="email"
+              name="signup_email"
+              placeholder="email"
+              required
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              autoComplete="email"
+            />
+            <input
+              type="password"
+              name="signup_password"
+              placeholder="mot de passe"
+              required
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              autoComplete="new-password"
+            />
+            <button type="submit">S'inscrire</button>
+          </form>
+        </>
+      )}
 
       <button type="button" onClick={() => setIsLogin(!isLogin)}>
         {isLogin

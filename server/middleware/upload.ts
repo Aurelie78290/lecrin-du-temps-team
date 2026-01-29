@@ -15,6 +15,10 @@ const certificatesDir = path.join(
   process.cwd(),
   "public/assets/uploads/certificates",
 );
+const profileDir = path.join(
+  process.cwd(),
+  "public/assets/uploads/profilepictures",
+);
 
 // ============================================
 // CONFIGURATION DU STOCKAGE (diskStorage)
@@ -37,6 +41,8 @@ const storage = multer.diskStorage({
       cb(null, watchesDir);
     } else if (file.fieldname === "certificate_image") {
       cb(null, certificatesDir);
+    } else if (file.fieldname === "photo") {
+      cb(null, profileDir);
     } else {
       cb(null, watchesDir); // Par défaut
     }

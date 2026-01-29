@@ -139,4 +139,9 @@ app.use(logErrors);
 
 /* ************************************************************************* */
 
+// Pour les photo de profil //
+
+const publicPath = path.join(process.cwd(), "public");
+app.use(express.static(publicPath));
+
 export default app;

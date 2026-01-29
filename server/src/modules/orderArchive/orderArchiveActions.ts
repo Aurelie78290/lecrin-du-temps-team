@@ -3,14 +3,12 @@ import basketRepository from "../../modules/basket/basketRepository";
 import orderArchiveRepository from "../../modules/orderArchive/orderArchiveRepository";
 import watchRepository from "../watch/watchRepository";
 
-interface AuthenticatedRequest extends Express.Request {
-  user?: { id: number };
-}
+type AuthenticatedRequest = Request & { user?: { id: number; role: string } };
 
 // Créer une commande depuis le panier
 export const createOrderFromStripe: RequestHandler = async (req, res, next) => {
   try {
-    const userId = (req as AuthenticatedRequest).user?.id;
+    const userId = req.user?.id;
     if (!userId) {
       res.status(401).json({ message: "Non authentifié" });
       return;
