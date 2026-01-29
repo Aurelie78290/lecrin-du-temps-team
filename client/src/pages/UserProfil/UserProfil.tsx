@@ -152,15 +152,15 @@ const UserProfil = () => {
         className="profil-actions"
         style={{ "--i": 1 } as React.CSSProperties}
       >
-        <button type="button" onClick={handleLogout} className="logout-btn">
-          Se déconnecter
-        </button>
         <button
           type="button"
           className="popup-btn"
           onClick={() => setIsPopupOpen(true)}
         >
           Modifier mes informations
+        </button>
+        <button type="button" onClick={handleLogout} className="logout-btn">
+          Se déconnecter
         </button>
       </div>
       <div className="cards-infos-container">
