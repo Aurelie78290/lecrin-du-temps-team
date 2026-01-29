@@ -18,6 +18,13 @@ router.put("/api/users/me", isAuth, userActions.edit); // Modification d'informa
 router.post("/api/forgot-password", userActions.forgotPassword); // MDP oublié //
 router.post("/api/reset-password", userActions.resetPassword); // Réinitialisation du MDP //
 router.get("/api/admin/users-stats", isAuth, userActions.getUserWatchStatus); // Statut des montres des users //
+router.get("/api/users/me/orders", isAuth, userActions.getMyOrders); // Commandes passées //
+router.post(
+  "/api/users/me/photo",
+  isAuth,
+  upload.single("photo"),
+  userActions.updatePhoto,
+); // Pour ajouter une photo de profil //
 
 // Define item-related routes
 import itemActions from "./modules/item/itemActions";

@@ -25,9 +25,9 @@ function Dashboard() {
         <DashboardVolTran />
         <DashboardPendingAdd />
       </section>
-      <section className="Dashboard_section_low">
+      <article className="Dashboard_section_low">
         <DashboardRecentOrders />
-      </section>
+      </article>
     </main>
   );
 }
