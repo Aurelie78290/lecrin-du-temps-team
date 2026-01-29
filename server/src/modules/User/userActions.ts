@@ -59,7 +59,7 @@ const login: RequestHandler = async (req, res, next) => {
       res.status(401).json({ message: "Identifiants incorrects" });
       return;
     }
-    await userRepository.updateLastLogin(user.iduser); // Met a jour la date de dernière connexion //
+    await userRepository.updateLastLogin(user.id); // Met a jour la date de dernière connexion //
 
     // Pour créer le TOKEN //
     const secret = process.env.APP_SECRET;
@@ -67,7 +67,7 @@ const login: RequestHandler = async (req, res, next) => {
       throw new Error("APP_SECRET is not defined");
     }
 
-    const token = jwt.sign({ id: user.iduser, role: user.user_role }, secret, {
+    const token = jwt.sign({ id: user.id, role: user.role }, secret, {
       expiresIn: "1h",
     });
 
@@ -81,11 +81,11 @@ const login: RequestHandler = async (req, res, next) => {
 
     // Renvoi des infos au front //
     res.json({
-      id: user.iduser,
+      id: user.id,
       firstname: user.firstname,
       lastname: user.lastname,
-      email: user.e_mail,
-      role: user.user_role,
+      email: user.email,
+      role: user.role,
       birthdate: user.birthdate,
       tel: user.tel,
     });

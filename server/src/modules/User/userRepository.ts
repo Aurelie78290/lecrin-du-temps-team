@@ -65,7 +65,7 @@ class UserRepository {
   }
 
   // Chercher par email (pour le login) //
-  async findByEmail(email: string): Promise<UserRow | null> {
+  async findByEmail(email: string): Promise<UserAccount | null> {
     const [rows] = await databaseClient.query<Rows>(
       "SELECT * FROM user WHERE e_mail = ?",
       [email],
@@ -73,7 +73,8 @@ class UserRepository {
     if (rows.length === 0) {
       return null;
     }
-    return rows[0] as UserRow;
+    const user = rows[0] as UserRow;
+    return { ...this.formatUser(user), password: user.password };
   }
   // Chercher par ID (pour check la session)
   async findById(id: number): Promise<UserAccount | null> {
@@ -85,7 +86,7 @@ class UserRepository {
     if (users.length === 0) {
       return null;
     }
-    return this.formatUser(users[0]);
+    return this.formatUser(users[0] as UserRow);
   }
 
   // Formater le nommage de SQL en JS //
