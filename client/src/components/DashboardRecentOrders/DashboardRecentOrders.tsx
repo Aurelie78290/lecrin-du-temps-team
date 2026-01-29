@@ -14,14 +14,18 @@ type RecentOrdersI = {
 
 function DashboardRecentOrders() {
   const [recentOrders, setRecentOrders] = useState<RecentOrdersI[]>([]);
-  const [emblaRef] = useEmblaCarousel({ loop: true, align: "start" });
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
 
   // Pour naviguer sur le carousel via des boutons
 
-  // const [emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
+  // 2. Fonctions de navigation avec "useCallback" pour la performance (optionnel mais propre)
+  const scrollPrev = () => {
+    if (emblaApi) emblaApi.scrollPrev();
+  };
 
-  // const goToPrev = () => emblaApi?.goToPrev(true);
-  // const goToNext = () => emblaApi?.goToNext(true);
+  const scrollNext = () => {
+    if (emblaApi) emblaApi.scrollNext();
+  };
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/AdminRecentOrders`)
@@ -30,7 +34,7 @@ function DashboardRecentOrders() {
         setRecentOrders(data);
       });
   }, []);
-  console.log(recentOrders);
+
   return (
     <article className="DashboardRecentOrders-article">
       <h2>Activité récente</h2>
@@ -65,11 +69,11 @@ function DashboardRecentOrders() {
               ))}
             </div>
           </div>
-          <button className="embla__prev" type="button">
-            Scroll to prev
+          <button className="embla__prev" onClick={scrollPrev} type="button">
+            Précédent
           </button>
-          <button className="embla__next" type="button">
-            Scroll to next
+          <button className="embla__next" onClick={scrollNext} type="button">
+            Suivant
           </button>
         </div>
       )}

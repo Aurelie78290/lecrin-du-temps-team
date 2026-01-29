@@ -21,6 +21,7 @@
   flex: 0 0 25%; /* 4 cartes par défaut */
   min-width: 0;
   padding-left: 1rem;
+  width: 10px;
 }
 .dashboardRecentOrdersCard {
   border: 1px solid var(--border-color);
@@ -32,20 +33,31 @@
   width: 70px;
 }
 
+.embla__prev,
+.embla__next {
+  background-color: var(--bonus-color);
+  border: 1px solid var(--border-color);
+  padding: 0.6rem;
+  margin: 1rem;
+  border-radius: 15px;
+  width: 100px;
+  color: var(--accent-color);
+}
 .embla__container:active {
   cursor: grabbing;
 }
 
 /* Ton responsive simple et efficace */
-@media (max-width: 1600px) {
+@media (max-width: 2005px) {
   .embla__slide {
     flex: 0 0 33.33%;
+    width: 10px;
   } /* 3 cartes */
 }
 @media (max-width: 1230px) {
   .embla__slide {
     flex: 0 0 50%;
-    width: 60px;
+    width: 10px;
   } /* 2 cartes */
 }
 @media (max-width: 1114px) {
