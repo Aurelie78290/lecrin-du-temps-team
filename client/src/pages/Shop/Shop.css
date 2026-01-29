@@ -11,7 +11,7 @@
 
 .shop-title {
   font-size: 34px;
-  margin: 0 0 20px 5px;
+  margin: 40px 0 40px 5px;
 }
 
 .shop-count {
@@ -22,7 +22,7 @@
 
 .shop-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 20px;
 }
 

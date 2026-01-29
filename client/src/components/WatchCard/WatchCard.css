@@ -8,12 +8,15 @@
     color-mix(in srgb, var(--secondary-color) 10%, transparent);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
+  width: 270px;
+  justify-self: center;
 }
 
 .watch-card-link {
   display: block;
   text-decoration: none;
   color: inherit;
+  margin: 0;
 }
 
 .watch-card:hover {
