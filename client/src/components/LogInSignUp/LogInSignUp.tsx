@@ -65,18 +65,19 @@ const LoginSignUp = () => {
           </>
         )}
         <input
-          type="text"
+          type="email"
           placeholder="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          type="text"
+          type="password"
           placeholder="mot de passe"
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete={isLogin ? "current-password" : "new-password"}
         />
         <button type="submit">Se connecter</button>
       </form>

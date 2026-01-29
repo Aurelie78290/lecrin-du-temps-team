@@ -1,6 +1,8 @@
+import { data } from "react-router-dom";
 import databaseClient from "../../../database/client";
 import type { Rows } from "../../../database/client";
 import type { Result } from "../../../database/client";
+import type { OrderArchiveItem } from "../orderArchive/orderArchiveRepository";
 
 // interface qui représente une ligne de la BDD //
 interface UserRow {
@@ -16,6 +18,12 @@ interface UserRow {
   count_personal?: number;
   count_pending?: number;
   count_active?: number;
+  user_photo?: string | null;
+  user_describe?: string | null;
+  street_number?: string | null;
+  street?: string | null;
+  zip_code?: string | null;
+  city?: string | null;
 }
 
 export interface UserAccount {
@@ -31,6 +39,12 @@ export interface UserAccount {
   count_personal?: number;
   count_pending?: number;
   count_active?: number;
+  user_photo?: string | null;
+  user_describe?: string | null;
+  street_number?: string | null;
+  street?: string | null;
+  zip_code?: string | null;
+  city?: string | null;
 }
 
 class UserRepository {
@@ -51,21 +65,20 @@ class UserRepository {
   }
 
   // Chercher par email (pour le login) //
-  async findByEmail(email: string): Promise<UserAccount | null> {
+  async findByEmail(email: string): Promise<UserRow | null> {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT iduser, firstname, lastname, e_mail, user_role, password, birthdate, tel FROM user WHERE e_mail = ?",
+      "SELECT * FROM user WHERE e_mail = ?",
       [email],
     );
-    const users = rows as UserRow[];
-    if (users.length === 0) {
+    if (rows.length === 0) {
       return null;
     }
-    return this.formatUser(users[0]);
+    return rows[0] as UserRow;
   }
   // Chercher par ID (pour check la session)
   async findById(id: number): Promise<UserAccount | null> {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT iduser, firstname, lastname, e_mail, user_role, birthdate, tel FROM user WHERE iduser = ?",
+      "SELECT iduser, firstname, lastname, e_mail, user_role, birthdate, tel, user_photo, user_describe, street_number, street, zip_code, city FROM user WHERE iduser = ?",
       [id],
     );
     const users = rows as UserRow[];
@@ -83,22 +96,33 @@ class UserRepository {
       lastname: row.lastname,
       email: row.e_mail,
       role: row.user_role,
-      password: row.password,
       birthdate: row.birthdate,
       tel: row.tel,
+      user_photo: row.user_photo,
+      user_describe: row.user_describe,
+      street_number: row.street_number,
+      street: row.street,
+      zip_code: row.zip_code,
+      city: row.city,
     };
   }
 
   // Mettre a jour des données user //
   async update(user: UserAccount): Promise<Result> {
     const [result] = await databaseClient.query<Result>(
-      "UPDATE user SET firstname = ?, lastname = ?, e_mail = ?, birthdate = ?, tel = ? WHERE iduser = ?",
+      "UPDATE user SET firstname = ?, lastname = ?, e_mail = ?, birthdate = ?, tel = ?, user_photo = ?, user_describe = ?, street_number = ?, street = ?, zip_code = ?, city = ? WHERE iduser = ?",
       [
         user.firstname,
         user.lastname,
         user.email,
         user.birthdate,
         user.tel,
+        user.user_photo || null,
+        user.user_describe || null,
+        user.street_number || null,
+        user.street || null,
+        user.zip_code || null,
+        user.city || null,
         user.id,
       ],
     );
@@ -170,6 +194,22 @@ class UserRepository {
     const [result] = await databaseClient.query<Result>(
       "UPDATE user SET last_login = NOW() WHERE iduser = ?",
       [userId],
+    );
+    return result;
+  }
+
+  async findOrdersByUserId(userId: number): Promise<OrderArchiveItem[]> {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT idorder, price, purchase_date, city, watch_id FROM order_archive WHERE user_order_id =?",
+      [userId],
+    );
+    return rows as OrderArchiveItem[];
+  }
+
+  async updatePhoto(userId: number, photoUrl: string): Promise<Result> {
+    const [result] = await databaseClient.query<Result>(
+      "UPDATE user SET user_photo = ? WHERE iduser = ?",
+      [photoUrl, userId],
     );
     return result;
   }

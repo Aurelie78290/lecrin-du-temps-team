@@ -59,7 +59,7 @@ const login: RequestHandler = async (req, res, next) => {
       res.status(401).json({ message: "Identifiants incorrects" });
       return;
     }
-    await userRepository.updateLastLogin(user.id); // Met a jour la date de dernière connexion //
+    await userRepository.updateLastLogin(user.iduser); // Met a jour la date de dernière connexion //
 
     // Pour créer le TOKEN //
     const secret = process.env.APP_SECRET;
@@ -67,7 +67,7 @@ const login: RequestHandler = async (req, res, next) => {
       throw new Error("APP_SECRET is not defined");
     }
 
-    const token = jwt.sign({ id: user.id, role: user.role }, secret, {
+    const token = jwt.sign({ id: user.iduser, role: user.user_role }, secret, {
       expiresIn: "1h",
     });
 
@@ -81,11 +81,11 @@ const login: RequestHandler = async (req, res, next) => {
 
     // Renvoi des infos au front //
     res.json({
-      id: user.id,
+      id: user.iduser,
       firstname: user.firstname,
       lastname: user.lastname,
-      email: user.email,
-      role: user.role,
+      email: user.e_mail,
+      role: user.user_role,
       birthdate: user.birthdate,
       tel: user.tel,
     });
@@ -127,7 +127,19 @@ interface AuthRequest extends Request {
 
 const edit: RequestHandler = async (req, res, next) => {
   try {
-    const { firstname, lastname, email, birthdate, tel } = req.body;
+    const {
+      firstname,
+      lastname,
+      email,
+      birthdate,
+      tel,
+      user_describe,
+      street_number,
+      street,
+      zip_code,
+      city,
+      user_photo,
+    } = req.body;
     const authReq = req as AuthRequest; // On définit le type de requête via le authMiddleware //
     const userId = authReq.user?.id; // Récupère l'ID de l'utilisateur via son token //
 
@@ -141,9 +153,15 @@ const edit: RequestHandler = async (req, res, next) => {
       firstname: firstname || "",
       lastname: lastname || "",
       email: email || "",
-      role: "",
+      role: authReq.user?.role || "",
       birthdate: birthdate || null,
       tel: tel || null,
+      user_describe: user_describe || null,
+      street_number: street_number || null,
+      street: street || null,
+      zip_code: zip_code || null,
+      city: city || null,
+      user_photo: user_photo || null,
     });
 
     res.sendStatus(204);
@@ -240,6 +258,43 @@ const getUserWatchStatus: RequestHandler = async (req, res, next) => {
   }
 };
 
+const getMyOrders: RequestHandler = async (req, res, next) => {
+  try {
+    const authReq = req as AuthRequest;
+    const userId = authReq.user?.id;
+
+    if (!userId) {
+      res.sendStatus(401);
+      return;
+    }
+
+    const orders = await userRepository.findOrdersByUserId(userId);
+    res.json(orders);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const updatePhoto: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = req.user?.id;
+    const file = req.file;
+
+    if (!userId || !file) {
+      res.status(400).send("Fichier manquant");
+      return;
+    }
+
+    const photoUrl = `/assets/uploads/profilepictures/${file.filename}`;
+
+    await userRepository.updatePhoto(userId, photoUrl);
+
+    res.status(200).json({ photo_url: photoUrl });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   login,
   checkAuth,
@@ -249,4 +304,6 @@ export default {
   forgotPassword,
   resetPassword,
   getUserWatchStatus,
+  getMyOrders,
+  updatePhoto,
 };
