@@ -42,9 +42,47 @@ const browse: RequestHandler = async (_req, res, next) => {
   }
 };
 
-const browseShop: RequestHandler = async (_req, res, next) => {
+// const browseShop: RequestHandler = async (_req, res, next) => {
+//   try {
+//     const watches = await watchRepository.readAll(); // si tu filtres SHOP ici, ok
+//     res.json(watches);
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
+const browseShop: RequestHandler = async (req, res, next) => {
   try {
-    const watches = await watchRepository.readAll(); // si tu filtres SHOP ici, ok
+    const { search, watch_gender, brand_id, movement_type_id } = req.query; // on récupère les paramètres de filtrage
+
+    // on créée un objet de filtres
+    const filters: Record<string, string | number> = {};
+
+    if (search && typeof search === "string") {
+      filters.search = search;
+    }
+
+    if (watch_gender && typeof watch_gender === "string") {
+      filters.watch_gender = watch_gender;
+    }
+
+    if (brand_id && typeof brand_id === "string") {
+      const brandIdNum = Number(brand_id);
+      if (!Number.isNaN(brandIdNum)) {
+        filters.brand_id = brandIdNum;
+      }
+    }
+
+    if (movement_type_id && typeof movement_type_id === "string") {
+      const movementIdNum = Number(movement_type_id);
+      if (!Number.isNaN(movementIdNum)) {
+        filters.movement_type_id = movementIdNum;
+      }
+    }
+
+    //on appelle le repository avec les filtres
+
+    const watches = await watchRepository.readAllShop(filters);
     res.json(watches);
   } catch (err) {
     next(err);
