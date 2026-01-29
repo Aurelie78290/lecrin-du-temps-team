@@ -32,7 +32,12 @@ const UserProfil = () => {
   }) => {
     if (!user) return;
     try {
-      await api.put("/api/users/me", updatedData);
+      const dataTosave = {
+        ...updatedData,
+        id: user.id,
+        user_photo: user.user_photo,
+      };
+      await api.put("/api/users/me", dataTosave);
       login({ ...user, ...updatedData });
       setIsPopupOpen(false);
       alert("Informations mises à jour");
@@ -168,7 +173,7 @@ const UserProfil = () => {
             {isAdmin && (
               <div className="bio-section">
                 <p>
-                  <span className="label">Déscription</span>
+                  <span className="label">Déscription:</span>
                   {user.user_describe || "Aucune description fournie."}
                 </p>
               </div>
