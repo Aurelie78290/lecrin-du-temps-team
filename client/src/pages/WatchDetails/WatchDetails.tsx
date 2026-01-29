@@ -736,7 +736,7 @@ export default function WatchDetails({
                           className="watchdetails-delete"
                           onClick={handleDelete}
                         >
-                          Retirer de la collection
+                          Supprimer de la collection
                         </button>
                       </>
                     )}

@@ -385,19 +385,49 @@ const removeFromCollection: RequestHandler = async (req, res, next) => {
       res.status(400).json({ message: "watchId requis" });
       return;
     }
-    const current = await watchRepository.read(watchId);
-    if (!current) {
+
+    // 1) vérifier que la montre existe + owner
+    const watchDb = await watchRepository.readOwnerAndStatus(watchId);
+    if (!watchDb) {
       res.sendStatus(404);
       return;
     }
 
-    if (isToValidate((current as WatchWithStatus).watch_sell_status)) {
+    if (watchDb.user_id !== userId) {
+      res.sendStatus(403);
+      return;
+    }
+
+    // 2) bloquer si pending/active
+    const status = (watchDb.watch_sell_status ?? "").toLowerCase().trim();
+    if (status === "pending" || status === "active") {
       res.status(403).json({
-        message: "Action interdite : montre en cours de validation",
+        message: "Action interdite : montre en validation ou en vente.",
       });
       return;
     }
+
+    // 3) supprimer fichiers + rows photo
+    const photos = await photoRepository.findByWatchId(watchId);
+
+    for (const p of photos) {
+      const relative = p.url.replace(/^\/?uploads\//, "");
+      const filePath = path.join(uploadsRoot, relative);
+      try {
+        await fs.unlink(filePath);
+      } catch {
+        // ignore
+      }
+    }
+
+    await photoRepository.deleteByWatchId(watchId);
+
+    // 4) unlink collection
     await watchRepository.removeFromCollection(userId, watchId);
+
+    // 5) supprimer la montre
+    await watchRepository.deleteById(watchId);
+
     res.sendStatus(204);
   } catch (err) {
     next(err);
