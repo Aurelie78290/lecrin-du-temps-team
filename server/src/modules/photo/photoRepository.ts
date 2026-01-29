@@ -37,7 +37,12 @@ class PhotoRepository {
       "SELECT id, url, type, watch_id FROM photo WHERE watch_id = ?",
       [watchId],
     );
-    return rows as Photo[];
+    return rows as {
+      id: number;
+      url: string;
+      type: string;
+      watch_id: number;
+    }[];
   }
 
   async findById(photoId: number): Promise<Photo | null> {
