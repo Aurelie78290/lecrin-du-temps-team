@@ -26,11 +26,17 @@ function DashboardPendingAdd() {
         <p>Pas d'annonces à valider</p>
       ) : (
         pendingAdds.slice(0, 3).map((e) => (
-          <div key={e.idwatch} className="DashboardPendingAdd-add">
-            <p>
-              {e.brand} - {e.model}
-            </p>
-          </div>
+          <Link
+            to="/ClassifiedAd"
+            key={e.idwatch}
+            className="DashboardPendingAdd-linkGeneral"
+          >
+            <div className="DashboardPendingAdd-add">
+              <p>
+                {e.brand} - {e.model}
+              </p>
+            </div>
+          </Link>
         ))
       )}
       <Link to="/ClassifiedAd" className="DashboardPendingAdd-linkto">
