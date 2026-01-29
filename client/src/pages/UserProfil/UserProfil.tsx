@@ -109,11 +109,23 @@ const UserProfil = () => {
     ? `https://ui-avatars.com/api/?name=${user.firstname}+${user.lastname}&background=1a1a1a&color=d4af37&size=128`
     : "";
 
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      const timer = setTimeout(() => setIsReady(true), 100);
+      return () => clearTimeout(timer);
+    }
+  }, [user]);
+
   if (!user) return <div className="loading">Chargement de votre écrin...</div>;
 
   return (
-    <div className="profil-container">
-      <div className="profil-header">
+    <div className={`profil-container ${isReady ? "is-ready" : ""}`}>
+      <div
+        className="profil-header"
+        style={{ "--i": 0 } as React.CSSProperties}
+      >
         <div className="photo-section">
           <div className="image-container">
             <img
@@ -136,7 +148,10 @@ const UserProfil = () => {
           {user.firstname.toUpperCase()} {user.lastname.toUpperCase()}
         </h1>
       </div>
-      <div className="profil-actions">
+      <div
+        className="profil-actions"
+        style={{ "--i": 1 } as React.CSSProperties}
+      >
         <button type="button" onClick={handleLogout} className="logout-btn">
           Se déconnecter
         </button>
@@ -149,7 +164,10 @@ const UserProfil = () => {
         </button>
       </div>
       <div className="cards-infos-container">
-        <div className="profil-infos-card">
+        <div
+          className="profil-infos-card"
+          style={{ "--i": 2 } as React.CSSProperties}
+        >
           <h3>Données personnelles</h3>
           <div className="profil-infos-content">
             <p>
@@ -180,7 +198,10 @@ const UserProfil = () => {
             )}
           </div>
         </div>
-        <div className="profil-infos-card">
+        <div
+          className="profil-infos-card"
+          style={{ "--i": 3 } as React.CSSProperties}
+        >
           <h3>Identifiants</h3>
           <div className="profil-infos-content">
             <p>
@@ -195,7 +216,10 @@ const UserProfil = () => {
         </div>
         {!isAdmin && (
           <>
-            <div className="profil-infos-card">
+            <div
+              className="profil-infos-card"
+              style={{ "--i": 4 } as React.CSSProperties}
+            >
               <h3>Adresse de Livraison</h3>
               <div className="profil-infos-content">
                 <p>
@@ -206,7 +230,10 @@ const UserProfil = () => {
                 </p>
               </div>
             </div>
-            <div className="profil-infos-card">
+            <div
+              className="profil-infos-card"
+              style={{ "--i": 5 } as React.CSSProperties}
+            >
               <h3>Mes commandes</h3>
               <div className="profil-infos-content">
                 {orders.length > 0 ? (

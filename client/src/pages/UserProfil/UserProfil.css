@@ -129,3 +129,19 @@
   color: #000;
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
 }
+
+.profil-header,
+.profil-actions,
+.profil-infos-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transition-delay: calc(var(--i) * 0.15s);
+}
+
+.profil-container.is-ready .profil-header,
+.profil-container.is-ready .profil-actions,
+.profil-container.is-ready .profil-infos-card {
+  opacity: 1;
+  transform: translateY(0);
+}
