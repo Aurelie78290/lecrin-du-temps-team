@@ -127,7 +127,19 @@ interface AuthRequest extends Request {
 
 const edit: RequestHandler = async (req, res, next) => {
   try {
-    const { firstname, lastname, email, birthdate, tel } = req.body;
+    const {
+      firstname,
+      lastname,
+      email,
+      birthdate,
+      tel,
+      user_describe,
+      street_number,
+      street,
+      zip_code,
+      city,
+      user_photo,
+    } = req.body;
     const authReq = req as AuthRequest; // On définit le type de requête via le authMiddleware //
     const userId = authReq.user?.id; // Récupère l'ID de l'utilisateur via son token //
 
@@ -141,9 +153,15 @@ const edit: RequestHandler = async (req, res, next) => {
       firstname: firstname || "",
       lastname: lastname || "",
       email: email || "",
-      role: "",
+      role: authReq.user?.role || "",
       birthdate: birthdate || null,
       tel: tel || null,
+      user_describe: user_describe || null,
+      street_number: street_number || null,
+      street: street || null,
+      zip_code: zip_code || null,
+      city: city || null,
+      user_photo: user_photo || null,
     });
 
     res.sendStatus(204);
@@ -240,6 +258,61 @@ const getUserWatchStatus: RequestHandler = async (req, res, next) => {
   }
 };
 
+const getMyOrders: RequestHandler = async (req, res, next) => {
+  try {
+    const authReq = req as AuthRequest;
+    const userId = authReq.user?.id;
+
+    if (!userId) {
+      res.sendStatus(401);
+      return;
+    }
+
+    const orders = await userRepository.findOrdersByUserId(userId);
+    res.json(orders);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const updatePhoto: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = req.user?.id;
+    const file = req.file;
+
+    if (!userId || !file) {
+      res.status(400).send("Fichier manquant");
+      return;
+    }
+
+    const photoUrl = `/assets/uploads/profilepictures/${file.filename}`;
+
+    await userRepository.updatePhoto(userId, photoUrl);
+
+    res.status(200).json({ photo_url: photoUrl });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deletePhoto: RequestHandler = async (req, res, next) => {
+  try {
+    const authReq = req as AuthRequest;
+    const userId = authReq.user?.id;
+
+    if (!userId) {
+      res.sendStatus(401);
+      return;
+    }
+
+    await userRepository.updatePhoto(userId, null as unknown as string);
+
+    res.status(200).json({ message: "Photo supprimée" });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   login,
   checkAuth,
@@ -249,4 +322,7 @@ export default {
   forgotPassword,
   resetPassword,
   getUserWatchStatus,
+  getMyOrders,
+  updatePhoto,
+  deletePhoto,
 };

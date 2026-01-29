@@ -66,63 +66,64 @@ const UserManagement = () => {
 
   return (
     <div className="edit-users-control">
-      <h1>Gestion des utilisateurs</h1>
-      <table className="users-table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Email</th>
-            <th>Rôle</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((u) => (
-            <tr key={u.id}>
-              <td>{u.id}</td>
-              <td>{u.email}</td>
-              <td>
-                <select
-                  className="select-btn"
-                  value={u.role}
-                  onClick={(e) => e.stopPropagation()}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") e.currentTarget.blur();
-                  }}
-                  onChange={(e) => {
-                    e.stopPropagation();
-                    handleRoleChange(u.id, e.target.value);
-                  }}
-                  disabled={currentUser?.id === u.id}
-                >
-                  <option value="user">User</option>
-                  <option value="admin">Admin</option>
-                </select>
-              </td>
-              <td className="actions">
-                <button
-                  type="button"
-                  className="infos-btn"
-                  onClick={() => setSelectedUser(u)}
-                >
-                  Voir les informations
-                </button>
-                <button
-                  className="delete-btn"
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDeleteUser(u.id);
-                  }}
-                  disabled={currentUser?.id === u.id}
-                >
-                  {currentUser?.id === u.id ? "X" : "Supprimer"}
-                </button>
-              </td>
+      <div className="table-container">
+        <table className="users-table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Email</th>
+              <th>Rôle</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map((u) => (
+              <tr key={u.id}>
+                <td>{u.id}</td>
+                <td>{u.email}</td>
+                <td>
+                  <select
+                    className="select-btn"
+                    value={u.role}
+                    onClick={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") e.currentTarget.blur();
+                    }}
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      handleRoleChange(u.id, e.target.value);
+                    }}
+                    disabled={currentUser?.id === u.id}
+                  >
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </td>
+                <td className="actions">
+                  <button
+                    type="button"
+                    className="infos-btn"
+                    onClick={() => setSelectedUser(u)}
+                  >
+                    Infos & Collection
+                  </button>
+                  <button
+                    className="delete-btn"
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteUser(u.id);
+                    }}
+                    disabled={currentUser?.id === u.id}
+                  >
+                    {currentUser?.id === u.id ? "X" : "Supprimer"}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {selectedUser && (
         <UserInfosPopup

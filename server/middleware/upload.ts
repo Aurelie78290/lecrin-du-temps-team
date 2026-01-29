@@ -1,5 +1,5 @@
-import multer from "multer";
 import path from "node:path";
+import multer from "multer";
 
 // ============================================
 // CONFIGURATION DES DOSSIERS DE DESTINATION
@@ -14,6 +14,10 @@ const watchesDir = path.join(process.cwd(), "public/assets/uploads/watches");
 const certificatesDir = path.join(
   process.cwd(),
   "public/assets/uploads/certificates",
+);
+const profileDir = path.join(
+  process.cwd(),
+  "public/assets/uploads/profilepictures",
 );
 
 // ============================================
@@ -37,6 +41,8 @@ const storage = multer.diskStorage({
       cb(null, watchesDir);
     } else if (file.fieldname === "certificate_image") {
       cb(null, certificatesDir);
+    } else if (file.fieldname === "photo") {
+      cb(null, profileDir);
     } else {
       cb(null, watchesDir); // Par défaut
     }

@@ -91,8 +91,8 @@ export type WatchUpdateInput = Partial<{
   production_year: string | null;
   ref_no: string | null;
 
-  is_limited_edition: number | null; // 0/1
-  edition_number: number | null;
+  is_limited_edition: number | null;
+  edition_number: string | null;
 }>;
 
 type WatchOwnerStatus = {
@@ -345,7 +345,8 @@ WHERE w.watch_sell_status = 'active';
   }
 
   // ======================
-  // R - Read all (Shop)
+
+  // R - Read all (collection)
   // ======================
   async readAllCollection(userId: number) {
     const [rows] = await databaseClient.query<Rows>(

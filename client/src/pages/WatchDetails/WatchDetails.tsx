@@ -163,6 +163,7 @@ export default function WatchDetails({
   const [watch, setWatch] = useState<WatchDetailsWithContext | null>(null);
   //pr la photo affichée en grand
   const [activePhoto, setActivePhoto] = useState<string | null>(null);
+  const [activeCertif, setActiveCertif] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -340,6 +341,7 @@ export default function WatchDetails({
 
         setWatch(normalized);
         setActivePhoto(normalized.photos[0] ?? null);
+        setActiveCertif(normalized.certificates[0] ?? null);
       })
       .catch((err: unknown) => {
         setError(err instanceof Error ? err.message : "Erreur inconnue");
@@ -496,17 +498,6 @@ export default function WatchDetails({
                   <dt>ETAT</dt>
                   <dd>{formatValue(watch.watch_condition)}</dd>
                 </div>
-
-                <div>
-                  <dt>CERTIFICAT</dt>
-                  <dd>
-                    {labelOrId(
-                      watch.certificate_label,
-                      watch.certificate_id,
-                      " (id)",
-                    )}
-                  </dd>
-                </div>
               </dl>
             </section>
           </div>
@@ -517,24 +508,27 @@ export default function WatchDetails({
               <section className="watchdetails-card">
                 <h2 className="watchdetails-section-title">Certificat</h2>
 
-                {watch.certificates?.length ? (
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                <div className="watchdetails-main">
+                  {activeCertif ? (
+                    <img src={`${API_URL}${activeCertif}`} alt="Certificat" />
+                  ) : (
+                    <div className="watchdetails-empty">Aucun certificat</div>
+                  )}
+                </div>
+
+                {watch.certificates?.length > 1 && (
+                  <div className="watchdetails-thumbs">
                     {watch.certificates.map((c) => (
-                      <img
+                      <button
                         key={c}
-                        src={`${API_URL}${c}`}
-                        alt="Certificat"
-                        style={{
-                          width: 120,
-                          height: 120,
-                          objectFit: "cover",
-                          borderRadius: 10,
-                        }}
-                      />
+                        type="button"
+                        className={`watchdetails-thumb ${c === activeCertif ? "is-active" : ""}`}
+                        onClick={() => setActiveCertif(c)}
+                      >
+                        <img src={`${API_URL}${c}`} alt="" />
+                      </button>
                     ))}
                   </div>
-                ) : (
-                  <div className="watchdetails-empty">Aucun certificat</div>
                 )}
               </section>
             </div>
@@ -684,7 +678,8 @@ export default function WatchDetails({
                 {inCollection && (
                   <div className="watchdetails-actions">
                     {isPending && (
-                      <>
+                      <div className="watchdetails-actions-center">
+                        {" "}
                         <div className="watchdetails-info">
                           ⏳ En cours de validation, modifications impossibles
                         </div>
@@ -695,11 +690,11 @@ export default function WatchDetails({
                         >
                           Annuler la mise en vente
                         </button>
-                      </>
+                      </div>
                     )}
 
                     {isForSale && !isPending && (
-                      <>
+                      <div className="watchdetails-actions-right">
                         <div className="watchdetails-info">
                           ✅ Cette montre est en vente
                         </div>
@@ -711,7 +706,7 @@ export default function WatchDetails({
                         >
                           Retirer de la vente
                         </button>
-                      </>
+                      </div>
                     )}
 
                     {!isPending && !isForSale && (
@@ -741,7 +736,7 @@ export default function WatchDetails({
                           className="watchdetails-delete"
                           onClick={handleDelete}
                         >
-                          Retirer de la collection
+                          Supprimer de la collection
                         </button>
                       </>
                     )}

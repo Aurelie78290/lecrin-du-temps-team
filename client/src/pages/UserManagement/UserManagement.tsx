@@ -9,7 +9,7 @@ function UserManagement() {
   return (
     <div className="user-management">
       <h1>Tableau de Gestion des Utilisateurs</h1>
-      <p>Bienvenue, {firstname}!</p>
+      <p>Bienvenue, {firstname}</p>
       <EditUsersRoles />
     </div>
   );

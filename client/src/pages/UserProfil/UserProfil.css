@@ -60,7 +60,6 @@
 
 .profil-infos-content {
   color: var(--text-color);
-  /* padding: 20px; */
 }
 
 .label {
@@ -68,4 +67,65 @@
   font-size: 1rem;
   line-height: 1.5;
   opacity: 1;
+}
+
+.profil-header {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 40px;
+  padding: 20px;
+}
+
+.photo-section {
+  flex-shrink: 0;
+}
+
+.image-container {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  overflow: hidden;
+}
+
+.profil-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upload-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #d4af37;
+  opacity: 0;
+  transition: opacity 0.3 ease;
+  cursor: pointer;
+  padding: 10px;
+}
+.upload-btn {
+  background: transparent;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.upload-btn:hover {
+  background: #d4af37;
+  color: #000;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
 }

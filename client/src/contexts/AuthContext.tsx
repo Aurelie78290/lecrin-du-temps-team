@@ -12,6 +12,12 @@ interface User {
   role: string;
   birthdate?: string;
   tel?: string;
+  user_photo?: string | null;
+  user_describe?: string;
+  street_number?: string;
+  street?: string;
+  zip_code?: string;
+  city?: string;
 }
 
 interface AuthContextType {
