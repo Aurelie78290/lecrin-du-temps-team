@@ -1,11 +1,9 @@
-import type { RequestHandler } from "express";
+import type { Request, RequestHandler } from "express";
 import Stripe from "stripe";
 import basketRepository from "../basket/basketRepository";
 import watchRepository from "../watch/watchRepository";
 
-interface AuthenticatedRequest extends Express.Request {
-  user?: { id: number };
-}
+type AuthenticatedRequest = Request & { user?: { id: number; role: string } };
 
 //initialisation de Stripe avec la clé secrète
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");

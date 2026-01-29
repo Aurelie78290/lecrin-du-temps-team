@@ -1,9 +1,7 @@
 import type { Request, RequestHandler } from "express";
 import favoriteRepository from "./favoriteRepository";
 
-interface AuthenticatedRequest extends Request {
-  user?: { id: number };
-}
+type AuthenticatedRequest = Request & { user?: { id: number; role: string } };
 
 const browse: RequestHandler = async (req, res, next) => {
   try {

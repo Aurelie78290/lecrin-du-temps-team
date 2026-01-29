@@ -101,6 +101,17 @@ const API_URL = "http://localhost:3310";
 // ============================
 // HELPERS
 // ============================
+
+const GENDER_OPTIONS = ["Homme", "Femme", "Unisexe"] as const;
+
+const CONDITION_OPTIONS = [
+  "Neuf",
+  "Excellent état",
+  "Très bon état",
+  "Bon état",
+  "Etat correct",
+  "A reviser",
+] as const;
 const asString = (v: unknown) => (typeof v === "string" ? v : "");
 const asNumberOrNull = (v: unknown): number | null => {
   if (typeof v === "number") return v;
@@ -184,7 +195,7 @@ export default function WatchEdit() {
   const [claspTypes, setClaspTypes] = useState<Option[]>([]);
   const [movementTypes, setMovementTypes] = useState<Option[]>([]);
   const [functionsList, setFunctionsList] = useState<Option[]>([]);
-  const [certificates, setCertificates] = useState<Option[]>([]);
+  // const [certificates, setCertificates] = useState<Option[]>([]);
 
   // ---------- FORM STATE ----------
   // marque / modèle
@@ -262,7 +273,7 @@ export default function WatchEdit() {
           claspTypesData,
           movementTypesData,
           functionsData,
-          certificatesData,
+          // certificatesData,
         ]) => {
           setBrands(brandsData);
           setCaseMaterials(caseMaterialsData);
@@ -272,7 +283,7 @@ export default function WatchEdit() {
           setClaspTypes(claspTypesData);
           setMovementTypes(movementTypesData);
           setFunctionsList(functionsData);
-          setCertificates(certificatesData);
+          // setCertificates(certificatesData);
         },
       )
       .catch((e) => {
@@ -848,22 +859,41 @@ export default function WatchEdit() {
                   <div>
                     <dt>GENRE</dt>
                     <dd>
-                      <input
+                      <select
                         value={watchGender}
                         onChange={(e) => setWatchGender(e.target.value)}
-                        placeholder="Homme / Femme / Unisexe"
-                      />
+                      >
+                        <option value="">—</option>
+                        {GENDER_OPTIONS.map((g) => (
+                          <option key={g} value={g}>
+                            {g}
+                          </option>
+                        ))}
+                      </select>
+
+                      <div style={{ opacity: 0.7, marginTop: 4 }}>
+                        Actuel: {watch.watch_gender ?? "—"}
+                      </div>
                     </dd>
                   </div>
-
                   <div>
                     <dt>ETAT</dt>
                     <dd>
-                      <input
+                      <select
                         value={watchCondition}
                         onChange={(e) => setWatchCondition(e.target.value)}
-                        placeholder="Neuf, Très bon état..."
-                      />
+                      >
+                        <option value="">—</option>
+                        {CONDITION_OPTIONS.map((c) => (
+                          <option key={c} value={c}>
+                            {c}
+                          </option>
+                        ))}
+                      </select>
+
+                      <div style={{ opacity: 0.7, marginTop: 4 }}>
+                        Actuel: {watch.watch_condition ?? "—"}
+                      </div>
                     </dd>
                   </div>
 
@@ -876,36 +906,6 @@ export default function WatchEdit() {
                         onChange={(e) => setWatchPrice(e.target.value)}
                         placeholder="Prix d'achat"
                       />
-                    </dd>
-                  </div>
-
-                  <div>
-                    <dt>CERTIFICAT</dt>
-                    <dd>
-                      <select
-                        value={certificateId}
-                        onChange={(e) =>
-                          setCertificateId(
-                            e.target.value === "" ? "" : Number(e.target.value),
-                          )
-                        }
-                      >
-                        <option value="">—</option>
-                        {certificates.map((c) => (
-                          <option key={c.id} value={c.id}>
-                            {c.name}
-                          </option>
-                        ))}
-                      </select>
-
-                      <div style={{ opacity: 0.7, marginTop: 4 }}>
-                        Actuel:{" "}
-                        {labelOrId(
-                          watch.certificate_label,
-                          watch.certificate_id,
-                          " (id)",
-                        )}
-                      </div>
                     </dd>
                   </div>
                 </dl>
