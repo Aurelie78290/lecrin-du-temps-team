@@ -1,7 +1,7 @@
 /* ===== LIGHT THEME COLORS ===== */
 
 :root {
-  --background-color: linear-gradient(to bottom, #d9cbc2 65%, #f5f0e9 100%);
+  --background-color: linear-gradient(to bottom, #d9cbc2 15%, #f5f0e9 100%);
   --primary-color: #f5f0e9;
   --text-color: #010510;
   --border-color: #685d4c;
@@ -19,7 +19,7 @@
 /* ===== DARK THEME COLORS ===== */
 
 :root[data-theme="dark"] {
-  --background-color: linear-gradient(to bottom, #010510 55%, #010c2a 100%);
+  --background-color: linear-gradient(to bottom, #010510 15%, #010c2a 100%);
   --primary-color: #010c2a;
   --text-color: #f5f0e9;
   --border-color: #e0c58f;
@@ -38,7 +38,11 @@ body {
   margin: 0;
   padding: 0;
   background: var(--background-color);
+  background-attachment: fixed; /* Rend le fond immobile lors du scroll */
+  background-repeat: no-repeat;
+  background-size: cover; /* S'assure que le dégradé couvre tout l'écran */
   color: var(--text-color);
+  min-height: 100vh;
 }
 h1,
 h2,

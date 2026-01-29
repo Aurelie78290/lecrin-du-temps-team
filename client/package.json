@@ -8,11 +8,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@splidejs/react-splide": "^0.7.12",
     "@stripe/react-stripe-js": "^5.4.1",
     "@stripe/stripe-js": "^8.6.4",
     "chart.js": "^4.5.1",
     "emailjs-com": "^3.2.0",
+    "embla-carousel-react": "^8.6.0",
     "react": "^19.1.0",
     "react-chartjs-2": "^5.3.1",
     "react-dom": "^19.1.0",

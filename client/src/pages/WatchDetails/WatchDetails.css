@@ -2,6 +2,13 @@
   padding: 24px;
 }
 
+@media (max-width: 1024px) {
+  .watchdetails-page {
+    padding: 0px;
+    margin-top: 70px;
+  }
+}
+
 .watchdetails-back {
   display: inline-block;
   margin-bottom: 16px;
@@ -9,6 +16,14 @@
   font-size: 1.25rem;
   font-size: 1.5rem;
   text-decoration: none;
+}
+
+@media (max-width: 1024px) {
+  .watchdetails-back {
+    /* display: flex;
+    justify-content: center; */
+    margin-top: 20px;
+  }
 }
 
 .watchdetails-header {
@@ -23,8 +38,15 @@
   padding-left: 30px;
 }
 
+@media (max-width: 1024px) {
+  .watchdetails-header {
+    padding-left: 0;
+  }
+}
+
 .watchdetails-title {
   margin: 0;
+  font-size: 2rem;
 }
 
 .watchdetails-price {
@@ -43,16 +65,41 @@
   justify-content: space-around;
 }
 
+@media (max-width: 1024px) {
+  .watchdetails-layout-flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+}
+
 .watchdetails-card {
   border-radius: 16px;
   padding: 30px;
   min-height: auto;
+}
+
+@media (max-width: 1024px) {
+  .watchdetails-card {
+    border-radius: 16px;
+    padding: 0px;
+    min-height: auto;
+  }
 }
 .watchdetails-card-w50 {
   width: 60%;
 }
 .watchdetails-card-w40 {
   width: 40%;
+}
+
+@media (max-width: 1024px) {
+  .watchdetails-card-w50 {
+    width: 100%;
+  }
+  .watchdetails-card-w40 {
+    width: 100%;
+  }
 }
 .watchdetails-100vh {
   min-height: 100vh;
@@ -67,8 +114,19 @@
   font-size: 1.8rem;
   border: 1px solid var(--secondary-color);
 }
+@media (max-width: 1024px) {
+  .watchdetails-section-title {
+    margin-top: 20px;
+  }
+}
 .watchdetails-main {
   display: flex;
+}
+
+@media (max-width: 1024px) {
+  .watchdetails-main {
+    justify-content: center;
+  }
 }
 .watchdetails-main img {
   max-width: 100%;
@@ -78,6 +136,28 @@
 
   display: block;
   border-radius: 14px;
+}
+
+@media (max-width: 1024px) {
+  .watchdetails-main img {
+    max-width: 80%;
+  }
+}
+.watchdetails-certif-img {
+  max-width: 100%;
+  max-height: 600px;
+  object-fit: cover;
+  object-position: center;
+
+  display: block;
+  border-radius: 14px;
+}
+
+@media (max-width: 1024px) {
+  .watchdetails-certif-img {
+    max-width: 80%;
+    margin: 0 auto;
+  }
 }
 
 .watchdetails-empty {
@@ -91,6 +171,12 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+@media (max-width: 1024px) {
+  .watchdetails-thumbs {
+    justify-content: center;
+  }
 }
 
 .watchdetails-thumb {
@@ -120,6 +206,14 @@
   margin: 0;
 }
 
+@media (max-width: 1024px) {
+  .watchdetails-dl {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
 .watchdetails-dl > div {
   display: flex;
   flex-direction: column;
@@ -131,6 +225,12 @@
   opacity: 0.85;
   font-size: 1.1rem;
   line-height: 30px;
+}
+
+@media (max-width: 1024px) {
+  .watchdetails-dl dt {
+    font-size: 1rem;
+  }
 }
 
 .watchdetails-dl dd {
@@ -145,18 +245,52 @@
 .watchdetails-actions {
   display: flex;
   justify-content: right;
-  margin-right: 50px;
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .watchdetails-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 20px;
+  }
+}
+
+.watchdetails-actions-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  gap: 20px;
+}
+.watchdetails-actions-right {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  gap: 20px;
 }
 
 .watchdetails-buy,
 .watchdetails-sell,
 .watchdetails-edit,
-.watchdetails-delete,
-.watchdetails-cancel {
+.watchdetails-delete {
   width: 200px;
   padding: 12px 14px;
   border-radius: 14px;
   font-size: 1.1rem;
   cursor: pointer;
   background-color: var(--secondary-color);
+}
+
+.watchdetails-cancel {
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background-color: var(--secondary-color);
+}
+
+.watchdetails-info {
+  text-align: center;
 }
