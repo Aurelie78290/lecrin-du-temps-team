@@ -295,6 +295,24 @@ const updatePhoto: RequestHandler = async (req, res, next) => {
   }
 };
 
+const deletePhoto: RequestHandler = async (req, res, next) => {
+  try {
+    const authReq = req as AuthRequest;
+    const userId = authReq.user?.id;
+
+    if (!userId) {
+      res.sendStatus(401);
+      return;
+    }
+
+    await userRepository.updatePhoto(userId, null as unknown as string);
+
+    res.status(200).json({ message: "Photo supprimée" });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   login,
   checkAuth,
@@ -306,4 +324,5 @@ export default {
   getUserWatchStatus,
   getMyOrders,
   updatePhoto,
+  deletePhoto,
 };

@@ -89,7 +89,7 @@ const UserProfil = () => {
     if (!window.confirm("voulez-vous vraiment supprimer votre photo?")) return;
     try {
       await api.delete("/api/users/me/photo");
-      login({ ...user, user_photo: undefined });
+      login({ ...user, user_photo: null });
       alert("Photo supprimée");
     } catch (err) {
       alert("Erreur lors de la suppression");

@@ -25,6 +25,7 @@ router.post(
   upload.single("photo"),
   userActions.updatePhoto,
 ); // Pour ajouter une photo de profil //
+router.delete("/api/users/me/photo", isAuth, userActions.deletePhoto);
 
 // Define item-related routes
 import itemActions from "./modules/item/itemActions";
