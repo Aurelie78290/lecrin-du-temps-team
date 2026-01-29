@@ -2,11 +2,7 @@ import type { Request } from "express";
 import type { RequestHandler } from "express";
 import basketRepository from "../../modules/basket/basketRepository";
 
-interface AuthenticatedRequest extends Request {
-  user?: {
-    id: number;
-  };
-}
+type AuthenticatedRequest = Request & { user?: { id: number; role: string } };
 
 // Récupérer le panier de l'utilisateur connecté
 const browse: RequestHandler = async (req, res, next) => {

@@ -204,7 +204,15 @@ const update: RequestHandler = async (req, res, next) => {
       if (value === undefined) return;
       updates[key] = value === "" ? null : value;
     };
-
+    const setTrimmedStringOrNull = (key: string, value: unknown) => {
+      if (value === undefined) return;
+      if (typeof value !== "string") {
+        updates[key] = null;
+        return;
+      }
+      const trimmed = value.trim();
+      updates[key] = trimmed === "" ? null : trimmed;
+    };
     const setNumberOrNull = (key: string, value: unknown) => {
       if (value === undefined) return;
       if (value === "") {
@@ -248,8 +256,7 @@ const update: RequestHandler = async (req, res, next) => {
       updates.is_limited_edition = Number(req.body.is_limited_edition) ? 1 : 0;
     }
 
-    setNumberOrNull("edition_number", req.body.edition_number);
-
+    setTrimmedStringOrNull("edition_number", req.body.edition_number);
     // ---------- CARACTERISTIQUES ----------
     setIdOrNull("case_material_id", req.body.case_material_id);
     setNumberOrNull("diameter_mm", req.body.diameter_mm);

@@ -29,12 +29,13 @@
 }
 
 @media (max-width: 600px) {
-  .watches-grid {
+  /* .watches-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
+  } */
 
   .watch-card-collection__main h1 {
-    margin-left: 5rem;
-    margin-top: 0.8rem;
+    margin-left: 2rem;
+    margin-top: 6rem;
+    font-size: 1.5rem;
   }
 }
