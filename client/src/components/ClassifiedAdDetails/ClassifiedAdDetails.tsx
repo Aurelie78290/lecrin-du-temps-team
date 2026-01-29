@@ -65,7 +65,7 @@ function ClassifiedAdDetails({ onActionSuccess }: onActionSuccesI) {
           ))
         )}
       </aside>
-      <main>
+      <main className="CalssifiedAdDetails-main">
         {selectedWatchId ? (
           <>
             <WatchDetails idwatch={selectedWatchId} isReadOnly={true} />

@@ -17,3 +17,18 @@
 .DashboardPendingAdd-add {
   cursor: pointer;
 }
+
+@media screen and (max-width: 1024px) {
+  .ClassifiedAdDetails-Conteneur {
+    flex-direction: column;
+    padding-left: 0;
+  }
+  .ClassifiedAdDetails-aside {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding-left: 1rem;
+  }
+  .CalssifiedAdDetails-main {
+    padding: 0 1rem;
+  }
+}
