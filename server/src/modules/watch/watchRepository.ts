@@ -18,6 +18,9 @@ export type WatchListItem = {
   watch_condition: string | null;
   photo_url?: string | null;
   watch_sell_status?: string | null;
+  watch_gender?: string | null;
+  movement_type?: string | null;
+  ref_no?: number | null;
 };
 
 export type WatchDetails = {
@@ -273,6 +276,70 @@ WHERE w.watch_sell_status = 'active';
 
     `,
     );
+
+    return rows as WatchListItem[];
+  }
+
+  // ======================
+  // R - Read all Shop (avec filtres)
+  // ======================
+  async readAllShop(filters: Record<string, string | number> = {}) {
+    let sql = `
+    SELECT
+      w.idwatch,
+      b.name AS brand,
+      m.name AS model,
+      w.watch_price,
+      w.watch_condition,
+      w.watch_sell_status,
+      w.watch_gender,
+      mt.movement_type,
+      (
+        SELECT url
+        FROM photo
+        WHERE watch_id = w.idwatch
+          AND type = 'watch'
+        LIMIT 1
+      ) AS photo_url
+    FROM watch w
+    JOIN brand b ON b.id = w.brand_id
+    JOIN model m ON m.id = w.model_id
+    LEFT JOIN movement_type mt ON mt.idmovement_type = w.movement_type_id
+    WHERE w.watch_sell_status = 'active'
+  `;
+
+    const params: (string | number)[] = [];
+
+    // Ajout des filtres de recherche
+
+    if (filters.search) {
+      sql += ` AND (
+      m.name LIKE ? OR 
+      b.name LIKE ? OR 
+      w.ref_no LIKE ?
+    )`;
+      const searchPattern = `%${filters.search}%`;
+      params.push(searchPattern, searchPattern, searchPattern);
+    }
+
+    if (filters.watch_gender) {
+      sql += " AND w.watch_gender = ?";
+      params.push(filters.watch_gender);
+    }
+
+    if (filters.brand_id) {
+      sql += " AND w.brand_id = ?";
+      params.push(filters.brand_id);
+    }
+
+    if (filters.movement_type_id) {
+      sql += " AND w.movement_type_id = ?";
+      params.push(filters.movement_type_id);
+    }
+
+    sql += " ORDER BY w.idwatch DESC";
+
+    const [rows] = await databaseClient.query<Rows>(sql, params);
 
     return rows as WatchListItem[];
   }

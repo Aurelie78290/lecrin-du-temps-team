@@ -1,4 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import SearchBar, {
+  type SearchFilters,
+} from "../../components/SearchBar/SearchBar";
 import WatchCard, { type Watch } from "../../components/WatchCard/WatchCard";
 import "./Shop.css";
 
@@ -9,12 +12,36 @@ export default function Shop() {
   const [loading, setLoading] = useState(true);
   const apiBaseUrl = "http://localhost:3310";
 
-  useEffect(() => {
-    fetch(`${apiBaseUrl}/api/shop/watches`)
+  const fetchWatches = useCallback((filters: SearchFilters) => {
+    setLoading(true);
+    const params = new URLSearchParams();
+    if (filters.search) params.append("search", filters.search);
+    if (filters.watch_gender)
+      params.append("watch_gender", filters.watch_gender);
+    if (filters.brand_id) params.append("brand_id", filters.brand_id);
+    if (filters.movement_type_id)
+      params.append("movement_type_id", filters.movement_type_id);
+
+    const queryString = params.toString();
+    const url = queryString
+      ? `${apiBaseUrl}/api/shop/watches?${queryString}`
+      : `${apiBaseUrl}/api/shop/watches`;
+
+    fetch(url)
       .then((res) => res.json())
-      .then((data) => setWatches(data))
+      .then(setWatches)
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    fetchWatches({
+      search: "",
+      watch_gender: "",
+      brand_id: "",
+      movement_type_id: "",
+    });
+  }, [fetchWatches]);
+
   return (
     <div>
       <div className="shop-page">
@@ -24,6 +51,8 @@ export default function Shop() {
             {watches.length} montre{watches.length > 1 ? "s" : ""}
           </div>
         </div>
+
+        <SearchBar onSearch={fetchWatches} />
 
         {loading && <div className="shop-state">Chargement…</div>}
 

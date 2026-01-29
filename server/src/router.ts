@@ -129,6 +129,9 @@ router.get("/api/brands", brandsActions.browse);
 import modelsActions from "./modules/models/modelsActions";
 router.get("/api/models", modelsActions.browse);
 
+import movementTypesActions from "./modules/movementTypes/movementTypesActions";
+router.get("/api/movement-types", movementTypesActions.browse);
+
 /* ************************************************************************* */
 
 // Define MonthlySales routes
