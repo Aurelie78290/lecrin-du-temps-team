@@ -423,7 +423,16 @@ VALUES (2, 3, 4000, 20251225, 2, 2),
 (7, 3, 5000, 20260103, 9, 7),
 (7, 3, 5000, 20260103, 10, 7),
 (8, 7, 5000, 20260102, 11, 8),
-(8, 7, 5000, 20260110, 12, 8),
+(8, 7, 5000, 20260119, 12, 8),
+(8, 7, 5000, 20260119, 12, 8),
+(8, 7, 6000, 20260120, 12, 8),
+(8, 7, 5000, 20260122, 12, 8),
+(8, 7, 5000, 20260123, 12, 8),
+(8, 7, 15000, 20260123, 12, 8),
+(8, 7, 78000, 20260123, 12, 8),
+(8, 7, 7500, 20260123, 12, 8),
+(8, 7, 5535, 20260126, 12, 8),
+(8, 7, 5000, 20260127, 12, 8),
 (8, 7, 5000, 20260102, 13, 8);
 /*!40000 ALTER TABLE `order_archive` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -575,12 +584,12 @@ TRUNCATE TABLE `user`;
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role, user_describe, created_at, password) 
-VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisberthome@gmail.com','admin', "Historienne de l'art, elle veille à la qualité des articles et au respect de l'héritage des manufactures. Elle déniche les pièces rares.",'', ''),
-('Jo','M','1980-01-01','','joachim.masson.17@gmail.com','customer', "", '', ''),
-('Aurélie','Dumotier','1986-02-14','Responsable Communauté & Évenements','aurelie.dumotier@gmail.com','admin', "Spécialiste en communication de luxe, elle gère les membres VIP et organise les rencontres physiques entre passionnés (les 'GTG').", '', ''),
-('Thomas','P','2000-01-01','Développeur & Webmaster','thomas.p@gmail.com','admin', "Passionné de 'Toolwatches', il assure la fluidité du site, la sécurité des transactions et l'optimisation de l'interface utilisateur.", '', ''),
-('Mathieu', 'H', '2000-01-01', 'Analyste Marché & Cote', 'mathieu.h@gmail.com','admin', "Expert en économie, il suit l'évolution des prix et les ventes aux enchères pour conseiller les membres sur l'investissement horloger.", '', ''),
-('romain', 'dodo', '', '', 'test@test.com', 'user', '', '', '$2b$10$YQWyYMtItnsmh5nINQLJau22ZKqfbfD2oYnxy5pBxjxERGl/.Vjia'),
+VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisberthome@gmail.com','admin', "Historienne de l'art, elle veille à la qualité des articles et au respect de l'héritage des manufactures. Elle déniche les pièces rares.",'2026-01-22 08:30:00', ''),
+('Jo','M','1980-01-01','','joachim.masson.17@gmail.com','customer', "", '2026-01-25 08:30:00', ''),
+('Aurélie','Dumotier','1986-02-14','Responsable Communauté & Évenements','aurelie.dumotier@gmail.com','admin', "Spécialiste en communication de luxe, elle gère les membres VIP et organise les rencontres physiques entre passionnés (les 'GTG').", '2026-01-20 08:30:00', ''),
+('Thomas','P','2000-01-01','Développeur & Webmaster','thomas.p@gmail.com','admin', "Passionné de 'Toolwatches', il assure la fluidité du site, la sécurité des transactions et l'optimisation de l'interface utilisateur.", '2026-01-18 08:30:00', ''),
+('Mathieu', 'H', '2000-01-01', 'Analyste Marché & Cote', 'mathieu.h@gmail.com','admin', "Expert en économie, il suit l'évolution des prix et les ventes aux enchères pour conseiller les membres sur l'investissement horloger.", '2026-01-02 08:30:00', ''),
+('romain', 'dodo', '', '', 'test@test.com', 'user', '', '2026-01-05 08:30:00', '$2b$10$YQWyYMtItnsmh5nINQLJau22ZKqfbfD2oYnxy5pBxjxERGl/.Vjia'),
 ('Jean', 'Dubois', '1980-01-01', 'cutsomer', 'jean.dubois@gmail.com','customer', "Collectionneur de montre", '2025-09-01 08:30:00', ''),
 ('Joachim', 'Masson', '', 'Expert Technique & Authentification', 'jo@admin.fr','admin', "Ancien horloger certifié, il est le garant de la véracité technique et aide à identifier les contrefaçons (le 'LC' pour Legit Check).", '2025-09-01 08:30:00', '$2b$10$/frmOJpVIVEXPQWCdjYFmuvtazIuFs43.IvYJNC/RFZWJPXjFhBau'),
 ('Aurélie', 'DUMOTIER', '', '', 'aurelie@test.com', 'admin', '', '', '$2b$10$abe.6Swei6O1Rw44IzG.a.HzJZ.oY37bhF5/OfreONKXnnAOWaT.W'),

@@ -187,9 +187,6 @@ export default function WatchDetails({
         credentials: "include",
       });
       const body = res.status === 204 ? "" : await res.text().catch(() => "");
-      console.log("DELETE URL:", url);
-      console.log("DELETE status:", res.status, res.statusText);
-      console.log("DELETE body:", body);
 
       if (!res.ok) {
         alert(`Erreur suppression (${res.status}) : ${body || res.statusText}`);

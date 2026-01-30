@@ -37,6 +37,12 @@ const storage = multer.diskStorage({
    * @param cb - Callback : cb(erreur, cheminDuDossier)
    */
   destination: (req, file, cb) => {
+    if (file.fieldname === "images") {
+      const type = String(req.body.type); // "watch" | "certificate"
+      cb(null, type === "certificate" ? certificatesDir : watchesDir);
+      return;
+    }
+
     if (file.fieldname === "watch_image") {
       cb(null, watchesDir);
     } else if (file.fieldname === "certificate_image") {
@@ -44,7 +50,7 @@ const storage = multer.diskStorage({
     } else if (file.fieldname === "photo") {
       cb(null, profileDir);
     } else {
-      cb(null, watchesDir); // Par défaut
+      cb(null, watchesDir);
     }
   },
 
@@ -109,6 +115,6 @@ export const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 5 * 1024 * 1024, // 5 MB en octets
+    fileSize: 15 * 1024 * 1024, // 15 MB
   },
 });
