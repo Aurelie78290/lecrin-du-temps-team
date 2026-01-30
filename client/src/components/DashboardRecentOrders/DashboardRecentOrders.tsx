@@ -28,27 +28,38 @@ function DashboardRecentOrders() {
       {recentOrders.length === 0 ? (
         <p>Pas d'activité récentes</p>
       ) : (
-        <article className="DashboardRecentOrders-article">
-          {recentOrders.map((e) => (
-            <article className="DashboardRecentOrdersCard" key={e.idorder}>
-              <p>
-                {new Date(e.purchase_date).toLocaleDateString("fr-FR", {
-                  day: "2-digit",
-                  month: "2-digit",
-                  year: "numeric",
-                })}
-              </p>
-              {e.user_role === "admin" ? (
-                <p> Vendu par l'écrin du temps</p>
-              ) : (
-                <p>Vendu par un particulier</p>
-              )}
-              <p>Prix: {e.price} €</p>
-              <p>Marque: {e.brand}</p>
-              <p>Model: {e.model}</p>
-            </article>
-          ))}
-        </article>
+        <table className="DashboardRecentOrders-table">
+          <thead className="DashboardRecentOrders-tableEntete">
+            <tr>
+              <th>Date</th>
+              <th>Vendeur</th>
+              <th>Prix (€)</th>
+              <th>Marque</th>
+              <th>Model</th>
+            </tr>
+          </thead>
+          <tbody>
+            {recentOrders.map((e) => (
+              <tr className="DashboardRecentOrders-row" key={e.idorder}>
+                <td>
+                  {new Date(e.purchase_date).toLocaleDateString("fr-FR", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })}
+                </td>
+                {e.user_role === "admin" ? (
+                  <td> L'écrin du temps</td>
+                ) : (
+                  <td>Client</td>
+                )}
+                <td>{e.price}</td>
+                <td>{e.brand}</td>
+                <td>{e.model}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </section>
   );
