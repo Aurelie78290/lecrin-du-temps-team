@@ -657,11 +657,6 @@ export default function WatchEdit() {
       if (certificateId !== "")
         formData.append("certificate_id", String(certificateId));
 
-      //       console.log("=== WATCHEDIT FORM DATA ===");
-      // for (const [k, v] of formData.entries()) {
-      //   console.log(k, v);
-      // }
-      console.log("=== END ===");
       const res = await fetch(`${API_URL}/api/watches/${watchId}`, {
         method: "PUT",
         credentials: "include",
