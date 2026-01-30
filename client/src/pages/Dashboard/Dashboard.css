@@ -2,6 +2,16 @@
   width: 100%;
 }
 
+.Dashboard-main h1 {
+  padding-bottom: 3rem;
+  text-align: center;
+}
+
+.Dashboard-main h2 {
+  text-align: center;
+  padding-bottom: 2rem;
+  padding-top: 3rem;
+}
 .Dashboard_section_high {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
