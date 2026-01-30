@@ -841,6 +841,14 @@ CREATE TABLE user_has_watch (
   PRIMARY KEY (user_id, watch_id)
 );
 
+INSERT INTO user_has_watch (user_id, watch_id, added_at)
+VALUES 
+(13,28,"2025-09-28 08:30:00"),
+(13,29,"2025-12-28 08:30:00"),
+(13,30,"2026-01-26 08:30:00"),
+(13,31,"2026-01-28 08:30:00"),
+(13,32,"2026-01-28 08:30:00");
+
 
 UPDATE watch SET watch_sell_status = 'active' WHERE idwatch BETWEEN 1 AND 20;
 
