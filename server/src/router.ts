@@ -1,8 +1,10 @@
 import express from "express";
+import multer from "multer";
 import { upload } from "../middleware/upload";
 import isAuth from "./middlewares/authMiddleware";
-
 const router = express.Router();
+
+const uploadMulti = multer({ dest: "public/uploads" });
 
 /* ************************************************************************* */
 // Define Your API Routes Here
@@ -86,6 +88,12 @@ router.patch(
   "/api/watches/:id/remove-from-sale",
   isAuth,
   watchActions.removeFromSale,
+);
+router.post(
+  "/api/watches/:id/photos",
+  isAuth,
+  upload.array("images", 10),
+  watchActions.uploadWatchPhotos,
 );
 
 router.get("/api/shop/watches", watchActions.browseShop);

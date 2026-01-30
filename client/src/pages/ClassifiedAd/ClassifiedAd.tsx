@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import ClassifiedAdDetails from "../../components/ClassifiedAdDetails/ClassifiedAdDetails";
 import ClassifiedAdStatus from "../../components/ClassifiedAdStatus/ClassifiedAdStatus";
+import "./ClassifiedAd.css";
 
 function ClassifiedAd() {
   const [updateTrigger, setUpdateTrigger] = useState(0);
@@ -10,7 +11,7 @@ function ClassifiedAd() {
 
   return (
     <section>
-      <h1> Validation des annonces</h1>
+      <h1 className="ClassifiedAd-h1"> Validation des annonces</h1>
       <ClassifiedAdStatus updateTrigger={updateTrigger} />
       <ClassifiedAdDetails onActionSuccess={triggerRefresh} />
     </section>

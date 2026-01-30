@@ -1,51 +1,32 @@
-.DashboardRecentOrders-article {
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden; /* Sécurité anti-scroll */
-  box-sizing: border-box;
+.DashboardRecentOrders-section {
   margin-top: 3rem;
 }
 
-.embla__viewport {
-  overflow: hidden; /* C'est ici que le scroll est bloqué */
-  width: 100%;
+.DashboardRecentOrders-table {
+  table-layout: fixed;
+  width: 80%;
+  margin: auto;
+  overflow: hidden;
+  border-spacing: 0;
+  border-collapse: separate;
+  border-radius: 15px 15px 0 0;
+  border: 1px solid var(--border-color);
 }
 
-.embla__container {
-  display: flex;
-  touch-action: pan-y pinch-zoom;
+.DashboardRecentOrders-tableEntete {
+  border: 1px solid var(--border-color);
 }
-
-.embla__slide {
-  flex: 0 0 25%; /* 4 cartes par défaut */
-  min-width: 0;
-  padding-left: 1rem;
+.DashboardRecentOrders-tableEntete th {
+  padding: 2rem;
+  border-bottom: 1px solid var(--border-color);
 }
-.dashboardRecentOrdersCard {
+.DashboardRecentOrders-row {
   border: 1px solid var(--border-color);
   border-radius: 15px;
-  box-sizing: border-box;
-  height: 100%; /* Pour que toutes les cartes aient la même hauteur */
-  background-color: rgba(255, 255, 255, 0.05); /* Optionnel : léger fond pour voir la carte */
-  margin-right: 1rem;
-  width: 70px;
+  background-color: rgba(255, 255, 255, 0.05);
 }
-
-/* Ton responsive simple et efficace */
-@media (max-width: 1600px) {
-  .embla__slide {
-    flex: 0 0 33.33%;
-  } /* 3 cartes */
-}
-@media (max-width: 1230px) {
-  .embla__slide {
-    flex: 0 0 50%;
-    width: 60px;
-  } /* 2 cartes */
-}
-@media (max-width: 1114px) {
-  .embla__slide {
-    flex: 0 0 100%;
-    width: 10px;
-  } /* 1 carte */
+.DashboardRecentOrders-row td {
+  padding: 1.4rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
 }
