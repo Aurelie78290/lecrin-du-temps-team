@@ -4,6 +4,15 @@
   padding: 40px 20px;
   position: relative;
 }
+.profil-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+}
 
 .popup-btn {
   margin-top: 35px;
@@ -13,22 +22,16 @@
   padding: 15px;
   border-radius: 8px;
   cursor: pointer;
-  position: absolute;
-  top: 100px;
-  right: 20px;
 }
 
 .logout-btn {
-  margin-top: 25px;
+  margin-top: 35px;
   background-color: var(--bonus-color);
   color: var(--accent-color);
   border: 1px solid var(--secondary-color);
   padding: 15px;
   border-radius: 8px;
   cursor: pointer;
-  position: absolute;
-  top: 40px;
-  right: 20px;
 }
 
 .cards-infos-container {
@@ -128,4 +131,20 @@
   background: #d4af37;
   color: #000;
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+}
+
+.profil-header,
+.profil-actions,
+.profil-infos-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transition-delay: calc(var(--i) * 0.15s);
+}
+
+.profil-container.is-ready .profil-header,
+.profil-container.is-ready .profil-actions,
+.profil-container.is-ready .profil-infos-card {
+  opacity: 1;
+  transform: translateY(0);
 }

@@ -77,6 +77,16 @@ class PhotoRepository {
     );
     return result.affectedRows > 0;
   }
+
+  async countByWatchAndType(watchId: number, type: "watch" | "certificate") {
+    const [rows] = await databaseClient.query(
+      "SELECT COUNT(*) as count FROM photo WHERE watch_id = ? AND type = ?",
+      [watchId, type],
+    );
+
+    const count = (rows as Array<{ count: number }>)[0]?.count ?? 0;
+    return Number(count);
+  }
 }
 
 export default new PhotoRepository();

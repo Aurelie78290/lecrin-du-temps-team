@@ -104,6 +104,9 @@ const API_URL = "http://localhost:3310";
 
 const GENDER_OPTIONS = ["Homme", "Femme", "Unisexe"] as const;
 
+const MAX_WATCH_PHOTOS = 5;
+const MAX_CERT_PHOTOS = 3;
+
 const CONDITION_OPTIONS = [
   "Neuf",
   "Excellent état",
@@ -181,6 +184,7 @@ export default function WatchEdit() {
 
   const [watch, setWatch] = useState<WatchDetailsDTO | null>(null);
   const [activePhoto, setActivePhoto] = useState<PhotoDTO | null>(null);
+  const [activeCert, setActiveCert] = useState<PhotoDTO | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -241,13 +245,91 @@ export default function WatchEdit() {
   // certificat (lookup)
   const [certificateId, setCertificateId] = useState<number | "">("");
 
-  // uploads
-  const [watchImage, setWatchImage] = useState<File | null>(null);
-  const [certificateImage, setCertificateImage] = useState<File | null>(null);
+  // uploads (multi)
+  const [watchImages, setWatchImages] = useState<File[]>([]);
+  const [certificateImages, setCertificateImages] = useState<File[]>([]);
+  const [uploadingWatch, setUploadingWatch] = useState(false);
+  const [uploadingCert, setUploadingCert] = useState(false);
 
   const watchPhotos = useMemo(() => watch?.watch_photos ?? [], [watch]);
   const certPhotos = useMemo(() => watch?.certificate_photos ?? [], [watch]);
-  const [activeCert, setActiveCert] = useState<PhotoDTO | null>(null);
+
+  // ===== LIMITES RESTANTES =====
+  const remainingWatchSlots = Math.max(
+    0,
+    MAX_WATCH_PHOTOS - watchPhotos.length,
+  );
+  const remainingCertSlots = Math.max(0, MAX_CERT_PHOTOS - certPhotos.length);
+
+  // ===== HANDLERS FILE PICK =====
+  const handlePickWatchFiles = (files: FileList | null) => {
+    if (!files) return;
+    const picked = Array.from(files);
+
+    const allowed = picked.slice(0, remainingWatchSlots);
+    setWatchImages((prev) =>
+      [...prev, ...allowed].slice(0, remainingWatchSlots),
+    );
+  };
+
+  const handlePickCertFiles = (files: FileList | null) => {
+    if (!files) return;
+    const picked = Array.from(files);
+
+    const allowed = picked.slice(0, remainingCertSlots);
+    setCertificateImages((prev) =>
+      [...prev, ...allowed].slice(0, remainingCertSlots),
+    );
+  };
+
+  // ===== UPLOAD MULTI PHOTOS =====
+  const uploadPhotos = async (type: "watch" | "certificate") => {
+    const files = type === "watch" ? watchImages : certificateImages;
+    if (files.length === 0) return;
+
+    try {
+      type === "watch" ? setUploadingWatch(true) : setUploadingCert(true);
+
+      const fd = new FormData();
+      fd.append("type", type);
+      for (const f of files) fd.append("images", f);
+
+      const res = await fetch(`${API_URL}/api/watches/${watchId}/photos`, {
+        method: "POST",
+        credentials: "include",
+        body: fd,
+      });
+
+      const txt = await res.text().catch(() => "");
+      if (!res.ok) throw new Error(txt || "Erreur upload photos");
+
+      // refresh montre
+      const refreshed = await fetch(`${API_URL}/api/watches/${watchId}`, {
+        credentials: "include",
+      }).then((r) => r.json());
+
+      setWatch((prev) => (prev ? { ...prev, ...refreshed } : refreshed));
+
+      if (type === "watch") {
+        setWatchImages([]);
+        const newPhotos = Array.isArray(refreshed.watch_photos)
+          ? refreshed.watch_photos
+          : [];
+        setActivePhoto(newPhotos[0] ?? null);
+      } else {
+        setCertificateImages([]);
+        const newCerts = Array.isArray(refreshed.certificate_photos)
+          ? refreshed.certificate_photos
+          : [];
+        setActiveCert(newCerts[0] ?? null);
+      }
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Erreur upload");
+    } finally {
+      type === "watch" ? setUploadingWatch(false) : setUploadingCert(false);
+    }
+  };
+
   // ============================
   // LOAD LOOKUPS
   // ============================
@@ -575,16 +657,6 @@ export default function WatchEdit() {
       if (certificateId !== "")
         formData.append("certificate_id", String(certificateId));
 
-      // uploads
-      if (watchImage) formData.append("watch_image", watchImage);
-      if (certificateImage)
-        formData.append("certificate_image", certificateImage);
-
-      //       console.log("=== WATCHEDIT FORM DATA ===");
-      // for (const [k, v] of formData.entries()) {
-      //   console.log(k, v);
-      // }
-      console.log("=== END ===");
       const res = await fetch(`${API_URL}/api/watches/${watchId}`, {
         method: "PUT",
         credentials: "include",
@@ -720,15 +792,32 @@ export default function WatchEdit() {
                 <div style={{ marginTop: 12, display: "grid", gap: 10 }}>
                   <div>
                     <div style={{ fontWeight: 600, marginBottom: 6 }}>
-                      Nouvelle photo montre
+                      Photos montre (max {MAX_WATCH_PHOTOS}) —{" "}
+                      {watchPhotos.length}/{MAX_WATCH_PHOTOS}
                     </div>
+
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={(e) =>
-                        setWatchImage(e.target.files?.[0] ?? null)
-                      }
+                      multiple
+                      disabled={remainingWatchSlots === 0}
+                      onChange={(e) => handlePickWatchFiles(e.target.files)}
                     />
+
+                    <div style={{ opacity: 0.75, marginTop: 6 }}>
+                      Sélection : {watchImages.length} (reste{" "}
+                      {remainingWatchSlots})
+                    </div>
+
+                    <button
+                      type="button"
+                      className="watchdetails-edit"
+                      disabled={uploadingWatch || watchImages.length === 0}
+                      onClick={() => uploadPhotos("watch")}
+                      style={{ marginTop: 8 }}
+                    >
+                      {uploadingWatch ? "Upload…" : "Uploader les photos"}
+                    </button>
                   </div>
                 </div>
               </section>
@@ -927,18 +1016,7 @@ export default function WatchEdit() {
                         </div>
                       )}
                     </div>
-                    <div>
-                      <div style={{ fontWeight: 600, marginBottom: 6 }}>
-                        Nouveau certificat (image)
-                      </div>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) =>
-                          setCertificateImage(e.target.files?.[0] ?? null)
-                        }
-                      />
-                    </div>
+
                     {certPhotos.length > 0 && (
                       <div className="watchdetails-thumbs">
                         {certPhotos.map((p) => (
@@ -998,6 +1076,37 @@ export default function WatchEdit() {
                         </button>
                       </div>
                     )}
+                    <div style={{ marginTop: 12 }}>
+                      <div style={{ fontWeight: 600, marginBottom: 6 }}>
+                        Certificats (max {MAX_CERT_PHOTOS}) —{" "}
+                        {certPhotos.length}/{MAX_CERT_PHOTOS}
+                      </div>
+
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        disabled={remainingCertSlots === 0}
+                        onChange={(e) => handlePickCertFiles(e.target.files)}
+                      />
+
+                      <div style={{ opacity: 0.75, marginTop: 6 }}>
+                        Sélection : {certificateImages.length} (reste{" "}
+                        {remainingCertSlots})
+                      </div>
+
+                      <button
+                        type="button"
+                        className="watchdetails-edit"
+                        disabled={
+                          uploadingCert || certificateImages.length === 0
+                        }
+                        onClick={() => uploadPhotos("certificate")}
+                        style={{ marginTop: 8 }}
+                      >
+                        {uploadingCert ? "Upload…" : "Uploader les certificats"}
+                      </button>
+                    </div>
                   </section>
                 </div>
 

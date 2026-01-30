@@ -41,56 +41,69 @@ const LoginSignUp = () => {
   return (
     <div className="auth-container">
       {isLogin ? (
-        <>
+        <section key="login-section">
           <h2>Se connecter</h2>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="email"
-              name="login_email"
-              placeholder="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              autoComplete="username"
-            />
-            <input
-              type="password"
-              name="login_password"
-              placeholder="mot de passe"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password"
-            />
+          <form onSubmit={handleSubmit} name="login-form">
+            <div className="input-group">
+              <label htmlFor="login-email">Email</label>
+              <input
+                id="login-email"
+                name="email"
+                type="email"
+                placeholder="votre@email.com"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="username"
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="login-pwd">Mot de passe</label>
+              <input
+                id="login-pwd"
+                name="password"
+                type="password"
+                placeholder="••••••••"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+              />
+            </div>
             <button type="submit">Se connecter</button>
           </form>
-        </>
+        </section>
       ) : (
-        <>
+        <section key="signup-section">
           <h2>Créer un compte</h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} name="signup-form">
             <input
               type="text"
+              name="firstname"
               placeholder="Prénom"
               required
               value={formData.firstname}
               onChange={(e) =>
                 setFormData({ ...formData, firstname: e.target.value })
               }
+              autoComplete="given-name"
             />
             <input
               type="text"
+              name="lastname"
               placeholder="Nom"
               required
               value={formData.lastname}
               onChange={(e) =>
                 setFormData({ ...formData, lastname: e.target.value })
               }
+              autoComplete="family-name"
             />
             <input
+              id="signup-email"
+              name="email"
               type="email"
-              name="signup_email"
-              placeholder="email"
+              placeholder="votre@email.com"
               required
               value={formData.email}
               onChange={(e) =>
@@ -99,9 +112,10 @@ const LoginSignUp = () => {
               autoComplete="email"
             />
             <input
+              id="signup-pwd"
+              name="password"
               type="password"
-              name="signup_password"
-              placeholder="mot de passe"
+              placeholder="Choisissez un mot de passe"
               required
               value={formData.password}
               onChange={(e) =>
@@ -111,7 +125,7 @@ const LoginSignUp = () => {
             />
             <button type="submit">S'inscrire</button>
           </form>
-        </>
+        </section>
       )}
 
       <button type="button" onClick={() => setIsLogin(!isLogin)}>

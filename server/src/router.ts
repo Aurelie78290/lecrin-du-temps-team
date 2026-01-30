@@ -1,8 +1,10 @@
 import express from "express";
+import multer from "multer";
 import { upload } from "../middleware/upload";
 import isAuth from "./middlewares/authMiddleware";
-
 const router = express.Router();
+
+const uploadMulti = multer({ dest: "public/uploads" });
 
 /* ************************************************************************* */
 // Define Your API Routes Here
@@ -87,6 +89,12 @@ router.patch(
   isAuth,
   watchActions.removeFromSale,
 );
+router.post(
+  "/api/watches/:id/photos",
+  isAuth,
+  upload.array("images", 10),
+  watchActions.uploadWatchPhotos,
+);
 
 router.get("/api/shop/watches", watchActions.browseShop);
 router.get("/api/collection/watches", isAuth, watchActions.browseCollection);
@@ -136,6 +144,9 @@ router.get("/api/brands", brandsActions.browse);
 
 import modelsActions from "./modules/models/modelsActions";
 router.get("/api/models", modelsActions.browse);
+
+import movementTypesActions from "./modules/movementTypes/movementTypesActions";
+router.get("/api/movement-types", movementTypesActions.browse);
 
 /* ************************************************************************* */
 
