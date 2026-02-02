@@ -4,14 +4,24 @@
   padding: 40px 20px;
   position: relative;
 }
+.profil-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 40px;
+  padding: 20px;
+}
 .profil-actions {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  gap: 30px;
+}
+
+.header-btns {
+  display: flex;
   gap: 15px;
-  margin-top: 20px;
-  position: relative;
-  z-index: 10;
-  pointer-events: auto;
+  align-items: center;
 }
 
 .popup-btn {
@@ -22,6 +32,7 @@
   padding: 15px;
   border-radius: 8px;
   cursor: pointer;
+  justify-content: flex-end;
 }
 
 .logout-btn {
@@ -65,19 +76,28 @@
   color: var(--text-color);
 }
 
+.profil-infos-content p {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 0 10px;
+}
+
+.profil-infos-content .label {
+  display: inline-block;
+  flex: 0 0 180px;
+  padding: 0;
+}
+
+.profil-infos-content span:not(.label) {
+  flex: 1;
+}
+
 .label {
   padding: 20px;
   font-size: 1rem;
   line-height: 1.5;
   opacity: 1;
-}
-
-.profil-header {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  margin-bottom: 40px;
-  padding: 20px;
 }
 
 .photo-section {
@@ -147,4 +167,111 @@
 .profil-container.is-ready .profil-infos-card {
   opacity: 1;
   transform: translateY(0);
+}
+
+.order-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.order-line:hover {
+  border-color: var(--border-color);
+  transform: translateX(5px);
+}
+
+.orders-watch {
+  width: clamp(50px, 10vw, 70px);
+  height: clamp(50px, 10vw, 70px);
+  position: relative;
+  border-radius: 4px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.order-brand {
+  margin: 2px 0;
+  padding: 2px;
+}
+
+.order-model {
+  padding: 2px;
+}
+
+.order-date {
+  padding: 2px;
+}
+
+.order-price {
+  text-align: right;
+}
+
+.view-more {
+  margin-top: 35px;
+  background-color: transparent;
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .cards-infos-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .profil-container {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .profil-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+    padding: 10px;
+  }
+
+  .profil-actions {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .popup-btn,
+  .logout-btn {
+    margin-top: 10px;
+    width: 100%;
+    padding: 12px;
+  }
+
+  .order-line {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .order-price {
+    font-size: 0.9rem;
+    min-height: fit-content;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-line {
+    flex-wrap: wrap;
+  }
+
+  .order-price {
+    width: 100%;
+    text-align: left;
+    padding: 85px;
+  }
 }

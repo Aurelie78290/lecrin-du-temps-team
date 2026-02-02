@@ -7,6 +7,7 @@ import home from "../../assets/images/home.svg";
 import annonce from "../../assets/images/icon/Annonces.svg";
 import book from "../../assets/images/icon/book.svg";
 import envelope from "../../assets/images/icon/envelope.svg";
+import euro from "../../assets/images/icon/euro.svg";
 import facebook from "../../assets/images/icon/facebook.svg";
 import handbag from "../../assets/images/icon/handbag.svg";
 import info from "../../assets/images/icon/info-square.svg";
@@ -86,9 +87,9 @@ function Navbar({
 
           {user?.role === "admin" && (
             <li className={isActive("/Shop") ? "active" : ""}>
-              <Link to="/" onClick={() => setExpanded(false)}>
+              <Link to="/Transactions" onClick={() => setExpanded(false)}>
                 <div className="icon-wrapper">
-                  <img src={handbag} alt="" />
+                  <img src={euro} alt="" />
                 </div>
                 <span>Transactions</span>
               </Link>

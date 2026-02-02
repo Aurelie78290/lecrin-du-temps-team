@@ -1,8 +1,9 @@
 .DisplayAllReviews-list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
   gap: 1rem;
+  padding: 0;
 }
 
 .DisplayAllReviews-element-list {
@@ -14,9 +15,9 @@
   text-align: center;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1375px) {
   .DisplayAllReviews-list {
-    margin: 0 5rem;
+    grid-template-columns: 1fr 1fr;
   }
 }
 

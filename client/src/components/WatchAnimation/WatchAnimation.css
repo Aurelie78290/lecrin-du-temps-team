@@ -1,0 +1,417 @@
+@import url(https://fonts.googleapis.com/css?family=Old+Standard+TT);
+
+/* --- FOND ET CONTENEUR --- */
+
+.clock-container {
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+}
+
+/* --- LE BOITIER DE L'HORLOGE --- */
+
+.clock {
+  position: relative;
+  height: 400px;
+  width: 400px;
+  border-radius: 50%;
+  background-color: var(--background-color);
+  color: #f1c8ab;
+  font-family: "Old Standard TT", serif;
+  box-shadow:
+    inset 0px 0px 12px 0px #111111,
+    0px 0px 0px 8.8px #404241,
+    0px 0px 0px 26.4px #202021,
+    0px 0px 0px 33.6px #edc7ae,
+    0px 0px 0px 36.8px #b6a091,
+    0px 0px 0px 44.4px #edc7ae;
+  overflow: hidden;
+}
+
+/* Fenêtre de lecture (L'encadré en haut) */
+
+.clock::before {
+  content: "";
+
+  width: 70px;
+
+  height: 116.6px;
+
+  border-radius: 8%;
+
+  box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.4);
+
+  position: absolute;
+
+  left: calc(50% - 35px);
+
+  top: 16px;
+
+  z-index: 10;
+}
+
+.clock img {
+  display: block;
+
+  position: absolute;
+
+  height: 400px;
+
+  width: 400px;
+
+  z-index: 99;
+
+  opacity: 0.65;
+
+  pointer-events: none;
+}
+
+/* --- FIGURES ET CHIFFRES --- */
+
+figure {
+  position: absolute;
+
+  display: block;
+
+  margin: 0;
+
+  left: 50%;
+
+  transform-origin: 50% 50%;
+
+  text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+figure span {
+  display: block;
+
+  position: absolute;
+
+  width: 32.7px;
+
+  left: calc(50% - 16.35px);
+
+  transform-origin: 50% 100%;
+}
+
+figure span::before {
+  content: attr(data-val);
+
+  position: absolute;
+
+  top: 0;
+
+  right: 0;
+
+  bottom: 0;
+
+  left: 0;
+
+  text-align: center;
+
+  line-height: 1;
+}
+
+/* --- POSITIONS ET TAILLES DES ROUES --- */
+
+/* Heures */
+
+.hour-ten,
+.hour {
+  top: 20px;
+}
+
+.hour-ten {
+  width: 220px;
+
+  height: 220px;
+
+  margin-left: -125px;
+
+  font-size: 28px;
+
+  animation: rotate-cW 129600s linear infinite;
+
+  --rotation-start: var(--hour-ten-start, 0deg);
+}
+
+.hour {
+  width: 340px;
+
+  height: 340px;
+
+  margin-left: -155px;
+
+  font-size: 28px;
+
+  animation: rotate-ccW 43200s linear infinite;
+
+  --rotation-start: var(--hour-start, 0deg);
+}
+
+/* Minutes */
+
+.min-ten,
+.min {
+  top: 48px;
+}
+
+.min-ten {
+  width: 220px;
+
+  height: 220px;
+
+  margin-left: -125px;
+
+  font-size: 54px;
+
+  transform: rotate(var(--min-ten-start, 0deg));
+
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.min {
+  width: 300px;
+
+  height: 300px;
+
+  margin-left: -135px;
+
+  font-size: 54px;
+
+  transform: rotate(var(--min-start, 0deg));
+
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Secondes */
+
+.sec-ten,
+.sec {
+  top: 102px;
+}
+
+.sec-ten {
+  width: 220px;
+
+  height: 220px;
+
+  margin-left: -125px;
+
+  font-size: 28px;
+
+  transform: rotate(var(--sec-ten-start, 0deg));
+
+  transition: transform 0.3s ease-in-out;
+}
+
+.sec {
+  width: 220px;
+
+  height: 220px;
+
+  margin-left: -100px;
+
+  font-size: 28px;
+
+  transform: rotate(var(--sec-start, 0deg));
+
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Ajustement hauteur des bras de levier */
+
+.hour-ten span,
+.min-ten span,
+.sec-ten span,
+.sec span {
+  height: 110px;
+}
+
+.hour span {
+  height: 170px;
+}
+
+.min span {
+  height: 150px;
+}
+
+/* --- ROTATIONS DES CHIFFRES --- */
+
+/* Roue de 12 (Heures) */
+
+.hour span:nth-child(1) {
+  transform: rotate(30deg);
+}
+
+.hour span:nth-child(2) {
+  transform: rotate(60deg);
+}
+
+.hour span:nth-child(3) {
+  transform: rotate(90deg);
+}
+
+.hour span:nth-child(4) {
+  transform: rotate(120deg);
+}
+
+.hour span:nth-child(5) {
+  transform: rotate(150deg);
+}
+
+.hour span:nth-child(6) {
+  transform: rotate(180deg);
+}
+
+.hour span:nth-child(7) {
+  transform: rotate(210deg);
+}
+
+.hour span:nth-child(8) {
+  transform: rotate(240deg);
+}
+
+.hour span:nth-child(9) {
+  transform: rotate(270deg);
+}
+
+.hour span:nth-child(10) {
+  transform: rotate(300deg);
+}
+
+.hour span:nth-child(11) {
+  transform: rotate(330deg);
+}
+
+.hour span:nth-child(12) {
+  transform: rotate(360deg);
+}
+
+/* Roue de 10 (Minutes & Secondes) */
+
+.min span:nth-child(1),
+.sec span:nth-child(1) {
+  transform: rotate(36deg);
+}
+
+.min span:nth-child(2),
+.sec span:nth-child(2) {
+  transform: rotate(72deg);
+}
+
+.min span:nth-child(3),
+.sec span:nth-child(3) {
+  transform: rotate(108deg);
+}
+
+.min span:nth-child(4),
+.sec span:nth-child(4) {
+  transform: rotate(144deg);
+}
+
+.min span:nth-child(5),
+.sec span:nth-child(5) {
+  transform: rotate(180deg);
+}
+
+.min span:nth-child(6),
+.sec span:nth-child(6) {
+  transform: rotate(216deg);
+}
+
+.min span:nth-child(7),
+.sec span:nth-child(7) {
+  transform: rotate(252deg);
+}
+
+.min span:nth-child(8),
+.sec span:nth-child(8) {
+  transform: rotate(288deg);
+}
+
+.min span:nth-child(9),
+.sec span:nth-child(9) {
+  transform: rotate(324deg);
+}
+
+.min span:nth-child(10),
+.sec span:nth-child(10) {
+  transform: rotate(360deg);
+}
+
+/* Roue de 6 (Dizaines) */
+
+.min-ten span:nth-child(1),
+.sec-ten span:nth-child(1) {
+  transform: rotate(0deg);
+}
+
+.min-ten span:nth-child(2),
+.sec-ten span:nth-child(2) {
+  transform: rotate(60deg);
+}
+
+.min-ten span:nth-child(3),
+.sec-ten span:nth-child(3) {
+  transform: rotate(120deg);
+}
+
+.min-ten span:nth-child(4),
+.sec-ten span:nth-child(4) {
+  transform: rotate(180deg);
+}
+
+.min-ten span:nth-child(5),
+.sec-ten span:nth-child(5) {
+  transform: rotate(240deg);
+}
+
+.min-ten span:nth-child(6),
+.sec-ten span:nth-child(6) {
+  transform: rotate(300deg);
+}
+
+/* Roue de 4 (Dizaines d'heures) */
+
+.hour-ten span:nth-child(1) {
+  transform: rotate(90deg);
+}
+
+.hour-ten span:nth-child(2) {
+  transform: rotate(180deg);
+}
+
+.hour-ten span:nth-child(3) {
+  transform: rotate(270deg);
+}
+
+.hour-ten span:nth-child(4) {
+  transform: rotate(360deg);
+}
+
+/* --- ANIMATIONS DE ROTATION --- */
+
+@keyframes rotate-ccW {
+  from {
+    transform: rotate(calc(var(--rotation-start) + 360deg));
+  }
+
+  to {
+    transform: rotate(var(--rotation-start));
+  }
+}
+
+@keyframes rotate-cW {
+  from {
+    transform: rotate(var(--rotation-start));
+  }
+
+  to {
+    transform: rotate(calc(var(--rotation-start) + 360deg));
+  }
+}

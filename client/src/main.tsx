@@ -27,6 +27,7 @@ import Shop from "./pages/Shop/Shop";
 import ShopPayment from "./pages/ShopPayment/ShopPayment";
 import ShopWatchIndex from "./pages/ShopWatchIndex/ShopWatchIndex";
 import ThankYou from "./pages/ThankYou/ThankYou";
+import Transactions from "./pages/Transactions/Transactions";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
 import UserManagement from "./pages/UserManagement/UserManagement";
 import UserProfil from "./pages/UserProfil/UserProfil";
@@ -162,6 +163,10 @@ const router = createBrowserRouter([
           {
             path: "/UserManagement",
             element: <UserManagement />,
+          },
+          {
+            path: "/Transactions",
+            element: <Transactions />,
           },
         ],
       },

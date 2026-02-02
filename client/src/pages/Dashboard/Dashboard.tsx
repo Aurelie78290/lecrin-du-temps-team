@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import DashboardNewMembers from "../../components/DashboardNewMembers/DashboardNewMembers";
 import DashboardPendingAdd from "../../components/DashboardPendingAdd/DashboardPendingAdd";
-import DashboardRecentOrders from "../../components/DashboardRecentOrders/DashboardRecentOrders";
 import DashboardVolTran from "../../components/DashboardVolTran/DashboardVolTran";
 
 import MonthlySales from "../../components/MonthlySales/MonthlySales";
@@ -25,9 +24,6 @@ function Dashboard() {
         <DashboardVolTran />
         <DashboardPendingAdd />
       </section>
-      <article className="Dashboard_section_low">
-        <DashboardRecentOrders />
-      </article>
     </main>
   );
 }

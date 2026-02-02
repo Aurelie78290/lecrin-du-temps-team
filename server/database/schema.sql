@@ -240,7 +240,6 @@ INSERT INTO `faq` (question, answer)
 VALUES ('Comment acheter une montre sur le site l''Écrin du temps?', 'Parcourez notre catalogue, ajoutez votre montre au panier et suivez les étapes de paiement sécurisé. Un e-mail de confirmation vous sera envoyé.'),
 ('Que comprend le prix de vente d''une montre?', 'Le prix inclut la montre, son certificat d''authenticité, l''écrin d''origine, une garantie de 24 mois et le contrôle technique de nos experts.'),
 ('À quoi correspond le numéro de référence d''une montre de luxe?', 'C''est l''identifiant unique du modèle qui précise la marque, la collection et les matériaux utilisés. C''est essentiel pour la traçabilité.'),
-('Dois-je être inscrit sur l''Écrin du Temps pour passer commande?', 'Oui, l''inscription est obligatoire. La création d''un compte client nous permet de sécuriser vos transactions et de gérer vos garanties.'),
 ('Comment faire part de mes doutes concernant l''authenticité d''une montre?', 'L''authenticité est notre priorité. Utilisez la section "Contact" située juste en dessous de cette FAQ pour nous envoyer un message direct.'),
 ('Quels sont les délais de livraison et les frais d''expédition d''une montre?', 'Expédition sous 48h et livraison en 3 à 5 jours. Les frais sont calculés au panier selon la valeur et la destination.'),
 ('Suis-je assuré(e) en cas de dommage ou de vol pendant le transport?', 'Absolument. Toutes nos expéditions sont couvertes par une assurance "ad valorem" à hauteur de la valeur réelle de la montre.');
@@ -414,26 +413,26 @@ LOCK TABLES `order_archive` WRITE;
 /*!40000 ALTER TABLE `order_archive` DISABLE KEYS */;
 INSERT INTO `order_archive` (user_saler_id, user_order_id, price, purchase_date, watch_id, user_iduser) 
 VALUES (2, 3, 4000, 20251225, 2, 2),
-(8, 3, 4000, 20260107, 3, 8),
-(8, 3, 4000, 20260108, 4, 8),
-(8, 3, 4000, 20260109, 5, 8),
-(8, 3, 4000, 20260202, 6, 8),
+(8, 13, 4000, 20260107, 3, 8),
+(8, 13, 4000, 20260108, 4, 8),
+(8, 13, 4000, 20260109, 5, 8),
+(8, 13, 4000, 20260202, 6, 8),
 (7, 3, 5000, 20250902, 7, 7),
 (7, 3, 5000, 20260103, 8, 7),
 (7, 3, 5000, 20260103, 9, 7),
 (7, 3, 5000, 20260103, 10, 7),
-(8, 7, 5000, 20260102, 11, 8),
-(8, 7, 5000, 20260119, 12, 8),
-(8, 7, 5000, 20260119, 12, 8),
-(8, 7, 6000, 20260120, 12, 8),
-(8, 7, 5000, 20260122, 12, 8),
-(8, 7, 5000, 20260123, 12, 8),
-(8, 7, 15000, 20260123, 12, 8),
-(8, 7, 78000, 20260123, 12, 8),
-(8, 7, 7500, 20260123, 12, 8),
-(8, 7, 5535, 20260126, 12, 8),
-(8, 7, 5000, 20260127, 12, 8),
-(8, 7, 5000, 20260102, 13, 8);
+(8, 13, 5000, 20260102, 11, 8),
+(8, 13, 5000, 20260119, 12, 8),
+(8, 13, 5000, 20260119, 12, 8),
+(8, 13, 6000, 20260120, 12, 8),
+(8, 13, 5000, 20260122, 12, 8),
+(8, 13, 5000, 20260123, 12, 8),
+(8, 13, 15000, 20260123, 12, 8),
+(8, 13, 78000, 20260123, 12, 8),
+(8, 13, 7500, 20260123, 12, 8),
+(8, 13, 5535, 20260126, 12, 8),
+(8, 13, 5000, 20260127, 12, 8),
+(8, 13, 5000, 20260102, 13, 8);
 /*!40000 ALTER TABLE `order_archive` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -510,6 +509,8 @@ INSERT INTO reviews (review_title, note, comment, user_iduser)
 VALUES ('Avis client',5,"La montre était exactement comme décrite par le vendeur. J'ai apprécié les nombreuses photos haute résolution qu'il a fournies et sa réponse rapide à mes questions sur l'historique de révision. La plateforme de l'Ecrin du temps a facilité la mise en relation sécurisée.",2),
 ('Avis client',4,"C'était la première fois que j'achetais une montre d'occasion aussi chère en ligne à un particulier. Le processus de paiement sécurisé m'a permis d'inspecter la montre avan que le vendeur ne reçoit les fonds. un gage de confiance indispensable pour ce type de transaction. Très professionnel.",2),
 ('Avis vendeur',3,"J'ai opté pour le service de conciergerie où l’Écrin du temps s'occupe de tout (photos professionnelles, description, négociation). Cela justifie amplement la commission. La montre a été vendue rapidement et je n'ai eu à m'occuper de rien, à part l'envoi sécurisé au centre d'authentification. Une solution parfaite pour vendre une pièce de très haute valeur sans stress.",2),
+('Avis acheteur', 4, "Expérience d'achat très sécurisante pour ma première Rolex. Le processus d'expertise prend un peu de temps, mais c'est le prix de la tranquillité d'esprit pour éviter les contrefaçons. Le colis est arrivé parfaitement emballé et conforme aux photos de l'annonce. Je retire une étoile car les frais de livraison sont assez élevés.", 13),
+('Avis vendeur', 5, "Une plateforme idéale pour les collectionneurs. J'ai posté mon Omega le lundi, vendue le mercredi. Le système d'étiquette d'expédition prépayée facilite énormément la logistique. On sent que la communauté est composée de passionnés sérieux. Le virement a été crédité sur mon compte 48h après la réception par l'acheteur.", 13),
 ('Avis vendeur',5,"J'ai vendu ma Cartier en moins de deux semaines via cette plateforme. La commission est juste, et le fait que l'acheteur ait un système de séquestre garantit une vente sérieuse. J'ai été payée immédiatement après la confirmation de l'authentification. Interface de vente très claire et excellent support client pour m'aider à remplir l'annonce.",2);
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -598,7 +599,7 @@ VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisber
 ('User', 'Toadmin', '', '', 'test4@test.com', 'user', '', '', '$2b$10$2SZrItauGHOPUnGBlZq8MOSotSiyGTfzIKU.d5fRYdO8JT3u8BYXK');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 INSERT INTO `user` (firstname, lastname, street_number, street, zip_code, city, birthdate, gender, user_type, tel, e_mail, newsletter, user_role, user_describe, password)
-VALUES ('jean', 'peplu','5','la grande plaine','17000','La Rochelle','2025-01-01','M.','Acheteur fortuné compulsif', '0606060606','jeanpeplu@user.fr','1','user','J''achete tout et surtout n''importe quoi avec la fortume dont j''ai hérité','$2b$10$9..xS04izXTA735IE9LER.tfMmCFwWstANMj4SVfsbsO98GEoFxlG');
+VALUES ('jean', 'peplu','5','la grande plaine','17000','La Rochelle','2025-01-01','M.','Acheteur fortuné compulsif', '0606060606','jeanpeplu@user.fr','1','user','J''achete tout et surtout n''importe quoi avec la fortume dont j''ai hérité', '$2b$10$9..xS04izXTA735IE9LER.tfMmCFwWstANMj4SVfsbsO98GEoFxlG');
 UNLOCK TABLES;
 
 --
