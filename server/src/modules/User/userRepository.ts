@@ -47,6 +47,14 @@ export interface UserAccount {
   city?: string | null;
 }
 
+export interface UserOrderSummary {
+  id: number;
+  price: number;
+  purchase_date: string;
+  city: string | null;
+  watch_id: number;
+}
+
 class UserRepository {
   // Pour créer un nouveau user //
   async create(user: Omit<UserAccount, "id">): Promise<Result> {
@@ -199,12 +207,12 @@ class UserRepository {
     return result;
   }
 
-  async findOrdersByUserId(userId: number): Promise<OrderArchiveItem[]> {
+  async findOrdersByUserId(userId: number): Promise<UserOrderSummary[]> {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT idorder, price, purchase_date, city, watch_id FROM order_archive WHERE user_order_id =?",
+      "SELECT oa.idorder AS id, oa.price, oa.purchase_date, b.name AS brand, m.name AS name, (SELECT p.url FROM photo p WHERE p.watch_id = oa.watch_id LIMIT 1) AS watch_photo FROM order_archive oa INNER JOIN watch w ON oa.watch_id = w.idwatch INNER JOIN brand b ON w.brand_id = b.id INNER JOIN model m ON w.model_id = m.id WHERE oa.user_order_id = ? ORDER BY oa.purchase_date DESC",
       [userId],
     );
-    return rows as OrderArchiveItem[];
+    return rows as UserOrderSummary[];
   }
 
   async updatePhoto(userId: number, photoUrl: string): Promise<Result> {

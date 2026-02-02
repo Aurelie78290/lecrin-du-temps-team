@@ -8,6 +8,7 @@ import logo from "../../../public/logo.svg";
 import watchImage from "../../assets/images/watchImage.png";
 import { useAuth } from "../../contexts/AuthContext";
 import api from "../../services/api";
+// import WatchAnimation from "../../components/WatchAnimation/WatchAnimation";
 
 const Home: React.FC = () => {
   // const [email, setEmail] = useState("");
@@ -63,6 +64,7 @@ const Home: React.FC = () => {
 
       <main className="home-main">
         <section className="content-split">
+          {/* <div className="left-side"><WatchAnimation /></div> */}
           <div className="image-block">
             <img
               src={watchImage}
@@ -70,85 +72,86 @@ const Home: React.FC = () => {
               className="featured-watch"
             />
           </div>
+          <div className="right-side">
+            <div className="form-block">
+              <h2 className="home-main-subtitle">
+                {isLogin
+                  ? "Les montres d'exception, réunies pour vous"
+                  : "Rejoignez l'excellence"}
+              </h2>
 
-          <div className="form-block">
-            <h2 className="home-main-subtitle">
-              {isLogin
-                ? "Les montres d'exception, réunies pour vous"
-                : "Rejoignez l'excellence"}
-            </h2>
+              <h3>{isLogin ? "Bienvenue" : "Inscription"}</h3>
 
-            <h3>{isLogin ? "Bienvenue" : "Inscription"}</h3>
-
-            <form onSubmit={handleSubmit} className="login-form">
-              {!isLogin && (
+              <form onSubmit={handleSubmit} className="login-form">
+                {!isLogin && (
+                  <div className="input-group">
+                    <input
+                      type="text"
+                      placeholder="Prénom"
+                      required
+                      onChange={(e) =>
+                        setFormData({ ...formData, firstname: e.target.value })
+                      }
+                    />
+                    <input
+                      type="text"
+                      placeholder="Nom"
+                      required
+                      onChange={(e) =>
+                        setFormData({ ...formData, lastname: e.target.value })
+                      }
+                    />
+                  </div>
+                )}
                 <div className="input-group">
                   <input
-                    type="text"
-                    placeholder="Prénom"
-                    required
+                    type="email"
+                    placeholder="Votre email"
+                    value={formData.email}
                     onChange={(e) =>
-                      setFormData({ ...formData, firstname: e.target.value })
+                      setFormData({ ...formData, email: e.target.value })
                     }
-                  />
-                  <input
-                    type="text"
-                    placeholder="Nom"
                     required
-                    onChange={(e) =>
-                      setFormData({ ...formData, lastname: e.target.value })
-                    }
                   />
                 </div>
-              )}
-              <div className="input-group">
-                <input
-                  type="email"
-                  placeholder="Votre email"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  required
-                />
-              </div>
 
-              <div className="input-row">
-                <input
-                  type="password"
-                  placeholder="Votre mot de passe"
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
-                  required
-                />
+                <div className="input-row">
+                  <input
+                    type="password"
+                    placeholder="Votre mot de passe"
+                    value={formData.password}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                    required
+                  />
+                  <button
+                    type="submit"
+                    className="submit-btn"
+                    aria-label="Envoyer"
+                  >
+                    <ArrowRight size={20} />
+                  </button>
+                </div>
+              </form>
+              <div className="options">
                 <button
-                  type="submit"
-                  className="submit-btn"
-                  aria-label="Envoyer"
+                  type="button"
+                  onClick={() => setIsLogin(!isLogin)}
+                  className="signup-link-btn"
                 >
-                  <ArrowRight size={20} />
+                  {isLogin ? "Créez votre compte" : "J'ai déjà un compte"}
                 </button>
+                {isLogin && (
+                  <Link
+                    to="/forgot-password"
+                    title="Mot de passe oublié?"
+                    className="forgot-password-link"
+                  >
+                    Mot de passe oublié?
+                  </Link>
+                )}
               </div>
-            </form>
-            <div className="options">
-              <button
-                type="button"
-                onClick={() => setIsLogin(!isLogin)}
-                className="signup-link-btn"
-              >
-                {isLogin ? "Créez votre compte" : "J'ai déjà un compte"}
-              </button>
-              {isLogin && (
-                <Link
-                  to="/forgot-password"
-                  title="Mot de passe oublié?"
-                  className="forgot-password-link"
-                >
-                  Mot de passe oublié?
-                </Link>
-              )}
             </div>
           </div>
         </section>

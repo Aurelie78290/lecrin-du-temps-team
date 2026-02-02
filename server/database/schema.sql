@@ -413,26 +413,26 @@ LOCK TABLES `order_archive` WRITE;
 /*!40000 ALTER TABLE `order_archive` DISABLE KEYS */;
 INSERT INTO `order_archive` (user_saler_id, user_order_id, price, purchase_date, watch_id, user_iduser) 
 VALUES (2, 3, 4000, 20251225, 2, 2),
-(8, 3, 4000, 20260107, 3, 8),
-(8, 3, 4000, 20260108, 4, 8),
-(8, 3, 4000, 20260109, 5, 8),
-(8, 3, 4000, 20260202, 6, 8),
+(8, 13, 4000, 20260107, 3, 8),
+(8, 13, 4000, 20260108, 4, 8),
+(8, 13, 4000, 20260109, 5, 8),
+(8, 13, 4000, 20260202, 6, 8),
 (7, 3, 5000, 20250902, 7, 7),
 (7, 3, 5000, 20260103, 8, 7),
 (7, 3, 5000, 20260103, 9, 7),
 (7, 3, 5000, 20260103, 10, 7),
-(8, 7, 5000, 20260102, 11, 8),
-(8, 7, 5000, 20260119, 12, 8),
-(8, 7, 5000, 20260119, 12, 8),
-(8, 7, 6000, 20260120, 12, 8),
-(8, 7, 5000, 20260122, 12, 8),
-(8, 7, 5000, 20260123, 12, 8),
-(8, 7, 15000, 20260123, 12, 8),
-(8, 7, 78000, 20260123, 12, 8),
-(8, 7, 7500, 20260123, 12, 8),
-(8, 7, 5535, 20260126, 12, 8),
-(8, 7, 5000, 20260127, 12, 8),
-(8, 7, 5000, 20260102, 13, 8);
+(8, 13, 5000, 20260102, 11, 8),
+(8, 13, 5000, 20260119, 12, 8),
+(8, 13, 5000, 20260119, 12, 8),
+(8, 13, 6000, 20260120, 12, 8),
+(8, 13, 5000, 20260122, 12, 8),
+(8, 13, 5000, 20260123, 12, 8),
+(8, 13, 15000, 20260123, 12, 8),
+(8, 13, 78000, 20260123, 12, 8),
+(8, 13, 7500, 20260123, 12, 8),
+(8, 13, 5535, 20260126, 12, 8),
+(8, 13, 5000, 20260127, 12, 8),
+(8, 13, 5000, 20260102, 13, 8);
 /*!40000 ALTER TABLE `order_archive` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -599,7 +599,7 @@ VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisber
 ('User', 'Toadmin', '', '', 'test4@test.com', 'user', '', '', '$2b$10$2SZrItauGHOPUnGBlZq8MOSotSiyGTfzIKU.d5fRYdO8JT3u8BYXK');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 INSERT INTO `user` (firstname, lastname, street_number, street, zip_code, city, birthdate, gender, user_type, tel, e_mail, newsletter, user_role, user_describe, password)
-VALUES ('jean', 'peplu','5','la grande plaine','17000','La Rochelle','2025-01-01','M.','Acheteur fortuné compulsif', '0606060606','jeanpeplu@user.fr','1','user','J''achete tout et surtout n''importe quoi avec la fortume dont j''ai hérité','$2b$10$9..xS04izXTA735IE9LER.tfMmCFwWstANMj4SVfsbsO98GEoFxlG');
+VALUES ('jean', 'peplu','5','la grande plaine','17000','La Rochelle','2025-01-01','M.','Acheteur fortuné compulsif', '0606060606','jeanpeplu@user.fr','1','user','J''achete tout et surtout n''importe quoi avec la fortume dont j''ai hérité', '$2b$10$9..xS04izXTA735IE9LER.tfMmCFwWstANMj4SVfsbsO98GEoFxlG');
 UNLOCK TABLES;
 
 --
