@@ -263,12 +263,15 @@ const getMyOrders: RequestHandler = async (req, res, next) => {
     const authReq = req as AuthRequest;
     const userId = authReq.user?.id;
 
+    console.log("recherche des commandes", userId);
+
     if (!userId) {
       res.sendStatus(401);
       return;
     }
 
     const orders = await userRepository.findOrdersByUserId(userId);
+    console.log("commandes trouvées:", orders);
     res.json(orders);
   } catch (err) {
     next(err);
