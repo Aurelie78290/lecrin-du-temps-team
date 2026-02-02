@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { useFavorites } from "../../contexts/FavoriteContext";
 import "./WatchCard.css";
+import type { CSSProperties } from "react";
 
 export type Watch = {
   idwatch: number;
@@ -18,14 +19,16 @@ type WatchCardProps = {
   watch: Watch;
   apiBaseUrl: string;
   context: "shop" | "collection";
-  userId?: number; // utile seulement en collection
-  onChange?: () => void; // pour refresh après delete
+  userId?: number;
+  onChange?: () => void;
+  index?: number;
 };
 
 export default function WatchCard({
   watch,
   apiBaseUrl,
   context,
+  index = 0,
 }: WatchCardProps) {
   const { user } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -37,7 +40,9 @@ export default function WatchCard({
     watch.watch_price == null
       ? "—"
       : `${new Intl.NumberFormat("fr-FR").format(watch.watch_price)} €`;
-
+  const style: CSSProperties & { "--enter-delay": string } = {
+    "--enter-delay": `${Math.min(index, 12) * 50}ms`,
+  };
   const linkTo =
     context === "collection"
       ? `/collection/${watch.idwatch}`
@@ -45,7 +50,7 @@ export default function WatchCard({
 
   return (
     <Link to={linkTo} className="watch-card-link">
-      <article className="watch-card">
+      <article className="watch-card" style={style}>
         <div className="watch-card-media">
           {isForSale && <span className="watch-card-badge">En vente</span>}
 
