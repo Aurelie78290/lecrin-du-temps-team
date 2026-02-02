@@ -77,6 +77,29 @@
   border-radius: 5px;
 }
 
+button.order-row {
+  background: transparent;
+  font-family: inherit;
+  color: #fff;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button.order-row:hover {
+  background-color: rgba(212, 175, 55, 0.25);
+  border-color: var(--border-color);
+  transform: translateX(5px);
+}
+
 .order-img {
   width: clamp(50px, 10vw, 70px);
   height: clamp(50px, 10vw, 70px);

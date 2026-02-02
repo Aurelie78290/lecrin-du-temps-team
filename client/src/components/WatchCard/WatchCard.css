@@ -1,15 +1,37 @@
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .watch-card {
   background: color-mix(in srgb, var(--primary-color) 80%, transparent);
   backdrop-filter: blur(10px);
   border: 1px solid color-mix(in srgb, var(--border-color) 50%, transparent);
   border-radius: 16px;
   overflow: hidden;
+
   box-shadow: 0 8px 24px
     color-mix(in srgb, var(--secondary-color) 10%, transparent);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
-  width: 270px;
   justify-self: center;
+  cursor: pointer;
+
+  width: 270px;
+  max-width: 340px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+
+  opacity: 0;
+  animation: cardIn 220ms ease-out both;
+  animation-delay: var(--enter-delay, 0ms);
 }
 
 .watch-card-link {
@@ -20,9 +42,9 @@
 }
 
 .watch-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 36px
-    color-mix(in srgb, var(--secondary-color) 15%, transparent);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 42px
+    color-mix(in srgb, var(--secondary-color) 18%, transparent);
 }
 
 .watch-card-media {
