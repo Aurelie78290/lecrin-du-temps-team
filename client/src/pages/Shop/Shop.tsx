@@ -57,12 +57,13 @@ export default function Shop() {
         {loading && <div className="shop-state">Chargement…</div>}
 
         <div className="shop-grid">
-          {watches.map((watch) => (
+          {watches.map((watch, index) => (
             <WatchCard
               key={watch.idwatch}
               watch={watch}
               apiBaseUrl={API_URL}
               context="shop"
+              index={index}
             />
           ))}
         </div>
