@@ -3,11 +3,11 @@ import { useState } from "react";
 import "./Home.css";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import logo from "../../../public/logo.svg";
 import watchImage from "../../assets/images/watchImage.png";
 import { useAuth } from "../../contexts/AuthContext";
 import api from "../../services/api";
-import { Link } from "react-router-dom";
 // import WatchAnimation from "../../components/WatchAnimation/WatchAnimation";
 
 const Home: React.FC = () => {

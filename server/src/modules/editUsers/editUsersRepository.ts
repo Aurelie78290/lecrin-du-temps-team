@@ -1,5 +1,5 @@
-import databaseClient from "../../../database/client";
 import type { ResultSetHeader } from "mysql2";
+import databaseClient from "../../../database/client";
 
 class EditUsersRole {
   // Lecture de tous les utilisateurs //
