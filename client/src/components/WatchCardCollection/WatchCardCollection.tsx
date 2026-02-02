@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import WatchCard, { type Watch } from "../WatchCard/WatchCard";
 import "./WatchCardCollection.css";
-import WatchCardAdd from "../WatchCardAdd/WatchCardAdd";
 import { useAuth } from "../../contexts/AuthContext";
+import WatchCardAdd from "../WatchCardAdd/WatchCardAdd";
 
 function WatchCardCollection() {
   const [watches, setWatches] = useState<Watch[]>([]);
@@ -32,13 +32,14 @@ function WatchCardCollection() {
         <h1>BIENVENUE DANS VOTRE COLLECTION, {name}</h1>
 
         <div className="watches-grid">
-          {watches.map((watch) => (
+          {watches.map((watch, index) => (
             <WatchCard
               key={watch.idwatch}
               watch={watch}
               apiBaseUrl={apiBaseUrl}
               context="collection"
-              onChange={() => setTrigger((prev) => prev + 1)} // ✅ refresh après delete
+              index={index}
+              onChange={() => setTrigger((prev) => prev + 1)}
             />
           ))}
         </div>

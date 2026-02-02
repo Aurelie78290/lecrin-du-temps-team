@@ -1,296 +1,472 @@
+/* =========================
+   WATCH DETAILS — FULL CSS
+   ========================= */
+
 .watchdetails-page {
-  padding: 24px;
+  padding: 28px 18px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 980px) {
   .watchdetails-page {
-    padding: 0px;
+    padding: 0;
     margin-top: 70px;
   }
 }
 
+.watchdetails-layout {
+  margin: 0 auto;
+}
+
+/* ====== BACK LINK ====== */
 .watchdetails-back {
-  display: inline-block;
-  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0 18px;
   color: var(--secondary-color);
-  font-size: 1.25rem;
-  font-size: 1.5rem;
+  font-family: var(--font-secondary);
+  font-size: 14px;
   text-decoration: none;
+  opacity: 0.9;
 }
 
-@media (max-width: 1024px) {
-  .watchdetails-back {
-    /* display: flex;
-    justify-content: center; */
-    margin-top: 20px;
-  }
+.watchdetails-back:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
 
+/* ====== HEADER ====== */
 .watchdetails-header {
   display: flex;
-  /* justify-content: space-between; */
-  /* align-items: baseline; */
+  justify-content: space-between;
+  align-items: baseline;
   gap: 16px;
-  margin-bottom: 40px;
-  margin-top: 20px;
-  flex-direction: column;
-  align-items: left;
-  padding-left: 30px;
+  margin: 0 0 18px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 980px) {
   .watchdetails-header {
-    padding-left: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 }
 
 .watchdetails-title {
   margin: 0;
-  font-size: 2rem;
+  font-size: clamp(22px, 2.6vw, 34px);
+  line-height: 1.15;
 }
 
 .watchdetails-price {
-  font-size: 1.5rem;
+  font-size: clamp(16px, 1.6vw, 20px);
+  font-family: var(--font-secondary);
+  font-weight: 800;
+  white-space: nowrap;
+  opacity: 0.95;
 }
 
-.watchdetails-layout {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  margin: 0 auto;
-}
-
-.watchdetails-layout-flex {
-  display: flex;
-  justify-content: space-around;
-}
-
-@media (max-width: 1024px) {
-  .watchdetails-layout-flex {
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
+@media (max-width: 980px) {
+  .watchdetails-price {
+    white-space: normal;
   }
 }
 
-.watchdetails-card {
-  border-radius: 16px;
-  padding: 30px;
-  min-height: auto;
+/* ====== MAIN GRID 2x2 ====== */
+
+.watchdetails-grid2x2 {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-areas:
+    "photos info"
+    "certif specs";
+  gap: 30px;
+
+  align-items: stretch;
+  grid-auto-rows: 1fr;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 980px) {
+  .watchdetails-grid2x2 {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "photos"
+      "certif"
+      "info"
+      "specs";
+    gap: 50px;
+
+    align-items: start;
+    grid-auto-rows: auto;
+  }
+
   .watchdetails-card {
-    border-radius: 16px;
-    padding: 0px;
-    min-height: auto;
+    height: auto;
   }
-}
-.watchdetails-card-w50 {
-  width: 60%;
-}
-.watchdetails-card-w40 {
-  width: 40%;
 }
 
-@media (max-width: 1024px) {
-  .watchdetails-card-w50 {
-    width: 100%;
-  }
-  .watchdetails-card-w40 {
-    width: 100%;
-  }
+.wd-photos {
+  grid-area: photos;
 }
-.watchdetails-100vh {
-  min-height: 100vh;
+.wd-info {
+  grid-area: info;
+}
+.wd-certif {
+  grid-area: certif;
+}
+.wd-specs {
+  grid-area: specs;
 }
 
+/* ====== CARD ====== */
+.watchdetails-card {
+  background: color-mix(in srgb, var(--primary-color) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border-color) 55%, transparent);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 12px 30px
+    color-mix(in srgb, var(--secondary-color) 10%, transparent);
+}
+
+/* Titre de section */
 .watchdetails-section-title {
-  margin: 0 0 40px;
-  border-radius: 20px;
-  padding: 15px 10px;
-  text-align: center;
-  margin-bottom: 40px;
-  font-size: 1.8rem;
-  border: 1px solid var(--secondary-color);
+  margin: 0 0 14px;
+  font-size: 14px;
+  font-family: var(--font-secondary);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.9;
 }
-@media (max-width: 1024px) {
-  .watchdetails-section-title {
-    margin-top: 20px;
-  }
-}
+
+/* ====== MEDIA FRAME (Photos / Certif) ======
+*/
 .watchdetails-main {
-  display: flex;
+  position: relative;
+  width: 100%;
+
+  aspect-ratio: 4 / 3;
+
+  border-radius: 16px;
+  overflow: hidden;
+
+  background: color-mix(in srgb, var(--primary-color) 70%, transparent);
+  margin-top: 30px;
 }
 
-@media (max-width: 1024px) {
-  .watchdetails-main {
-    justify-content: center;
-  }
-}
 .watchdetails-main img {
-  max-width: 100%;
-  max-height: 600px;
+  position: absolute;
+  inset: 0;
+
+  width: auto;
+  height: 100%;
   object-fit: cover;
   object-position: center;
+  justify-self: center;
 
   display: block;
-  border-radius: 14px;
+  border-radius: 16px;
 }
 
-@media (max-width: 1024px) {
-  .watchdetails-main img {
-    max-width: 80%;
-  }
-}
-.watchdetails-certif-img {
-  max-width: 100%;
-  max-height: 600px;
-  object-fit: cover;
-  object-position: center;
+.watchdetails-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 6px;
+  text-align: center;
+  padding: 18px;
 
-  display: block;
-  border-radius: 14px;
+  color: color-mix(in srgb, var(--secondary-color) 75%, transparent);
 }
 
-@media (max-width: 1024px) {
-  .watchdetails-certif-img {
-    max-width: 80%;
-    margin: 0 auto;
-  }
+.watchdetails-placeholder__title {
+  font-family: var(--font-secondary);
+  font-weight: 900;
+  letter-spacing: 0.02em;
 }
 
-.watchdetails-empty {
-  padding: 24px;
-  border-radius: 14px;
-  background: rgba(0, 0, 0, 0.05);
+.watchdetails-placeholder__text {
+  font-family: var(--font-secondary);
+  font-size: 13px;
+  opacity: 0.85;
 }
 
+/* ====== THUMBS ====== */
 .watchdetails-thumbs {
-  margin-top: 12px;
+  margin-top: 30px;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 0;
 }
 
-@media (max-width: 1024px) {
+@media (min-width: 981px) {
   .watchdetails-thumbs {
-    justify-content: center;
+    min-height: 86px;
+    align-content: flex-start;
   }
 }
 
 .watchdetails-thumb {
-  border: 0;
+  border: 1px solid transparent;
   background: transparent;
   padding: 0;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
+  opacity: 0.9;
+  transition: transform 120ms ease, border-color 120ms ease, opacity 120ms ease;
+}
+
+.watchdetails-thumb:hover {
+  transform: translateY(-2px);
+  opacity: 1;
 }
 
 .watchdetails-thumb img {
-  width: 72px;
-  height: 72px;
+  width: 74px;
+  height: 74px;
   object-fit: cover;
   display: block;
 }
 
 .watchdetails-thumb.is-active {
-  outline: 2px solid currentColor;
+  border-color: color-mix(in srgb, var(--secondary-color) 60%, transparent);
 }
 
+.watchdetails-thumbs.is-empty {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ====== DL (Infos / Specs) ====== */
 .watchdetails-dl {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 14px 18px;
   margin: 0;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 520px) {
   .watchdetails-dl {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .watchdetails-main {
+    aspect-ratio: 3 / 3;
   }
 }
 
 .watchdetails-dl > div {
-  display: flex;
-  flex-direction: column;
-  align-items: baseline;
+  padding: 10px 12px;
+  border-radius: 14px;
+
+  /* vrai glass */
+  background: rgba(201, 196, 196, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border: 1px solid var(--border-color);
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18), inset 0 1px 0
+    rgba(255, 255, 255, 0.25);
+
+  min-width: 0;
+
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease,
+    border 160ms ease;
+}
+
+.watchdetails-dl > div:hover {
+  transform: translateY(-2px);
+
+  background: rgba(255, 255, 255, 0.14);
+  border-color: var(--border-color);
+
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25), inset 0 1px 0
+    rgba(255, 255, 255, 0.35);
+}
+
+.watchdetails-dl > div:focus-within {
+  border-color: color-mix(in srgb, var(--secondary-color) 55%, transparent);
+  box-shadow: 0 16px 34px
+    color-mix(in srgb, var(--secondary-color) 18%, transparent), 0 0 0 3px
+    color-mix(in srgb, var(--secondary-color) 18%, transparent), inset 0 1px 0
+    color-mix(in srgb, white 16%, transparent);
 }
 
 .watchdetails-dl dt {
-  font-weight: 700;
-  opacity: 0.85;
-  font-size: 1.1rem;
-  line-height: 30px;
-}
-
-@media (max-width: 1024px) {
-  .watchdetails-dl dt {
-    font-size: 1rem;
-  }
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  color: var(--secondary-color);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  line-height: 1.2;
 }
 
 .watchdetails-dl dd {
-  margin: 0;
-  font-size: 1.1rem;
+  margin: 6px 0 0;
+  font-size: 14px;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
-.watchdetails-dl div {
-  padding: 0 20px;
-}
-
-.watchdetails-actions {
+/* ====== ACTIONS BAR ====== */
+.watchdetails-actionsBar {
+  margin-top: 60px;
   display: flex;
-  justify-content: right;
-  gap: 20px;
+  gap: 12px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
-@media (max-width: 1024px) {
-  .watchdetails-actions {
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    margin-top: 20px;
+@media (max-width: 980px) {
+  .watchdetails-actionsBar {
+    justify-content: center;
   }
 }
 
-.watchdetails-actions-center {
+.watchdetails-actionsGroup {
   display: flex;
-  flex-direction: column;
+  gap: 12px;
   align-items: center;
-  margin-top: 30px;
-  gap: 20px;
-}
-.watchdetails-actions-right {
-  display: flex;
-  align-items: center;
-  margin-top: 30px;
-  gap: 20px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
-.watchdetails-buy,
-.watchdetails-sell,
-.watchdetails-edit,
-.watchdetails-delete {
-  width: 200px;
-  padding: 12px 14px;
-  border-radius: 14px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  background-color: var(--secondary-color);
-}
-
-.watchdetails-cancel {
-  padding: 12px 14px;
-  border-radius: 14px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  background-color: var(--secondary-color);
+@media (max-width: 980px) {
+  .watchdetails-actionsGroup {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .watchdetails-info {
-  text-align: center;
+  width: 100%;
+  text-align: right;
+  font-family: var(--font-secondary);
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+@media (max-width: 980px) {
+  .watchdetails-info {
+    text-align: center;
+  }
+}
+
+/* boutons */
+.watchdetails-buy,
+.watchdetails-sell,
+.watchdetails-edit,
+.watchdetails-delete,
+.watchdetails-cancel {
+  min-width: 190px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-family: var(--font-secondary);
+  font-weight: 800;
+  cursor: pointer;
+
+  border: 1px solid color-mix(in srgb, var(--border-color) 45%, transparent);
+  background: var(--secondary-color);
+  color: var(--primary-color);
+
+  transition: transform 120ms ease, filter 120ms ease, opacity 120ms ease;
+}
+
+.watchdetails-buy:hover,
+.watchdetails-sell:hover,
+.watchdetails-edit:hover,
+.watchdetails-delete:hover,
+.watchdetails-cancel:hover {
+  transform: none;
+  filter: brightness(1.03);
+}
+
+.watchdetails-buy:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.watchdetails-delete {
+  background: transparent;
+  color: var(--secondary-color);
+}
+
+/* ====== LOADING / ERROR ====== */
+.watchdetails-state {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--primary-color) 80%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border-color) 55%, transparent);
+}
+
+/* =========================
+   WATCH EDIT — form controls
+   ========================= */
+
+.watchdetails-dl--form dd {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.watchdetails-control,
+.watchdetails-input {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--border-color) 45%, transparent);
+  background: color-mix(in srgb, var(--primary-color) 86%, transparent);
+  color: inherit;
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  outline: none;
+}
+
+.watchdetails-control:focus,
+.watchdetails-input:focus {
+  border-color: color-mix(in srgb, var(--secondary-color) 55%, transparent);
+}
+
+.watchdetails-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-secondary);
+  font-weight: 700;
+}
+
+.watchdetails-help {
+  opacity: 0.75;
+  font-size: 12px;
+  font-family: var(--font-secondary);
+}
+
+.watchdetails-editTools {
+  margin-top: 12px;
+  display: grid;
+  gap: 12px;
+}
+
+.watchdetails-uploadBlock {
+  display: grid;
+  gap: 8px;
+}
+
+.watchdetails-uploadTitle {
+  font-weight: 800;
+  font-family: var(--font-secondary);
 }
