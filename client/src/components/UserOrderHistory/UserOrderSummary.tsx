@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import "./UserOderSummary.css";
 
 interface Order {
@@ -17,6 +19,23 @@ interface OrderSummaryProps {
 }
 
 const UserOrderSummary = ({ isOpen, onClose, orders }: OrderSummaryProps) => {
+  const navigate = useNavigate();
+
+  const handleRowClick = (order: Order) => {
+    onClose();
+
+    navigate("/Collection", {
+      state: {
+        addItem: {
+          brand: order.brand,
+          name: order.name,
+          photo: order.watch_photo,
+          id: order.watch_id,
+        },
+      },
+    });
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -38,7 +57,19 @@ const UserOrderSummary = ({ isOpen, onClose, orders }: OrderSummaryProps) => {
         </div>
         <div className="orders-scroll">
           {orders.map((order) => (
-            <div key={order.id} className="order-row">
+            <button
+              key={order.id}
+              className="order-row"
+              type="button"
+              tabIndex={0}
+              onClick={() => handleRowClick(order)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleRowClick(order);
+                }
+              }}
+            >
               <img
                 src={`http://localhost:3310${order.watch_photo}`}
                 alt="Montre"
@@ -54,7 +85,7 @@ const UserOrderSummary = ({ isOpen, onClose, orders }: OrderSummaryProps) => {
                 </span>
               </div>
               <div className="order-price">{order.price.toLocaleString()}€</div>
-            </div>
+            </button>
           ))}
         </div>
       </div>
