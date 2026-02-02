@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
-
 import "./DashboardRecentOrders.css";
 
-type RecentOrdersI = {
+export type RecentOrdersI = {
   idorder: number;
   purchase_date: string;
   price: number;
@@ -11,22 +9,11 @@ type RecentOrdersI = {
   model: string;
 };
 
-function DashboardRecentOrders() {
-  const [recentOrders, setRecentOrders] = useState<RecentOrdersI[]>([]);
-
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/AdminRecentOrders`)
-      .then((response) => response.json())
-      .then((data: RecentOrdersI[]) => {
-        setRecentOrders(data);
-      });
-  }, []);
-
+function DashboardRecentOrders({ orders }: { orders: RecentOrdersI[] }) {
   return (
     <section className="DashboardRecentOrders-section">
-      <h2>Activité récente</h2>
-      {recentOrders.length === 0 ? (
-        <p>Pas d'activité récentes</p>
+      {orders.length === 0 ? (
+        <p>Aucun résultat pour ces critères</p>
       ) : (
         <table className="DashboardRecentOrders-table">
           <thead className="DashboardRecentOrders-tableEntete">
@@ -39,7 +26,7 @@ function DashboardRecentOrders() {
             </tr>
           </thead>
           <tbody>
-            {recentOrders.map((e) => (
+            {orders.map((e) => (
               <tr className="DashboardRecentOrders-row" key={e.idorder}>
                 <td>
                   {new Date(e.purchase_date).toLocaleDateString("fr-FR", {
