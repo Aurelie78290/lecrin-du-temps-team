@@ -51,6 +51,8 @@ const edit: RequestHandler = async (req, res, next) => {
       content: req.body.content,
       reference_source: req.body.reference_source,
       release_date: req.body.release_date,
+      photo: req.body.photo,
+      photo_secondary: req.body.photo_secondary,
     };
 
     // Remove undefined values
@@ -85,6 +87,7 @@ const add: RequestHandler = async (req, res, next) => {
       subtitle: req.body.subtitle || null,
       content: req.body.content,
       photo: req.body.photo,
+      photo_secondary: req.body.photo_secondary || null,
       reference_source: req.body.reference_source || null,
       user_iduser: req.body.user_iduser,
       release_date: req.body.release_date || new Date().toISOString(),
