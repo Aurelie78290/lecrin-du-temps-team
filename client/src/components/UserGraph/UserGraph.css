@@ -1,5 +1,6 @@
 .usergraph__main {
-  display: inline-block;
+  flex: 2;
+  min-width: 0;
   border: solid 1px #e0c58f;
   padding: 1rem;
   border-radius: 10px;
