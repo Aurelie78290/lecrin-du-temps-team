@@ -171,7 +171,7 @@ export default function WatchDetails({
   const [activeCertif, setActiveCertif] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const [isReady, setIsReady] = useState(false);
   const normalize = (s?: string | null) =>
     (s ?? "").toLowerCase().replace("à", "a").trim();
 
@@ -343,6 +343,7 @@ export default function WatchDetails({
 
     setLoading(true);
     setError(null);
+    setIsReady(false);
 
     fetch(`${API_URL}/api/watches/${effectiveId}`, { credentials: "include" })
       .then(async (res) => {
@@ -372,6 +373,8 @@ export default function WatchDetails({
         setWatch(normalized);
         setActivePhoto(normalized.photos[0] ?? null);
         setActiveCertif(normalized.certificates[0] ?? null);
+
+        requestAnimationFrame(() => setIsReady(true));
       })
       .catch((err: unknown) => {
         setError(err instanceof Error ? err.message : "Erreur inconnue");
@@ -392,7 +395,7 @@ export default function WatchDetails({
   }
 
   return (
-    <div className="watchdetails-page">
+    <div className={`watchdetails-page ${isReady ? "is-ready" : ""}`}>
       <div className="watchdetails-layout">
         {!isReadOnly && (
           <Link
