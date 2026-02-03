@@ -1,8 +1,7 @@
 .ClassifiedAdDetails-Conteneur {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   border: 1px solid;
-  padding-left: 1rem;
   border-radius: 16px;
   border-color: var(--border-color);
 }
@@ -11,22 +10,26 @@
   display: flex;
   flex-direction: column;
   border-right: 1px solid var(--border-color);
-  padding-right: 1rem;
+  width: 30%;
+  padding: 0 5%;
 }
 
 .DashboardPendingAdd-add {
   cursor: pointer;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1200px) {
   .ClassifiedAdDetails-Conteneur {
     flex-direction: column;
     padding-left: 0;
   }
   .ClassifiedAdDetails-aside {
     border-right: none;
-    border-bottom: 1px solid var(--border-color);
-    padding-left: 1rem;
+    border-bottom: 3px double var(--border-color);
+    width: 80%;
+    margin: auto;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
   }
   .CalssifiedAdDetails-main {
     padding: 0 1rem;

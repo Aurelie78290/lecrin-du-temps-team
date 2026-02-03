@@ -587,19 +587,19 @@ LOCK TABLES `user` WRITE;
 INSERT INTO `user` (firstname, lastname, birthdate, user_type, e_mail, user_role, user_describe, created_at, password) 
 VALUES ('Anaïs','B','1980-01-01','Directrice Éditoriale & Curatrice','anaisberthome@gmail.com','admin', "Historienne de l'art, elle veille à la qualité des articles et au respect de l'héritage des manufactures. Elle déniche les pièces rares.",'2026-01-22 08:30:00', ''),
 ('Jo','M','1980-01-01','','joachim.masson.17@gmail.com','customer', "", '2026-01-25 08:30:00', ''),
-('Aurélie','Dumotier','1986-02-14','Responsable Communauté & Évenements','aurelie.dumotier@gmail.com','admin', "Spécialiste en communication de luxe, elle gère les membres VIP et organise les rencontres physiques entre passionnés (les 'GTG').", '2026-01-20 08:30:00', ''),
+('Aurélie','Dumotier','1986-02-14','Responsable Communauté & Évenements','aurelie.dumotier@gmail.com','customer', "", '2026-01-20 08:30:00', ''),
 ('Thomas','P','2000-01-01','Développeur & Webmaster','thomas.p@gmail.com','admin', "Passionné de 'Toolwatches', il assure la fluidité du site, la sécurité des transactions et l'optimisation de l'interface utilisateur.", '2026-01-18 08:30:00', ''),
 ('Mathieu', 'H', '2000-01-01', 'Analyste Marché & Cote', 'mathieu.h@gmail.com','admin', "Expert en économie, il suit l'évolution des prix et les ventes aux enchères pour conseiller les membres sur l'investissement horloger.", '2026-01-02 08:30:00', ''),
 ('romain', 'dodo', '', '', 'test@test.com', 'user', '', '2026-01-05 08:30:00', '$2b$10$YQWyYMtItnsmh5nINQLJau22ZKqfbfD2oYnxy5pBxjxERGl/.Vjia'),
 ('Jean', 'Dubois', '1980-01-01', 'cutsomer', 'jean.dubois@gmail.com','customer', "Collectionneur de montre", '2025-09-01 08:30:00', ''),
 ('Joachim', 'Masson', '', 'Expert Technique & Authentification', 'jo@admin.fr','admin', "Ancien horloger certifié, il est le garant de la véracité technique et aide à identifier les contrefaçons (le 'LC' pour Legit Check).", '2025-09-01 08:30:00', '$2b$10$/frmOJpVIVEXPQWCdjYFmuvtazIuFs43.IvYJNC/RFZWJPXjFhBau'),
-('Aurélie', 'DUMOTIER', '', '', 'aurelie@test.com', 'admin', '', '', '$2b$10$abe.6Swei6O1Rw44IzG.a.HzJZ.oY37bhF5/OfreONKXnnAOWaT.W'),
+('Aurélie', 'DUMOTIER', '1986-02-14', 'Responsable Communauté & Évenements', 'aurelie@test.com', 'admin', "Spécialiste en communication de luxe, elle gère les membres VIP et organise les rencontres physiques entre passionnés (les 'GTG').", '2026-02-01 08:30:00', '$2b$10$abe.6Swei6O1Rw44IzG.a.HzJZ.oY37bhF5/OfreONKXnnAOWaT.W'),
 ('Romain', 'Debas', '1988-02-02', 'Responsable Image & Partenariats', 'debasromain@gmail.com','admin', "Photographe spécialisé en macro-horlogerie, il gère l'identité visuelle du site et les relations avec les grandes maisons.", '', '$2b$10$3.bsPn7LlURcw2rtM2DUrOZsOWzsIGL86JnNXy21rnyam2q/XrvHK'),
 ('User', 'Todelete', '', '', 'testdelete@test.com', 'user', '', '', '$2b$10$7AR5Ntccmsv1HVJ4x4LB/OYBfZJOEThsVcWdyC2ltPFLHGbS/v3Zm'),
 ('User', 'Toadmin', '', '', 'test4@test.com', 'user', '', '', '$2b$10$2SZrItauGHOPUnGBlZq8MOSotSiyGTfzIKU.d5fRYdO8JT3u8BYXK');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 INSERT INTO `user` (firstname, lastname, street_number, street, zip_code, city, birthdate, gender, user_type, tel, e_mail, newsletter, user_role, user_describe, password)
-VALUES ('jean', 'peplu','5','la grande plaine','17000','La Rochelle','2025-01-01','M.','Acheteur fortuné compulsif', '0606060606','jeanpeplu@user.fr','1','user','J''achete tout et surtout n''importe quoi avec la fortume dont j''ai hérité', '$2b$10$9..xS04izXTA735IE9LER.tfMmCFwWstANMj4SVfsbsO98GEoFxlG');
+VALUES ('jean', 'peplu','5','la grande plaine','17000','La Rochelle','2025-01-01','M.','Acheteur fortuné compulsif', '0606060606','jeanpeplu@user.fr','1','user','J''achete tout et surtout n''importe quoi avec la fortune dont j''ai hérité','$2b$10$9..xS04izXTA735IE9LER.tfMmCFwWstANMj4SVfsbsO98GEoFxlG');
 UNLOCK TABLES;
 
 --
