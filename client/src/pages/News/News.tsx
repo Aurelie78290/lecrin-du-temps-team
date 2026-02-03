@@ -39,11 +39,11 @@ function News() {
         <h1 className="news-title">Chroniques horlogères</h1>
 
         <div className="news-grid">
-          {news.map((article, index) => (
+          {news.map((article) => (
             <BreakingNewsCard
               key={article.idarticles}
               article={article}
-              className={index % 2 !== 0 ? "card--tall" : "card--short"}
+              className="card"
             />
           ))}
         </div>
