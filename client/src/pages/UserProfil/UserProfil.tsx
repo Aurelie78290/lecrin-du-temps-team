@@ -4,12 +4,16 @@ import EditProfilPopUp from "../../components/EditProfilPopUp/EditProfilPopUp";
 import { useAuth } from "../../contexts/AuthContext";
 import api from "../../services/api";
 import "./UserProfil.css";
+import UserOrderSummary from "../../components/UserOrderHistory/UserOrderSummary";
 
 interface Order {
   id: number;
   price: number;
   purchase_date: string;
   watch_id: number;
+  watch_photo: string;
+  brand: string;
+  name: string;
 }
 
 const UserProfil = () => {
@@ -17,6 +21,7 @@ const UserProfil = () => {
   const navigate = useNavigate();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [orders, setOrders] = useState<Order[]>([]);
+  const [isUserOderSummaryOpen, setIsUserOrderSummaryOpen] = useState(false);
 
   const handleUpdate = async (updatedData: {
     firstname: string;
@@ -126,49 +131,51 @@ const UserProfil = () => {
         className="profil-header"
         style={{ "--i": 0 } as React.CSSProperties}
       >
-        <div className="photo-section">
-          <div className="image-container">
-            <img
-              src={
-                user.user_photo
-                  ? `http://localhost:3310${user.user_photo}`
-                  : avatarFallback
-              }
-              alt="Profil-pic"
-              className="profil-photo"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = avatarFallback;
-              }}
-            />
-          </div>
-        </div>
-        <h1>
-          Bienvenue
-          <br />
-          {user.firstname.toUpperCase()} {user.lastname.toUpperCase()}
-        </h1>
-      </div>
-      <div
-        className="profil-actions"
-        style={{ "--i": 1 } as React.CSSProperties}
-      >
-        <button
-          type="button"
-          className="popup-btn"
-          onClick={() => setIsPopupOpen(true)}
+        <div
+          className="profil-actions"
+          style={{ "--i": 1 } as React.CSSProperties}
         >
-          Modifier mes informations
-        </button>
-        <button type="button" onClick={handleLogout} className="logout-btn">
-          Se déconnecter
-        </button>
+          <div className="photo-section">
+            <div className="image-container">
+              <img
+                src={
+                  user.user_photo
+                    ? `http://localhost:3310${user.user_photo}`
+                    : avatarFallback
+                }
+                alt="Profil-pic"
+                className="profil-photo"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = avatarFallback;
+                }}
+              />
+            </div>
+          </div>
+          <h1>
+            Bienvenue
+            <br />
+            {user.firstname.toUpperCase()} {user.lastname.toUpperCase()}
+          </h1>
+        </div>
+        <div className="header-btns">
+          <button
+            type="button"
+            className="popup-btn"
+            onClick={() => setIsPopupOpen(true)}
+          >
+            Modifier mes informations
+          </button>
+          <button type="button" onClick={handleLogout} className="logout-btn">
+            Se déconnecter
+          </button>
+        </div>
       </div>
       <div className="cards-infos-container">
         <div
           className="profil-infos-card"
           style={{ "--i": 2 } as React.CSSProperties}
         >
-          <h3>Données personnelles</h3>
+          <h3>Informations personnelles</h3>
           <div className="profil-infos-content">
             <p>
               <span className="label">Prénom:</span>
@@ -223,10 +230,20 @@ const UserProfil = () => {
               <h3>Adresse de Livraison</h3>
               <div className="profil-infos-content">
                 <p>
-                  {user.street_number || "N°"} {user.street || "Rue"}
+                  <span className="label">N° de rue :</span>
+                  {user.street_number || "Non renseigné"}
                 </p>
                 <p>
-                  {user.zip_code || "Code postal"} {user.city || "Ville"}
+                  <span className="label">Nom de la voie :</span>
+                  {user.street || "Non renseigné"}
+                </p>
+                <p>
+                  <span className="label">Code postal:</span>
+                  {user.zip_code || "Non renseigné"}
+                </p>
+                <p>
+                  <span className="label">Ville :</span>
+                  {user.city || "Non renseigné"}
                 </p>
               </div>
             </div>
@@ -237,21 +254,60 @@ const UserProfil = () => {
               <h3>Mes commandes</h3>
               <div className="profil-infos-content">
                 {orders.length > 0 ? (
-                  orders.map((order) => (
-                    <p key={order.id}>
-                      {" "}
-                      Commande #{order.id} - {order.price}€ (
-                      {new Date(order.purchase_date).toLocaleDateString(
-                        "fr-FR",
-                      )}
-                      )
-                    </p>
-                  ))
+                  <>
+                    {orders.slice(0, 3).map((order) => (
+                      <button
+                        key={order.id}
+                        className="order-line"
+                        type="button"
+                        onClick={() =>
+                          navigate("/Collection", {
+                            state: {
+                              addItem: {
+                                brand: order.brand,
+                                name: order.name,
+                                photo: order.watch_photo,
+                                id: order.watch_id,
+                              },
+                            },
+                          })
+                        }
+                      >
+                        <img
+                          src={`http://localhost:3310${order.watch_photo}`}
+                          alt="Montre"
+                          className="orders-watch"
+                        />
+                        <span className="order-brand">{order.brand}</span>
+                        <span className="order-model">{order.name}</span>
+                        <span className="order-date">
+                          {new Date(order.purchase_date).toLocaleDateString(
+                            "fr-FR",
+                          )}
+                        </span>
+                        <span className="order-price">{order.price}€</span>
+                      </button>
+                    ))}
+                    {orders.length > 3 && (
+                      <button
+                        type="button"
+                        onClick={() => setIsUserOrderSummaryOpen(true)}
+                        className="view-more"
+                      >
+                        Voir toute les commandes ({orders.length})
+                      </button>
+                    )}
+                  </>
                 ) : (
-                  <p>Aucune commande passée</p>
+                  <p>Aucune commande</p>
                 )}
               </div>
             </div>
+            <UserOrderSummary
+              isOpen={isUserOderSummaryOpen}
+              onClose={() => setIsUserOrderSummaryOpen(false)}
+              orders={orders}
+            />
           </>
         )}
       </div>

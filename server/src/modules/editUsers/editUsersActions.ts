@@ -1,5 +1,5 @@
+import type { Request, RequestHandler } from "express";
 import editUsersRepository from "./editUsersRepository";
-import type { RequestHandler, Request } from "express";
 
 // Pour définir le type de requête avec l'authMiddleware //
 interface AuthRequest extends Request {
