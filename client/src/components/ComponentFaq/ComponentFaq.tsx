@@ -28,7 +28,7 @@ function ComponentsFaq() {
 
   return (
     <section className="ComponentFaq-section">
-      <h1 className="ComponentFaq-h1">Vous vous poser une question?</h1>
+      <h1 className="ComponentFaq-h1">Vous vous posez une question?</h1>
       <h2 className="ComponentFaq-h2">
         Votre question concernant L’Écrin du temps a peut-être déjà été posée.
         Si c’est le cas, vous la trouverez ici.
