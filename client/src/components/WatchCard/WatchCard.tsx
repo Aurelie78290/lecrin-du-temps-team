@@ -51,38 +51,40 @@ export default function WatchCard({
   return (
     <Link to={linkTo} className="watch-card-link">
       <article className="watch-card" style={style}>
-        <div className="watch-card-media">
-          {isForSale && <span className="watch-card-badge">En vente</span>}
+        <div className="watch-card-inner">
+          <div className="watch-card-media">
+            {isForSale && <span className="watch-card-badge">En vente</span>}
 
-          {user && (
-            <button
-              type="button"
-              className={`watch-card-fav ${favorited ? "is-fav" : ""}`}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleFavorite(watch.idwatch);
-              }}
-            >
-              <Heart size={20} fill={favorited ? "currentColor" : "none"} />
-            </button>
-          )}
+            {user && context === "shop" && (
+              <button
+                type="button"
+                className={`watch-card-fav ${favorited ? "is-fav" : ""}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleFavorite(watch.idwatch);
+                }}
+              >
+                <Heart size={20} fill={favorited ? "currentColor" : "none"} />
+              </button>
+            )}
 
-          {cover && (
-            <img
-              src={`${apiBaseUrl}${cover}`}
-              alt={`Montre ${watch.brand} ${watch.model}`}
-              loading="lazy"
-            />
-          )}
-        </div>
+            {cover && (
+              <img
+                src={`${apiBaseUrl}${cover}`}
+                alt={`Montre ${watch.brand} ${watch.model}`}
+                loading="lazy"
+              />
+            )}
+          </div>
 
-        <div className="watch-card-body">
-          <div className="watch-card-brand">{watch.brand}</div>
-          <div className="watch-card-model">{watch.model}</div>
+          <div className="watch-card-body">
+            <div className="watch-card-brand">{watch.brand}</div>
+            <div className="watch-card-model">{watch.model}</div>
 
-          <div className="watch-card-row">
-            <div className="watch-card-price">{price}</div>
+            <div className="watch-card-row">
+              <div className="watch-card-price">{price}</div>
+            </div>
           </div>
         </div>
       </article>
