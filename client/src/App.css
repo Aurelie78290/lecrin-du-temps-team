@@ -57,6 +57,14 @@ p {
   font-family: var(--font-secondary);
 }
 
+h1 {
+  margin-bottom: 4rem;
+  text-align: center;
+  font-size: 2.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
 /* SI VOUS REALISEZ SUR VOS COMPOSANTS UN STYLE REUTILISABLE (BOUTON OU AUTRE), AJOUTEZ LE ICI, MERCI <3 */
 
 /* classe css pour la navbar */

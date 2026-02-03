@@ -53,11 +53,11 @@ function ContactForm() {
 
   return (
     <section className="ContactForm-section">
-      <h1 className="ContactForm-title">Toujours à votre écoute.</h1>
-      <h2 className="ContactForm-subtitle">
+      <h2 className="ContactForm-title">Toujours à votre écoute.</h2>
+      <h3 className="ContactForm-subtitle">
         Si vous ne trouvez pas rapidement la réponse à votre question, n'hésitez
         pas à nous contacter directement.
-      </h2>
+      </h3>
 
       <form className="ContactForm" onSubmit={handleSubmit}>
         <label>
