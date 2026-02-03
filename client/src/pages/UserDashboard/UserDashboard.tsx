@@ -1,3 +1,4 @@
+import UserFavoritePick from "../../components/UserFavoritePick/UserFavoritePick";
 import UserGraph from "../../components/UserGraph/UserGraph";
 import UserLastAdd from "../../components/UserLastAdd/UserLastAdd";
 import UserReview from "../../components/UserReview/UserReview";
@@ -7,7 +8,10 @@ function UserDashboard() {
   return (
     <>
       <UserLastAdd />
-      <UserGraph />
+      <div className="dashboard__position">
+        <UserFavoritePick />
+        <UserGraph />
+      </div>
       <UserReview />
     </>
   );
