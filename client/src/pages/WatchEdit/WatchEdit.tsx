@@ -238,6 +238,7 @@ export default function WatchEdit() {
 
   const watchPhotos = useMemo(() => watch?.watch_photos ?? [], [watch]);
   const certPhotos = useMemo(() => watch?.certificate_photos ?? [], [watch]);
+  const [isReady, setIsReady] = useState(false);
 
   const remainingWatchSlots = Math.max(
     0,
@@ -359,6 +360,7 @@ export default function WatchEdit() {
 
     setLoading(true);
     setError(null);
+    setIsReady(false);
 
     fetch(`${API_URL}/api/watches/${watchId}`, { credentials: "include" })
       .then(async (res) => {
@@ -443,6 +445,7 @@ export default function WatchEdit() {
         setWatch(normalized);
         setActivePhoto(normalized.watch_photos?.[0] ?? null);
         setActiveCert(normalized.certificate_photos?.[0] ?? null);
+        requestAnimationFrame(() => setIsReady(true));
 
         setBrandId(normalized.brand_id ?? "");
         setModelId(normalized.model_id ?? "");
@@ -646,7 +649,7 @@ export default function WatchEdit() {
   }
 
   return (
-    <div className="watchdetails-page">
+    <div className={`watchdetails-page ${isReady ? "is-ready" : ""}`}>
       <div className="watchdetails-layout">
         <Link
           className="watchdetails-back"
