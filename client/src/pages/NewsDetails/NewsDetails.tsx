@@ -9,6 +9,7 @@ interface Article {
   idarticles: number;
   article_title: string;
   photo: string;
+  photo_secondary: string;
   subtitle: string;
   release_date: string;
   content: string;
@@ -78,25 +79,37 @@ function NewsDetails() {
       <Link to="/news" className="NewsDetails-back-btn">
         ← Retour aux articles
       </Link>
-      <section className="NewsDetails-section">
-        <h1 className="NewsDetails-title">{article.article_title}</h1>
-        <div className="NewsDetails-references">
-          <p className="NewsDetails-references-content">
-            <strong>Source : </strong>
-            {article.reference_source}
-          </p>
-          <p className="NewsDetail-references-content">
-            <strong>Date : </strong>
-            {formatDate(article.release_date)}
-          </p>
-        </div>
-        <p className="NewsDetails-subtitle">{article.subtitle}</p>
+      <section className="NewsDetails-section-hero">
         <div className="NewsDetails-container">
           <img
             src={article.photo}
             alt={article.article_title}
             className="NewsDetails-photo"
           />
+        </div>
+
+        <div className="NewsDetails-overlay">
+          <h1 className="NewsDetails-title">{article.article_title}</h1>
+          <p className="NewsDetails-subtitle">{article.subtitle}</p>
+          <div className="NewsDetails-references">
+            <p className="NewsDetails-references-content">
+              <strong>Source : </strong>
+              {article.reference_source}
+            </p>
+            <p className="NewsDetails-references-content">
+              <strong>Date : </strong>
+              {formatDate(article.release_date)}
+            </p>
+          </div>
+        </div>
+        <div className="NewsDetails-section-content">
+          {article.photo_secondary && (
+            <img
+              src={article.photo_secondary}
+              alt="Illustration secondaire"
+              className="NewsDetails-secondary-photo"
+            />
+          )}
           <p className="NewsDetails-content">{article.content}</p>
         </div>
 

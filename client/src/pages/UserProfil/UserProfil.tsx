@@ -152,8 +152,8 @@ const UserProfil = () => {
             </div>
           </div>
           <h1>
-            Bienvenue
-            <br />
+            {/* Bienvenue
+            <br /> */}
             {user.firstname.toUpperCase()} {user.lastname.toUpperCase()}
           </h1>
         </div>
@@ -256,7 +256,23 @@ const UserProfil = () => {
                 {orders.length > 0 ? (
                   <>
                     {orders.slice(0, 3).map((order) => (
-                      <div key={order.id} className="order-line">
+                      <button
+                        key={order.id}
+                        className="order-line"
+                        type="button"
+                        onClick={() =>
+                          navigate("/Collection", {
+                            state: {
+                              addItem: {
+                                brand: order.brand,
+                                name: order.name,
+                                photo: order.watch_photo,
+                                id: order.watch_id,
+                              },
+                            },
+                          })
+                        }
+                      >
                         <img
                           src={`http://localhost:3310${order.watch_photo}`}
                           alt="Montre"
@@ -270,7 +286,7 @@ const UserProfil = () => {
                           )}
                         </span>
                         <span className="order-price">{order.price}€</span>
-                      </div>
+                      </button>
                     ))}
                     {orders.length > 3 && (
                       <button

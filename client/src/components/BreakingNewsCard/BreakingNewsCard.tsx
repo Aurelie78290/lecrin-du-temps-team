@@ -22,26 +22,31 @@ function BreakingNewsCard({ article, className }: BreakingNewsCardProps) {
     new Date(dateString).toLocaleDateString("fr-FR");
 
   return (
-    <article className={`breakingNews-section ${className ?? ""}`}>
-      <h2>{article.article_title}</h2>
-      <div className="breakingNews-references">
-        <p className="breakingNews-references-content">
-          {article.reference_source}
-        </p>
-        <p className="breakingNews-references-content">
-          {formatDate(article.release_date)}
-        </p>
-      </div>
+    <Link
+      to={`/NewsDetails/${article.idarticles}`}
+      className={`breakingNews-section ${className ?? ""}`}
+    >
       <div className="breakingNews-container">
         <img
           src={article.photo}
           alt={article.article_title}
           className="breakingNews-photo"
         />
+        <span className="breakingNews-overlayBtn">Lire l’article</span>
       </div>
-      <p className="breakingNews-subtitle">{article.subtitle}</p>
-      <Link to={`/NewsDetails/${article.idarticles}`}>Lire l’article</Link>
-    </article>
+      <div className="breakingNews-content">
+        <h2>{article.article_title}</h2>
+        <p className="breakingNews-subtitle">{article.subtitle}</p>
+        <div className="breakingNews-references">
+          <p className="breakingNews-references-content">
+            <strong>Source :</strong> {article.reference_source}
+          </p>
+          <p className="breakingNews-references-content">
+            {formatDate(article.release_date)}
+          </p>
+        </div>
+      </div>
+    </Link>
   );
 }
 
