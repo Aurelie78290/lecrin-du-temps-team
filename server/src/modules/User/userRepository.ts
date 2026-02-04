@@ -53,6 +53,11 @@ export interface UserOrderSummary {
   purchase_date: string;
   city: string | null;
   watch_id: number;
+  brand_id: number;
+  model_id: number;
+  brand: string;
+  name: string;
+  watch_photo: string;
 }
 
 class UserRepository {
@@ -209,8 +214,29 @@ class UserRepository {
 
   async findOrdersByUserId(userId: number): Promise<UserOrderSummary[]> {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT oa.idorder AS id, oa.price, oa.purchase_date, b.name AS brand, m.name AS name, (SELECT p.url FROM photo p WHERE p.watch_id = oa.watch_id LIMIT 1) AS watch_photo FROM order_archive oa INNER JOIN watch w ON oa.watch_id = w.idwatch INNER JOIN brand b ON w.brand_id = b.id INNER JOIN model m ON w.model_id = m.id WHERE oa.user_order_id = ? ORDER BY oa.purchase_date DESC",
-      [userId],
+      `SELECT 
+      oa.idorder AS id, 
+      oa.price, 
+      oa.purchase_date, 
+      b.name AS brand, 
+      m.name AS name, 
+      w.brand_id, 
+      w.model_id, 
+      oa.watch_id,
+      (SELECT p.url FROM photo p WHERE p.watch_id = oa.watch_id LIMIT 1) AS watch_photo,
+      (SELECT COUNT(*) 
+       FROM watch w2 
+       JOIN user_has_watch uhw ON w2.idwatch = uhw.watch_id 
+       WHERE uhw.user_id = ? 
+       AND w2.brand_id = w.brand_id 
+       AND w2.model_id = w.model_id) > 0 AS is_already_added
+    FROM order_archive oa 
+    INNER JOIN watch w ON oa.watch_id = w.idwatch 
+    INNER JOIN brand b ON w.brand_id = b.id 
+    INNER JOIN model m ON w.model_id = m.id 
+    WHERE oa.user_order_id = ? 
+    ORDER BY oa.purchase_date DESC`,
+      [userId, userId],
     );
     return rows as UserOrderSummary[];
   }
