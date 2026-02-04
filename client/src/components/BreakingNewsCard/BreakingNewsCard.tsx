@@ -22,14 +22,17 @@ function BreakingNewsCard({ article, className }: BreakingNewsCardProps) {
     new Date(dateString).toLocaleDateString("fr-FR");
 
   return (
-    <article className={`breakingNews-section ${className ?? ""}`}>
+    <Link
+      to={`/NewsDetails/${article.idarticles}`}
+      className={`breakingNews-section ${className ?? ""}`}
+    >
       <div className="breakingNews-container">
         <img
           src={article.photo}
           alt={article.article_title}
           className="breakingNews-photo"
         />
-        <Link to={`/NewsDetails/${article.idarticles}`}>Lire l’article</Link>
+        <span className="breakingNews-overlayBtn">Lire l’article</span>
       </div>
       <div className="breakingNews-content">
         <h2>{article.article_title}</h2>
@@ -43,7 +46,7 @@ function BreakingNewsCard({ article, className }: BreakingNewsCardProps) {
           </p>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
 
