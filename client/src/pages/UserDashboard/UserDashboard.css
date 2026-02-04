@@ -3,3 +3,30 @@
   gap: 1rem;
   margin: 1rem 0rem;
 }
+
+@media (max-width: 992px) {
+  .dashboard__position {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.dashboard100vh {
+  max-height: 100vh;
+}
+
+@media (max-width: 992px) {
+  .dashboard100vh {
+    max-height: none;
+  }
+}
+
+.dashboard__title {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 992px) {
+  .dashboard__title {
+    padding-top: 4rem;
+  }
+}

@@ -1,7 +1,58 @@
 .usergraph__main {
-  flex: 2;
-  min-width: 0;
+  /* flex: 2; */
   border: solid 1px #e0c58f;
   padding: 1rem;
   border-radius: 10px;
+  height: 50vh;
+  width: 70%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+@media (max-width: 992px) {
+  .usergraph__main {
+    width: 100%;
+    height: auto;
+    padding: 30px 0;
+  }
+}
+
+.usergraph__placeholder {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  color: #e0c58f;
+  opacity: 0.9;
+}
+
+.usergraph__icon {
+  font-size: 40px;
+  opacity: 0.7;
+}
+
+@media (max-width: 992px) {
+  .userreview-h2 {
+    text-align: center;
+  }
+}
+
+.usergraph__spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(224, 197, 143, 0.2);
+  border-top: 3px solid #e0c58f;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
