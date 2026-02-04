@@ -152,8 +152,8 @@ const UserProfil = () => {
             </div>
           </div>
           <h1>
-            Bienvenue
-            <br />
+            {/* Bienvenue
+            <br /> */}
             {user.firstname.toUpperCase()} {user.lastname.toUpperCase()}
           </h1>
         </div>
