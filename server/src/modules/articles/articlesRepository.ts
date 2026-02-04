@@ -10,6 +10,7 @@ export type Article = {
   content: string;
   reference_source: string | null;
   photo: string;
+  photo_secondary: string | null;
   user_iduser: number;
 };
 
@@ -20,8 +21,8 @@ class ArticleRepository {
     // Execute the SQL INSERT query to add a new item to the "article" table
     const [result] = await databaseClient.query<Result>(
       `INSERT INTO articles 
-      (article_title, subtitle, release_date, content, reference_source, photo, user_iduser)
-      VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      (article_title, subtitle, release_date, content, reference_source, photo, photo_secondary, user_iduser)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         article.article_title,
         article.subtitle ?? null,
@@ -29,6 +30,7 @@ class ArticleRepository {
         article.content,
         article.reference_source ?? null,
         article.photo ?? null,
+        article.photo_secondary ?? null,
         article.user_iduser,
       ],
     );
@@ -43,7 +45,7 @@ class ArticleRepository {
     // Execute the SQL SELECT query to retrieve a specific item by its ID
     const [rows] = await databaseClient.query<Rows>(
       `SELECT idarticles, article_title, subtitle, release_date, 
-              content, reference_source, photo, user_iduser 
+              content, reference_source, photo, photo_secondary, user_iduser 
        FROM articles 
        WHERE idarticles = ?`,
       [id],
@@ -57,7 +59,7 @@ class ArticleRepository {
     // Execute the SQL SELECT query to retrieve all items from the "article" table
     const [rows] = await databaseClient.query<Rows>(
       `SELECT idarticles, article_title, subtitle, release_date, 
-              content, reference_source, photo, user_iduser 
+              content, reference_source, photo, photo_secondary, user_iduser 
        FROM articles 
        ORDER BY release_date DESC`,
     );
@@ -95,7 +97,10 @@ class ArticleRepository {
       fields.push("photo = ?");
       values.push(article.photo);
     }
-
+    if (article.photo_secondary !== undefined) {
+      fields.push("photo_secondary = ?");
+      values.push(article.photo_secondary);
+    }
     if (fields.length === 0) {
       throw new Error("Aucun champ à mettre à jour");
     }

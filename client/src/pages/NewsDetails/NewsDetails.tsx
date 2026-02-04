@@ -9,6 +9,7 @@ interface Article {
   idarticles: number;
   article_title: string;
   photo: string;
+  photo_secondary: string;
   subtitle: string;
   release_date: string;
   content: string;
@@ -102,6 +103,13 @@ function NewsDetails() {
           </div>
         </div>
         <div className="NewsDetails-section-content">
+          {article.photo_secondary && (
+            <img
+              src={article.photo_secondary}
+              alt="Illustration secondaire"
+              className="NewsDetails-secondary-photo"
+            />
+          )}
           <p className="NewsDetails-content">{article.content}</p>
         </div>
 
