@@ -77,7 +77,7 @@ h1 {
   margin-left: 115px; /* Largeur sidebar fermée */
   flex: 1;
   transition: margin-left 0.3s ease; /* Même durée que ta sidebar */
-  padding: 2rem;
+  padding: 0 2rem;
 }
 
 .app-layout.sidebar-expanded .main-content {

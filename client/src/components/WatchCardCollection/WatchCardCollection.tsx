@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import WatchCard, { type Watch } from "../WatchCard/WatchCard";
 import "./WatchCardCollection.css";
-import { useAuth } from "../../contexts/AuthContext";
+// import { useAuth } from "../../contexts/AuthContext";
 import WatchCardAdd from "../WatchCardAdd/WatchCardAdd";
 
 function WatchCardCollection() {
   const [watches, setWatches] = useState<Watch[]>([]);
   const [trigger, setTrigger] = useState(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const { user } = useAuth();
-  const name = user?.firstname.toUpperCase();
+  // const { user } = useAuth();
+  // const name = user?.firstname.toUpperCase();
 
   const apiBaseUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3310";
 
@@ -29,7 +29,7 @@ function WatchCardCollection() {
       {isPopupOpen && <div className="overlay" />}
 
       <div className={isPopupOpen ? "content content--dimmed" : "content"}>
-        <h1>BIENVENUE DANS VOTRE COLLECTION, {name}</h1>
+        <h1>VOTRE COLLECTION</h1>
 
         <div className="watches-grid">
           {watches.map((watch, index) => (
