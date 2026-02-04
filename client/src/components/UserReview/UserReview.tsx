@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-
-import "./UserReview.css";
 import { Link } from "react-router";
+import "./UserReview.css";
 
 interface Article {
   idarticles: number;
@@ -23,25 +22,26 @@ function UserReview() {
       .catch((err) => console.error(err));
   }, []);
 
-  const lastIdNews = 0;
-  const lastNews = news[lastIdNews];
+  const lastNews = news[0];
 
-  if (!lastNews) {
-    return <p>Chargement...</p>;
-  }
+  if (!lastNews) return <p>Chargement...</p>;
 
   return (
-    <div className="userreview__main">
+    <Link
+      to={`/NewsDetails/${lastNews.idarticles}`}
+      className="userreview__main userreview__link"
+    >
       <div>
-        <h2>{lastNews.article_title}</h2>
+        <h2 className="userreview-h2">{lastNews.article_title}</h2>
       </div>
+
       <div className="userreview__datebtn">
         <h3>{lastNews.release_date.split("T")[0]}</h3>
-        <Link to="/NewsDetails/6">
-          <button type="button">&gt;</button>
-        </Link>
+        <span className="userreview__chevron" aria-hidden="true">
+          &gt;
+        </span>
       </div>
-    </div>
+    </Link>
   );
 }
 

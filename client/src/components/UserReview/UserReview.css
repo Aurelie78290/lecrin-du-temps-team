@@ -5,25 +5,56 @@
   border-radius: 10px;
   padding: 0.2rem 1rem;
   justify-content: space-between;
+  transition: 0.5s ease;
+}
+.userreview__main:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+  border: solid 1px var(--secondary-color);
+}
+
+@media (max-width: 992px) {
+  .userreview__main {
+    font-size: 0.8rem;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .userreview__datebtn {
   display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 1rem;
 }
 
 .userreview__datebtn button {
   background: none;
-  box-shadow: none;
-  border: solid 1px var(--secondary-color);
+  border: none;
   color: var(--secondary-color);
   cursor: pointer;
   transition: all 0.2s ease;
+  font-size: 1rem;
+  transform: translateY(12%);
 }
 
 .userreview__datebtn button:hover {
-  background: var(--secondary-color);
+  /* background: var(--secondary-color); */
   color: white;
+}
+
+.userreview__link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 5px 40px;
+}
+
+.userreview__link:visited {
+  color: inherit;
+}
+
+.userreview__chevron {
+  color: var(--secondary-color);
+  transition: transform 0.2s ease;
+  transform: translateY(10%);
 }
