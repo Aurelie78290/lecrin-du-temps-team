@@ -1,6 +1,6 @@
 import { CreditCard, FileText, Lock, MapPin } from "lucide-react";
-import { useAuth } from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 import { useBasket } from "../../contexts/ShopContext";
 
 import "./ShopPayment.css";
