@@ -259,4 +259,15 @@ import { createOrderFromStripe } from "./modules/orderArchive/orderArchiveAction
 
 router.post("/api/orders/create-from-stripe", isAuth, createOrderFromStripe);
 
+/* ************************************************************************* */
+// Define routes to add watch by admin to sell
+import addWatchShopActions from "./modules/addWatchShop/addWatchShopActions";
+
+router.get("/api/adminAddWatch", addWatchShopActions.readAllWatchList);
+router.post(
+  "/api/adminAddWatch",
+  upload.none(),
+  addWatchShopActions.addWatchShop,
+);
+
 export default router;
