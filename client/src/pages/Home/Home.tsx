@@ -5,7 +5,8 @@ import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import logo from "../../../public/logo.svg";
-import watchImage from "../../assets/images/watchImage.png";
+// import watchImage from "../../assets/images/watchImage.png";
+import EDTimage from "../../assets/images/ETDimage.png";
 import { useAuth } from "../../contexts/AuthContext";
 import api from "../../services/api";
 // import WatchAnimation from "../../components/WatchAnimation/WatchAnimation";
@@ -55,25 +56,14 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-container">
-      <header className="home-header">
-        <div className="logo-section">
-          <img src={logo} alt="Logo" className="logo" />
-          <h1 className="home-main-title">L'ÉCRIN DU TEMPS</h1>
-        </div>
-      </header>
-
       <main className="home-main">
         <section className="content-split">
-          {/* <div className="left-side"><WatchAnimation /></div> */}
-          <div className="image-block">
-            <img
-              src={watchImage}
-              alt="Montre de luxe"
-              className="featured-watch"
-            />
+          <div className="logo-section">
+            <img src={EDTimage} alt="Écrin du Temps" className="edt-image" />
           </div>
           <div className="right-side">
             <div className="form-block">
+              <img src={logo} alt="Logo" className="logo" />
               <h2 className="home-main-subtitle">
                 {isLogin
                   ? "Les montres d'exception, réunies pour vous"
@@ -161,7 +151,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-
-// <a href="/" className="signup-link">
-//   Je ne suis pas encore inscrit
-// </a>
