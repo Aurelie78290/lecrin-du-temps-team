@@ -12,9 +12,12 @@ interface Order {
   price: number;
   purchase_date: string;
   watch_id: number;
+  brand_id: number;
+  model_id: number;
   watch_photo: string;
   brand: string;
   name: string;
+  is_already_added: number;
 }
 
 const UserProfil = () => {
