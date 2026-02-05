@@ -127,6 +127,9 @@ router.get("/api/collection/stats", isAuth, watchActions.getCollectionStats);
 
 router.get("/api/admin/users/:id/watches", watchActions.browseForAdmin);
 
+router.get("/api/admin/watches", isAuth, watchActions.browseAllForAdmin);
+router.delete("/api/admin/watches/:id", isAuth, watchActions.destroyForAdmin);
+
 /* ************************************************************************* */
 
 // Define articles-related routes
