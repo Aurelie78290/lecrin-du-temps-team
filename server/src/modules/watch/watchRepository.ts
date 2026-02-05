@@ -510,6 +510,27 @@ WHERE uhw.user_id = ?;
     const r = result as { affectedRows?: number };
     return r.affectedRows ?? 0;
   }
+
+  async browseAllForAdmin() {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT w.idwatch, b.name AS brand, m.name AS model, w.watch_price, w.watch_sell_status, (SELECT url FROM photo WHERE watch_id = w.idwatch AND type = 'watch' LIMIT 1) AS photo_url FROM watch w JOIN brand b ON b.id = w.brand_id JOIN model m ON m.id = w.model_id WHERE w.watch_sell_status = 'active' ORDER BY w.idwatch DESC",
+    );
+    return rows as WatchListItem[];
+  }
+
+  async deleteFromShopAdmin(id: number) {
+    await databaseClient.query(
+      "DELETE FROM is_favorite WHERE watch_idwatch = ?",
+      [id],
+    );
+    await databaseClient.query("DELETE FROM photo WHERE watch_id = ?", [id]);
+
+    const [result] = await databaseClient.query<Result>(
+      "DELETE FROM watch WHERE idwatch = ? ",
+      [id],
+    );
+    return result.affectedRows > 0;
+  }
 }
 
 export default new WatchRepository();

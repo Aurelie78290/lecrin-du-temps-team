@@ -88,6 +88,12 @@ const login: RequestHandler = async (req, res, next) => {
       role: user.role,
       birthdate: user.birthdate,
       tel: user.tel,
+      user_photo: user.user_photo,
+      street_number: user.street_number,
+      street: user.street,
+      zip_code: user.zip_code,
+      city: user.city,
+      user_describe: user.user_describe,
     });
   } catch (err) {
     next(err);
