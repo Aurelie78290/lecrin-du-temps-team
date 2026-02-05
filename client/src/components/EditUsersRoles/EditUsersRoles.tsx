@@ -20,6 +20,7 @@ const UserManagement = () => {
   const { user: currentUser, loading: authLoading } = useAuth(); // Contexte d'authentification //
   const [users, setUsers] = useState<User[]>([]); // Liste des utilisateurs //
   const [selectedUser, setSelectedUser] = useState<User | null>(null); // Utilisateur sélectionné pour voir les infos //
+  const [searchEmail, setSearchEmail] = useState(""); // Pour chercher un utilisateur par e-mail //
   const fetchUsers = useCallback(async () => {
     try {
       const res = await api.get("/api/admin/users-stats");
@@ -35,6 +36,11 @@ const UserManagement = () => {
       fetchUsers();
     }
   }, [fetchUsers, authLoading]);
+
+  // Pour chercher un utilisatuer par son e-mail //
+  const filteredUsers = users.filter((u) =>
+    u.email.toLocaleLowerCase().includes(searchEmail.toLocaleLowerCase()),
+  );
 
   // Pour changer le rôle d'un utilisateur //
   const handleRoleChange = async (id: number, newRole: string) => {
@@ -66,6 +72,19 @@ const UserManagement = () => {
 
   return (
     <div className="edit-users-control">
+      <div className="search-container">
+        <label htmlFor="search-email" className="search-label">
+          Recherche par mail :
+        </label>
+        <input
+          id="search-email"
+          type="text"
+          placeholder="e-mail..."
+          className="search-input"
+          value={searchEmail}
+          onChange={(e) => setSearchEmail(e.target.value)}
+        />
+      </div>
       <div className="table-container">
         <table className="users-table">
           <thead>
@@ -77,50 +96,58 @@ const UserManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((u) => (
-              <tr key={u.id}>
-                <td>{u.id}</td>
-                <td>{u.email}</td>
-                <td>
-                  <select
-                    className="select-btn"
-                    value={u.role}
-                    onClick={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") e.currentTarget.blur();
-                    }}
-                    onChange={(e) => {
-                      e.stopPropagation();
-                      handleRoleChange(u.id, e.target.value);
-                    }}
-                    disabled={currentUser?.id === u.id}
-                  >
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </td>
-                <td className="actions">
-                  <button
-                    type="button"
-                    className="infos-btn"
-                    onClick={() => setSelectedUser(u)}
-                  >
-                    Infos & Collection
-                  </button>
-                  <button
-                    className="delete-btn"
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteUser(u.id);
-                    }}
-                    disabled={currentUser?.id === u.id}
-                  >
-                    {currentUser?.id === u.id ? "X" : "Supprimer"}
-                  </button>
+            {filteredUsers.length > 0 ? (
+              filteredUsers.map((u) => (
+                <tr key={u.id}>
+                  <td>{u.id}</td>
+                  <td>{u.email}</td>
+                  <td>
+                    <select
+                      className="select-btn"
+                      value={u.role}
+                      onClick={(e) => e.stopPropagation()}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") e.currentTarget.blur();
+                      }}
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        handleRoleChange(u.id, e.target.value);
+                      }}
+                      disabled={currentUser?.id === u.id}
+                    >
+                      <option value="user">User</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </td>
+                  <td className="actions">
+                    <button
+                      type="button"
+                      className="infos-btn"
+                      onClick={() => setSelectedUser(u)}
+                    >
+                      Infos & Collection
+                    </button>
+                    <button
+                      className="delete-btn"
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteUser(u.id);
+                      }}
+                      disabled={currentUser?.id === u.id}
+                    >
+                      {currentUser?.id === u.id ? "X" : "Supprimer"}
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={4} className="no-match">
+                  Aucun utilisateur trouvé
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

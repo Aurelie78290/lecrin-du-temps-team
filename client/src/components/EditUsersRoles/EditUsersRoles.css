@@ -1,3 +1,14 @@
+@keyframes fadeInRow {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .edit-users-control {
   max-width: 1200px;
   margin: 1rem auto;
@@ -5,11 +16,40 @@
   padding: 0;
 }
 
+.search-container {
+  padding: 15px 0;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.search-label {
+  color: var(--border-color);
+}
+
+.search-input {
+  border: 1px solid var(--border-color);
+  color: inherit;
+  padding: 10px;
+  width: 25%;
+  min-width: 200px;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 0 8px var(--border-color);
+}
+
 .table-container {
   width: 100%;
   overflow-x: auto;
   border-radius: 10px;
   border: 1px solid var(--border-color);
+  transition: all 0.5s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .users-table {
@@ -33,11 +73,26 @@
   border-bottom: 1px solid var(--border-color);
   color: var(--border-color);
   font-size: medium;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.users-table tbody tr {
+  border-bottom: 1px solid var(--border-color);
+  animation: fadeInRow 0.3s ease-out forwards;
+  transition: background-color 0.2s ease;
+}
+
+.users-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.users-table tbody tr:last-child {
+  border-bottom: none;
 }
 
 .users-table th:nth-child(1),
 .users-table td:nth-child(1) {
-  width: 5%;
+  width: 80px;
 }
 
 .users-table th:nth-child(2),
@@ -108,6 +163,11 @@ select.select-btn,
   background-color: var(--bonus-color);
   color: var(--secondary-color);
   cursor: pointer;
+}
+
+.no-match {
+  width: 100%;
+  font-size: large;
 }
 
 @media (max-width: 1024px) {
