@@ -742,6 +742,37 @@ const uploadWatchPhotos: RequestHandler = async (req, res) => {
   });
 };
 
+const browseAllForAdmin: RequestHandler = async (req, res, next) => {
+  try {
+    const watches = await watchRepository.browseAllForAdmin();
+    res.json(watches);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const destroyForAdmin: RequestHandler = async (req, res, next) => {
+  try {
+    const watchId = Number(req.params.id);
+    if (Number.isNaN(watchId)) {
+      res.sendStatus(400);
+      return;
+    }
+
+    const deleted = await watchRepository.deleteFromShopAdmin(watchId);
+
+    if (!deleted) {
+      res.sendStatus(409).json({
+        message: "Suppression impossible",
+      });
+      return;
+    }
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   browse,
   read,
@@ -758,4 +789,6 @@ export default {
   removeFromSale,
   deletePhoto,
   uploadWatchPhotos,
+  browseAllForAdmin,
+  destroyForAdmin,
 };

@@ -4,6 +4,7 @@ import SearchBar, {
 } from "../../components/SearchBar/SearchBar";
 import WatchCard, { type Watch } from "../../components/WatchCard/WatchCard";
 import "./Shop.css";
+import { useNavigate } from "react-router";
 
 const API_URL = "http://localhost:3310";
 
@@ -11,6 +12,7 @@ export default function Shop() {
   const [watches, setWatches] = useState<Watch[]>([]);
   const [loading, setLoading] = useState(true);
   const apiBaseUrl = "http://localhost:3310";
+  const navigate = useNavigate();
 
   const fetchWatches = useCallback((filters: SearchFilters) => {
     setLoading(true);
@@ -50,6 +52,13 @@ export default function Shop() {
           <div className="shop-count">
             {watches.length} montre{watches.length > 1 ? "s" : ""}
           </div>
+          <button
+            type="button"
+            className="infos-btn"
+            onClick={() => navigate("/admin/manage-watches")}
+          >
+            Gérer les annonces
+          </button>
         </div>
 
         <SearchBar onSearch={fetchWatches} />

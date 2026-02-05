@@ -7,6 +7,7 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 
 // Import the main app component
 import App from "./App";
+import AdminWatchList from "./components/AdminWatchList/AdminWatchList";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
@@ -167,6 +168,10 @@ const router = createBrowserRouter([
           {
             path: "/Transactions",
             element: <Transactions />,
+          },
+          {
+            path: "/admin/manage-watches",
+            element: <AdminWatchList />,
           },
         ],
       },
