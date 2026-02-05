@@ -1,5 +1,11 @@
+import AddWatchShop from "../../components/AddWatchShop/AddWatchShop";
+
 function Hub() {
-  return <></>;
+  return (
+    <>
+      <AddWatchShop />
+    </>
+  );
 }
 
 export default Hub;

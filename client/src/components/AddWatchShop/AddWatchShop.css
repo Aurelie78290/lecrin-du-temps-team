@@ -1,0 +1,42 @@
+.AddWatchShop-formulaire {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.AddWatchShop-GeneralInfo {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+}
+
+.AddWatchShop-Caracteristiques {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+}
+
+.AddWatchShop-GeneralInfo select,
+.AddWatchShop-GeneralInfo input,
+.AddWatchShop-GeneralInfo label {
+  padding: 0.8rem 0;
+  margin: 0.8rem 0;
+  text-align: center;
+}
+
+.AddWatchShop-Caracteristiques select,
+.AddWatchShop-Caracteristiques input {
+  padding: 0.8rem 0;
+  margin: 0.8rem 0;
+  text-align: center;
+}
+
+.AddWatchShop-formulaire select,
+.AddWatchShop-formulaire input,
+.AddWatchShop-formulaire label {
+  border-color: var(--border-color);
+}
+
+.AddWatchShop-Limiteddition {
+  display: flex;
+  justify-content: space-between;
+}
