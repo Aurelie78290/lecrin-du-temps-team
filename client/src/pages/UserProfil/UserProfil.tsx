@@ -4,8 +4,8 @@ import EditProfilPopUp from "../../components/EditProfilPopUp/EditProfilPopUp";
 import { useAuth } from "../../contexts/AuthContext";
 import api from "../../services/api";
 import "./UserProfil.css";
-import UserOrderSummary from "../../components/UserOrderHistory/UserOrderSummary";
 import OrderDetailsPopup from "../../components/OrderDetailsPopup/OrderDetailsPopup";
+import UserOrderSummary from "../../components/UserOrderHistory/UserOrderSummary";
 
 interface Order {
   id: number;

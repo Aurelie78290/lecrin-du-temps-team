@@ -195,7 +195,7 @@ function AddWatchShop() {
 
   return (
     <>
-      <h1>AddWatchShop</h1>
+      <h1>Ajouter une montre à la boutique</h1>
       <form
         id="watchAddShop"
         className="AddWatchShop-formulaire"
@@ -492,16 +492,22 @@ function AddWatchShop() {
           />
         </div>
       </form>
-      <button type="button" className="addWatchShop-annulationBtn">
-        Annuler
-      </button>
-      <button
-        type="submit"
-        form="watchAddShop"
-        className="addWatchShop-submitBtn"
-      >
-        Valider
-      </button>
+      <div className="AddWatchShop-Toggle">
+        <button
+          type="button"
+          className="addWatchShop-annulationBtn"
+          onClick={() => window.history.back()}
+        >
+          Annuler
+        </button>
+        <button
+          type="submit"
+          form="watchAddShop"
+          className="addWatchShop-submitBtn"
+        >
+          Valider
+        </button>
+      </div>
     </>
   );
 }
