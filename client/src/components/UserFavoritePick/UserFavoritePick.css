@@ -49,6 +49,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.15rem;
+  margin: 0 10px;
 }
 
 .favorite-pick__brand {
@@ -59,12 +60,20 @@
   text-align: center;
 }
 
+:root:not([data-theme="dark"]) .favorite-pick__brand {
+  color: var(--border-color);
+}
+
 .favorite-pick__model {
   font-family: var(--font-secondary);
   font-size: 0.9rem;
   color: #e0c58f;
   opacity: 0.75;
   text-align: center;
+}
+
+:root:not([data-theme="dark"]) .favorite-pick__model {
+  color: var(--border-color);
 }
 
 .favorite-pick__price {
@@ -94,7 +103,6 @@
 }
 
 .favorite-pick--placeholder {
-  min-height: 360px;
   display: flex;
   flex-direction: column;
   align-items: center;
