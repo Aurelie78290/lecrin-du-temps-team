@@ -1,0 +1,34 @@
+.FavoriteIcon-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.75rem;
+  border: none;
+  background: var(--border-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.FavoriteIcon-button:hover {
+  background: var(--text-color);
+}
+
+.FavoriteIcon-heart {
+  width: 28px;
+  height: 28px;
+  color: #e74c3c;
+  fill: none;
+}
+
+.FavoriteIcon-heart.active {
+  fill: #e74c3c;
+  color: #e74c3c;
+}
+
+@media (max-width: 768px) {
+  .FavoriteIcon-button {
+    margin-left: auto;
+    margin-right: -1.75rem;
+  }
+}

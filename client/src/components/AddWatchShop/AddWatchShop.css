@@ -1,0 +1,75 @@
+.AddWatchShop-formulaire {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.AddWatchShop-GeneralInfo {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+}
+
+.AddWatchShop-Caracteristiques {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+}
+
+.AddWatchShop-GeneralInfo select,
+.AddWatchShop-GeneralInfo input,
+.AddWatchShop-GeneralInfo label {
+  padding: 0.8rem 0;
+  margin: 0.8rem 0;
+  text-align: center;
+}
+
+.AddWatchShop-Caracteristiques select,
+.AddWatchShop-Caracteristiques input {
+  padding: 0.8rem 0;
+  margin: 0.8rem 0;
+  text-align: center;
+}
+
+.AddWatchShop-formulaire select,
+.AddWatchShop-formulaire input,
+.AddWatchShop-formulaire label {
+  border-color: var(--border-color);
+}
+
+.AddWatchShop-Limiteddition {
+  display: flex;
+  justify-content: space-between;
+}
+
+.AddWatchShop-Toggle {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 1rem;
+}
+.addWatchShop-annulationBtn,
+.addWatchShop-submitBtn {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 1rem;
+  padding: 0.6rem;
+  border-radius: 10px;
+  margin: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  width: 120px;
+  text-align: center;
+  align-items: center;
+}
+
+.addWatchShop-annulationBtn {
+  background-color: brown;
+  color: #f5f0e9;
+  cursor: pointer;
+}
+.addWatchShop-submitBtn {
+  background-color: #27ae60;
+  color: #f5f0e9;
+  cursor: pointer;
+}

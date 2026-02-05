@@ -4,11 +4,11 @@
   --background-color: linear-gradient(to bottom, #d9cbc2 15%, #f5f0e9 100%);
   --primary-color: #f5f0e9;
   --text-color: #010510;
-  --border-color: #685d4c;
+  --border-color: #9e8155;
 
   /* ===== COLORS IN COMMON ===== */
   --secondary-color: #010510;
-  --accent-color: #010510;
+  --accent-color: #242424e1;
   --bonus-color: #3e160c;
 
   /* ===== TYPO ===== */
@@ -95,10 +95,17 @@ h1 {
   z-index: 100; /* pour être au-dessus du contenu */
 }
 
+.favorites-icon-container {
+  position: fixed;
+  top: 1.5rem;
+  right: 9rem;
+  z-index: 100;
+}
+
 /* =========================
    MOBILE
    ========================= */
-@media (max-width: 600px) {
+@media (max-width: 992px) {
   .main-content {
     margin-left: 0; /* Sidebar en overlay */
     padding: 1rem; /* Padding plus compact */

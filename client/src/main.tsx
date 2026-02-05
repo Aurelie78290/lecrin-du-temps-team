@@ -173,6 +173,10 @@ const router = createBrowserRouter([
             path: "/admin/manage-watches",
             element: <AdminWatchList />,
           },
+          {
+            path: "/Hub",
+            element: <Hub />,
+          },
         ],
       },
     ],

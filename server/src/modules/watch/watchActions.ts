@@ -36,8 +36,22 @@ const isToValidate = (s?: string | null) =>
 // =======================
 // B - Browse (Read All)
 // =======================
-const browse: RequestHandler = async (_req, res, next) => {
+const browse: RequestHandler = async (req, res, next) => {
   try {
+    const idsParam = req.query.ids;
+
+    // Cas des favoris
+    if (idsParam && typeof idsParam === "string") {
+      const ids = idsParam
+        .split(",")
+        .map((id) => Number(id))
+        .filter((id) => !Number.isNaN(id));
+
+      const watches = await watchRepository.readManyByIds(ids);
+      res.json(watches);
+      return;
+    }
+
     const watches = await watchRepository.readAll();
     res.json(watches);
   } catch (err) {

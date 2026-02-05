@@ -5,6 +5,7 @@ import SearchBar, {
 import WatchCard, { type Watch } from "../../components/WatchCard/WatchCard";
 import "./Shop.css";
 import { useNavigate } from "react-router";
+import LinkAddWatch from "../../components/LinkAddWatch/LinkAddWatch";
 
 const API_URL = "http://localhost:3310";
 
@@ -60,7 +61,7 @@ export default function Shop() {
             Gérer les annonces
           </button>
         </div>
-
+        <LinkAddWatch />
         <SearchBar onSearch={fetchWatches} />
 
         {loading && <div className="shop-state">Chargement…</div>}

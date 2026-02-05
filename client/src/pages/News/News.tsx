@@ -43,7 +43,7 @@ function News() {
             <BreakingNewsCard
               key={article.idarticles}
               article={article}
-              className="card"
+              className="news-card"
             />
           ))}
         </div>

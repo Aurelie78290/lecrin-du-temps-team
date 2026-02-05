@@ -19,6 +19,7 @@ import tiktok from "../../assets/images/icon/tiktok.svg";
 import watch from "../../assets/images/icon/watch.svg";
 import logo from "../../assets/images/logo.svg";
 import ThemeChange from "../ThemeChange/ThemeChange";
+// import ClassifiedAd from "../../pages/ClassifiedAd/ClassifiedAd";
 
 function Navbar({
   expanded,
@@ -29,8 +30,9 @@ function Navbar({
 }) {
   const location = useLocation();
 
-  const isActive = (path: string) => {
-    return location.pathname === path;
+  const isActive = (path: string | string[]) => {
+    const paths = Array.isArray(path) ? path : [path];
+    return paths.some((p) => location.pathname.startsWith(p));
   };
   const { user } = useAuth();
   return (
@@ -55,7 +57,7 @@ function Navbar({
 
         {/* Menu principal */}
         <ul className="menu">
-          <li className={isActive("/") ? "active" : ""}>
+          <li className={isActive(["/Accueil", "/dashboard"]) ? "active" : ""}>
             <Link
               to={user?.role === "admin" ? "/dashboard" : "/Accueil"}
               onClick={() => setExpanded(false)}
@@ -67,7 +69,11 @@ function Navbar({
             </Link>
           </li>
 
-          <li className={isActive("/Collection") ? "active" : ""}>
+          <li
+            className={
+              isActive(["/Collection", "/ClassifiedAd"]) ? "active" : ""
+            }
+          >
             {user?.role === "admin" ? (
               <Link to="/ClassifiedAd" onClick={() => setExpanded(false)}>
                 <div className="icon-wrapper">
@@ -86,7 +92,7 @@ function Navbar({
           </li>
 
           {user?.role === "admin" && (
-            <li className={isActive("/Shop") ? "active" : ""}>
+            <li className={isActive("/Transactions") ? "active" : ""}>
               <Link to="/Transactions" onClick={() => setExpanded(false)}>
                 <div className="icon-wrapper">
                   <img src={euro} alt="" />
@@ -96,7 +102,7 @@ function Navbar({
             </li>
           )}
 
-          <li>
+          <li className={isActive("/Shop") ? "active" : ""}>
             <Link to="/Shop" onClick={() => setExpanded(false)}>
               <div className="icon-wrapper">
                 <img src={handbag} alt="" />
@@ -146,7 +152,7 @@ function Navbar({
             )}
           </li>
 
-          <li className={isActive("/Collection") ? "active" : ""}>
+          <li className={isActive("/About") ? "active" : ""}>
             {user?.role === "admin" ? (
               <div />
             ) : (
