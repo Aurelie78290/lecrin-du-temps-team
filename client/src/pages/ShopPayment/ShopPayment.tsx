@@ -1,5 +1,6 @@
 import { CreditCard, FileText, Lock, MapPin } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 import { useBasket } from "../../contexts/ShopContext";
 
 import "./ShopPayment.css";
@@ -25,14 +26,8 @@ type BillingAddress = {
   city: string;
 };
 
-// type PaymentMethod = {
-//   cardNumber: string;
-//   cardHolder: string;
-//   expiryDate: string;
-//   cvv: string;
-// };
-
 function ShopPayment() {
+  const { user } = useAuth();
   const { basket } = useBasket();
 
   const [shippingAddress, setShippingAddress] = useState<ShippingAddress>({
@@ -56,15 +51,33 @@ function ShopPayment() {
     city: "",
   });
 
-  // const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>({
-  //   cardNumber: "",
-  //   cardHolder: "",
-  //   expiryDate: "",
-  //   cvv: "",
-  // });
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isEditingShipping, setIsEditingShipping] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setShippingAddress({
+        firstName: user.firstname || "",
+        lastName: user.lastname || "",
+        street: user.street || "",
+        streetNumber: user.street_number?.toString() || "",
+        zipCode: user.zip_code?.toString() || "",
+        city: user.city || "",
+        phone: user.tel || "",
+        email: user.email || "",
+      });
+      setBillingAddress((prev) => ({
+        ...prev,
+        firstName: user.firstname || "",
+        lastName: user.lastname || "",
+        street: user.street || "",
+        streetNumber: user.street_number?.toString() || "",
+        zipCode: user.zip_code?.toString() || "",
+        city: user.city || "",
+      }));
+    }
+  }, [user]);
 
   const total = basket.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -100,28 +113,6 @@ function ShopPayment() {
         city: shippingAddress.city,
         phone: shippingAddress.phone,
       };
-
-      //     const res = await fetch("http://localhost:3310/api/orders", {
-      //       method: "POST",
-      //       headers: { "Content-Type": "application/json" },
-      //       credentials: "include",
-      //       body: JSON.stringify({ delivery }),
-      //     });
-
-      //     if (!res.ok) {
-      //       const body = await res.text();
-      //       throw new Error(body || "Erreur lors du paiement");
-      //     }
-
-      //     // Vider le panier côté front-end
-      //     await clearBasket();
-      //     navigate("/ThankYou");
-      //   } catch (err) {
-      //     setError(err instanceof Error ? err.message : "Erreur inconnue");
-      //   } finally {
-      //     setLoading(false);
-      //   }
-      // };
 
       //création d'une session stripe
       const res = await fetch(
@@ -168,6 +159,43 @@ function ShopPayment() {
               <div className="checkout-section-header">
                 <MapPin className="checkout-icon" />
                 <h2>Adresse de livraison</h2>
+                <button
+                  type="button"
+                  className="edit-adress-btn"
+                  onClick={() => {
+                    if (!isEditingShipping) {
+                      //  "nouvelle adresse"  on vide les champs
+                      setShippingAddress({
+                        firstName: "",
+                        lastName: "",
+                        street: "",
+                        streetNumber: "",
+                        zipCode: "",
+                        city: "",
+                        phone: "",
+                        email: shippingAddress.email,
+                      });
+                    } else if (user) {
+                      // Retour adresse profil
+                      setShippingAddress({
+                        firstName: user.firstname || "",
+                        lastName: user.lastname || "",
+                        street: user.street || "",
+                        streetNumber: user.street_number?.toString() || "",
+                        zipCode: user.zip_code?.toString() || "",
+                        city: user.city || "",
+                        phone: user.tel || "",
+                        email: user.email || "",
+                      });
+                    }
+
+                    setIsEditingShipping(!isEditingShipping);
+                  }}
+                >
+                  {isEditingShipping
+                    ? "Utiliser mon adresse de profil"
+                    : "Livrer à une autre adresse"}
+                </button>
               </div>
 
               <div className="checkout-form-grid">
@@ -178,6 +206,7 @@ function ShopPayment() {
                     id="ship-firstName"
                     required
                     value={shippingAddress.firstName}
+                    disabled={!isEditingShipping}
                     onChange={(e) =>
                       setShippingAddress({
                         ...shippingAddress,
@@ -194,6 +223,7 @@ function ShopPayment() {
                     id="ship-lastName"
                     required
                     value={shippingAddress.lastName}
+                    disabled={!isEditingShipping}
                     onChange={(e) =>
                       setShippingAddress({
                         ...shippingAddress,
@@ -207,10 +237,12 @@ function ShopPayment() {
                   <label htmlFor="ship-email">Email *</label>
                   <input
                     type="email"
+                    maxLength={100}
                     id="ship-email"
                     placeholder="votre@email.com"
                     required
                     value={shippingAddress.email}
+                    disabled={!isEditingShipping}
                     onChange={(e) =>
                       setShippingAddress({
                         ...shippingAddress,
@@ -224,9 +256,11 @@ function ShopPayment() {
                   <label htmlFor="ship-streetNumber">N° *</label>
                   <input
                     type="text"
+                    maxLength={10}
                     id="ship-streetNumber"
                     required
                     value={shippingAddress.streetNumber}
+                    disabled={!isEditingShipping}
                     onChange={(e) =>
                       setShippingAddress({
                         ...shippingAddress,
@@ -240,9 +274,11 @@ function ShopPayment() {
                   <label htmlFor="ship-street">Rue *</label>
                   <input
                     type="text"
+                    maxLength={150}
                     id="ship-street"
                     required
                     value={shippingAddress.street}
+                    disabled={!isEditingShipping}
                     onChange={(e) =>
                       setShippingAddress({
                         ...shippingAddress,
@@ -256,9 +292,11 @@ function ShopPayment() {
                   <label htmlFor="ship-zipCode">Code postal *</label>
                   <input
                     type="text"
+                    maxLength={5}
                     id="ship-zipCode"
                     required
                     value={shippingAddress.zipCode}
+                    disabled={!isEditingShipping}
                     onChange={(e) =>
                       setShippingAddress({
                         ...shippingAddress,
@@ -272,9 +310,11 @@ function ShopPayment() {
                   <label htmlFor="ship-city">Ville *</label>
                   <input
                     type="text"
+                    maxLength={100}
                     id="ship-city"
                     required
                     value={shippingAddress.city}
+                    disabled={!isEditingShipping}
                     onChange={(e) =>
                       setShippingAddress({
                         ...shippingAddress,
@@ -288,9 +328,11 @@ function ShopPayment() {
                   <label htmlFor="ship-phone">Téléphone *</label>
                   <input
                     type="tel"
+                    maxLength={20}
                     id="ship-phone"
                     required
                     value={shippingAddress.phone}
+                    disabled={!isEditingShipping}
                     onChange={(e) =>
                       setShippingAddress({
                         ...shippingAddress,

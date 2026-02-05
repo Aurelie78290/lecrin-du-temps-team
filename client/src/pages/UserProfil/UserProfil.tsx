@@ -5,15 +5,19 @@ import { useAuth } from "../../contexts/AuthContext";
 import api from "../../services/api";
 import "./UserProfil.css";
 import UserOrderSummary from "../../components/UserOrderHistory/UserOrderSummary";
+import OrderDetailsPopup from "../../components/OrderDetailsPopup/OrderDetailsPopup";
 
 interface Order {
   id: number;
   price: number;
   purchase_date: string;
   watch_id: number;
+  brand_id: number;
+  model_id: number;
   watch_photo: string;
   brand: string;
   name: string;
+  is_already_added: number;
 }
 
 const UserProfil = () => {
@@ -22,6 +26,7 @@ const UserProfil = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [orders, setOrders] = useState<Order[]>([]);
   const [isUserOderSummaryOpen, setIsUserOrderSummaryOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   const handleUpdate = async (updatedData: {
     firstname: string;
@@ -260,18 +265,7 @@ const UserProfil = () => {
                         key={order.id}
                         className="order-line"
                         type="button"
-                        onClick={() =>
-                          navigate("/Collection", {
-                            state: {
-                              addItem: {
-                                brand: order.brand,
-                                name: order.name,
-                                photo: order.watch_photo,
-                                id: order.watch_id,
-                              },
-                            },
-                          })
-                        }
+                        onClick={() => setSelectedOrder(order)}
                       >
                         <img
                           src={`http://localhost:3310${order.watch_photo}`}
@@ -308,6 +302,12 @@ const UserProfil = () => {
               onClose={() => setIsUserOrderSummaryOpen(false)}
               orders={orders}
             />
+            {selectedOrder && (
+              <OrderDetailsPopup
+                order={selectedOrder}
+                onClose={() => setSelectedOrder(null)}
+              />
+            )}
           </>
         )}
       </div>

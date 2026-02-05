@@ -388,6 +388,45 @@ WHERE uhw.user_id = ?;
   }
 
   // ======================
+  // R - Read many by ids (FAVORIS)
+  // ======================
+
+  async readManyByIds(ids: number[]) {
+    if (ids.length === 0) return [];
+
+    const placeholders = ids.map(() => "?").join(",");
+
+    const [rows] = await databaseClient.query<Rows>(
+      `
+    SELECT
+      w.idwatch,
+      b.name AS brand,
+      m.name AS model,
+      w.watch_price,
+      w.watch_condition,
+      w.watch_sell_status,
+      w.watch_gender,
+      mt.movement_type,
+      (
+        SELECT url
+        FROM photo
+        WHERE watch_id = w.idwatch
+          AND type = 'watch'
+        LIMIT 1
+      ) AS photo_url
+    FROM watch w
+    JOIN brand b ON b.id = w.brand_id
+    JOIN model m ON m.id = w.model_id
+    LEFT JOIN movement_type mt ON mt.idmovement_type = w.movement_type_id
+    WHERE w.idwatch IN (${placeholders})
+    `,
+      ids,
+    );
+
+    return rows as WatchListItem[];
+  }
+
+  // ======================
   // U - Update (watch)
   // ======================
   async updateById(idwatch: number, updates: WatchUpdateInput) {

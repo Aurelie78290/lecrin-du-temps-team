@@ -36,8 +36,22 @@ const isToValidate = (s?: string | null) =>
 // =======================
 // B - Browse (Read All)
 // =======================
-const browse: RequestHandler = async (_req, res, next) => {
+const browse: RequestHandler = async (req, res, next) => {
   try {
+    const idsParam = req.query.ids;
+
+    // Cas des favoris
+    if (idsParam && typeof idsParam === "string") {
+      const ids = idsParam
+        .split(",")
+        .map((id) => Number(id))
+        .filter((id) => !Number.isNaN(id));
+
+      const watches = await watchRepository.readManyByIds(ids);
+      res.json(watches);
+      return;
+    }
+
     const watches = await watchRepository.readAll();
     res.json(watches);
   } catch (err) {
@@ -187,6 +201,8 @@ const add: RequestHandler = async (req, res, next) => {
     if (files?.watch_image?.[0]) {
       const url = `/uploads/watches/${files.watch_image[0].filename}`;
       await photoRepository.create(url, "watch", watchId);
+    } else if (req.body.watch_photo) {
+      await photoRepository.create(req.body.watch_photo, "watch", watchId);
     }
 
     if (files?.certificate_image?.[0]) {

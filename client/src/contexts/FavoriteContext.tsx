@@ -13,6 +13,7 @@ const API_URL = "http://localhost:3310";
 type FavoriteContextType = {
   favoriteIds: Set<number>;
   toggleFavorite: (watchId: number) => Promise<void>;
+  removeFavorite: (watchId: number) => Promise<void>;
   isFavorite: (watchId: number) => boolean;
 };
 
@@ -51,18 +52,17 @@ export const FavoriteProvider = ({ children }: { children: ReactNode }) => {
   }, [user]);
 
   useEffect(() => {
-    fetchFavorites();
-  }, [fetchFavorites]);
+    if (user) fetchFavorites();
+    else setFavoriteIds(new Set());
+  }, [user, fetchFavorites]);
 
   const toggleFavorite = async (watchId: number) => {
     // Optimistic update
+
     setFavoriteIds((prev) => {
       const next = new Set(prev);
-      if (next.has(watchId)) {
-        next.delete(watchId);
-      } else {
-        next.add(watchId);
-      }
+      if (next.has(watchId)) next.delete(watchId);
+      else next.add(watchId);
       return next;
     });
 
@@ -80,11 +80,31 @@ export const FavoriteProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const removeFavorite = async (watchId: number) => {
+    // Optimistic update
+    setFavoriteIds((prev) => {
+      const next = new Set(prev);
+      next.delete(watchId);
+      return next;
+    });
+
+    try {
+      const res = await fetch(`${API_URL}/api/favorites/${watchId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error("Delete failed");
+    } catch {
+      // Revert on error
+      fetchFavorites();
+    }
+  };
+
   const isFavorite = (watchId: number) => favoriteIds.has(watchId);
 
   return (
     <FavoriteContext.Provider
-      value={{ favoriteIds, toggleFavorite, isFavorite }}
+      value={{ favoriteIds, toggleFavorite, removeFavorite, isFavorite }}
     >
       {children}
     </FavoriteContext.Provider>

@@ -7,18 +7,19 @@ import { AuthContext } from "../../contexts/AuthContext";
 import "./UserDashboard.css";
 
 function UserDashboard() {
-  //Afficher le nom de l'utilisateur authentifié via le contexte
   const auth = useContext(AuthContext);
   const firstname = auth?.user?.firstname;
   return (
     <>
-      <h1> Bienvenue {firstname || "Admin"}</h1>
-      <UserLastAdd />
-      <div className="dashboard__position">
-        <UserFavoritePick />
-        <UserGraph />
+      <div className="dashboard100vh">
+        <h1 className="dashboard__title"> Bienvenue {firstname || "Admin"}</h1>
+        <UserLastAdd />
+        <div className="dashboard__position">
+          <UserFavoritePick />
+          <UserGraph />
+        </div>
+        <UserReview />
       </div>
-      <UserReview />
     </>
   );
 }
