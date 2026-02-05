@@ -27,11 +27,13 @@
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.35s ease;
+  transform: translateX(100%);
 }
 
 .favorites-drawer-sidebar.open {
   visibility: visible;
   opacity: 1;
+  transform: translateX(0);
 }
 
 .favorites-drawer-header {
@@ -101,4 +103,26 @@
   gap: 1rem;
   padding: 1rem;
   grid-template-columns: 1fr;
+}
+
+@media (max-width: 768px) {
+  .favorites-drawer-title {
+    margin: 3.5rem 0 0 1.5rem;
+  }
+
+  .favorites-drawer-sidebar {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .favorites-drawer-sidebar {
+    max-width: 400px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .favorites-drawer-sidebar {
+    max-width: 525px;
+  }
 }
