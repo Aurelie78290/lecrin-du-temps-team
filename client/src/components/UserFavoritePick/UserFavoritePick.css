@@ -1,12 +1,22 @@
 .favorite-pick {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
   gap: 0.8rem;
-  padding: 1.5rem 2rem;
+  padding: 1rem;
   border: 1px solid var(--secondary-color);
   border-radius: 12px;
+  width: 30%;
+  height: 50vh;
+}
+
+@media (max-width: 992px) {
+  .favorite-pick {
+    width: 100%;
+    height: auto;
+    padding: 30px 0;
+  }
 }
 
 .favorite-pick__title {
@@ -16,6 +26,7 @@
   margin: 0;
   color: var(--text-color);
   opacity: 0.85;
+  margin-bottom: 10px;
 }
 
 .favorite-pick__image {
@@ -30,6 +41,7 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  border-radius: 16px;
 }
 
 .favorite-pick__info {
@@ -43,14 +55,16 @@
   font-family: var(--font-primary);
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--text-color);
+  color: #e0c58f;
+  text-align: center;
 }
 
 .favorite-pick__model {
   font-family: var(--font-secondary);
   font-size: 0.9rem;
-  color: var(--text-color);
+  color: #e0c58f;
   opacity: 0.75;
+  text-align: center;
 }
 
 .favorite-pick__price {
@@ -77,4 +91,44 @@
 .favorite-pick__btn:hover {
   background: var(--secondary-color);
   color: var(--primary-color);
+}
+
+.favorite-pick--placeholder {
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.favorite-pick__image--empty {
+  border: 1px dashed color-mix(in srgb, var(--secondary-color) 55%, transparent);
+  border-radius: 12px;
+  width: 160px;
+  height: 160px;
+  background-color: color-mix(in srgb, var(--secondary-color) 10%, transparent);
+}
+
+.favorite-pick__spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid color-mix(in srgb, var(--secondary-color) 20%, transparent);
+  border-top: 3px solid var(--secondary-color);
+  border-radius: 50%;
+  animation: favoriteSpin 1s linear infinite;
+}
+
+@keyframes favoriteSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.favorite-pick__btn--disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }

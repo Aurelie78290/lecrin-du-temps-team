@@ -201,6 +201,8 @@ const add: RequestHandler = async (req, res, next) => {
     if (files?.watch_image?.[0]) {
       const url = `/uploads/watches/${files.watch_image[0].filename}`;
       await photoRepository.create(url, "watch", watchId);
+    } else if (req.body.watch_photo) {
+      await photoRepository.create(req.body.watch_photo, "watch", watchId);
     }
 
     if (files?.certificate_image?.[0]) {

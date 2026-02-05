@@ -9,12 +9,13 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import type { ChartOptions, TooltipItem } from "chart.js"; // ⚠️ CRUCIAL : sans ça, pas de remplissage !
+import type { ChartOptions, TooltipItem } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useCollectionStats } from "../../hook/useCollectionStats";
 import "chartjs-adapter-date-fns";
 import "./UserGraph.css";
 import { fr } from "date-fns/locale";
+import { Link } from "react-router";
 
 ChartJS.register(
   TimeScale,
@@ -25,20 +26,18 @@ ChartJS.register(
   Tooltip,
   Legend,
   Filler,
-  // ⚠️ Ne pas oublier !
 );
 
 function UserGraph() {
   const { chartData, loading } = useCollectionStats();
-  if (loading) return <p>Chargement...</p>;
-  if (chartData.length === 0) return <p>Aucune donnée</p>;
+
+  const isEmpty = chartData.length === 0;
+
   // Configuration du graphique
   const options: ChartOptions<"line"> = {
     responsive: true,
     plugins: {
-      legend: {
-        display: false,
-      },
+      legend: { display: false },
       title: {
         display: true,
         text: "Évolution de ma collection",
@@ -54,28 +53,16 @@ function UserGraph() {
     },
     scales: {
       x: {
-        type: "time", // ✅ Fix ici
+        type: "time",
         time: {
-          unit: "month", // ✅ Fix ici
-          displayFormats: {
-            month: "MMM yyyy",
-          },
+          unit: "month",
+          displayFormats: { month: "MMM yyyy" },
         },
-        adapters: {
-          date: {
-            locale: fr,
-          },
-        },
-        title: {
-          display: true,
-          text: "Date",
-        },
+        adapters: { date: { locale: fr } },
+        title: { display: true, text: "Date" },
       },
       y: {
         beginAtZero: false,
-        title: {
-          display: true,
-        },
         ticks: {
           callback: (value: number | string) =>
             `${Number(value).toLocaleString("fr-FR")} €`,
@@ -84,7 +71,6 @@ function UserGraph() {
     },
   };
 
-  // Données du graphique
   const data = {
     datasets: [
       {
@@ -101,7 +87,27 @@ function UserGraph() {
 
   return (
     <div className="usergraph__main">
-      <Line className="usergraph__content" options={options} data={data} />
+      {loading && (
+        <div className="usergraph__placeholder">
+          <div className="usergraph__spinner" />
+          <p>Chargement du graphique…</p>
+        </div>
+      )}
+
+      {!loading && isEmpty && (
+        <div className="usergraph__placeholder">
+          <h3>Votre collection est vide</h3>
+          <p>Ajoutez une montre pour voir l’évolution ici.</p>
+
+          <Link to="/collection" className="favorite-pick__btn">
+            Voir ma collection
+          </Link>
+        </div>
+      )}
+
+      {!loading && !isEmpty && (
+        <Line className="usergraph__content" options={options} data={data} />
+      )}
     </div>
   );
 }
