@@ -168,6 +168,10 @@ const router = createBrowserRouter([
             path: "/Transactions",
             element: <Transactions />,
           },
+          {
+            path: "/Hub",
+            element: <Hub />,
+          },
         ],
       },
     ],
