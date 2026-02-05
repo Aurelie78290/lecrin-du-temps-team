@@ -19,6 +19,7 @@ type WatchCardProps = {
   watch: Watch;
   apiBaseUrl: string;
   context: "shop" | "collection";
+  forceEager?: boolean;
   userId?: number;
   onChange?: () => void;
   index?: number;
@@ -28,6 +29,7 @@ export default function WatchCard({
   watch,
   apiBaseUrl,
   context,
+  forceEager,
   index = 0,
 }: WatchCardProps) {
   const { user } = useAuth();
@@ -73,7 +75,7 @@ export default function WatchCard({
               <img
                 src={`${apiBaseUrl}${cover}`}
                 alt={`Montre ${watch.brand} ${watch.model}`}
-                loading="lazy"
+                loading={forceEager ? "eager" : "lazy"}
               />
             )}
           </div>

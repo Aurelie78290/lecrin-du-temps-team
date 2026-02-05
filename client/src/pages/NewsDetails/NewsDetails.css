@@ -65,7 +65,7 @@
 
 .NewsDetails-overlay {
   position: absolute;
-  top: 54%;
+  top: 50%;
   left: 53%;
   transform: translateX(-50%);
   width: 60%;

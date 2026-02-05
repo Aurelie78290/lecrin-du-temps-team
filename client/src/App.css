@@ -95,6 +95,13 @@ h1 {
   z-index: 100; /* pour être au-dessus du contenu */
 }
 
+.favorites-icon-container {
+  position: fixed;
+  top: 1.5rem;
+  right: 9rem;
+  z-index: 100;
+}
+
 /* =========================
    MOBILE
    ========================= */
