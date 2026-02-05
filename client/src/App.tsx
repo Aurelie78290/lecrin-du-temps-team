@@ -5,6 +5,7 @@ import "./App.css";
 import { useState } from "react";
 import "./App.css";
 import BasketIcon from "./components/Basket/BasketIcon";
+import FavoriteIcon from "./components/FavoriteIcon/FavoriteIcon";
 import { AuthProvider } from "./contexts/AuthContext";
 import { FavoriteProvider } from "./contexts/FavoriteContext";
 import { BasketProvider } from "./contexts/ShopContext";
@@ -20,15 +21,31 @@ function App() {
   const pagesWithoutBasket = ["/"];
   const showBasket = !pagesWithoutBasket.includes(location.pathname);
 
+  const [basketOpen, setBasketOpen] = useState(false);
+  const [favoritesOpen, setFavoritesOpen] = useState(false);
+
+  const pagesWithoutFavorites = ["/"];
+  const showFavorites = !pagesWithoutFavorites.includes(location.pathname);
+  const showFavoritesIcon = showFavorites && !basketOpen;
+
   return (
     // On englobe tout dans AuthProvider pour tout protéger //
     <AuthProvider>
       <ThemeProvider>
         <FavoriteProvider>
           <BasketProvider>
-            {showBasket && (
+            {showBasket && !favoritesOpen && (
               <div className="basket-icon-container">
-                <BasketIcon />
+                <BasketIcon isOpen={basketOpen} setIsOpen={setBasketOpen} />
+              </div>
+            )}
+            {showFavoritesIcon && (
+              <div className="favorites-icon-container">
+                <FavoriteIcon
+                  isOpen={favoritesOpen}
+                  setIsOpen={setFavoritesOpen}
+                  apiBaseUrl="http://localhost:3310/api/watches?ids="
+                />
               </div>
             )}
             <div
