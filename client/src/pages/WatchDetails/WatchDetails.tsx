@@ -1,6 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useMatch, useNavigate, useParams } from "react-router";
+import {
+  Link,
+  useLocation,
+  useMatch,
+  useNavigate,
+  useParams,
+} from "react-router";
 import ShopBasket from "../../components/ShopBasket/ShopBasket";
+import { useAuth } from "../../contexts/AuthContext";
 import { useBasket } from "../../contexts/ShopContext";
 import "./WatchDetails.css";
 
@@ -149,9 +156,12 @@ export default function WatchDetails({
   idwatch,
   isReadOnly = false,
 }: WatchDetailsProps) {
+  const { user } = useAuth();
   // J'utilise soit l'id en props (depuis ClassifiedAdDetails), soit celui de l'URL
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const cameFromAdmin = location.state?.fromAdmin;
 
   const { addToBasket } = useBasket();
   const [basketOpen, setBasketOpen] = useState(false);
@@ -389,7 +399,9 @@ export default function WatchDetails({
     return (
       <div className="watchdetails-state">
         <p>Erreur : {error ?? "Montre introuvable"}</p>
-        <Link to="/Shop">← Retour boutique</Link>
+        <Link to={user?.role === "admin" ? "/admin/manage-watches" : "/Shop"}>
+          ← Retour {user?.role === "admin" ? "Gestion" : "Boutique"}
+        </Link>
       </div>
     );
   }
@@ -400,9 +412,20 @@ export default function WatchDetails({
         {!isReadOnly && (
           <Link
             className="watchdetails-back"
-            to={inCollection ? "/Collection" : "/Shop"}
+            to={
+              cameFromAdmin
+                ? "/admin/manage-watches"
+                : inCollection
+                  ? "/Collection"
+                  : "/Shop"
+            }
           >
-            ← Retour {inCollection ? "Collection" : "Boutique"}
+            ← Retour{" "}
+            {cameFromAdmin
+              ? "Gestion des annonces"
+              : inCollection
+                ? "Collection"
+                : "Boutique"}
           </Link>
         )}
 

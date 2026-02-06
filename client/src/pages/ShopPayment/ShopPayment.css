@@ -325,3 +325,11 @@
     font-size: 1.1rem;
   }
 }
+
+/* =========================
+   LIGHT THEME 
+   ========================= */
+
+html[data-theme="light"] .checkout-stripe-info {
+  background: #d9cbc2;
+}

@@ -78,7 +78,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   return (
-    <div className="search-bar">
+    <div className="search-bar-shop">
       <div className="search-bar-container">
         <div className="search-input-group">
           <label htmlFor="search">Rechercher</label>

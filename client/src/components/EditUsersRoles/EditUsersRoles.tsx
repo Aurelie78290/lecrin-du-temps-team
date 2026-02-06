@@ -99,9 +99,9 @@ const UserManagement = () => {
             {filteredUsers.length > 0 ? (
               filteredUsers.map((u) => (
                 <tr key={u.id}>
-                  <td>{u.id}</td>
-                  <td>{u.email}</td>
-                  <td>
+                  <td data-label="Id">{u.id}</td>
+                  <td data-label="Email">{u.email}</td>
+                  <td data-label="Rôle">
                     <select
                       className="select-btn"
                       value={u.role}
@@ -119,7 +119,7 @@ const UserManagement = () => {
                       <option value="admin">Admin</option>
                     </select>
                   </td>
-                  <td className="actions">
+                  <td data-label="Actions" className="actions">
                     <button
                       type="button"
                       className="infos-btn"

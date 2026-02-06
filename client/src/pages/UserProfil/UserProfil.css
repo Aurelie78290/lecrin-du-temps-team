@@ -38,7 +38,7 @@
 .logout-btn {
   margin-top: 35px;
   background-color: var(--bonus-color);
-  color: var(--accent-color);
+  color: var(--border-color);
   border: 1px solid var(--secondary-color);
   padding: 15px;
   border-radius: 8px;
@@ -234,10 +234,15 @@ button.order-line {
   margin-top: 35px;
   background-color: transparent;
   color: var(--secondary-color);
-  border: 1px solid var(--secondary-color);
+  border: 1px solid var(--border-color);
   padding: 15px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.view-more:hover {
+  background-color: rgba(212, 175, 55, 0.25);
+  border-color: var(--border-color);
 }
 
 @media (max-width: 1024px) {
