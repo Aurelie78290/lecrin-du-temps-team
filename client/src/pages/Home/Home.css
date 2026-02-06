@@ -387,6 +387,7 @@
 .input-group input:hover,
 .input-row input:hover {
   color: color-mix(in srgb, var(--text-color) 55%, transparent);
+  background: none;
 }
 
 .input-group input:focus,
