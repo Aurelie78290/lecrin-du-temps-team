@@ -128,7 +128,7 @@ const UserManagement = () => {
                       Infos & Collection
                     </button>
                     <button
-                      className="delete-btn"
+                      className="users-delete-btn"
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
