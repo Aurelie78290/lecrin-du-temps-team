@@ -138,7 +138,7 @@ const Home: React.FC = () => {
                     title="Mot de passe oublié?"
                     className="forgot-password-link"
                   >
-                    Mot de passe oublié?
+                    Mot de passe oublié ?
                   </Link>
                 )}
               </div>

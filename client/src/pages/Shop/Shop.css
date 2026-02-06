@@ -3,8 +3,8 @@
 }
 
 .shop-header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   margin-bottom: 20px;
   flex-wrap: wrap;
@@ -17,14 +17,18 @@
   font-size: 2.8rem;
   font-weight: 500;
   text-transform: uppercase;
+  grid-column: 2;
   /* margin: 40px 0 40px 5px; */
 }
 
 .shop-count {
   font-family: var(--font-secondary);
   font-size: 14px;
+  font-weight: bold;
   opacity: 0.8;
   margin-right: 10px;
+  grid-column: 3;
+  justify-self: end;
 }
 
 .shop-grid {
@@ -43,4 +47,22 @@
   border: 1px solid color-mix(in srgb, var(--secondary-color) 20%, transparent);
   width: fit-content;
   margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+  .shop-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .shop-title {
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+  }
+
+  .shop-count {
+    margin-right: 0;
+  }
 }
