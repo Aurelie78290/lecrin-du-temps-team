@@ -201,420 +201,428 @@ function AddWatchShop() {
         className="AddWatchShop-formulaire"
         onSubmit={handleSubmit}
       >
-        <div className="AddWatchShop-GeneralInfo">
+        <div className="AddWatchShop-container">
           <h2>informations générales</h2>
-          {/* BRAND */}
-          <div>
-            <dt>MARQUE</dt>
-            <dd>
-              <select
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
-                required
-              >
-                <option value="">Sélectionner...</option>
-                {brandList.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-            </dd>
-          </div>
+          <div className="AddWatchShop-GeneralInfo">
+            {/* BRAND */}
+            <div>
+              <dt>MARQUE</dt>
+              <dd>
+                <select
+                  value={brand}
+                  onChange={(e) => setBrand(e.target.value)}
+                  required
+                >
+                  <option value="">Sélectionner...</option>
+                  {brandList.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </dd>
+            </div>
 
-          {/* MODEL */}
-          <div>
-            <dt>MODELE</dt>
-            <dd>
-              <select
-                value={model}
-                onChange={(e) => setModel(e.target.value)}
-                required
-              >
-                <option value="">Sélectionner...</option>
-                {modelList.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-            </dd>
-          </div>
+            {/* MODEL */}
+            <div>
+              <dt>MODELE</dt>
+              <dd>
+                <select
+                  value={model}
+                  onChange={(e) => setModel(e.target.value)}
+                  required
+                >
+                  <option value="">Sélectionner...</option>
+                  {modelList.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </dd>
+            </div>
 
-          {/* PRICE */}
-          <div>
-            <dt>PRIX</dt>
-            <dd>
-              <input
-                type="number"
-                placeholder="euros"
-                value={watchPrice}
-                onChange={(e) => setWatchPrice(e.target.value)}
-                required
-              />
-            </dd>
-          </div>
+            {/* PRICE */}
+            <div>
+              <dt>PRIX</dt>
+              <dd>
+                <input
+                  type="number"
+                  placeholder="euros"
+                  value={watchPrice}
+                  onChange={(e) => setWatchPrice(e.target.value)}
+                  required
+                />
+              </dd>
+            </div>
 
-          {/* CONDITION */}
-          <div>
-            <dt>ETAT</dt>
-            <dd>
-              <select
-                value={condition}
-                onChange={(e) => setCondition(e.target.value)}
-                required
-              >
-                <option value="">Sélectionner...</option>
-                {WATCH_CONDITIONS.map((cond) => (
-                  <option key={cond} value={cond}>
-                    {cond}
-                  </option>
-                ))}
-              </select>
-            </dd>
-          </div>
+            {/* CONDITION */}
+            <div>
+              <dt>ETAT</dt>
+              <dd>
+                <select
+                  value={condition}
+                  onChange={(e) => setCondition(e.target.value)}
+                  required
+                >
+                  <option value="">Sélectionner...</option>
+                  {WATCH_CONDITIONS.map((cond) => (
+                    <option key={cond} value={cond}>
+                      {cond}
+                    </option>
+                  ))}
+                </select>
+              </dd>
+            </div>
 
-          {/* NUMERO DE SERIE*/}
-          <div>
-            <dt>REFERENCE (REF_NO)</dt>
-            <dd>
+            {/* NUMERO DE SERIE*/}
+            <div>
+              <dt>REFERENCE (REF_NO)</dt>
+              <dd>
+                <input
+                  type="text"
+                  placeholder="N° de série"
+                  value={refNo}
+                  onChange={(e) => setRefNo(e.target.value)}
+                />
+              </dd>
+            </div>
+            {/* ANNEE DE FABRICATION*/}
+            <div>
+              <dt>ANNEE DE PRODUCTION</dt>
+              <dd>
+                <input
+                  type="date"
+                  value={productionYear}
+                  onChange={(e) => setProductionYear(e.target.value)}
+                />
+              </dd>
+            </div>
+
+            {/* CASE MATERIAL*/}
+            <div>
+              <dt>MATERIAU BOITIER</dt>
+              <dd>
+                <select
+                  value={caseMaterial}
+                  onChange={(e) => setCaseMaterial(e.target.value)}
+                  required
+                >
+                  <option value="">Sélectionner...</option>
+                  {caseMaterialList.map((item) => (
+                    <option
+                      key={item.idcase_material}
+                      value={item.idcase_material}
+                    >
+                      {item.case_material_name}
+                    </option>
+                  ))}
+                </select>
+              </dd>
+            </div>
+
+            {/* GENRE*/}
+            <div>
+              <dt>GENRE</dt>
+              <dd>
+                <select
+                  value={watchGender}
+                  onChange={(e) => setWatchGender(e.target.value)}
+                  required
+                >
+                  <option value="">Sélectionner...</option>
+                  {GENDER.map((cond) => (
+                    <option key={cond} value={cond}>
+                      {cond}
+                    </option>
+                  ))}
+                </select>
+              </dd>
+            </div>
+            {/* TYPE DE FERMOIRE*/}
+            <div>
+              <dt>TYPE DE FERMOIR</dt>
+              <dd>
+                <select
+                  value={claspType}
+                  onChange={(e) => setClaspType(e.target.value)}
+                  required
+                >
+                  <option value="">Sélectionner...</option>
+                  {claspTypeList.map((item) => (
+                    <option key={item.idclasp_type} value={item.idclasp_type}>
+                      {item.clasp_type_name}
+                    </option>
+                  ))}
+                </select>
+              </dd>
+            </div>
+            {/* STRAP MATERIAL*/}
+            <div>
+              <dt>MATERIAU BRACELET</dt>
+              <dd>
+                <select
+                  value={strapMaterial}
+                  onChange={(e) => setStrapMaterial(e.target.value)}
+                  required
+                >
+                  <option value="">Sélectionner...</option>
+                  {strapMaterialList.map((item) => (
+                    <option
+                      key={item.idstrap_material}
+                      value={item.idstrap_material}
+                    >
+                      {item.strap_material_name}
+                    </option>
+                  ))}
+                </select>
+              </dd>
+            </div>
+            <div className="AddWatchShop-Limiteddition">
+              {/* EDITION LIMITEE BOOLEAN*/}
+
+              <label htmlFor="edition_limite">
+                Edition limitée{" "}
+                <input
+                  id="edition_limite"
+                  type="checkbox"
+                  checked={isLimitedEdition}
+                  onChange={(e) => setIsLimitedEdition(e.target.checked)}
+                />{" "}
+              </label>
+
+              {/* NUMERO DE L'EDITION LIMITEE*/}
               <input
                 type="text"
-                placeholder="N° de série"
-                value={refNo}
-                onChange={(e) => setRefNo(e.target.value)}
+                placeholder="N° d'édition limitée"
+                value={editionNumber}
+                disabled={!isLimitedEdition}
+                className={
+                  !isLimitedEdition
+                    ? "AddWatchShop-Limiteddition-YesText"
+                    : "AddWatchShop-Limiteddition-NoText"
+                }
+                // PENSER A CHANGER LE HOOVER LORSQUE DISABLED
+                onChange={(e) => setEditionNumber(e.target.value)}
               />
-            </dd>
-          </div>
-          {/* ANNEE DE FABRICATION*/}
-          <div>
-            <dt>ANNEE DE PRODUCTION</dt>
-            <dd>
-              <input
-                type="date"
-                value={productionYear}
-                onChange={(e) => setProductionYear(e.target.value)}
-              />
-            </dd>
-          </div>
-          <div className="AddWatchShop-Limiteddition">
-            {/* EDITION LIMITEE BOOLEAN*/}
-
-            <label htmlFor="edition_limite">
-              Edition limitée{" "}
-              <input
-                id="edition_limite"
-                type="checkbox"
-                checked={isLimitedEdition}
-                onChange={(e) => setIsLimitedEdition(e.target.checked)}
-              />{" "}
-            </label>
-
-            {/* NUMERO DE L'EDITION LIMITEE*/}
-            <input
-              type="text"
-              placeholder="N° d'édition limitée"
-              value={editionNumber}
-              disabled={!isLimitedEdition}
-              // PENSER A CHANGER LE HOOVER LORSQUE DISABLED
-              onChange={(e) => setEditionNumber(e.target.value)}
-            />
-          </div>
-
-          {/* GENRE*/}
-          <div>
-            <dt>GENRE</dt>
-            <dd>
-              <select
-                value={watchGender}
-                onChange={(e) => setWatchGender(e.target.value)}
-                required
-              >
-                <option value="">Sélectionner...</option>
-                {GENDER.map((cond) => (
-                  <option key={cond} value={cond}>
-                    {cond}
-                  </option>
-                ))}
-              </select>
-            </dd>
+            </div>
           </div>
         </div>
-        <div className="AddWatchShop-Caracteristiques">
+        <div className="AddWatchShop-container">
           <h2>Caractéristiques</h2>
-          {/* CASE MATERIAL*/}
-          <div>
-            <dt>MATERIAU BOITIER</dt>
-            <dd>
-              <select
-                value={caseMaterial}
-                onChange={(e) => setCaseMaterial(e.target.value)}
-                required
-              >
-                <option value="">Sélectionner...</option>
-                {caseMaterialList.map((item) => (
-                  <option
-                    key={item.idcase_material}
-                    value={item.idcase_material}
-                  >
-                    {item.case_material_name}
-                  </option>
-                ))}
-              </select>
-            </dd>
-          </div>
 
-          {/* DIAMETRE*/}
-          <div>
-            <dt>DIAMETRE</dt>
-            <dd>
-              <input
-                type="number"
-                placeholder="mm"
-                value={diameterMm}
-                onChange={(e) => setDiameterMm(e.target.value)}
-              />
-            </dd>
-          </div>
+          <div className="AddWatchShop-Caracteristiques">
+            {/* DIAMETRE*/}
+            <div>
+              <dt>DIAMETRE</dt>
+              <dd>
+                <input
+                  type="number"
+                  placeholder="mm"
+                  value={diameterMm}
+                  onChange={(e) => setDiameterMm(e.target.value)}
+                />
+              </dd>
+            </div>
 
-          {/* EPAISSEUR*/}
-          <div>
-            <dt>EPAISSEUR</dt>
-            <dd>
-              <input
-                type="number"
-                placeholder="mm"
-                value={thicknessMm}
-                onChange={(e) => setThicknessMm(e.target.value)}
-              />
-            </dd>
-          </div>
+            {/* EPAISSEUR*/}
+            <div>
+              <dt>EPAISSEUR</dt>
+              <dd>
+                <input
+                  type="number"
+                  placeholder="mm"
+                  value={thicknessMm}
+                  onChange={(e) => setThicknessMm(e.target.value)}
+                />
+              </dd>
+            </div>
 
-          {/* ETANCHEITE*/}
-          <div>
-            <dt>ETANCHEITE</dt>
-            <dd>
-              <input
-                type="number"
-                placeholder="(Bar)"
-                value={waterResistanceBar}
-                onChange={(e) => setWaterResistanceBar(e.target.value)}
-              />
-            </dd>
-          </div>
+            {/* ETANCHEITE*/}
+            <div>
+              <dt>ETANCHEITE</dt>
+              <dd>
+                <input
+                  type="number"
+                  placeholder="(Bar)"
+                  value={waterResistanceBar}
+                  onChange={(e) => setWaterResistanceBar(e.target.value)}
+                />
+              </dd>
+            </div>
 
-          {/* DIAL COLOR*/}
-          <div>
-            <dt>COULEUR CADRAN</dt>
-            <dd>
-              <input
-                type="text"
-                placeholder="..."
-                value={dialColor}
-                onChange={(e) => setDialColor(e.target.value)}
-              />
-            </dd>
-          </div>
+            {/* DIAL COLOR*/}
+            <div>
+              <dt>COULEUR CADRAN</dt>
+              <dd>
+                <input
+                  type="text"
+                  placeholder="..."
+                  value={dialColor}
+                  onChange={(e) => setDialColor(e.target.value)}
+                />
+              </dd>
+            </div>
 
-          {/* DIAL FINISH COLOR*/}
-          <div>
-            <dt>FINITION CADRAN</dt>
-            <dd>
-              <select
-                value={dialFinishColor}
-                onChange={(e) => setDialFinishColor(e.target.value)}
-                required
-              >
-                <option value="">Sélectionner...</option>
-                {dialFinishList.map((item) => (
-                  <option key={item.iddial_finish} value={item.iddial_finish}>
-                    {item.dial_finish_name}
-                  </option>
-                ))}
-              </select>
-            </dd>
-          </div>
+            {/* DIAL FINISH COLOR*/}
+            <div>
+              <dt>FINITION CADRAN</dt>
+              <dd>
+                <select
+                  value={dialFinishColor}
+                  onChange={(e) => setDialFinishColor(e.target.value)}
+                  required
+                >
+                  <option value="">Sélectionner...</option>
+                  {dialFinishList.map((item) => (
+                    <option key={item.iddial_finish} value={item.iddial_finish}>
+                      {item.dial_finish_name}
+                    </option>
+                  ))}
+                </select>
+              </dd>
+            </div>
 
-          {/* HOUR MAKER TYPE*/}
-          <div>
-            <dt>RESERVE DE MARCHE</dt>
-            <dd>
-              <select
-                value={hourMakerType}
-                onChange={(e) => setHourMakerType(e.target.value)}
-                required
-              >
-                <option value="">Sélectionner...</option>
-                {hourMakerTypeList.map((item) => (
-                  <option
-                    key={item.idhour_maker_type}
-                    value={item.idhour_maker_type}
-                  >
-                    {item.hour_maker_type_name}
-                  </option>
-                ))}
-              </select>
-            </dd>
-          </div>
+            {/* HOUR MAKER TYPE*/}
+            <div>
+              <dt>RESERVE DE MARCHE</dt>
+              <dd>
+                <select
+                  value={hourMakerType}
+                  onChange={(e) => setHourMakerType(e.target.value)}
+                  required
+                >
+                  <option value="">Sélectionner...</option>
+                  {hourMakerTypeList.map((item) => (
+                    <option
+                      key={item.idhour_maker_type}
+                      value={item.idhour_maker_type}
+                    >
+                      {item.hour_maker_type_name}
+                    </option>
+                  ))}
+                </select>
+              </dd>
+            </div>
 
-          {/* STRAP MATERIAL*/}
-          <div>
-            <dt>MATERIAU BRACELET</dt>
-            <dd>
-              <select
-                value={strapMaterial}
-                onChange={(e) => setStrapMaterial(e.target.value)}
-                required
-              >
-                <option value="">Sélectionner...</option>
-                {strapMaterialList.map((item) => (
-                  <option
-                    key={item.idstrap_material}
-                    value={item.idstrap_material}
-                  >
-                    {item.strap_material_name}
-                  </option>
-                ))}
-              </select>
-            </dd>
-          </div>
+            {/* STRAP COLOR*/}
+            <div>
+              <dt>COULEUR BRACELET</dt>
+              <dd>
+                <input
+                  type="text"
+                  placeholder="..."
+                  value={strapColor}
+                  onChange={(e) => setStrapColor(e.target.value)}
+                />
+              </dd>
+            </div>
 
-          {/* STRAP COLOR*/}
-          <div>
-            <dt>COULEUR BRACELET</dt>
-            <dd>
-              <input
-                type="text"
-                placeholder="..."
-                value={strapColor}
-                onChange={(e) => setStrapColor(e.target.value)}
-              />
-            </dd>
-          </div>
+            {/* LUG WIDTH*/}
+            <div>
+              <dt>LARGEUR ENTRE-CORNES</dt>
+              <dd>
+                <input
+                  type="number"
+                  placeholder="mm"
+                  value={lugWidthMm}
+                  onChange={(e) => setLugWidthMm(e.target.value)}
+                />
+              </dd>
+            </div>
 
-          {/* TYPE DE FERMOIRE*/}
-          <div>
-            <dt>TYPE DE FERMOIR</dt>
-            <dd>
-              <select
-                value={claspType}
-                onChange={(e) => setClaspType(e.target.value)}
-                required
-              >
-                <option value="">Sélectionner...</option>
-                {claspTypeList.map((item) => (
-                  <option key={item.idclasp_type} value={item.idclasp_type}>
-                    {item.clasp_type_name}
-                  </option>
-                ))}
-              </select>
-            </dd>
-          </div>
+            {/* TYPE DE MOUVEMENT*/}
+            <div>
+              <dt>TYPE MOUVEMENT</dt>
+              <dd>
+                <select
+                  value={movementType}
+                  onChange={(e) => setMovementType(e.target.value)}
+                  required
+                >
+                  <option value="">Sélectionner...</option>
+                  {movementTypeList.map((item) => (
+                    <option
+                      key={item.idmovement_type}
+                      value={item.idmovement_type}
+                    >
+                      {item.movement_type}
+                    </option>
+                  ))}
+                </select>
+              </dd>
+            </div>
 
-          {/* LUG WIDTH*/}
-          <div>
-            <dt>LARGEUR ENTRE-CORNES</dt>
-            <dd>
-              <input
-                type="number"
-                placeholder="mm"
-                value={lugWidthMm}
-                onChange={(e) => setLugWidthMm(e.target.value)}
-              />
-            </dd>
-          </div>
+            {/* CALIBRE*/}
+            <div>
+              <dt>CALIBRE</dt>
+              <dd>
+                <input
+                  type="text"
+                  placeholder="..."
+                  value={caliber}
+                  onChange={(e) => setCaliber(e.target.value)}
+                />
+              </dd>
+            </div>
 
-          {/* TYPE DE MOUVEMENT*/}
-          <div>
-            <dt>TYPE MOUVEMENT</dt>
-            <dd>
-              <select
-                value={movementType}
-                onChange={(e) => setMovementType(e.target.value)}
-                required
-              >
-                <option value="">Sélectionner...</option>
-                {movementTypeList.map((item) => (
-                  <option
-                    key={item.idmovement_type}
-                    value={item.idmovement_type}
-                  >
-                    {item.movement_type}
-                  </option>
-                ))}
-              </select>
-            </dd>
-          </div>
+            {/* FUNCTION WATCH*/}
+            <div>
+              <dt>FONCTIONS</dt>
+              <dd>
+                <select
+                  value={functionWatch}
+                  onChange={(e) => setFunctionWatch(e.target.value)}
+                  required
+                >
+                  <option value="">Sélectionner...</option>
+                  {functionList.map((item) => (
+                    <option key={item.idfunctions} value={item.idfunctions}>
+                      {item.function_name}
+                    </option>
+                  ))}
+                </select>
+              </dd>
+            </div>
 
-          {/* CALIBRE*/}
-          <div>
-            <dt>CALIBRE</dt>
-            <dd>
-              <input
-                type="text"
-                placeholder="..."
-                value={caliber}
-                onChange={(e) => setCaliber(e.target.value)}
-              />
-            </dd>
-          </div>
+            {/* RESERVE DE MARCHE*/}
+            <div>
+              <dt>RESERVE DE MARCHE</dt>
+              <dd>
+                <input
+                  type="number"
+                  placeholder="Heures"
+                  value={powerReserveHours}
+                  onChange={(e) => setPowerReserveHours(e.target.value)}
+                />
+              </dd>
+            </div>
 
-          {/* FUNCTION WATCH*/}
-          <div>
-            <dt>FONCTIONS</dt>
-            <dd>
-              <select
-                value={functionWatch}
-                onChange={(e) => setFunctionWatch(e.target.value)}
-                required
-              >
-                <option value="">Sélectionner...</option>
-                {functionList.map((item) => (
-                  <option key={item.idfunctions} value={item.idfunctions}>
-                    {item.function_name}
-                  </option>
-                ))}
-              </select>
-            </dd>
-          </div>
+            {/* FREQUENCE*/}
+            <div>
+              <dt>FREQUENCE</dt>
+              <dd>
+                <input
+                  type="number"
+                  placeholder="Hz"
+                  value={frequencyHz}
+                  onChange={(e) => setFrequencyHz(e.target.value)}
+                />
+              </dd>
+            </div>
 
-          {/* RESERVE DE MARCHE*/}
-          <div>
-            <dt>RESERVE DE MARCHE</dt>
-            <dd>
-              <input
-                type="number"
-                placeholder="Heures"
-                value={powerReserveHours}
-                onChange={(e) => setPowerReserveHours(e.target.value)}
-              />
-            </dd>
-          </div>
-
-          {/* FREQUENCE*/}
-          <div>
-            <dt>FREQUENCE</dt>
-            <dd>
-              <input
-                type="number"
-                placeholder="Hz"
-                value={frequencyHz}
-                onChange={(e) => setFrequencyHz(e.target.value)}
-              />
-            </dd>
-          </div>
-
-          {/* JEWEL COUNT*/}
-          <div>
-            <dt>NOMBRE DE RUBIS</dt>
-            <dd>
-              <input
-                type="number"
-                placeholder="..."
-                value={jewelCount}
-                onChange={(e) => setJewelCount(e.target.value)}
-              />
-            </dd>
+            {/* JEWEL COUNT*/}
+            <div>
+              <dt>NOMBRE DE RUBIS</dt>
+              <dd>
+                <input
+                  type="number"
+                  placeholder="..."
+                  value={jewelCount}
+                  onChange={(e) => setJewelCount(e.target.value)}
+                />
+              </dd>
+            </div>
           </div>
         </div>
       </form>

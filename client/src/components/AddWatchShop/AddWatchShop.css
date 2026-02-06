@@ -2,15 +2,22 @@
   display: flex;
   justify-content: space-evenly;
 }
-
-.AddWatchShop-GeneralInfo,
-.AddWatchShop-Caracteristiques {
-  /* display: flex;
-  flex-direction: column; */
-  width: 35%;
+.AddWatchShop-container {
+  width: 45%;
   border: 1px solid var(--border-color);
   border-radius: 15px;
   padding: 1rem;
+}
+
+.AddWatchShop-container h2 {
+  text-align: center;
+}
+
+.AddWatchShop-GeneralInfo,
+.AddWatchShop-Caracteristiques {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
 }
 
 .AddWatchShop-GeneralInfo div,
@@ -59,11 +66,12 @@
   font-size: 14px;
   outline: none;
   text-align: left;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .AddWatchShop-GeneralInfo select,
-.AddWatchShop-GeneralInfo input,
-.AddWatchShop-GeneralInfo label {
+.AddWatchShop-GeneralInfo input {
   padding: 0.8rem 0;
   margin: 0.8rem 0;
   text-align: center;
@@ -77,8 +85,7 @@
 }
 
 .AddWatchShop-formulaire select,
-.AddWatchShop-formulaire input,
-.AddWatchShop-formulaire label {
+.AddWatchShop-formulaire input {
   border-color: var(--border-color);
 }
 
@@ -118,4 +125,52 @@
   background-color: #27ae60;
   color: #f5f0e9;
   cursor: pointer;
+}
+
+.AddWatchShop-Limiteddition {
+  display: flex;
+
+  border-color: var(--border-color);
+  padding: 0.8rem 0;
+  margin: 0.8rem 0;
+  text-align: center;
+  align-items: center;
+}
+
+.AddWatchShop-GeneralInfo div:hover,
+.AddWatchShop-Caracteristiques div:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.AddWatchShop-formulaire input:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  background-color: var(--accent-color);
+}
+
+.AddWatchShop-formulaire .AddWatchShop-Limiteddition-YesText:hover {
+  transform: none;
+  box-shadow: none;
+  background: none;
+  cursor: default;
+}
+
+@media (max-width: 1300px) {
+  .AddWatchShop-GeneralInfo,
+  .AddWatchShop-Caracteristiques {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .AddWatchShop-formulaire {
+    display: flex;
+    flex-direction: column;
+  }
+  .AddWatchShop-container {
+    margin: auto;
+    margin-bottom: 2rem;
+    width: 90%;
+  }
 }
