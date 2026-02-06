@@ -230,6 +230,27 @@
   transition: all 0.3s;
 }
 
+@media (max-width: 1285px) {
+  .NewsDetails-container {
+    height: auto;
+  }
+
+  .NewsDetails-photo {
+    position: relative;
+    height: 45vh;
+  }
+
+  .NewsDetails-overlay {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 85%;
+    margin: -4rem auto 0 auto;
+    opacity: 0.95;
+  }
+}
+
 @media (max-width: 1023px) {
   .NewsDetails-overlay {
     width: 80%;

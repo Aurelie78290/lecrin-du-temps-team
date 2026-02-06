@@ -1,4 +1,4 @@
-import { CreditCard, FileText, Lock, MapPin } from "lucide-react";
+import { CreditCard, Edit, FileText, Lock, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useBasket } from "../../contexts/ShopContext";
@@ -158,7 +158,7 @@ function ShopPayment() {
             <section className="checkout-section">
               <div className="checkout-section-header">
                 <MapPin className="checkout-icon" />
-                <h2>Adresse de livraison</h2>
+                <h2>Votre adresse de livraison</h2>
                 <button
                   type="button"
                   className="edit-adress-btn"
@@ -192,6 +192,7 @@ function ShopPayment() {
                     setIsEditingShipping(!isEditingShipping);
                   }}
                 >
+                  <Edit size={16} />
                   {isEditingShipping
                     ? "Utiliser mon adresse de profil"
                     : "Livrer à une autre adresse"}
@@ -260,7 +261,6 @@ function ShopPayment() {
                     id="ship-streetNumber"
                     required
                     value={shippingAddress.streetNumber}
-                    disabled={!isEditingShipping}
                     onChange={(e) =>
                       setShippingAddress({
                         ...shippingAddress,
@@ -278,7 +278,6 @@ function ShopPayment() {
                     id="ship-street"
                     required
                     value={shippingAddress.street}
-                    disabled={!isEditingShipping}
                     onChange={(e) =>
                       setShippingAddress({
                         ...shippingAddress,
@@ -296,7 +295,6 @@ function ShopPayment() {
                     id="ship-zipCode"
                     required
                     value={shippingAddress.zipCode}
-                    disabled={!isEditingShipping}
                     onChange={(e) =>
                       setShippingAddress({
                         ...shippingAddress,
@@ -314,7 +312,6 @@ function ShopPayment() {
                     id="ship-city"
                     required
                     value={shippingAddress.city}
-                    disabled={!isEditingShipping}
                     onChange={(e) =>
                       setShippingAddress({
                         ...shippingAddress,
@@ -332,7 +329,6 @@ function ShopPayment() {
                     id="ship-phone"
                     required
                     value={shippingAddress.phone}
-                    disabled={!isEditingShipping}
                     onChange={(e) =>
                       setShippingAddress({
                         ...shippingAddress,
@@ -348,7 +344,7 @@ function ShopPayment() {
             <section className="checkout-section">
               <div className="checkout-section-header">
                 <FileText className="checkout-icon" />
-                <h2>Adresse de facturation</h2>
+                <h2>Votre adresse de facturation</h2>
               </div>
 
               <div className="checkout-checkbox-group">

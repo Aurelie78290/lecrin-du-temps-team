@@ -25,3 +25,10 @@
   fill: #e74c3c;
   color: #e74c3c;
 }
+
+@media (max-width: 768px) {
+  .FavoriteIcon-button {
+    margin-left: auto;
+    margin-right: -1.75rem;
+  }
+}

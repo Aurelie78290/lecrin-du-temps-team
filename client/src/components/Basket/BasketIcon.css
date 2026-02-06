@@ -31,3 +31,10 @@
   justify-content: center;
   padding: 0 0.20rem;
 }
+
+@media (max-width: 768px) {
+  .basket-icon-button {
+    margin-left: auto;
+    margin-right: -1.25rem;
+  }
+}

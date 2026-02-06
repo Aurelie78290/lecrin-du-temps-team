@@ -1,0 +1,125 @@
+@keyframes fadeInRow {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.manage-watches {
+  max-width: 1200px;
+  margin: 2rem auto;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+.search-container {
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+.search-label {
+  color: var(--border-color);
+}
+
+.search-input {
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: inherit;
+  padding: 10px;
+  width: 25%;
+  min-width: 200px;
+}
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  transition: all 0.5s ease;
+  display: flex;
+  flex-direction: column;
+}
+.watches-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+.watches-table th,
+.watches-table td {
+  padding: 20px;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+}
+
+.watches-table th {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: var(--border-color);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.watches-table tbody tr {
+  border-bottom: 1px solid var(--border-color);
+  animation: fadeInRow 0.3s ease-out forwards;
+}
+
+.watches-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.watches-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.table-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  display: block;
+  margin: 0 auto;
+}
+
+.watches-table td.actions-cell {
+  height: 100%;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 60px;
+}
+
+.infos-btn,
+.delete-btn {
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  min-width: 130px;
+  transition: opacity 0.2s;
+}
+.infos-btn {
+  background-color: transparent;
+  color: inherit;
+  border: 1px solid var(--border-color);
+}
+.delete-btn {
+  border: 1px solid var(--border-color);
+  background-color: var(--bonus-color);
+  color: var(--secondary-color);
+}
+.no-match {
+  padding: 2rem;
+  font-size: large;
+}
