@@ -20,8 +20,8 @@ function SearchRecentOrders({ onSearchChange, filters }: SearchProps) {
   };
 
   return (
-    <section className="search-container">
-      <div className="search-group">
+    <section className="searchRecentOrders-container">
+      <div className="searchRecentOrders-group">
         <label htmlFor="sellerType">Vendeur : </label>
         <select
           name="sellerType"
@@ -35,7 +35,7 @@ function SearchRecentOrders({ onSearchChange, filters }: SearchProps) {
         </select>
       </div>
 
-      <div className="search-group">
+      <div className="searchRecentOrders-group">
         <label htmlFor="startDate">Du : </label>
         <input
           type="date"
@@ -46,7 +46,7 @@ function SearchRecentOrders({ onSearchChange, filters }: SearchProps) {
         />
       </div>
 
-      <div className="search-group">
+      <div className="searchRecentOrders-group">
         <label htmlFor="endDate">Au : </label>
         <input
           type="date"
