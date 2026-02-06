@@ -1,17 +1,17 @@
-.search-container {
+.searchRecentOrders-container {
   display: flex;
   justify-content: space-evenly;
   align-items: flex-start;
 }
 
-.search-group {
+.searchRecentOrders-group {
   display: flex;
   flex-direction: column;
   color: var(--border-color);
   gap: 0.5rem;
 }
 
-.search-group label {
+.searchRecentOrders-group label {
   padding-left: 0.75rem;
   color: var(--border-color);
   font-size: 0.9rem;
@@ -20,7 +20,7 @@
   letter-spacing: 1px;
 }
 
-.search-group select,
+.searchRecentOrders-group select,
 input {
   padding: 0.75rem;
   border-radius: 20px;
@@ -33,12 +33,12 @@ input {
   transition: all 0.3s ease;
 }
 
-.search-group select option {
+.searchRecentOrders-group select option {
   color: var(--primary-color);
   background-color: var(--accent-color);
 }
 
-.search-group select:hover,
+.searchRecentOrders-group select:hover,
 input:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
@@ -47,14 +47,15 @@ input:hover {
   border-color: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.search-group select:focus,
+.searchRecentOrders-group select:focus,
 input:focus {
   outline: none;
   border-color: var(--border-color);
 }
 
 /* Cible l'icône du calendrier pour Chrome, Edge et Safari */
-.search-group input[type="date"]::-webkit-calendar-picker-indicator {
+.searchRecentOrders-group
+  input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   /* Optionnel : tu peux aussi augmenter un peu sa taille ou changer son opacité au survol */
   transition: opacity 0.3s ease;
