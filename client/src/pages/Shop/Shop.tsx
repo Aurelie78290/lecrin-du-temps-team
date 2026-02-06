@@ -4,7 +4,6 @@ import SearchBar, {
 } from "../../components/SearchBar/SearchBar";
 import WatchCard, { type Watch } from "../../components/WatchCard/WatchCard";
 import "./Shop.css";
-import { useNavigate } from "react-router";
 import LinkAddWatch from "../../components/LinkAddWatch/LinkAddWatch";
 
 const API_URL = "http://localhost:3310";
@@ -13,7 +12,6 @@ export default function Shop() {
   const [watches, setWatches] = useState<Watch[]>([]);
   const [loading, setLoading] = useState(true);
   const apiBaseUrl = "http://localhost:3310";
-  const navigate = useNavigate();
 
   const fetchWatches = useCallback((filters: SearchFilters) => {
     setLoading(true);

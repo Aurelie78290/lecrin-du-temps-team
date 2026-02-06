@@ -101,7 +101,11 @@ const AdminWatchList = () => {
                     <button
                       type="button"
                       className="infos-btn"
-                      onClick={() => navigate(`/shop/${w.idwatch}`)}
+                      onClick={() =>
+                        navigate(`/shop/${w.idwatch}`, {
+                          state: { fromAdmin: true },
+                        })
+                      }
                     >
                       Voir les informations
                     </button>
