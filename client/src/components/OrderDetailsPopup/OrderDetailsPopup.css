@@ -15,7 +15,6 @@
 .order-details-content {
   width: 90%;
   max-width: 400px;
-  background-color: var(--background-color);
   padding: 40px 30px;
   border: 1px solid var(--border-color);
   border-radius: 10px;
@@ -25,7 +24,7 @@
   align-items: center;
   justify-content: center;
   animation: fadeInPop 0.4s ease-out;
-  background-color: black;
+  background: var(--background-color);
 }
 @keyframes fadeInPop {
   from {
@@ -54,6 +53,7 @@
   width: clamp(50px, 10vw, 70px);
   height: clamp(50px, 10vw, 70px);
   border-radius: 4px;
+  border: 1px solid var(--border-color);
   flex-shrink: 0;
   object-fit: cover;
   margin-bottom: 20px;
