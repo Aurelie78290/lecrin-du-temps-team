@@ -342,3 +342,18 @@
     display: block;
   }
 }
+
+/* =========================
+   LIGHT THEME 
+   ========================= */
+
+html[data-theme="light"] .NewsDetails-references-content {
+  color: #9e8155;
+}
+
+html[data-theme="light"] .NewsDetails-subtitle {
+  background: #9e8155;
+  color: #010510;
+
+  opacity: 0.85;
+}

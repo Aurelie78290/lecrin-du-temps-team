@@ -110,3 +110,21 @@
     flex-direction: column;
   }
 }
+
+/* =========================
+   LIGHT THEME 
+   ========================= */
+
+html[data-theme="light"] .breakingNews-section {
+  background: none;
+}
+
+html[data-theme="light"]
+  .breakingNews-section
+  .breakingNews-references-content {
+  color: #9e8155;
+}
+
+html[data-theme="light"] .breakingNews-container .breakingNews-overlayBtn {
+  color: #9e8155;
+}

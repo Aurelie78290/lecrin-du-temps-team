@@ -32,3 +32,14 @@
     margin-right: -1.75rem;
   }
 }
+
+/* =========================
+   LIGHT THEME 
+   ========================= */
+
+html[data-theme="light"] .favorites-icon-container .FavoriteIcon-button:hover {
+  background-color: #9e8155 !important;
+  box-shadow: none !important;
+  border: none;
+  transform: scale(1.1);
+}

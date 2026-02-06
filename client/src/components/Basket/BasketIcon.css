@@ -1,11 +1,11 @@
 .basket-icon-button {
   position: relative;
   padding: 0.5rem;
-  background: var(--border-color);
+  background-color: var(--border-color);
   border: none;
   border-radius: 0.75rem;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,4 +37,15 @@
     margin-left: auto;
     margin-right: -1.25rem;
   }
+}
+
+/* =========================
+   LIGHT THEME 
+   ========================= */
+
+html[data-theme="light"] .basket-icon-container .basket-icon-button:hover {
+  background-color: #9e8155 !important;
+  box-shadow: none !important;
+  border: none;
+  transform: scale(1.1);
 }
