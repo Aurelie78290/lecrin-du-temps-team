@@ -53,13 +53,6 @@ export default function Shop() {
           <div className="shop-count">
             {watches.length} montre{watches.length > 1 ? "s" : ""}
           </div>
-          <button
-            type="button"
-            className="infos-btn"
-            onClick={() => navigate("/admin/manage-watches")}
-          >
-            Gérer les annonces
-          </button>
         </div>
         <LinkAddWatch />
         <SearchBar onSearch={fetchWatches} />
