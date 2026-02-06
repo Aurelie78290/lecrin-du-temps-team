@@ -87,12 +87,12 @@ const AdminWatchList = () => {
                       }}
                     />
                   </td>
-                  <td>
+                  <td data-label="Montre">
                     {w.brand}
                     <br />
                     {w.model}
                   </td>
-                  <td>
+                  <td data-label="Prix">
                     {w.watch_price
                       ? `${w.watch_price.toLocaleString()}€`
                       : "N/A"}
