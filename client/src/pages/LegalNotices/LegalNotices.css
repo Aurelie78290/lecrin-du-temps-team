@@ -58,3 +58,7 @@
     padding-top: 0;
   }
 }
+
+html[data-theme="light"] .legalnotices-content {
+  background: linear-gradient(to bottom, #b89968, #9e8155);
+}
