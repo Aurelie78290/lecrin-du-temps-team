@@ -111,7 +111,7 @@ const AdminWatchList = () => {
                     </button>
                     <button
                       type="button"
-                      className="delete-btn"
+                      className="watchlist-delete-btn"
                       onClick={() => handleDeleteWatch(w.idwatch)}
                     >
                       Supprimer l'annonce

@@ -58,7 +58,7 @@
 
 .watches-table th {
   background-color: rgba(0, 0, 0, 0.2);
-  color: var(--border-color);
+  color: var(--secondary-color);
   text-transform: uppercase;
   font-size: 0.9rem;
   border-bottom: 1px solid var(--border-color);
@@ -101,7 +101,7 @@
 }
 
 .infos-btn,
-.delete-btn {
+.watchlist-delete-btn {
   padding: 8px 15px;
   border-radius: 5px;
   cursor: pointer;
@@ -114,10 +114,10 @@
   color: inherit;
   border: 1px solid var(--border-color);
 }
-.delete-btn {
+.watchlist-delete-btn {
   border: 1px solid var(--border-color);
   background-color: var(--bonus-color);
-  color: var(--secondary-color);
+  color: var(--border-color);
 }
 .no-match {
   padding: 2rem;
