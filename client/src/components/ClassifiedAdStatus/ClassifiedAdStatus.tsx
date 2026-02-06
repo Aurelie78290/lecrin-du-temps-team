@@ -14,7 +14,7 @@ function ClassifiedAdStatus({ updateTrigger }: { updateTrigger: number }) {
   const statusMapping = [
     { key: "active", label: "En vente" },
     { key: "pending", label: "A valider" },
-    { key: "personal", label: "Refusée / Collection" },
+    { key: "personal", label: "En Collection" },
   ];
 
   // const statusOrder = ["En vente", "A valider", "Refusée"];
