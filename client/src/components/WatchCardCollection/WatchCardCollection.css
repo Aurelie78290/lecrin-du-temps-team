@@ -7,7 +7,7 @@
 
 .watch-card-collection__main h1 {
   font-family: var(--font-primary);
-  color: var(--secondary-color);
+  color: var(--text-color);
   margin-top: 4rem;
   margin-bottom: 4rem;
   text-align: center;
