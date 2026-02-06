@@ -123,3 +123,90 @@
   padding: 2rem;
   font-size: large;
 }
+@media (max-width: 768px) {
+  .manage-watches,
+  .table-container,
+  .watches-table {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  .table-container {
+    border: none;
+    overflow: hidden;
+  }
+
+  .watches-table thead {
+    display: none;
+  }
+
+  .watches-table tbody tr {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    margin: 0 auto 25px auto;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.03);
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .watches-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    width: 100% !important;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    text-align: right;
+  }
+
+  .watches-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--border-color);
+    font-size: 0.7rem;
+    text-align: left;
+    min-width: 80px;
+  }
+
+  .watches-table td:first-child {
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-bottom: 2px solid var(--border-color);
+  }
+  .watches-table td:first-child::before {
+    content: none;
+  }
+
+  .table-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .watches-table td.actions {
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px 15px;
+    border-bottom: none;
+  }
+  .watches-table td.actions::before {
+    content: none;
+  }
+
+  .infos-btn,
+  .watchlist-delete-btn {
+    width: 75%;
+    max-width: none;
+    min-width: 0;
+    height: 40px;
+    font-size: 0.85rem;
+    margin: 0;
+  }
+}
